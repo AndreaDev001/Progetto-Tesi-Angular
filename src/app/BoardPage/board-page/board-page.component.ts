@@ -1,6 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { DropdownOption } from '../../dropdown/dropdown.component';
+import { UserService } from 'src/model/services/user.service';
+import { CollectionModel } from 'src/model/interfaces';
 
 @Component({
   selector: 'app-board-page',
@@ -12,6 +14,9 @@ export class BoardPageComponent implements OnInit,OnDestroy {
   private subscriptions: Subscription[] = [];
   public currentVisibilities: DropdownOption[] = [];
 
+  constructor(private userService: UserService) {
+
+  }
 
   public ngOnInit(): void {
     this.currentVisibilities.push({name: "ciao",callback: () => {}})

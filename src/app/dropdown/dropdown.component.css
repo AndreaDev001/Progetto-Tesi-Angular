@@ -25,6 +25,13 @@ p.dropdown-label
     margin: 0px;
     font-size: 15px;
 }
+p.dropdown-supporting-text
+{
+    color: black;
+    padding: 2px;
+    margin: 0px;
+    font-size: 12px;
+}
 button.dropdown-option:hover
 {
     background-color: var(--tertiary-color);

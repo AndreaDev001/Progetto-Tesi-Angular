@@ -20,8 +20,9 @@ export class DropdownComponent implements OnChanges {
 
 
   public ngOnChanges(changes: SimpleChanges): void {
-    if(changes['currentOptions'] != undefined && this.currentSelectedOption == undefined)
-        this.currentSelectedOption = this.currentOptions[0].name; 
+    if(changes['currentOptions'] != undefined && this.currentSelectedOption == undefined) {
+      this.currentSelectedOption = this.currentOptions[0].name;
+    }
   }
 
   public handleClick(item: DropdownOption): void {
