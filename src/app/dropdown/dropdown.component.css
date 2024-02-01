@@ -1,0 +1,38 @@
+button.dropdown-option
+{
+    background-color: var(--secondary-color);
+    width: 100%;
+    border: 0px;
+    font-size: 15px;
+    color: whitesmoke;
+    text-align: start;
+    padding: 2px 5px;
+    cursor: pointer;
+    transition: 0.2s ease-in-out all;
+}
+button.dropdown-toggle-button {
+    padding: 10px 5px;
+    border: 0px;
+    margin: 0px;
+    background-color: var(--secondary-color);
+    color: whitesmoke;
+    border-radius: 2px;
+}
+p.dropdown-label
+{
+    color: black;
+    padding: 2px;
+    margin: 0px;
+    font-size: 15px;
+}
+button.dropdown-option:hover
+{
+    background-color: var(--tertiary-color);
+    color: black;
+    text-decoration: underline;
+}
+div.dropdown-menu
+{
+    background-color: var(--secondary-color);
+    padding: 2px;
+}

@@ -1,0 +1,20 @@
+<div>
+    <div class = "d-inline-block mx-1">
+        <app-search-bar (searchChanged)="updateFilter(currentFilter,'title',$event)" [currentLabel]="'Title'" [currentSupportingText]="'Write a title...'"></app-search-bar>
+    </div>
+    <div class = "d-inline-block mx-1">
+        <app-search-bar (searchChanged)="updateFilter(currentFilter,'description',$event)" [currentLabel]="'Description'" [currentSupportingText]="'Write a description...'"></app-search-bar>
+    </div>
+    <div class = "d-inline-block mx-1">
+        <app-search-bar (searchChanged)="updateFilter(currentFilter,'bannerName',$event)" [currentLabel]="'Banner Name'"></app-search-bar>
+    </div>
+    <div class = "d-inline-block mx-1">
+        <app-search-bar (searchChanged)="updateFilter(currentFilter,'bannedName',$event)" [currentLabel]="'Banner Name'"></app-search-bar>
+    </div>
+    <div class = "d-inline-block mx-1">
+        <app-search-bar (searchChanged)="updateFilter(currentFilter,'bannerUsername',$event)" [currentLabel]="'Banner Username'" [currentSupportingText]="'Write an email'"></app-search-bar>
+    </div>
+    <div class = "d-inline-block mx-1">
+        <app-search-bar (searchChanged)="updateFilter(currentFilter,'bannedUsername',$event)" [currentLabel]="'Banned Username'" [currentSupportingText]="'Write an username...'"></app-search-bar>
+    </div>
+</div>

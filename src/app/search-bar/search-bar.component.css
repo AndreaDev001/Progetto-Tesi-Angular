@@ -1,0 +1,21 @@
+div.search-bar-holder {
+    display: inline-block;
+}
+input.search-bar-input {
+    border: 1px solid lightgrey;
+    padding: 5px;
+    border-radius: 2px;
+}
+input.search-bar-input:focus {
+    outline: none;
+}
+p.search-bar-label {
+    margin: 0px;
+    font-size: 15px;
+    color: black;
+}
+p.search-bar-supporting-text {
+    margin: 0px;
+    font-size: 12px;
+    color: black;
+}

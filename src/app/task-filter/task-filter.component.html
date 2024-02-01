@@ -1,0 +1,20 @@
+<div>
+    <div class = "d-inline-block mx-1">
+        <app-search-bar (searchChanged)="updateFilter(currentFilter,'name',$event)" [currentLabel]="'Name'" [currentSupportingText]="'Write a name...'"></app-search-bar>
+    </div>
+    <div class = "d-inline-block mx-1">
+        <app-search-bar (searchChanged)="updateFilter(currentFilter,'description',$event)" [currentLabel]="'Description'" [currentSupportingText]="'Write a description...'"></app-search-bar>
+    </div>
+    <div class = "d-inline-block mx-1">
+        <app-search-bar (searchChanged)="updateFilter(currentFilter,'publisherEmail',$event)" [currentLabel]="'Publisher email'" [currentSupportingText]="'Write an email'"></app-search-bar>
+    </div>
+    <div class = "d-inline-block mx-1">
+        <app-search-bar (searchChanged)="updateFilter(currentFilter,'publisherUsername',$event)" [currentLabel]="'Publisher username'" [currentSupportingText]="'Write an username...'"></app-search-bar>
+    </div>
+    <div class = "d-inline-block mx-1">
+        <app-search-bar (searchChanged)="updateFilter(currentFilter,'publisherName', $event)" [currentLabel]="'Publisher name'" [currentSupportingText]="'Write a name...'"></app-search-bar>
+    </div>
+    <div class = "d-inline-block mx-1">
+        <app-search-bar (searchChanged)="updateFilter(currentFilter,'publisherSurname',$event)" [currentLabel]="'Publisher surname'" [currentSupportingText]="'Write a surname...'"></app-search-bar>
+    </div>
+</div>

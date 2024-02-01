@@ -1,0 +1,27 @@
+div#header-holder
+{
+    border-bottom: 1px solid black;
+    width: 100%;
+}
+ul.header-list
+{
+    margin: 0px;
+    list-style-type: none;
+    padding: 5px;
+    background-color: var(--primary-color);
+}
+li.header-item
+{
+    display: inline-block;
+    font-size: 20px;
+    padding: 8px;
+    transition: 0.3s ease-in-out all;
+    cursor: pointer;
+    color: whitesmoke;
+}
+li.header-item:hover
+{
+    background-color: var(--tertiary-color);
+    color: black;
+    text-decoration: underline;
+}
