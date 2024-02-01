@@ -3,5 +3,5 @@
         <h3>Boards</h3>
         <p class = "mt-1">Here you can see of all the boards in the organization</p>
     </section>
-    <app-board-filter></app-board-filter>
+    <app-board-filter (filterChanged)="handleFilterChange($event)"></app-board-filter>
 </div>

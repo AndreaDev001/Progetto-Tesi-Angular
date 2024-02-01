@@ -3,6 +3,8 @@ import { Subscription } from 'rxjs';
 import { DropdownOption } from '../../dropdown/dropdown.component';
 import { UserService } from 'src/model/services/user.service';
 import { CollectionModel } from 'src/model/interfaces';
+import { Filter } from '../board-filter/board-filter.component';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-board-page',
@@ -12,21 +14,17 @@ import { CollectionModel } from 'src/model/interfaces';
 export class BoardPageComponent implements OnInit,OnDestroy {
 
   private subscriptions: Subscription[] = [];
-  public currentVisibilities: DropdownOption[] = [];
-
-  constructor(private userService: UserService) {
-
-  }
 
   public ngOnInit(): void {
-    this.currentVisibilities.push({name: "ciao",callback: () => {}})
-    this.currentVisibilities.push({name: "ciao",callback: () => {}})
-    this.currentVisibilities.push({name: "ciao",callback: () => {}})
-    this.currentVisibilities.push({name: "ciao",callback: () => {}})
-    this.currentVisibilities.push({name: "ciao",callback: () => {}})
+
+
   }
 
   public ngOnDestroy(): void {
     this.subscriptions.forEach((value: Subscription) => value.unsubscribe());  
+  }
+
+  public handleFilterChange(filter: Filter): void {
+     
   }
 }

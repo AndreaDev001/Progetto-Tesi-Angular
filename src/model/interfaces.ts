@@ -169,3 +169,28 @@ export interface CommentReport
     reported: UserRef,
     comment: CommentRef
 }
+
+export interface PagedModel
+{
+    _embedded: EmbeddedPagedModel
+}
+export interface CollectionModel
+{
+    _embedded:  EmbeddedCollectionModel
+}
+export interface EmbeddedCollectionModel
+{
+    content: any[]
+}
+export interface EmbeddedPagedModel
+{
+    content: any[],
+    page?: Page
+}
+export interface Page
+{
+    page: number,
+    size: number,
+    totalPages: number,
+    totalElements: number
+}

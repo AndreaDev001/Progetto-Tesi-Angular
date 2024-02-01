@@ -10,6 +10,7 @@ export class SearchBarComponent implements OnInit
   @Input() currentLabel?: string = undefined;
   @Input() currentSupportingText?: string = undefined;
   @Input() currentPlaceholder?: string = undefined;
+  @Input() defaultValue?: String = undefined
   @Output() searchChanged: EventEmitter<String> = new EventEmitter();
   public currentValue?: string = undefined;
 

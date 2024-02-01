@@ -1,7 +1,7 @@
 <div class = "search-bar-holder">
     <div class = "d-inline-block">
         <p class = "search-bar-label">{{currentLabel}}</p>
-        <input (change)="handleValueChange($event)" [placeholder]="currentPlaceholder" class = "search-bar-input" type="search">
+        <input  [defaultValue]="defaultValue != undefined ? defaultValue : ''" (change)="handleValueChange($event)" [placeholder]="currentPlaceholder" class = "search-bar-input" type="search">
         <p class = "search-bar-supporting-text">{{currentSupportingText}}</p>
     </div>
 </div>

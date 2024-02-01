@@ -15,13 +15,14 @@ export class DropdownComponent implements OnChanges {
   @Input() currentOptions: DropdownOption[] = [];
   @Input() currentLabel?: string = undefined;
   @Input() currentSupportingText?: string = undefined;
+  @Input() defaultValue?: String = undefined;
   @Output() changedCurrent: EventEmitter<String> = new EventEmitter<String>();
   public currentSelectedOption?: String = undefined;
 
 
   public ngOnChanges(changes: SimpleChanges): void {
     if(changes['currentOptions'] != undefined && this.currentSelectedOption == undefined) {
-      this.currentSelectedOption = this.currentOptions[0].name;
+      this.currentSelectedOption = changes['currentOptions'].currentValue[0];
     }
   }
 

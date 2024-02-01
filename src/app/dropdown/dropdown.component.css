@@ -11,12 +11,14 @@ button.dropdown-option
     transition: 0.2s ease-in-out all;
 }
 button.dropdown-toggle-button {
-    padding: 10px 5px;
     border: 0px;
     margin: 0px;
+    padding: 5px 5px;
     background-color: var(--secondary-color);
     color: whitesmoke;
     border-radius: 2px;
+    width: 100%;
+    text-align: start;
 }
 p.dropdown-label
 {

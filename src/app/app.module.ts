@@ -7,13 +7,13 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { BoardPageComponent } from './BoardPage/board-page/board-page.component';
-import { TasksPageComponent } from './tasks-page/tasks-page.component';
+import { TasksPageComponent } from './TaskPage/tasks-page/tasks-page.component';
 import { DropdownComponent } from './dropdown/dropdown.component';
 import { SearchBarComponent } from './search-bar/search-bar.component';
 import { BoardFilterComponent } from './BoardPage/board-filter/board-filter.component';
-import { TaskFilterComponent } from './task-filter/task-filter.component';
-import { ReportFilterComponent } from './report-filter/report-filter.component';
-import { BanFilterComponent } from './ban-filter/ban-filter.component';
+import { TaskFilterComponent } from './TaskPage/task-filter/task-filter.component';
+import { ReportFilterComponent } from './ReportPage/report-filter/report-filter.component';
+import { BanFilterComponent } from './BanPage/ban-filter/ban-filter.component';
 
 @NgModule({
   declarations: [
