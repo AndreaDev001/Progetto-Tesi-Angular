@@ -14,6 +14,22 @@ import { BoardFilterComponent } from './BoardPage/board-filter/board-filter.comp
 import { TaskFilterComponent } from './TaskPage/task-filter/task-filter.component';
 import { ReportFilterComponent } from './ReportPage/report-filter/report-filter.component';
 import { BanFilterComponent } from './BanPage/ban-filter/ban-filter.component';
+import { ReportPageComponent } from './ReportPage/report-page/report-page.component';
+import { BanPageComponent } from './BanPage/ban-page/ban-page.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CreateBoardComponent } from './Forms/create-board/create-board.component';
+import { CreateTaskComponent } from './Forms/create-task/create-task.component';
+import { CreateTeamComponent } from './Forms/create-team/create-team.component';
+import { MatFormFieldModule } from '@angular/material/form-field'
+import {MatInputModule} from '@angular/material/input'
+import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
+import { CreateCommentComponent } from './Forms/create-comment/create-comment.component';
+import { CreateDiscussionComponent } from './Forms/create-discussion/create-discussion.component';
+import { CreatePollComponent } from './Forms/create-poll/create-poll.component';
+import { CreateReportComponent } from './Forms/create-report/create-report.component';
+import { CreateBanComponent } from './create-ban/create-ban.component';
+import { AlertComponentComponent } from './alert-component/alert-component.component';
 
 @NgModule({
   declarations: [
@@ -26,13 +42,29 @@ import { BanFilterComponent } from './BanPage/ban-filter/ban-filter.component';
     BoardFilterComponent,
     TaskFilterComponent,
     ReportFilterComponent,
-    BanFilterComponent
+    BanFilterComponent,
+    ReportPageComponent,
+    CreateBoardComponent,
+    CreateTaskComponent,
+    CreateTeamComponent,
+    BanPageComponent,
+    CreateCommentComponent,
+    CreateDiscussionComponent,
+    CreatePollComponent,
+    CreateReportComponent,
+    CreateBanComponent,
+    AlertComponentComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     NgbModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

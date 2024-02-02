@@ -1,0 +1,27 @@
+button.modal-button
+{
+    padding: 10px;
+    font-size: 18px;
+    border: 0px;
+    margin: 0px;
+    border-radius: 10px;
+    background-color: var(--tertiary-color);
+    transition: 0.2s ease-in-out all;
+}
+button.modal-button:hover
+{
+    background-color: var(--primary-color);
+    color: whitesmoke;
+}
+div.default-modal-header
+{
+    background-color: var(--secondary-color);
+}
+div.default-modal-body
+{
+    background-color: var(--tertiary-color);
+}
+div.default-modal-footer
+{
+    background-color: var(--secondary-color);
+}

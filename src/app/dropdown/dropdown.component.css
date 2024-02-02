@@ -19,6 +19,7 @@ button.dropdown-toggle-button {
     border-radius: 2px;
     width: 100%;
     text-align: start;
+    border: 1px solid lightgray;
 }
 p.dropdown-label
 {

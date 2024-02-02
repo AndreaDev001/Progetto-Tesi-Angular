@@ -1,0 +1,18 @@
+<form [formGroup]="formGroup">
+  <p class = "px-2 py-1">Please specify a valid name, description and a maximum amount of members</p>
+  <mat-form-field class = "form-field">
+      <mat-label>Name</mat-label>
+      <input matInput formControlName="name" placeholder="Write a name...">
+      <mat-hint class = "hint-text">Write a name...</mat-hint>
+  </mat-form-field>
+  <mat-form-field class = "form-field">
+    <mat-label>Description</mat-label>
+    <textarea matInput formControlName="description" placeholder="Write a description"></textarea>
+    <mat-hint class = "hint-text">Write a description</mat-hint>
+  </mat-form-field>
+  <mat-form-field class = "form-field">
+    <mat-label>Max amount of members</mat-label>
+    <input matInput formControlName="maxMembers" placeholder="Write a maximum amount of members">
+    <mat-hint class = "hint-text">Choose a max amount of members</mat-hint>
+  </mat-form-field>
+</form>

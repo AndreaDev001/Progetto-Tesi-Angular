@@ -1,0 +1,22 @@
+<form [formGroup]="formGroup">
+    <mat-form-field class = "form-field">
+        <mat-label>Title</mat-label>
+        <input matInput placeholder="Title" formControlName="title">
+        <mat-hint class = "mat-hint">Write a title...</mat-hint>
+    </mat-form-field>
+    <mat-form-field class = "form-field">
+        <mat-label>Description</mat-label>
+        <input matInput placeholder="Description" formControlName="description">
+        <mat-hint class = "mat-hint">Write a description...</mat-hint>
+    </mat-form-field>
+    <mat-form-field class = "form-field">
+        <mat-label>Minimum Votes</mat-label>
+        <input matInput placeholder="Minimum Votes" formControlName="minimumVotes">
+        <mat-hint class = "mat-hint">Write a minimum amount of votes...</mat-hint>
+    </mat-form-field>
+    <mat-form-field class = "form-field">
+        <mat-label>Maximum votes</mat-label>
+        <input matInput placeholder="Maximum Votes" formControlName="maximumVotes">
+        <mat-hint class = "mat-hint">Write a maximum amount of votes</mat-hint>
+    </mat-form-field>
+</form>

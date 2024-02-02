@@ -49,6 +49,7 @@ export class BoardFilterComponent implements OnInit
       let page: number = value.page != undefined ? value.page : 0;
       let pageSize: number = value.pageSize != undefined ? value.pageSize : 20;
       this.currentFilter = {title: title,description: description,publisherEmail: publisherEmail,publisherName: publisherName,publisherSurname: publisherSurname,publisherUsername: publisherUsername,publisherGender: publisherGender,visibility: visibility,page: page,pageSize: pageSize};
+      this.filterChanged.emit(this.currentFilter);
     })
     this.boardService.getVisibilities().subscribe((value: CollectionModel) => {
       if(value._embedded != null) {

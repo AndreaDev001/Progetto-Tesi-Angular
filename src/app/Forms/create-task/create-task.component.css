@@ -1,0 +1,10 @@
+.hint-text
+{
+    font-size: 14px;
+    font-weight: thin;
+}
+.form-field
+{
+    display: block;
+    padding: 10px;
+}
