@@ -28,8 +28,11 @@ import { CreateCommentComponent } from './Forms/create-comment/create-comment.co
 import { CreateDiscussionComponent } from './Forms/create-discussion/create-discussion.component';
 import { CreatePollComponent } from './Forms/create-poll/create-poll.component';
 import { CreateReportComponent } from './Forms/create-report/create-report.component';
-import { CreateBanComponent } from './create-ban/create-ban.component';
+import { CreateBanComponent } from './Forms/create-ban/create-ban.component';
 import { AlertComponentComponent } from './alert-component/alert-component.component';
+import { NoItemsComponent } from './no-items/no-items.component';
+import { LoaderComponent } from './loader/loader.component';
+import { OffCanvasComponent } from './off-canvas/off-canvas.component';
 
 @NgModule({
   declarations: [
@@ -54,6 +57,9 @@ import { AlertComponentComponent } from './alert-component/alert-component.compo
     CreateReportComponent,
     CreateBanComponent,
     AlertComponentComponent,
+    NoItemsComponent,
+    LoaderComponent,
+    OffCanvasComponent,
   ],
   imports: [
     BrowserModule,

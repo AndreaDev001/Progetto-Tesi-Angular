@@ -4,8 +4,9 @@
         <p class = "mt-1">Here you can see of all the boards in the organization</p>
     </section>
     <app-board-filter (filterChanged)="handleFilterChange($event)"></app-board-filter>
-    <app-create-board></app-create-board>
 </div>
-<ng-template #testTemplate>
-    <app-create-task></app-create-task>
+<ng-template #boardFilters>
+    <div class = "px-2 w-100">
+        <app-board-filter [rowDisplay]="true" (filterChanged)="handleFilterChange($event)"></app-board-filter>
+    </div>
 </ng-template>

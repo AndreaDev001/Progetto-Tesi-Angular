@@ -6,26 +6,27 @@ import { CollectionModel } from 'src/model/interfaces';
 import { Filter } from '../board-filter/board-filter.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertHandlerService } from 'src/app/alert-handler.service';
+import { OffCanvasHandlerService } from 'src/app/off-canvas-handler.service';
 
 @Component({
   selector: 'app-board-page',
   templateUrl: './board-page.component.html',
   styleUrls: ['./board-page.component.css']
 })
-export class BoardPageComponent implements OnDestroy,AfterViewInit {
+export class BoardPageComponent implements OnDestroy,AfterViewInit{
 
-  @ViewChild("testTemplate") testTemplate: any;
   private subscriptions: Subscription[] = [];
+  @ViewChild("boardFilters") boardFilters: any;
 
-  constructor(private alertHandler: AlertHandlerService) {
+  constructor(private offCanvasHandler: OffCanvasHandlerService) {
 
   }
 
   public ngAfterViewInit(): void {
-    this.alertHandler.setDefaultAlertTitle("Create a Board")
-    this.alertHandler.setTextTemplate(this.testTemplate);
-    this.alertHandler.open(); 
+    this.offCanvasHandler.setContentTemplate(this.boardFilters);
+    this.offCanvasHandler.open();
   }
+
 
   public ngOnDestroy(): void {
     this.subscriptions.forEach((value: Subscription) => value.unsubscribe());  

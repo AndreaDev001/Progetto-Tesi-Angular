@@ -1,0 +1,14 @@
+<ng-template #defaultHeaderTemplate>
+    <div class = "offcanvas-header">
+        <div>
+            <h4 class = "offcanvas-title d-block">{{currentTitle}}</h4>
+        </div>
+        <div>
+            <button type="button" class = "btn btn-close" (click)="close()"></button>
+        </div>
+    </div>
+</ng-template>
+<ng-template #offcanvas>
+    <ng-container *ngTemplateOutlet="currentHeaderTemplate"></ng-container>
+    <ng-container *ngTemplateOutlet="currentContentTemplate"></ng-container>
+</ng-template>

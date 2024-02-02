@@ -1,11 +1,11 @@
 import { HttpParams } from '@angular/common/http';
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output,Input} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DropdownOption } from 'src/app/dropdown/dropdown.component';
 import { CollectionModel } from 'src/model/interfaces';
 import { BoardService } from 'src/model/services/board.service';
 import { HttpUtilsService } from 'src/model/services/http-utils.service';
-import { UserService } from 'src/model/services/user.service';
+import { UserService} from 'src/model/services/user.service';
 
 export interface Filter
 {
@@ -27,6 +27,7 @@ export interface Filter
 })
 export class BoardFilterComponent implements OnInit
 {
+  @Input() rowDisplay: boolean = false;
   public currentFilter: Filter = {page: 0,pageSize: 20};
   public currentVisibilities: DropdownOption[] = [];
   public currentGenders: DropdownOption[] = [];

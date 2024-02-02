@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { DropdownOption } from '../dropdown/dropdown.component';
+import { DropdownOption } from '../../dropdown/dropdown.component';
 import { ReportService } from 'src/model/services/report.service';
 import { CollectionModel } from 'src/model/interfaces';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
