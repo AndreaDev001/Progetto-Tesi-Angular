@@ -33,6 +33,7 @@ import { AlertComponentComponent } from './alert-component/alert-component.compo
 import { NoItemsComponent } from './no-items/no-items.component';
 import { LoaderComponent } from './loader/loader.component';
 import { OffCanvasComponent } from './off-canvas/off-canvas.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
@@ -70,7 +71,8 @@ import { OffCanvasComponent } from './off-canvas/off-canvas.component';
     MatFormFieldModule,
     MatInputModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FontAwesomeModule
   ],
   providers: [],
   bootstrap: [AppComponent]

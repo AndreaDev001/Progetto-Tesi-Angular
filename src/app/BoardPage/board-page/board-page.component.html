@@ -4,6 +4,7 @@
         <p class = "mt-1">Here you can see of all the boards in the organization</p>
     </section>
     <app-board-filter (filterChanged)="handleFilterChange($event)"></app-board-filter>
+    <app-no-items></app-no-items>
 </div>
 <ng-template #boardFilters>
     <div class = "px-2 w-100">

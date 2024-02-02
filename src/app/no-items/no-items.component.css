@@ -1,0 +1,14 @@
+p.missing-text
+{
+    font-size: 15px;
+    padding: 2px;
+}
+button.missing-button
+{
+    font-size: 15px;
+    border: 0;
+    padding: 10px 40px;
+    background-color: var(--secondary-color);
+    color: whitesmoke;
+    border-radius: 2px;
+}
