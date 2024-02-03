@@ -1,6 +1,8 @@
 div#header-holder
 {
-    border-bottom: 1px solid black;
+    position: sticky;
+    top: 0;
+    border-bottom: 1px solid lightblue;
     width: 100%;
 }
 ul.header-list
@@ -8,9 +10,9 @@ ul.header-list
     margin: 0px;
     list-style-type: none;
     padding: 5px;
-    background-color: var(--primary-color);
+    background: var(--primary-color);
 }
-li.header-item
+a.header-item
 {
     display: inline-block;
     font-size: 20px;
@@ -18,10 +20,26 @@ li.header-item
     transition: 0.3s ease-in-out all;
     cursor: pointer;
     color: whitesmoke;
+    text-decoration: none;
 }
-li.header-item:hover
+a.header-item:hover
 {
     background-color: var(--tertiary-color);
     color: black;
     text-decoration: underline;
+}
+button.header-show-button
+{
+    background-color: var(--primary-color);
+    color: whitesmoke;
+    border: 0px;
+    font-size: 20px;
+    padding: 5px 10px;
+    transition: 0.2s ease-in-out all;
+}
+button.header-show-button:hover
+{
+    background-color: var(--tertiary-color);
+    border-radius: 60%;
+    color: black;
 }

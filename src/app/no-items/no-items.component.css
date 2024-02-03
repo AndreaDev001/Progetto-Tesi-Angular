@@ -11,4 +11,11 @@ button.missing-button
     background-color: var(--secondary-color);
     color: whitesmoke;
     border-radius: 2px;
+    transition: 0.2s ease-in-out all;
+    box-sizing: border-box;
+}
+button.missing-button:hover {
+    background-color: var(--primary-color);
+    padding: 12px 42px;
+    border: 1px solid black;
 }

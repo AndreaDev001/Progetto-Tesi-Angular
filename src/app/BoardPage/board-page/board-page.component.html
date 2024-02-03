@@ -3,8 +3,18 @@
         <h3>Boards</h3>
         <p class = "mt-1">Here you can see of all the boards in the organization</p>
     </section>
-    <app-board-filter (filterChanged)="handleFilterChange($event)"></app-board-filter>
+    <div class = "d-none d-md-block">
+        <app-board-filter (filterChanged)="handleFilterChange($event)"></app-board-filter>
+    </div>
+    <div class = "d-block d-md-none text-center py-4">
+        <button class = "filter-button" (click)="openCanvas()">
+            Filters
+        </button>
+    </div>
     <app-no-items></app-no-items>
+    <div class = "w-100 mt-4 text-center">
+        <app-pagination></app-pagination>
+    </div>
 </div>
 <ng-template #boardFilters>
     <div class = "px-2 w-100">

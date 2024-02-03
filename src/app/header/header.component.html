@@ -1,19 +1,40 @@
 <div id = "header-holder">
     <nav class = "d-block">
-        <div class = "primary-color w-50 d-inline-block text-start">
-            <ul class = "header-list">
-                <li class = "header-item">Home</li>
-                <li class = "header-item">Boards</li>
-                <li class = "header-item">Tasks</li>
-                <li class = "header-item">Reports</li>
-                <li class = "header-item">Bans</li>
-                <li class = "header-item">Help</li>
-            </ul>
+        <div class = "d-none d-md-block">
+            <div class = "d-inline-block w-50 text-start">
+                <ul class = "header-list">
+                    <li class = "d-inline-block" *ngFor="let current of items">
+                        <ng-container *ngTemplateOutlet="routerItem;context: {item: current}"></ng-container>
+                    </li>
+                </ul>
+            </div>
+            <div class = "d-inline-block  w-50 text-end">
+                <ul class = "header-list">
+                    <a class = "header-item">
+                        <fa-icon [icon]="userIcon"></fa-icon>
+                    </a>
+                </ul>
+            </div>
         </div>
-        <div class = "primary-color w-50 d-inline-block text-end">
-            <ul class = "header-list">
-                <li class = "header-item">User</li>
-            </ul>
+        <div class = "d-block d-md-none text-end primary-color" style="padding: 8px">
+            <button [ngbTooltip]="'Show options'"   placement="left" class = "header-show-button" (click)="toggleCollapse()">
+                <fa-icon [icon]="hamburgerIcon"></fa-icon>
+            </button>
+        </div>
+        <div class = "d-block d-md-none">
+            <div #collapse = "ngbCollapse" [(ngbCollapse)]="isCollapsed">
+                <ul class = "header-list">
+                    <li class = "d-block" *ngFor="let current of items">
+                        <ng-container *ngTemplateOutlet="routerItem;context: {item: current}"></ng-container>
+                    </li>
+                </ul>
+            </div>
         </div>
     </nav>
 </div>
+<ng-template #routerItem let-item="item">
+    <a [routerLink]="item.path" class = "header-item">
+        <fa-icon [icon]="item.icon"></fa-icon>
+        {{item.name}}
+    </a>
+</ng-template>

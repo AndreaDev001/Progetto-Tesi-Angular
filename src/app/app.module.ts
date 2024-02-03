@@ -34,6 +34,7 @@ import { NoItemsComponent } from './no-items/no-items.component';
 import { LoaderComponent } from './loader/loader.component';
 import { OffCanvasComponent } from './off-canvas/off-canvas.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { PaginationComponent } from './pagination/pagination.component';
 
 @NgModule({
   declarations: [
@@ -61,6 +62,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     NoItemsComponent,
     LoaderComponent,
     OffCanvasComponent,
+    PaginationComponent,
   ],
   imports: [
     BrowserModule,

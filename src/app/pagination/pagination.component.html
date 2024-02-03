@@ -1,0 +1,42 @@
+<div class = "default-page-container" *ngIf="currentAmountOfPages > 1">
+    <div class = "d-inline-block px-1">
+        <ng-container *ngTemplateOutlet="firstPageTemplate" ></ng-container>
+    </div>
+    <div class = "d-inline-block">
+        <ng-container *ngTemplateOutlet="previousPageTemplate"></ng-container>
+    </div>
+    <div class = "d-inline-block" *ngFor="let current of createRange(currentAmountOfPages);let index = index">
+        <ng-container *ngTemplateOutlet="pageTemplate;context: {index: index + 1}"></ng-container>
+    </div>
+    <div class = "d-inline-block">
+        <ng-container *ngTemplateOutlet="nextPageTemplate"></ng-container>
+    </div>
+    <div class = "d-inline-block px-1">
+        <ng-container *ngTemplateOutlet="lastPageTemplate"></ng-container>
+    </div>
+</div>
+<ng-template #defaultFirstPageTemplate>
+    <button [ngbTooltip]="'Move to first page'" class = "button-page-arrow">
+        <fa-icon [icon]="firstPageIcon" style="font-size: 17px"></fa-icon>
+    </button>
+</ng-template>
+<ng-template #defaultLastPageTemplate>
+    <button [ngbTooltip]="'Move to last page'" class = "button-page-arrow">
+        <fa-icon [icon]="lastPageIcon" style="font-size: 17px"></fa-icon>
+    </button>
+</ng-template>
+<ng-template #defaultPreviousPageTemplate>
+    <button  [ngbTooltip]="'Move to previous page'"  class = "button-page-arrow">
+        <fa-icon [icon]="previousPageIcon"></fa-icon>
+    </button>
+</ng-template>
+<ng-template #defaultNextPageTemplate>
+    <button [ngbTooltip]="'Move to next page'" class = "button-page-arrow">
+        <fa-icon [icon]="nextPageIcon"></fa-icon>
+    </button>
+</ng-template>
+<ng-template #defaultPageTemplate let-index="index">
+        <button class = "button-page">
+            <p class = "page-text">{{index}}</p>
+        </button>
+</ng-template>

@@ -24,12 +24,15 @@ export class BoardPageComponent implements OnDestroy,AfterViewInit{
 
   public ngAfterViewInit(): void {
     this.offCanvasHandler.setContentTemplate(this.boardFilters);
-    this.offCanvasHandler.open();
   }
 
 
   public ngOnDestroy(): void {
     this.subscriptions.forEach((value: Subscription) => value.unsubscribe());  
+  }
+
+  public openCanvas(): void {
+    this.offCanvasHandler.open();
   }
 
   public handleFilterChange(filter: Filter): void {
