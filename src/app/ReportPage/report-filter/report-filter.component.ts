@@ -1,5 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { DropdownOption } from '../../dropdown/dropdown.component';
+import { DropdownOption } from '../../Utility/dropdown/dropdown.component';
 import { UserService } from 'src/model/services/user.service';
 import { ReportService } from 'src/model/services/report.service';
 import { CollectionModel } from 'src/model/interfaces';

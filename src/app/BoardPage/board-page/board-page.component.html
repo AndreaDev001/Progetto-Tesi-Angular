@@ -11,9 +11,8 @@
             Filters
         </button>
     </div>
-    <app-no-items></app-no-items>
-    <div class = "w-100 mt-4 text-center">
-        <app-pagination></app-pagination>
+    <div class = "w-100 mt-4 text-center" *ngIf="currentTotalElements > 0 && !isSearching">
+        <app-pagination (pageChanged)="handlePageChange($event)"></app-pagination>
     </div>
 </div>
 <ng-template #boardFilters>

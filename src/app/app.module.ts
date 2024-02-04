@@ -8,8 +8,8 @@ import { HeaderComponent } from './header/header.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { BoardPageComponent } from './BoardPage/board-page/board-page.component';
 import { TasksPageComponent } from './TaskPage/tasks-page/tasks-page.component';
-import { DropdownComponent } from './dropdown/dropdown.component';
-import { SearchBarComponent } from './search-bar/search-bar.component';
+import { DropdownComponent } from './Utility/dropdown/dropdown.component';
+import { SearchBarComponent } from './Utility/search-bar/search-bar.component';
 import { BoardFilterComponent } from './BoardPage/board-filter/board-filter.component';
 import { TaskFilterComponent } from './TaskPage/task-filter/task-filter.component';
 import { ReportFilterComponent } from './ReportPage/report-filter/report-filter.component';
@@ -30,11 +30,13 @@ import { CreatePollComponent } from './Forms/create-poll/create-poll.component';
 import { CreateReportComponent } from './Forms/create-report/create-report.component';
 import { CreateBanComponent } from './Forms/create-ban/create-ban.component';
 import { AlertComponentComponent } from './alert-component/alert-component.component';
-import { NoItemsComponent } from './no-items/no-items.component';
-import { LoaderComponent } from './loader/loader.component';
-import { OffCanvasComponent } from './off-canvas/off-canvas.component';
+import { NoItemsComponent } from './Utility/no-items/no-items.component';
+import { LoaderComponent } from './Utility/loader/loader.component';
+import { OffCanvasComponent } from './Utility/off-canvas/off-canvas.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { PaginationComponent } from './pagination/pagination.component';
+import { PaginationComponent } from './Utility/pagination/pagination.component';
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { HomePageComponent } from './HomePage/home-page/home-page.component';
 
 @NgModule({
   declarations: [
@@ -63,6 +65,7 @@ import { PaginationComponent } from './pagination/pagination.component';
     LoaderComponent,
     OffCanvasComponent,
     PaginationComponent,
+    HomePageComponent,
   ],
   imports: [
     BrowserModule,
@@ -74,7 +77,8 @@ import { PaginationComponent } from './pagination/pagination.component';
     MatInputModule,
     FormsModule,
     ReactiveFormsModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    NgxSpinnerModule
   ],
   providers: [],
   bootstrap: [AppComponent]

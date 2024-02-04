@@ -1,7 +1,7 @@
 import { HttpParams } from '@angular/common/http';
 import { Component, EventEmitter, OnInit, Output,Input} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { DropdownOption } from 'src/app/dropdown/dropdown.component';
+import { DropdownOption } from 'src/app/Utility/dropdown/dropdown.component';
 import { CollectionModel } from 'src/model/interfaces';
 import { BoardService } from 'src/model/services/board.service';
 import { HttpUtilsService } from 'src/model/services/http-utils.service';

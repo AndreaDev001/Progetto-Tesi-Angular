@@ -36,7 +36,7 @@
     </button>
 </ng-template>
 <ng-template #defaultPageTemplate let-index="index">
-        <button class = "button-page">
+        <button (click)="handleClick(index)" class = "button-page">
             <p class = "page-text">{{index}}</p>
         </button>
 </ng-template>

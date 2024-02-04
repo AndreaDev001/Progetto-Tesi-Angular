@@ -13,9 +13,10 @@ button.missing-button
     border-radius: 2px;
     transition: 0.2s ease-in-out all;
     box-sizing: border-box;
+    border: 1px solid lightblue;
 }
 button.missing-button:hover {
-    background-color: var(--primary-color);
-    padding: 12px 42px;
-    border: 1px solid black;
+    background-color: var(--tertiary-color);
+    color: black;
+    border-radius: 20px;
 }

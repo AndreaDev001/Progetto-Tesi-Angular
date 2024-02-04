@@ -1,5 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { DropdownOption } from '../../dropdown/dropdown.component';
+import { DropdownOption } from '../../Utility/dropdown/dropdown.component';
 import { BanService } from 'src/model/services/ban.service';
 import { CollectionModel } from 'src/model/interfaces';
 import { ReportService } from 'src/model/services/report.service';

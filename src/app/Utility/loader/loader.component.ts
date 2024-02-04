@@ -1,4 +1,5 @@
 import { Component, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-loader',
@@ -11,7 +12,11 @@ export class LoaderComponent implements OnInit
   @Input() currentTitle: string = "Searching";
   @Input() currentText: string = "Searching results, please wait...";
 
+  constructor(private spinner: NgxSpinnerService) {
+
+  }
+
   public ngOnInit(): void {
-    
+    this.spinner.show();
   }
 }

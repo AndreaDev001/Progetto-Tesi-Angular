@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { DropdownOption } from 'src/app/dropdown/dropdown.component';
+import { DropdownOption } from 'src/app/Utility/dropdown/dropdown.component';
 import { CollectionModel } from 'src/model/interfaces';
 import { BoardService } from 'src/model/services/board.service';
 import { TaskService } from 'src/model/services/task.service';

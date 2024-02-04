@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, OnDestroy, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { OffCanvasHandlerService } from '../off-canvas-handler.service';
+import { OffCanvasHandlerService } from '../../off-canvas-handler.service';
 import { NgbOffcanvas, NgbOffcanvasRef } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
