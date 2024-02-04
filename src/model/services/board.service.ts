@@ -21,7 +21,7 @@ export class BoardService {
   }
 
   public getBoardsBySpec(filter: Filter): any {
-    const desiredURL: string = this.url + "/public/" + "boards";
+    const desiredURL: string = this.url + "/public/" + "spec";
     let queryParams: HttpParams = this.httpUtils.generateParams(filter);
     return this.httpClient.get(desiredURL,{params: queryParams});
   }

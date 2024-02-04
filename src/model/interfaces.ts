@@ -170,6 +170,10 @@ export interface CommentReport
     comment: CommentRef
 }
 
+export interface PaginationRequest {
+    page: number,
+    pageSize: number
+}
 export interface PagedModel
 {
     _embedded: EmbeddedPagedModel

@@ -7,7 +7,7 @@
     <div class = "row">
         <div class = "col-2">
             <ul class = "option-list mt-2">
-                <li *ngFor="let current of optionsTemplate">
+                <li [id]="current.name" *ngFor="let current of optionsTemplate">
                     <ng-container *ngTemplateOutlet="optionTemplate;context: {item: current}"></ng-container>
                 </li>
             </ul>
@@ -16,44 +16,28 @@
             <div *ngIf="currentTemplate != undefined">
                 <ng-container *ngTemplateOutlet="currentTemplate"></ng-container>
             </div>
-            <div *ngIf="currentTotalElements > 0">
-                <app-pagination [pageSize]="currentTotalElements / currentPageSize"></app-pagination>
-            </div>
+            <app-no-items *ngIf="currentTotalElements == 0 && !isSearching"></app-no-items>
+            <app-pagination [pageSize]="20" [totalElements]="currentTotalElements" *ngIf="currentTotalElements == 0"></app-pagination>
         </div>
     </div>
 </div>
 <ng-template #boardTemplate>
     <ng-container *ngTemplateOutlet="descriptionItem;context: {item: this.descriptionItems[0]}"></ng-container>
-    <div class = "p-2">
-        <app-no-items *ngIf="currentTotalElements > 0"></app-no-items>
-    </div>
 </ng-template>
 <ng-template #tasksTemplate>
     <ng-container *ngTemplateOutlet="descriptionItem;context: {item: this.descriptionItems[1]}"></ng-container>
-    <div class = "p-2">
-        <app-no-items *ngIf="currentTotalElements > 0"></app-no-items>
-    </div>
 </ng-template>
 <ng-template #discussionTemplate>
     <ng-container *ngTemplateOutlet="descriptionItem;context: {item: this.descriptionItems[2]}"></ng-container>
-    <div class = "p-2">
-        <app-no-items *ngIf="currentTotalElements > 0"></app-no-items>
-    </div>
 </ng-template>
 <ng-template #boardInvitesTemplate>
     <ng-container *ngTemplateOutlet="descriptionItem;context: {item: this.descriptionItems[3]}"></ng-container>
-    <div class = "p-2">
-        <app-no-items *ngIf="currentTotalElements > 0"></app-no-items>
-    </div>
 </ng-template>
 <ng-template #pollTemplate>
     <ng-container *ngTemplateOutlet="descriptionItem;context: {item: this.descriptionItems[4]}"></ng-container>
-    <div class = "p-2">
-        <app-no-items *ngIf="currentTotalElements > 0"></app-no-items>
-    </div>
 </ng-template>
 <ng-template #optionTemplate let-item="item">
-    <button class = "option-holder" (click)="updateTemplate(item.requiredTemplate,item.path)">
+    <button  style="margin-top: 5px;" class = "option-holder" (click)="updateTemplate($event,item.requiredTemplate,item.path)">
         <fa-icon class = "option-icon" [icon]="item.icon"></fa-icon>
         <p class = "option-name">{{item.name}}</p>
     </button>

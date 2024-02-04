@@ -40,6 +40,7 @@ export class HomePageComponent implements AfterViewInit, OnDestroy {
   @ViewChild("discussionTemplate") discussionTemplate: any;
   @ViewChild("pollTemplate") pollTemplate: any;
 
+
   private subscriptions: Subscription[] = [];
   public currentPage: number = 0;
   public currentPageSize: number = 20;
@@ -62,6 +63,8 @@ export class HomePageComponent implements AfterViewInit, OnDestroy {
   public invitesIcon: IconDefinition = faMessage;
   public pollIcon: IconDefinition = faPoll;
   public isSearching: boolean = false;
+  public currentSelectedElement: any;
+  public elements: any = undefined;
 
   private currentUserID: any = undefined;
   public currentUser: any = undefined;
@@ -73,6 +76,7 @@ export class HomePageComponent implements AfterViewInit, OnDestroy {
   }
 
   public ngAfterViewInit(): void {
+    this.elements = document.getElementsByClassName("option-holder");
     this.descriptionItems.push({name: "Boards",subtitle: "Here you can see all of the boards you partecipate in",icon: this.boardIcon})
     this.descriptionItems.push({name: "Tasks",subtitle: "Here you can see all of the tasks that have been assigned to you",icon: this.taskIcon})
     this.descriptionItems.push({name: "Discussions",subtitle: "Here you can see all of the discussions that have been assingned to you",icon: this.discussionIcon})
@@ -118,11 +122,23 @@ export class HomePageComponent implements AfterViewInit, OnDestroy {
             this.currentViewPath = 'boards';
             break;
         }
+        this.updateSelection(this.currentViewPath);
         this.updateRouter(this.currentViewPath);
       }
     }))
     this.subscriptions.push(this.authenticationHandler.getCurrentUser(false).subscribe((value: any) => this.currentUser = value));
     this.subscriptions.push(this.authenticationHandler.getCurrentUserID(false).subscribe((value: any) => this.currentUserID = value));
+  }
+
+  private updateSelection(path: string): any {
+    for(let current of this.elements) {
+      console.log(current);
+      console.log(current.textContent.toLowerCase());
+      if(current.textContent.toLowerCase() == path) {
+        this.currentSelectedElement = current;
+        this.currentSelectedElement.className = "option-holder-selected";
+      }
+    }
   }
   
   public updateItems(view: string): void {
@@ -161,7 +177,7 @@ export class HomePageComponent implements AfterViewInit, OnDestroy {
           this.currentPageSize = value._embedded.page.size;
         }
       }
-    })
+    },(err: any) => this.isSearching = false);
   }
 
   public resetPage(): void {
@@ -181,7 +197,12 @@ export class HomePageComponent implements AfterViewInit, OnDestroy {
     });
   }
 
-  public updateTemplate(requiredTemplate: any,path: string): void {
+  public updateTemplate(event: any,requiredTemplate: any,path: string): void {
+    let oldElement = this.currentSelectedElement;
+    this.currentSelectedElement = event.target;
+    this.currentSelectedElement.className = "option-holder-selected";
+    if(oldElement != undefined)
+        oldElement.className = "option-holder";
     this.resetPage();
     this.updateItems(path);
     this.currentTemplate = requiredTemplate;

@@ -16,18 +16,27 @@ button.option-holder
 {
     padding: 5px 20px;
     background-color: var(--secondary-color);
-    margin: 0px;
+    border-radius: 2px;
     border: 0;
     width: 100%;
     text-align: start;
     color: whitesmoke;
     transition: 0.2s ease-in-out all;
 }
+button.option-holder-selected
+{
+    background-color: var(--tertiary-color);
+    padding: 5px 20px;
+    border-radius: 2px;
+    color: black;
+    border: 0;
+    width: 100%;
+    text-align: start;
+    transition: 0.2s ease-in-out all;
+}
 button.option-holder:hover
 {
     background-color: var(--tertiary-color);
-    border-radius: 20px;
-    padding: 5px 35px;
     color: black;
 }
 p.option-name
@@ -48,7 +57,7 @@ ul.option-list
 {
     list-style-type: none;
     padding: 10px 10px;
-    border-radius: 5px;
+    border-radius: 2px;
     background-color: var(--secondary-color);
     border: 1px solid lightblue;
 }
