@@ -132,8 +132,7 @@ export class HomePageComponent implements AfterViewInit, OnDestroy {
 
   private updateSelection(path: string): any {
     for(let current of this.elements) {
-      console.log(current);
-      console.log(current.textContent.toLowerCase());
+
       if(current.textContent.toLowerCase() == path) {
         this.currentSelectedElement = current;
         this.currentSelectedElement.className = "option-holder-selected";

@@ -1,0 +1,46 @@
+<button class = "card-wrapper">
+    <div class = "task-card">
+        <div class = "task-card-header">
+            <div class = "position-relative">
+
+                <img class = "task-image s" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRMMKCFonjcGI2vneqwLAQDBybvouJCUgsdXbvoEB0GLA&s">
+                <div class = "position-absolute" style="top: 0%;left: 0%;">
+                    <div class = "d-flex" style="padding: 10px 10px">
+                            <img class = "publisher-icon" src="https://i0.wp.com/picjumbo.com/wp-content/uploads/beautiful-nature-mountain-scenery-with-flowers-free-photo.jpg?w=600&quality=80">
+                        <div class = "mx-2">
+                            <span class = "publisher-username">Username</span>
+                            <span class = "created-date">Created Date</span>
+                        </div>
+                    </div>
+                </div>
+                <div class = "position-absolute mt-1" style="top: 50%;left: 50%;transform: translate(-50%,-50%);">
+                    <div class = "text-center">
+                        <div class = "d-inline-block" style="font-size: 25px;">
+                            <fa-icon [icon]="likeIcon"></fa-icon>
+                            <span class = "mx-1">0</span>
+                        </div>
+                    </div>
+                </div>
+                <div class = "position-absolute" style="top: 0;right: 0%;transform: translate(-50%,50%)">
+                    <div [ngbTooltip]="'Amount of members assigned'">
+                        <fa-icon [icon]="membersIcon"></fa-icon>
+                        <span class = "mx-1">0</span>
+                    </div>
+                </div>
+                <div class = "position-absolute" style="bottom: 0;right: 0;transform: translateY(-100%,100%)">
+                    <fa-icon [icon]="calendarIcon"></fa-icon>
+                    <span class = "mx-1">2024-07-23</span>
+                </div>
+            </div>
+        </div>
+        <div class = "task-card-body">
+            <p class = "task-title">Title</p>
+            <p class = "task-description">Description of the task, please specify a description for this item</p>
+        </div>
+        <div class = "task-card-footer">
+            <button class = "task-leave-button">
+                Leave
+            </button>
+        </div>
+    </div>
+</button>

@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import {HttpClientModule} from '@angular/common/http'
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HeaderComponent } from './header/header.component';
+import { HeaderComponent } from './Utility/header/header.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { BoardPageComponent } from './BoardPage/board-page/board-page.component';
 import { TasksPageComponent } from './TaskPage/tasks-page/tasks-page.component';
@@ -29,7 +29,7 @@ import { CreateDiscussionComponent } from './Forms/create-discussion/create-disc
 import { CreatePollComponent } from './Forms/create-poll/create-poll.component';
 import { CreateReportComponent } from './Forms/create-report/create-report.component';
 import { CreateBanComponent } from './Forms/create-ban/create-ban.component';
-import { AlertComponentComponent } from './alert-component/alert-component.component';
+import { AlertComponentComponent } from './Utility/alert-component/alert-component.component';
 import { NoItemsComponent } from './Utility/no-items/no-items.component';
 import { LoaderComponent } from './Utility/loader/loader.component';
 import { OffCanvasComponent } from './Utility/off-canvas/off-canvas.component';
@@ -37,6 +37,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { PaginationComponent } from './Utility/pagination/pagination.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { HomePageComponent } from './HomePage/home-page/home-page.component';
+import { BoardCardComponent } from './Cards/board-card/board-card.component';
+import { TaskCardComponent } from './Cards/task-card/task-card.component';
 
 @NgModule({
   declarations: [
@@ -66,6 +68,8 @@ import { HomePageComponent } from './HomePage/home-page/home-page.component';
     OffCanvasComponent,
     PaginationComponent,
     HomePageComponent,
+    BoardCardComponent,
+    TaskCardComponent,
   ],
   imports: [
     BrowserModule,

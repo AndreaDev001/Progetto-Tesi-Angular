@@ -1,0 +1,86 @@
+div.task-card-header {
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    color: whitesmoke;
+    overflow: hidden;
+}
+div.task-card-body {
+    padding: 10px;
+}
+button.card-wrapper
+{
+    border: 0;
+    text-align: start;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-radius: 5px;
+    background-color: var(--primary-color);
+    width: 265px;
+    color: whitesmoke;
+    border: 1px solid var(--tertiary-color);
+    transition: 0.4s ease-in-out all;
+    overflow: hidden;
+}
+div.task-card-footer 
+{
+    padding: 10px;
+    text-align: center;
+}
+button.task-leave-button {
+    border: 0;
+    padding: 5px 30px;
+    border: 1px solid red;
+    border-radius: 5px ;
+    background-color: darkred;
+    color: whitesmoke;
+}
+button.card-wrapper:hover {
+    background-color: var(--tertiary-color);
+    color: black;
+}
+button.card-wrapper:hover img.s {
+    transform: scale(1.2);
+}
+img.task-image {
+    width: 100%;
+    height: auto;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    filter: brightness(70%);
+    transition: 0.2s ease-in-out all;
+}
+p.task-title
+{
+    padding: 0;
+    margin: 0;
+    font-size: 15px;
+}
+p.task-description
+{
+    padding: 0;
+    margin: 0;
+    font-size: 13px;
+}
+img.publisher-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 60%;
+    border: 1px solid var(--tertiary-color);
+    filter: brightness(70%);
+}
+
+span.publisher-name {
+    display: block;
+    font-size: 12px;
+    padding: 0;
+    margin: 0;
+    color: inherit;
+}
+span.created-date 
+{
+    display: block;
+    font-size: 10px;
+    padding: 0;
+    margin: 0;
+    color: inherit;
+}

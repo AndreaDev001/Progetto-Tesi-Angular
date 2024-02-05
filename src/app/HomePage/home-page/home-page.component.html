@@ -5,18 +5,53 @@
     </div>
     <p id = "welcome-subtitle">Welcome back, here you can view your invites, boards and the tasks that have been assigned to you</p>
     <div class = "row">
-        <div class = "col-2">
+        <div class = "col-12 col-md-2">
             <ul class = "option-list mt-2">
                 <li [id]="current.name" *ngFor="let current of optionsTemplate">
                     <ng-container *ngTemplateOutlet="optionTemplate;context: {item: current}"></ng-container>
                 </li>
             </ul>
         </div>
-        <div class = "col-10">
+        <div class = "col-12 col-md-10 mt-2">
             <div *ngIf="currentTemplate != undefined">
                 <ng-container *ngTemplateOutlet="currentTemplate"></ng-container>
             </div>
-            <app-no-items *ngIf="currentTotalElements == 0 && !isSearching"></app-no-items>
+            <div class = "row">
+                <div class = "col-3 mt-1">
+                    <app-board-card></app-board-card>
+                </div>
+                <div class = "col-3 mt-1">
+                    <app-task-card></app-task-card>
+                </div>
+                <div class = "col-3 mt-1">
+                    <app-task-card></app-task-card>
+                </div>
+                <div class = "col-3 mt-1">
+                    <app-task-card></app-task-card>
+                </div>
+                <div class = "col-3 mt-1">
+                    <app-task-card></app-task-card>
+                </div>
+                <div class = "col-3 mt-1">
+                    <app-task-card></app-task-card>
+                </div>
+                <div class = "col-3 mt-1">
+                    <app-task-card></app-task-card>
+                </div>
+                <div class = "col-3 mt-1">
+                    <app-task-card></app-task-card>
+                </div>
+                <div class = "col-3 mt-1">
+                    <app-task-card></app-task-card>
+                </div>
+                <div class = "col-3 mt-1">
+                    <app-task-card></app-task-card>
+                </div>
+                <div class = "col-3 mt-1">
+                    <app-task-card></app-task-card>
+                </div>
+            </div>
+
             <app-pagination [pageSize]="20" [totalElements]="currentTotalElements" *ngIf="currentTotalElements == 0"></app-pagination>
         </div>
     </div>

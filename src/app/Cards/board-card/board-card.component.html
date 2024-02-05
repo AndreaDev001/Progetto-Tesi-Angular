@@ -1,0 +1,39 @@
+<button class = "card-wrapper">
+    <div class = "board-card">
+        <div class = "board-card-header">
+            <div class = "position-relative text-center">
+                <div class = "position-absolute" style="top: 50%;left: 50%;transform: translate(-50%, -50%);">
+                    <div class = "d-inline-block" [ngbTooltip]="'Member Amount'">
+                        <fa-icon [icon]="membersIcon" style="font-size: 20px;color: whitesmoke"></fa-icon>
+                        <span class = "mx-1" style="font-size: 20px;color: whitesmoke">0</span>
+                    </div>
+                    <div class = "d-inline-block mx-1" [ngbTooltip]="'Groups amount'">
+                        <fa-icon [icon]="listIcon" style="font-size: 20px;;color: whitesmoke"></fa-icon>
+                        <span class = "mx-1" style="font-size: 20px;color: whitesmoke">0</span>
+                    </div>
+                </div>
+                <img class = "board-image" src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Altja_j%C3%B5gi_Lahemaal.jpg/1200px-Altja_j%C3%B5gi_Lahemaal.jpg">
+            </div>
+        </div>
+        <div class = "board-card-body">
+            <p class = "board-title">Title</p>
+            <p class = "board-subtitle">Description of the board, please provide some information about this board</p>
+            <div class = "text-center mt-1">
+                <button class = "board-open-button">Open</button>
+                <button class = "board-leave-button">Leave</button>
+            </div>
+        </div>
+        <div class = "board-card-footer">
+            <div class = "d-flex">
+                <div>
+                    <img class = "board-publisher-image" src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Altja_j%C3%B5gi_Lahemaal.jpg/1200px-Altja_j%C3%B5gi_Lahemaal.jpg">
+                </div>
+                <div class = "px-2">
+                    <p class = "board-publisher-username">Username</p>
+                    <span class = "board-publisher-name">Name</span>
+                    <span class = "board-publisher-surname">Surname</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</button>

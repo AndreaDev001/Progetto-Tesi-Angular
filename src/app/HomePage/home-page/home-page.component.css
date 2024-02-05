@@ -59,7 +59,7 @@ ul.option-list
     padding: 10px 10px;
     border-radius: 2px;
     background-color: var(--secondary-color);
-    border: 1px solid lightblue;
+    border: 1px solid var(--tertiary-color);
 }
 h4.description-item-name
 {
