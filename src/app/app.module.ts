@@ -42,8 +42,10 @@ import { TaskCardComponent } from './Cards/task-card/task-card.component';
 import { DiscussionCardComponent } from './Cards/discussion-card/discussion-card.component';
 import { PollCardComponent } from './Cards/poll-card/poll-card.component';
 import { BoardInviteCardComponent } from './Cards/board-invite-card/board-invite-card.component';
-import { ReportCardComponent } from './report-card/report-card.component';
-import { BanCardComponent } from './ban-card/ban-card.component';
+import { ReportCardComponent } from './Cards/report-card/report-card.component';
+import { BanCardComponent } from './Cards/ban-card/ban-card.component';
+import { UserPageComponent } from './user-page/user-page.component';
+import { UserDetailsComponent } from './user-details/user-details.component';
 
 @NgModule({
   declarations: [
@@ -79,7 +81,9 @@ import { BanCardComponent } from './ban-card/ban-card.component';
     PollCardComponent,
     BoardInviteCardComponent,
     ReportCardComponent,
-    BanCardComponent
+    BanCardComponent,
+    UserPageComponent,
+    UserDetailsComponent
   ],
   imports: [
     BrowserModule,

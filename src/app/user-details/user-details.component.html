@@ -1,0 +1,107 @@
+<div class = "p-4">
+    <div class = "details-holder">
+        <div class = "row">
+            <div class = "col-12 col-md-3">
+                <div class = "position-fixed">
+                    <div class = "secondary-color text-center" style="padding: 20px;border-radius: 10px;">
+                        <div class = "image-wrapper">
+                            <img class = "user-image" src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Altja_j%C3%B5gi_Lahemaal.jpg/1200px-Altja_j%C3%B5gi_Lahemaal.jpg">
+                        </div>
+                        <div class = "mt-1">
+                            <h3 class = "p-0 m-0">Username</h3>
+                            <div>
+                                <span>Name</span>
+                                <span class = "mx-1">Surname</span>
+                            </div>
+                            <p class = "p-0 m-0" style="font-size: 18px;">MALE</p>
+                        </div>
+                        <div class = "mt-1">
+                            <div class = "d-inline-block mx-1" *ngFor="let current of descriptionItems">
+                                <ng-container *ngTemplateOutlet="descriptionTemplate;context: {item: current}"></ng-container>
+                            </div>
+                        </div>
+                    </div>
+                    <div class = "py-3 text-center">
+                        <button class = "follow-button">Follow</button>
+                        <button class = "delete-button">Delete</button>
+                    </div>
+                </div>
+                </div>
+            <div class = "col-12 col-md-9">
+                <div class = "px-2">
+                    <ng-container *ngTemplateOutlet="boardTemplate"></ng-container>
+                    <ng-container *ngTemplateOutlet="taskTemplate"></ng-container>
+                    <ng-container *ngTemplateOutlet="discussionTemplate"></ng-container>
+                    <ng-container *ngTemplateOutlet="pollTemplate"></ng-container>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<ng-template #descriptionTemplate let-item="item">
+    <div style="font-size: 20px;">
+        <fa-icon class = "d-inline-block" [icon]="item.icon"></fa-icon>
+        <span class = "mx-1">{{item.amount}}</span>
+    </div>
+</ng-template>
+<ng-template #boardTemplate>
+    <div class = "py-2 px-4 secondary-color" style="border-radius: 10px;">
+        <div>
+            <h3 class = "d-inline-block">Boards</h3>
+            <fa-icon class = "d-inline-block mx-1" [icon]="boardIcon" style="font-size: 20px;"></fa-icon>
+        </div>
+        <p class = "p-0 m-0">Boards this user is part of</p>
+        <div class = "py-1">
+            <div class = "d-inline-block">
+                <app-board-card></app-board-card>
+            </div>
+            <div class = "d-inline-block mx-1">
+                <app-board-card></app-board-card>
+            </div>
+            <div class = "d-inline-block mx-1">
+                <app-board-card></app-board-card>
+            </div>
+        </div>
+    </div>
+</ng-template>
+<ng-template #taskTemplate>
+    <div class = "mt-2 py-2 px-4 secondary-color" style="border-radius: 10px;">
+        <div>
+            <h3 class = "d-inline-block">Tasks</h3>
+            <fa-icon class = "mx-1" [icon]="taskIcon" style="font-size: 20px;"></fa-icon>
+        </div>
+        <p class = "p-0 m-0">Tasks that have been assigned to this user</p>
+        <div class = "py-1">
+            <div class = "d-inline-block">
+                <app-task-card></app-task-card>
+            </div>
+            <div class = "d-inline-block mx-1">
+                <app-task-card></app-task-card>
+            </div>
+        </div>
+    </div>
+</ng-template>
+<ng-template #discussionTemplate>
+    <div class = "mt-1 py-2 px-4 secondary-color" style="border-radius: 10px;">
+        <div>
+            <h3 class = "d-inline-block">Discussions</h3>
+            <fa-icon class = "d-inline-block mx-1" style="font-size: 20px;" [icon]="discussionIcon"></fa-icon>
+        </div>
+        <p class = "p-0 m-0">Discussions that have been created by this user</p>
+        <div class = "py-1">
+            <app-discussion-card></app-discussion-card>
+        </div>
+    </div>
+</ng-template>
+<ng-template #pollTemplate>
+    <div class = "mt-1 py-2 px-4 secondary-color" style="border-radius: 10px;">
+        <div>
+            <h3 class = "d-inline-block">Polls</h3>
+            <fa-icon class = "d-inline-block mx-1" style="font-size: 20px;" [icon]="pollIcon"></fa-icon>
+        </div>
+        <p class = "p-0 m-0">Polls that have been created by this user</p>
+        <div class = "py-1">
+            <app-poll-card></app-poll-card>
+        </div>
+    </div>
+</ng-template>
