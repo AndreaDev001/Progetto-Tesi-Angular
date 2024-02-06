@@ -1,1 +1,38 @@
-<p>discussion-card works!</p>
+<button class = "card-wrapper">
+    <div class = "discussion-card">
+        <div class = "discussion-card-header">
+            <div class = "w-50 text-start d-inline-block">
+                <div class = "d-inline-block">
+                    <img class = "publisher-image" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRMMKCFonjcGI2vneqwLAQDBybvouJCUgsdXbvoEB0GLA&s">
+                </div>
+                <div class = "d-inline-block mx-1">
+                    <p class = "publisher-username">Username</p>
+                </div>
+    
+            </div>
+            <div class = "w-50 text-end d-inline-block">
+                <fa-icon [icon]="chatIcon"></fa-icon>
+            </div>
+        </div>
+        <div class = "discussion-card-body">
+            <p class = "discussion-card-title">Title</p>
+            <p class = "discussion-card-topic">Please enter a valid topic for the discussion</p>
+        </div>
+        <div class = "discussion-card-footer">
+            <div class = "text-center button-holder">
+                <button class = "add-like-button">Add Like</button>
+                <button class = "delete-discussion-button">Delete</button>
+            </div>
+            <div class = "d-block">
+                <div class = "d-inline-block">
+                    <fa-icon [icon]="likeIcon"></fa-icon>
+                    <span class = "icon-text mx-1">0</span>
+                </div>
+                <div class = "d-inline-block mx-2">
+                    <fa-icon [icon]="commentIcon"></fa-icon>
+                    <span class = "icon-text mx-1">0</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</button>

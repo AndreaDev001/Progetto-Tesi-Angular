@@ -1,0 +1,66 @@
+button.card-wrapper {
+    border: 0;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-radius: 10px;
+    padding: 5px;
+    background-color: var(--primary-color);
+    transition: 0.2s ease-in-out all;
+    width: 265px;
+    border: 1px solid var(--tertiary-color);
+    text-align: start;
+}
+p.username
+{
+    padding: 0;
+    margin: 0;
+    font-size: 15px;
+}
+img.user-image {
+    width: 40px;
+    height: 40px;
+    filter: brightness(70%);
+    border: 1px solid var(--tertiary-color);
+    border-radius: 60%;
+
+}
+button.card-wrapper:hover {
+    background-color: var(--tertiary-color);
+}
+div.report-card-header {
+    padding: 5px;
+    text-align: center;
+    background-color: var(--secondary-color);
+}
+div.report-card-footer {
+    padding: 5px 10px;
+}
+button.create-ban-button{
+    border: 0;
+    border: 1px solid red;
+    background-color: darkred;
+    width: 40%;
+    padding: 10px;
+    border-radius: 10px;
+}
+button.delete-button {
+    border: 0;
+    border: 1px solid red;
+    background-color: darkred;
+    width: 40%;
+    padding: 10px;
+    border-radius: 10px;
+    margin-left: 5px;
+}
+div.report-card-body {
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 10px;
+    padding-bottom: 5px;
+}
+p.report-title
+{
+    padding: 0;
+    margin: 0;
+    font-size: 17px;
+}

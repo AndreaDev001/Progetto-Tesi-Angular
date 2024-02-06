@@ -39,6 +39,11 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { HomePageComponent } from './HomePage/home-page/home-page.component';
 import { BoardCardComponent } from './Cards/board-card/board-card.component';
 import { TaskCardComponent } from './Cards/task-card/task-card.component';
+import { DiscussionCardComponent } from './Cards/discussion-card/discussion-card.component';
+import { PollCardComponent } from './Cards/poll-card/poll-card.component';
+import { BoardInviteCardComponent } from './Cards/board-invite-card/board-invite-card.component';
+import { ReportCardComponent } from './report-card/report-card.component';
+import { BanCardComponent } from './ban-card/ban-card.component';
 
 @NgModule({
   declarations: [
@@ -70,6 +75,11 @@ import { TaskCardComponent } from './Cards/task-card/task-card.component';
     HomePageComponent,
     BoardCardComponent,
     TaskCardComponent,
+    DiscussionCardComponent,
+    PollCardComponent,
+    BoardInviteCardComponent,
+    ReportCardComponent,
+    BanCardComponent
   ],
   imports: [
     BrowserModule,

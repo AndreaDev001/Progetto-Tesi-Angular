@@ -1,0 +1,47 @@
+<button class = "card-wrapper">
+    <div class = "ban-card-header" style="font-size: 25px;">
+        <fa-icon [icon]="banIcon"></fa-icon>
+        <p class = "p-0 m-0" style="font-size: 17px;">Ban</p>
+    </div>
+    <div class = "ban-card-body">
+        <div class = "w-100">
+            <p class = "p-0 m-0">Banner:</p>
+            <div class = "d-inline-block">
+                <img class = "user-image" src="https://i0.wp.com/picjumbo.com/wp-content/uploads/beautiful-nature-mountain-scenery-with-flowers-free-photo.jpg?w=600&quality=80">
+            </div>
+            <div class = "d-inline-block mx-1">
+                <span class = "username">Username</span>
+            </div>
+        </div>
+        <div class = "w-100 mt-1">
+            <p class = "p-0 m-0">Banned:</p>
+            <div class = "d-inline-block">
+                <img class = "user-image" src="https://i0.wp.com/picjumbo.com/wp-content/uploads/beautiful-nature-mountain-scenery-with-flowers-free-photo.jpg?w=600&quality=80">
+            </div>
+            <div class = "d-inline-block mx-1">
+                <span class = "username">Username</span>
+            </div>
+        </div>
+        <div class = "mt-1">
+            <p class = "p-0 m-0 d-inline-block">Reason:</p>
+            <p class = "p-0 m-0 d-inline-block mx-1">RACISM</p>
+        </div>
+        <div class = "mt-1">
+            <p class = "p-0 m-0 d-inline-block">Type:</p>
+            <p class = "p-0 m-0 d-inline-block mx-1">BOARD</p>
+        </div>
+    </div>
+    <div class = "ban-card-footer">
+        <div style="font-size: 17px;" class = "d-inline-block w-50" [ngbTooltip]="'Created Date'">
+            <fa-icon [icon]="clockIcon"></fa-icon>
+            <p class = "p-0 m-0 d-inline-block mx-1">2024-10-5</p>
+        </div>
+        <div style="font-size: 17px;" class = "d-inline-block w-50" [ngbTooltip]="'Expiration Date'">
+            <fa-icon [icon]="calendarIcon"></fa-icon>
+            <p class = "p-0 mx-1 d-inline-block">2024-10-2</p>
+        </div>
+        <div class = "text-center">
+            <button class = "delete-ban-button">Delete</button>
+        </div>
+    </div>
+</button>

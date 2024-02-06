@@ -39,7 +39,7 @@ button.card-wrapper:hover {
     color: black;
 }
 button.card-wrapper:hover img.s {
-    transform: scale(1.2);
+    transform: scale(1.1);
 }
 img.task-image {
     width: 100%;
