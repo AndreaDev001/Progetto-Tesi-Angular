@@ -1,0 +1,49 @@
+div.comment-wrapper
+{
+    padding: 20px;
+    border-radius: 10px;
+    background-color: var(--secondary-color);
+}
+p.comment-text
+{
+    font-size: 15px;
+    margin-top: 5px;
+}
+p.publisher-username {
+    font-size: 20px;
+    padding: 0;
+    margin: 0;
+}
+span.publisher-name {
+    font-size: 12px;
+}
+span.publisher-surname {
+    font-size: 12px;
+}
+img.publisher-image {
+    width: 50px;
+    height: 50px;
+    border: 1px solid var(--tertiary-color);
+    border-radius: 60%;
+    filter: brightness(70%)
+}
+p.publisher-username {
+    font-size: 17px;
+}
+button.add-like-button
+{
+    border: 0;
+    padding: 10px;
+    background-color: var(--tertiary-color);
+    border-radius: 10px;
+    border: 1px solid var(--secondary-color);
+}
+button.report-button
+{
+    border: 0;
+    padding: 10px;
+    background-color: darkred;
+    border: 1px solid red;
+    border-radius: 10px;
+    margin-left: 2px;
+}

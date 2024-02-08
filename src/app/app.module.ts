@@ -44,8 +44,13 @@ import { PollCardComponent } from './Cards/poll-card/poll-card.component';
 import { BoardInviteCardComponent } from './Cards/board-invite-card/board-invite-card.component';
 import { ReportCardComponent } from './Cards/report-card/report-card.component';
 import { BanCardComponent } from './Cards/ban-card/ban-card.component';
-import { UserPageComponent } from './user-page/user-page.component';
-import { UserDetailsComponent } from './user-details/user-details.component';
+import { UserPageComponent } from './UserPage/user-page/user-page.component';
+import { UserDetailsComponent } from './UserPage/user-details/user-details.component';
+import { DiscussionPageComponent } from './DiscussionPage/discussion-page/discussion-page.component';
+import { PollPageComponent } from './PollPage/poll-page/poll-page.component';
+import { DiscussionDetailsComponent } from './DiscussionPage/discussion-details/discussion-details.component';
+import { DiscussionOptionsComponent } from './DiscussionPage/discussion-options/discussion-options.component';
+import { DiscussionCommentComponent } from './DiscussionPage/discussion-comment/discussion-comment.component';
 
 @NgModule({
   declarations: [
@@ -83,7 +88,12 @@ import { UserDetailsComponent } from './user-details/user-details.component';
     ReportCardComponent,
     BanCardComponent,
     UserPageComponent,
-    UserDetailsComponent
+    UserDetailsComponent,
+    DiscussionPageComponent,
+    PollPageComponent,
+    DiscussionDetailsComponent,
+    DiscussionOptionsComponent,
+    DiscussionCommentComponent
   ],
   imports: [
     BrowserModule,

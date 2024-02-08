@@ -1,4 +1,4 @@
-<button class = "card-wrapper">
+<button class = "card-wrapper" *ngIf="task != undefined">
     <div class = "task-card">
         <div class = "task-card-header">
             <div class = "position-relative">
@@ -8,8 +8,8 @@
                     <div class = "d-flex" style="padding: 10px 10px">
                             <img class = "publisher-icon" src="https://i0.wp.com/picjumbo.com/wp-content/uploads/beautiful-nature-mountain-scenery-with-flowers-free-photo.jpg?w=600&quality=80">
                         <div class = "mx-2">
-                            <span class = "publisher-username">Username</span>
-                            <span class = "created-date">Created Date</span>
+                            <span class = "publisher-username">{{task.publisher.username}}</span>
+                            <span class = "created-date">{{task.createdDate}}</span>
                         </div>
                     </div>
                 </div>
@@ -17,25 +17,25 @@
                     <div class = "text-center">
                         <div class = "d-inline-block" style="font-size: 25px;">
                             <fa-icon [icon]="likeIcon"></fa-icon>
-                            <span class = "mx-1">0</span>
+                            <span class = "mx-1">{{task.amountOfLikes}}</span>
                         </div>
                     </div>
                 </div>
                 <div class = "position-absolute" style="top: 0;right: 0%;transform: translate(-50%,50%)">
                     <div [ngbTooltip]="'Amount of members assigned'">
                         <fa-icon [icon]="membersIcon"></fa-icon>
-                        <span class = "mx-1">0</span>
+                        <span class = "mx-1">{{task.amountOfAssignedMembers}}</span>
                     </div>
                 </div>
                 <div class = "position-absolute" style="bottom: 0;right: 0;transform: translateY(-100%,100%)">
                     <fa-icon [icon]="calendarIcon"></fa-icon>
-                    <span class = "mx-1">2024-07-23</span>
+                    <span class = "mx-1">{{task.expirationDate}}</span>
                 </div>
             </div>
         </div>
         <div class = "task-card-body">
-            <p class = "task-title">Title</p>
-            <p class = "task-description">Description of the task, please specify a description for this item</p>
+            <p class = "task-title">{{task.title}}</p>
+            <p class = "task-description">{{task.description}}</p>
         </div>
         <div class = "task-card-footer">
             <button class = "task-leave-button">

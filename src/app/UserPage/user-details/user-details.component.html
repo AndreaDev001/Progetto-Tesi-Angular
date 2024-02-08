@@ -1,0 +1,135 @@
+<div class = "p-4" *ngIf="user != undefined">
+    <div class = "details-holder">
+        <div class = "text-center">
+            <div>
+                <h3 class = "d-inline-block">{{user.username}}</h3>
+                <fa-icon class = "d-inline-block mx-2" style="font-size: 20px;"  [icon]="personIcon"></fa-icon>
+                <p class = "p-0 m-0">In this page you can see information about {{user.username}}</p>
+            </div>
+        </div>
+        <div class = "row">
+            <div class = "col-12 col-md-3">
+                    <div class = "secondary-color text-center" style="padding: 20px;border-radius: 10px;">
+                        <div class = "image-wrapper">
+                            <img class = "user-image" src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Altja_j%C3%B5gi_Lahemaal.jpg/1200px-Altja_j%C3%B5gi_Lahemaal.jpg">
+                        </div>
+                        <div class = "mt-1">
+                            <h3 class = "p-0 m-0">{{user.username}}</h3>
+                            <div>
+                                <span>{{user.name}}</span>
+                                <span class = "mx-1">{{user.surname}}</span>
+                            </div>
+                            <p class = "p-0 m-0" style="font-size: 18px;">{{user.gender}}</p>
+                        </div>
+                        <div class = "mt-1">
+                            <div class = "d-inline-block mx-1" *ngFor="let current of descriptionItems">
+                                <ng-container *ngTemplateOutlet="descriptionTemplate;context: {item: current}"></ng-container>
+                            </div>
+                        </div>
+                    </div>
+                    <div class = "py-3 text-center">
+                        <button class = "follow-button">Follow</button>
+                        <button class = "delete-button">Delete</button>
+                    </div>
+                </div>
+            <div class = "col-12 col-md-9">
+                <div class = "px-2">
+                    <ng-container *ngTemplateOutlet="boardTemplate"></ng-container>
+                    <ng-container *ngTemplateOutlet="taskTemplate"></ng-container>
+                    <ng-container *ngTemplateOutlet="discussionTemplate"></ng-container>
+                    <ng-container *ngTemplateOutlet="pollTemplate"></ng-container>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<ng-template #descriptionTemplate let-item="item">
+    <div style="font-size: 20px;">
+        <fa-icon class = "d-inline-block" [icon]="item.icon"></fa-icon>
+        <span class = "mx-1">{{item.amount}}</span>
+    </div>
+</ng-template>
+<ng-template #boardTemplate>
+    <div class = "mt-2 py-2 px-4 secondary-color" style="border-radius: 10px;">
+        <div class = "py-2">
+            <div>
+                <h3 class = "d-inline-block">Boards</h3>
+                <fa-icon class = "mx-1" [icon]="boardIcon" style="font-size: 20px;"></fa-icon>
+            </div>
+            <p class = "p-0 m-0">Boards that this user partecipates in</p>
+        </div>
+        <div class = "py-1" class = "horizontal-container">
+            <div *ngIf="currentJoinedBoards.length > 0">
+                <div class = "d-inline-block mx-1" *ngFor="let current of currentJoinedBoards">
+                    <app-board-card [boardRef]="current.board"></app-board-card>
+                </div>
+            </div>
+            <div *ngIf="currentJoinedBoards.length == 0">
+                <app-no-items></app-no-items>
+            </div>
+        </div>
+    </div>
+</ng-template>
+<ng-template #taskTemplate>
+    <div class = "mt-2 py-2 px-4 secondary-color" style="border-radius: 10px;">
+        <div class = "py-2">
+            <div>
+                <h3 class = "d-inline-block">Tasks</h3>
+                <fa-icon class = "mx-1" [icon]="taskIcon" style="font-size: 20px;"></fa-icon>
+            </div>
+            <p class = "p-0 m-0">Tasks that have been assigned to this user</p>
+        </div>
+        <div class = "py-1" class = "horizontal-container">
+            <div *ngIf="currentAssignedTasks.length > 0">
+                <div class = "d-inline-block mx-1" *ngFor="let current of currentAssignedTasks">
+                    <app-task-card [taskRef]="current.task"></app-task-card>
+                </div>
+            </div>
+            <div *ngIf="currentAssignedTasks.length == 0">
+                <app-no-items></app-no-items>
+            </div>
+        </div>
+    </div>
+</ng-template>
+<ng-template #discussionTemplate>
+    <div class = "mt-1 py-2 px-4 secondary-color" style="border-radius: 10px;">
+        <div class = "py-2">
+            <div>
+                <h3 class = "d-inline-block">Discussions</h3>
+                <fa-icon class = "d-inline-block mx-1" style="font-size: 20px;" [icon]="discussionIcon"></fa-icon>
+            </div>
+            <p class = "p-0 m-0">Discussions that have been created by this user</p>
+        </div>
+        <div class = "py-1" class = "horizontal-container">
+            <div *ngIf="currentDiscussions.length > 0">
+                <div class = "d-inline-block mx-1" *ngFor="let current of currentDiscussions">
+                    <app-discussion-card [discussion]="current"></app-discussion-card>
+                </div>
+            </div>
+            <div *ngIf="currentDiscussions.length == 0">
+                <app-no-items></app-no-items>
+            </div>
+        </div>
+    </div>
+</ng-template>
+<ng-template #pollTemplate>
+    <div class = "mt-1 py-2 px-4 secondary-color" style="border-radius: 10px;">
+        <div class = "py-2">
+            <div>
+                <h3 class = "d-inline-block">Polls</h3>
+                <fa-icon class = "d-inline-block mx-1" style="font-size: 20px;" [icon]="pollIcon"></fa-icon>
+            </div>
+            <p class = "p-0 m-0">Polls that have been created by this user</p>
+        </div>
+        <div class = "py-1" class = "horizontal-container">
+            <div *ngIf="currentPolls.length > 0">
+                <div class = "d-inline-block mx-1" *ngFor="let current of currentPolls">
+                    <app-poll-card [poll]="current"></app-poll-card>
+                </div>
+            </div>
+            <div *ngIf="currentPolls.length == 0">
+                <app-no-items></app-no-items>
+            </div>
+        </div>
+    </div>
+</ng-template>

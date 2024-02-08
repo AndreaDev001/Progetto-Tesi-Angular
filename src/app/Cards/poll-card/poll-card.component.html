@@ -1,4 +1,4 @@
-<button class = "card-wrapper">
+<button class = "card-wrapper" *ngIf="poll != undefined">
     <div class = "poll-card-header">
         <div class = "d-inline-block w-50 text-start">
            <img class = "publisher-image d-inline-block" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRMMKCFonjcGI2vneqwLAQDBybvouJCUgsdXbvoEB0GLA&s">
@@ -9,8 +9,8 @@
         </div>
     </div>
     <div class = "poll-card-body">
-        <p class = "poll-title">Poll Title</p>
-        <p class = "poll-description">Please enter a valid poll description</p>
+        <p class = "poll-title">{{poll.title}}/p>
+        <p class = "poll-description">{{poll.description}}</p>
     </div>
     <div class = "poll-card-footer">
         <div class = "d-block">
@@ -18,15 +18,15 @@
         </div>
         <div class = "d-inline-block">
             <fa-icon [icon]="likeIcon"></fa-icon>
-            <span class = "icon-text mx-1">0</span>
+            <span class = "icon-text mx-1">{{poll.amountOfLikes}}</span>
         </div>
         <div class = "d-inline-block mx-1">
             <fa-icon [icon]="minVoteIcon"></fa-icon>
-            <span class = "icon-text mx-1">0</span>
+            <span class = "icon-text mx-1">{{poll.minimumVotes}}</span>
         </div>
         <div class = "d-inline-block mx-1">
             <fa-icon [icon]="maxVoteIcon"></fa-icon>
-            <span class = "icon-text mx-1">0</span>
+            <span class = "icon-text mx-1">{{poll.maximumVotes}}</span>
         </div>
     </div>
 </button>

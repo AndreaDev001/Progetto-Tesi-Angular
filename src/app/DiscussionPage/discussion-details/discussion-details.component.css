@@ -1,0 +1,22 @@
+img.publisher-image
+{
+    width: 60px;
+    height: 60px;
+    border-radius: 60%;
+    border: 1px solid var(--tertiary-color);
+    filter: brightness(70%)
+}
+p.publisher-username
+{
+    padding: 0;
+    margin: 0;
+}
+span.publisher-name
+{
+    font-size: 12px;
+}
+span.publisher-surname
+{
+    font-size: 12px;
+    margin-left: 2px;
+}

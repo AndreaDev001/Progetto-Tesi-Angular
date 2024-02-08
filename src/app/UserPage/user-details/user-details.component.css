@@ -29,3 +29,11 @@ button.delete-button
     border: 1px solid red;
     margin-top: 5px;
 }
+div.horizontal-container
+{
+    white-space: nowrap;
+    overflow-x: auto;
+    width: 100%;
+    padding-top: 10px;
+    padding-bottom: 30px;
+}

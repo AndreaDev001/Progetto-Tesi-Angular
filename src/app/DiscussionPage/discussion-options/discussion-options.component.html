@@ -1,0 +1,34 @@
+<div class = "publisher-discussions">
+    <div>
+        <p class = "publisher-discussions d-inline-block">Publisher Discussions</p>
+        <fa-icon class = "d-inline-block mx-2" [icon]="userIcon" style="font-size: 20px;"></fa-icon>
+    </div>
+    <p class = "p-0 m-0" style="font-size: 15px;">View other discussions created by the same user</p>
+    <div class = "vertical-container">
+        <div *ngIf="currentPublisherDiscussions.length > 0">
+            <div class = "mt-1" *ngFor="let current of currentPublisherDiscussions">
+                <app-discussion-card [discussion]="current"></app-discussion-card>
+            </div>
+        </div>
+        <div *ngIf="currentPublisherDiscussions.length == 0">
+            <app-no-items></app-no-items>
+        </div>
+    </div>
+</div>
+<div class = "similar-discussions mt-2">
+    <div>
+        <p class = "similar-discussions d-inline-block">Similar Discussions</p>
+        <fa-icon class = "d-inline-block mx-2" [icon]="discussionIcon" style="font-size: 20px"></fa-icon>
+    </div>
+    <p class = "p-0 m-0" style="font-size: 15px;">View other similar discussions</p>
+    <div class = "vertical-container">
+        <div *ngIf="currentSimilarDiscussions.length > 0">
+            <div class = "mt-1" *ngFor="let current of currentSimilarDiscussions">
+                <app-discussion-card [discussion]="current"></app-discussion-card>
+            </div>
+        </div>
+        <div *ngIf="currentSimilarDiscussions.length == 0">
+            <app-no-items></app-no-items>
+        </div>
+    </div>
+</div>

@@ -5,8 +5,8 @@ import { UserService } from 'src/model/services/user.service';
 import { Board, CollectionModel, PagedModel } from 'src/model/interfaces';
 import { Filter } from '../board-filter/board-filter.component';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AlertHandlerService } from 'src/app/alert-handler.service';
-import { OffCanvasHandlerService } from 'src/app/off-canvas-handler.service';
+import { AlertHandlerService } from 'src/app/services/alert-handler.service';
+import { OffCanvasHandlerService } from 'src/app/services/off-canvas-handler.service';
 import { BoardService } from 'src/model/services/board.service';
 
 @Component({
