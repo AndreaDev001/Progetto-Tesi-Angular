@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faCalendar, faHeart, faUser } from '@fortawesome/free-solid-svg-icons';
+import { Comment } from 'src/model/interfaces';
 
 @Component({
   selector: 'app-discussion-comment',

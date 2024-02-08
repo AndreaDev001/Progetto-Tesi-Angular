@@ -19,4 +19,16 @@ export class DiscussionService {
     let queryParams: HttpParams = this.httpUtils.generatePaginationParams(page);
     return this.httpClient.get(desiredURL,{params: queryParams});
   }
+
+  public getSimilarDiscussions(discussionID: any,page: PaginationRequest): any {
+    const desiredURL: string = this.url + "/public/similar/" + discussionID;
+    let queryParams: HttpParams = this.httpUtils.generatePaginationParams(page);
+    return this.httpClient.get(desiredURL,{params: queryParams});
+  }
+
+  public getDiscussionById(id: any): any {
+    const desiredURL: string = this.url + "/public/" + id;
+    let queryParams: HttpParams = new HttpParams();
+    return this.httpClient.get(desiredURL,{params: queryParams});
+  }
 }

@@ -1,27 +1,27 @@
-<div>
-    <h3 class = "d-inline-block">Title</h3>
-    <p>Please provid a valid description for this discussion, try to be more precise as possible</p>
+<div *ngIf="discussion != undefined">
+    <h3 class = "d-inline-block">{{discussion.title}}</h3>
+    <p>{{discussion.topic}}/p>
         <div class = "position-relative">
             <div class = "d-flex">
                 <div class = "image-wrapper">
                     <img class = "publisher-image" src="https://i0.wp.com/picjumbo.com/wp-content/uploads/beautiful-nature-mountain-scenery-with-flowers-free-photo.jpg?w=600&quality=80">
                 </div>
                 <div class = "mx-2">
-                    <p class = "publisher-username ">Username</p>    
+                    <p class = "publisher-username">{{discussion.publisher.username}}</p>    
                 <div>
-                    <span class = "publisher-name">Name</span>
-                     <span class = "publisher-surname">Surname</span>
+                    <span class = "publisher-name">{{discussion.publisher.name}}</span>
+                    <span class = "publisher-surname">{{discussion.publisher.surname}}</span>
                 </div>
             </div>
         </div>
         <div class = "position-absolute" style="top: 0;right:0">
             <div class = "d-inline-block">
                 <fa-icon class = "d-inline-block" [icon]="calendarIcon"></fa-icon>
-                <p class = "mx-1 d-inline-block">2024-03-28</p>
+                <p class = "mx-1 d-inline-block">{{discussion.createdDate}}</p>
             </div>
             <div class = "d-inline-block mx-2">
                 <fa-icon [icon]="heartIcon"></fa-icon>
-                <p class = "mx-1 d-inline-block">0</p>
+                <p class = "mx-1 d-inline-block">{{discussion.amountOfLikes}}</p>
             </div>
         </div>
         <div class = "py-2">

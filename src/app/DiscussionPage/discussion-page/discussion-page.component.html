@@ -1,41 +1,26 @@
-<div class = "container">
-    <div class = "py-4">
-        <div class  = "mx-1">
-            <div>
-                <h3 class = "d-inline-block">Discussion</h3>
-                <fa-icon class = "mx-2" [icon]="discussionIcon" style="font-size: 25px;"></fa-icon>
-            </div>
-            <p class = "p-0 m-0">Interact with the discussion by creating a new comment</p>
-        </div>
-        <div class = "row py-4">
-            <div class = "col-12 col-md-8">
-                <div class = "left-side">
-                    <app-discussion-details></app-discussion-details>
+<div *ngIf="currentDiscussion != undefined">
+    <div class = "container">
+        <div class = "py-4">
+            <div class  = "mx-1">
+                <div>
+                    <h3 class = "d-inline-block">Discussion</h3>
+                    <fa-icon class = "mx-2" [icon]="discussionIcon" style="font-size: 25px;"></fa-icon>
                 </div>
-                <div class = "mt-2">
-                    <div class = "mt-2">
-                        <app-discussion-comment></app-discussion-comment>
+                <p class = "p-0 m-0">Interact with the discussion by creating a new comment</p>
+            </div>
+            <div class = "row py-4">
+                <div class = "col-12 col-md-8">
+                    <div class = "left-side">
+                        <app-discussion-details></app-discussion-details>
                     </div>
-                    <div class = "mt-2">
-                        <app-discussion-comment></app-discussion-comment>
-                    </div>
-                    <div class = "mt-2">
-                        <app-discussion-comment></app-discussion-comment>
-                    </div>
-                    <div class = "mt-2">
-                        <app-discussion-comment></app-discussion-comment>
-                    </div>
-                    <div class = "mt-2">
-                        <app-discussion-comment></app-discussion-comment>
-                    </div>
-                    <div class = "mt-2">
-                        <app-discussion-comment></app-discussion-comment>
+                    <div class = "mt-2" *ngFor="let current of currentComments">
+                        <app-discussion-comment [comment]="current"></app-discussion-comment>
                     </div>
                 </div>
-            </div>
-            <div class = "col-12 col-md-4">
-                <div class = "right-side">
-                    <app-discussion-options></app-discussion-options>
+                <div class = "col-12 col-md-4">
+                    <div class = "right-side">
+                        <app-discussion-options></app-discussion-options>
+                    </div>
                 </div>
             </div>
         </div>

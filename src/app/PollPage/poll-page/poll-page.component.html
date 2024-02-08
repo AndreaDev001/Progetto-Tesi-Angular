@@ -20,17 +20,8 @@
                         </div>
                         <p class = "p-0 m-0">Please choose one of the following options</p>
                     </div>
-                    <div class = "mt-2">
-                        <app-poll-option></app-poll-option>
-                    </div>
-                    <div class = "mt-2">
-                        <app-poll-option></app-poll-option>
-                    </div>
-                    <div class = "mt-2">
-                        <app-poll-option></app-poll-option>
-                    </div>
-                    <div class = "mt-2">
-                        <app-poll-option></app-poll-option>
+                    <div class = "mt-2" *ngFor="let current of pollOptions">
+                        <app-poll-option [pollOption]="current"></app-poll-option>
                     </div>
                 </div>
             </div>

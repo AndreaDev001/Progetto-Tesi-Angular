@@ -27,6 +27,8 @@ export interface BoardMember
 }
 export interface Comment
 {
+    id: string,
+    createdDate: string,
     title: string,
     text: string,
     publisher: UserRef,
@@ -35,6 +37,8 @@ export interface Comment
 }
 export interface Discussion
 {
+    id: string
+    createdDate: string
     title: string,
     topic: string,
     publisher: UserRef,
@@ -49,6 +53,9 @@ export interface Permission
 }
 export interface Poll
 {
+    id: string,
+    createdDate: string,
+    publisher: UserRef
     title: string,
     description: string,
     minimumVotes: number,
@@ -140,7 +147,9 @@ export interface TaskAssignment {
 export interface PollOption
 {
     poll: PollRef,
-    name: string
+    name: string,
+    description: string,
+    amountOfVotes: number
 }
 export interface Report
 {

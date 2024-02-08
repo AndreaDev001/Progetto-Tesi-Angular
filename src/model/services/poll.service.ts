@@ -20,4 +20,16 @@ export class PollService {
     let queryParams: HttpParams = this.httpUtilsService.generatePaginationParams(page);
     return this.httpClient.get(desiredURL,{params: queryParams});
   }
+
+  public getSimilarPolls(pollID: any,page: PaginationRequest): any {
+    const desiredURL: string = this.url + "/public/similar/" + pollID;
+    let queryParams: HttpParams = this.httpUtilsService.generatePaginationParams(page);
+    return this.httpClient.get(desiredURL,{params: queryParams});
+  }
+
+  public getPollByID(id: string): any {
+    const desiredURL: string = this.url + "/public/" + id;
+    let queryParams: HttpParams = new HttpParams();
+    return this.httpClient.get(desiredURL,{params: queryParams});
+  }
 }
