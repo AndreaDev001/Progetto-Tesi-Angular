@@ -1,4 +1,4 @@
-import { BoardRef, CommentRef, DiscussionRef, PollRef, RoleRef, TaskGroupRef, TaskRef, TeamRef, UserRef } from "./refs"
+import { BoardRef, CommentRef, DiscussionRef, PollOptionRef, PollRef, RoleRef, TaskGroupRef, TaskRef, TeamRef, UserRef } from "./refs"
 
 export interface Board
 {
@@ -6,11 +6,12 @@ export interface Board
     description: string,
     minMembers: number,
     maxMembers: number,
-    visibility: string,
-    amountOfGroups: number,
-    amountOfRoles: number,
-    amountOfTags: number,
-    amountOfMembers: number
+    visibility?: string,
+    publisher: UserRef
+    amountOfGroups?: number,
+    amountOfRoles?: number,
+    amountOfTags?: number,
+    amountOfMembers?: number
 }
 export interface BoardInvite
 {
@@ -22,7 +23,7 @@ export interface BoardInvite
 export interface BoardMember
 {
     user: UserRef,
-    boad: BoardRef
+    board: BoardRef
 }
 export interface Comment
 {
@@ -75,12 +76,15 @@ export interface Tag
 export interface Task
 {
     title: string,
-    name: string,
+    name?: string,
     description: string,
-    priority: string,
+    priority?: string,
     publisher: UserRef,
-    taskGroup: TaskGroupRef,
-    amountOfLikes: number
+    taskGroup?: TaskGroupRef,
+    expirationDate: string,
+    createdDate: string,
+    amountOfLikes: number,
+    amountOfAssignedMembers: number
 }
 export interface TaskGroup
 {
@@ -102,6 +106,7 @@ export interface TeamMember
 }
 export interface User
 {
+    id: string,
     email: string,
     username: string,
     name: string,
@@ -118,7 +123,24 @@ export interface User
     amountOfCreatedReports: number,
     amountOfReceivedReports: number,
     amountOfCreatedBans: number,
-    amountOfReceivedBans: number
+    amountOfReceivedBans: number,
+    amountOfAssignedTasks: number,
+    amountOfCreatedDiscussions: number,
+    amountOfCreatedVotes: number
+}
+export interface PollVote
+{
+    pollOption: PollOptionRef,
+    user: UserRef
+}
+export interface TaskAssignment {
+    user: UserRef,
+    task: TaskRef
+}
+export interface PollOption
+{
+    poll: PollRef,
+    name: string
 }
 export interface Report
 {

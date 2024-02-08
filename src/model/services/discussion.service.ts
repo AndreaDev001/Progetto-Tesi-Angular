@@ -14,8 +14,8 @@ export class DiscussionService {
 
   }
 
-  public getDiscussionsByPublisher(publisherID: any,page: PaginationRequest) {
-    const desiredURL: string = this.url + "/public/" + publisherID;
+  public getDiscussionsByPublisher(publisherID: any,page: PaginationRequest): any {
+    const desiredURL: string = this.url + "/public/publisher/" + publisherID;
     let queryParams: HttpParams = this.httpUtils.generatePaginationParams(page);
     return this.httpClient.get(desiredURL,{params: queryParams});
   }

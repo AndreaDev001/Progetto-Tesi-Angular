@@ -1,1 +1,42 @@
-<p>poll-page works!</p>
+<div class = "container">
+    <div class = "py-4">
+        <div class = "mx-1">
+            <div>
+                <h3 class = "d-inline-block">Poll</h3>
+                <fa-icon [icon]="pollIcon" class = "mx-1" style="font-size: 25px;"></fa-icon>
+            </div>
+            <p class = "p-0 m-0">You can interact with the poll by voting, choose one of the avaliable options</p>
+        </div>
+        <div class = "row py-4">
+            <div class = "col-12 col-md-8">
+                <div class = "left-side">
+                    <app-poll-details></app-poll-details>
+                </div>
+                <div class = "mt-2 options-wrapper py-3">
+                    <div class = "mx-1">
+                        <div style="font-size: 17px;">
+                            <h4 class = "d-inline-block">Options</h4>
+                            <fa-icon class = "d-inline-block mx-1" [icon]="optionIcon"></fa-icon>
+                        </div>
+                        <p class = "p-0 m-0">Please choose one of the following options</p>
+                    </div>
+                    <div class = "mt-2">
+                        <app-poll-option></app-poll-option>
+                    </div>
+                    <div class = "mt-2">
+                        <app-poll-option></app-poll-option>
+                    </div>
+                    <div class = "mt-2">
+                        <app-poll-option></app-poll-option>
+                    </div>
+                    <div class = "mt-2">
+                        <app-poll-option></app-poll-option>
+                    </div>
+                </div>
+            </div>
+            <div class = "col-12 col-md-4">
+                <app-poll-options></app-poll-options>
+            </div>
+        </div>
+    </div>
+</div>

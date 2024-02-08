@@ -1,0 +1,27 @@
+button.option-wrapper
+{
+    border: 0px;
+    padding: 20px;
+    background-color: var(--secondary-color);
+    border-radius: 10px;
+    width: 100%;
+    text-align: start;
+    transition: 0.2s ease-in-out all;
+}
+button.option-wrapper:hover
+{
+    background-color: var(--tertiary-color);
+    padding-left: 30px;
+}
+p.option-text
+{
+    font-size: 17px;
+    padding: 0;
+    margin: 0;
+}
+p.option-subtitle
+{
+    font-size: 15px;
+    padding: 0;
+    margin: 0;
+}

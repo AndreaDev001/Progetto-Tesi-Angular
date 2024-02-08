@@ -1,3 +1,7 @@
+div.container-wrapper
+{
+    padding: 20px;
+}
 img.publisher-image
 {
     width: 60px;
@@ -19,4 +23,20 @@ span.publisher-surname
 {
     font-size: 12px;
     margin-left: 2px;
+}
+button.add-like-button {
+    padding: 10px;
+    border: 0;
+    border-radius: 10px;
+    background-color: var(--tertiary-color);
+    border: 1px solid var(--primary-color);
+}
+button.report-button {
+    padding: 10px;
+    border: 0;
+    border-radius: 10px;
+    background-color: darkred;
+    border: 1px solid red;
+    border-radius: 10px;
+    margin-left: 5px;
 }

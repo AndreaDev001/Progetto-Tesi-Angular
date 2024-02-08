@@ -1,0 +1,37 @@
+img.publisher-image {
+    width: 60px;
+    height: 60px;
+    border: 1px solid var(--tertiary-color);
+    border-radius: 60%;
+    filter: brightness(70%);
+}
+p.publisher-username
+{
+    font-size: 17px;
+    padding: 0;
+    margin: 0;
+}
+span.publisher-name {
+    font-size: 12px;
+}
+span.publisher-surname {
+    font-size: 12px;
+    margin-left: 2px;
+}
+button.add-like-button
+{
+    border: 0;
+    padding: 10px;
+    border: 1px solid var(--primary-color);
+    background-color: var(--tertiary-color);
+    border-radius: 10px;
+}
+button.report-button
+{
+    border: 0;
+    padding: 10px;
+    border: 1px solid red;
+    background-color: darkred;
+    border-radius: 10px;
+    margin-left: 5px;
+}

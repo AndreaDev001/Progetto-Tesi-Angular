@@ -1,0 +1,10 @@
+div.left-side
+{
+    padding: 20px;
+    background-color: var(--secondary-color);
+    border-radius: 10px;
+}
+div.options-wrapper
+{
+    margin-top: 20px;
+}

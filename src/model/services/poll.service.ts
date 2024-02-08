@@ -16,7 +16,7 @@ export class PollService {
   }
 
   public getPollsByPublisher(publisherID: any,page: PaginationRequest): any {
-    const desiredURL: string = this.url + "/public/" + publisherID;
+    const desiredURL: string = this.url + "/public/publisher/" + publisherID;
     let queryParams: HttpParams = this.httpUtilsService.generatePaginationParams(page);
     return this.httpClient.get(desiredURL,{params: queryParams});
   }

@@ -1,22 +1,32 @@
 <div>
     <h3 class = "d-inline-block">Title</h3>
     <p>Please provid a valid description for this discussion, try to be more precise as possible</p>
-    <div class = "image-wrapper">
         <div class = "position-relative">
             <div class = "d-flex">
-                <img class = "publisher-image" src="https://i0.wp.com/picjumbo.com/wp-content/uploads/beautiful-nature-mountain-scenery-with-flowers-free-photo.jpg?w=600&quality=80">
+                <div class = "image-wrapper">
+                    <img class = "publisher-image" src="https://i0.wp.com/picjumbo.com/wp-content/uploads/beautiful-nature-mountain-scenery-with-flowers-free-photo.jpg?w=600&quality=80">
+                </div>
                 <div class = "mx-2">
-                    <p class = "publisher-username ">Username</p>
-                    <div>
-                        <span class = "publisher-name">Name</span>
-                        <span class = "publisher-surname">Surname</span>
-                    </div>
+                    <p class = "publisher-username ">Username</p>    
+                <div>
+                    <span class = "publisher-name">Name</span>
+                     <span class = "publisher-surname">Surname</span>
                 </div>
             </div>
-            <div class = "position-absolute" style="top: 0;right:0">
+        </div>
+        <div class = "position-absolute" style="top: 0;right:0">
+            <div class = "d-inline-block">
                 <fa-icon class = "d-inline-block" [icon]="calendarIcon"></fa-icon>
                 <p class = "mx-1 d-inline-block">2024-03-28</p>
             </div>
+            <div class = "d-inline-block mx-2">
+                <fa-icon [icon]="heartIcon"></fa-icon>
+                <p class = "mx-1 d-inline-block">0</p>
+            </div>
+        </div>
+        <div class = "py-2">
+            <button class = "add-like-button">Add Like</button>
+            <button class = "report-button">Report</button>
         </div>
     </div>
 </div>

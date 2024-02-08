@@ -1,8 +1,12 @@
 export interface BoardRef
 {
-    title: string
-    minMembers: number,
-    maxMembers: number 
+    title: string,
+    description: string
+    minMembers: number
+    maxMembers: number
+    amountOfMembers: number
+    amountOfGroups: number
+    publisher: UserRef
 }
 export interface UserRef
 {
@@ -22,6 +26,10 @@ export interface PollRef
     description: String,
     publisher: UserRef
 }
+export interface PollOptionRef {
+    poll: PollRef,
+    name: string
+}
 export interface RoleRef
 {
     name: String,
@@ -34,10 +42,15 @@ export interface TaskGroupRef
 }
 export interface TaskRef
 {
+    id: string;
     title: string,
-    name: string,
+    description: string
+    amountOfLikes: number,
+    amountOfAssignedMembers: number
     publisher: UserRef,
     taskGroup: TaskGroupRef
+    expirationDate: string,
+    createdDate: string;
 }
 export interface TeamRef
 {
