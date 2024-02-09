@@ -60,9 +60,7 @@
         </div>
         <div class = "py-1" class = "horizontal-container">
             <div *ngIf="currentJoinedBoards.length > 0">
-                <div class = "d-inline-block mx-1" *ngFor="let current of currentJoinedBoards">
-                    <app-board-card [boardRef]="current.board"></app-board-card>
-                </div>
+                <app-text-overflow [horizontal]="true" [templates]="joinedBoardsItems"></app-text-overflow>
             </div>
             <div *ngIf="currentJoinedBoards.length == 0">
                 <app-no-items></app-no-items>
@@ -81,9 +79,7 @@
         </div>
         <div class = "py-1" class = "horizontal-container">
             <div *ngIf="currentAssignedTasks.length > 0">
-                <div class = "d-inline-block mx-1" *ngFor="let current of currentAssignedTasks">
-                    <app-task-card [taskRef]="current.task"></app-task-card>
-                </div>
+                <app-text-overflow [horizontal]="true" [templates]="assignedTasksItems"></app-text-overflow>
             </div>
             <div *ngIf="currentAssignedTasks.length == 0">
                 <app-no-items></app-no-items>
@@ -102,9 +98,7 @@
         </div>
         <div class = "py-1" class = "horizontal-container">
             <div *ngIf="currentDiscussions.length > 0">
-                <div class = "d-inline-block mx-1" *ngFor="let current of currentDiscussions">
-                    <app-discussion-card [discussion]="current"></app-discussion-card>
-                </div>
+                <app-text-overflow [horizontal]="true " [templates]="discussionItems"></app-text-overflow>
             </div>
             <div *ngIf="currentDiscussions.length == 0">
                 <app-no-items></app-no-items>
@@ -123,13 +117,23 @@
         </div>
         <div class = "py-1" class = "horizontal-container">
             <div *ngIf="currentPolls.length > 0">
-                <div class = "d-inline-block mx-1" *ngFor="let current of currentPolls">
-                    <app-poll-card [poll]="current"></app-poll-card>
-                </div>
+                <app-text-overflow [horizontal]="true" [templates]="pollsItem"></app-text-overflow>
             </div>
             <div *ngIf="currentPolls.length == 0">
                 <app-no-items></app-no-items>
             </div>
         </div>
     </div>
+</ng-template>
+<ng-template #joinedBoardCardTemplate let-i>
+    <app-board-card [boardRef]="i"></app-board-card>
+</ng-template>
+<ng-template #discussionCardTemplate let-i>
+    <app-discussion-card [discussion]="i"></app-discussion-card>
+</ng-template>
+<ng-template #pollCardTemplate let-i>
+    <app-poll-card [poll]="i"></app-poll-card>
+</ng-template>
+<ng-template #taskAssignedCardTemplate let-i>
+    <app-task-card [taskRef]="i"></app-task-card>
 </ng-template>

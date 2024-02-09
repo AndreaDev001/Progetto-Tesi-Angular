@@ -10,6 +10,8 @@ export interface BoardRef
 }
 export interface UserRef
 {
+    id: string,
+    createdDate: string
     name: String,
     surname: String,
     username: String,

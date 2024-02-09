@@ -54,6 +54,7 @@ import { DiscussionCommentComponent } from './DiscussionPage/discussion-comment/
 import { PollDetailsComponent } from './PollPage/poll-details/poll-details.component';
 import { PollOptionsComponent } from './PollPage/poll-options/poll-options.component';
 import { PollOptionComponent } from './PollPage/poll-option/poll-option.component';
+import { TextOverflowComponent } from './Utility/text-overflow/text-overflow.component';
 
 @NgModule({
   declarations: [
@@ -99,7 +100,8 @@ import { PollOptionComponent } from './PollPage/poll-option/poll-option.componen
     DiscussionCommentComponent,
     PollDetailsComponent,
     PollOptionsComponent,
-    PollOptionComponent
+    PollOptionComponent,
+    TextOverflowComponent
   ],
   imports: [
     BrowserModule,

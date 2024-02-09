@@ -8,6 +8,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AlertHandlerService } from 'src/app/services/alert-handler.service';
 import { OffCanvasHandlerService } from 'src/app/services/off-canvas-handler.service';
 import { BoardService } from 'src/model/services/board.service';
+import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
+import { faFilter, faTable } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-board-page',
@@ -23,6 +25,8 @@ export class BoardPageComponent implements OnDestroy,AfterViewInit{
   public currentTotalElements: number = 0;
   public currentFilter: Filter | undefined = undefined;
   public isSearching: boolean = false;
+  public boardIcon: IconDefinition = faTable;
+  public filterIcon: IconDefinition = faFilter;
   @ViewChild("boardFilters") boardFilters: any;
 
   constructor(private offCanvasHandler: OffCanvasHandlerService,private boardService: BoardService) {
@@ -54,19 +58,24 @@ export class BoardPageComponent implements OnDestroy,AfterViewInit{
     this.searchBoards();
   }
 
+  public resetSearch(): void {
+    this.currentPage = 0;
+    this.currentFilter = {page: 0,pageSize: 20};
+    this.searchBoards();
+  }
+
   public searchBoards(): void {
     if(this.currentFilter != undefined) {
       this.isSearching = true;
       this.boardService.getBoardsBySpec(this.currentFilter).subscribe((value: PagedModel) => {
         this.isSearching = false;
-        if(value._embedded != null) {
-          if(value._embedded.page != undefined) {
-            this.currentPage = value._embedded.page.page;
-            this.currentTotalPages = value._embedded.page.totalPages;
-            this.currentTotalElements = value._embedded.page.totalElements;
-          }
-          if(value._embedded.content != undefined)
+        if(value._embedded != undefined && value._embedded.content != undefined)
             this.currentItems = value._embedded.content;
+          
+        if(value.page != undefined) {
+          this.currentPage = value.page.page;
+          this.currentTotalPages = value.page.totalPages;
+          this.currentTotalElements = value.page.totalElements;
         }
       })
     }

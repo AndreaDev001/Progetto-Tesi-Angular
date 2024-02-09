@@ -30,11 +30,16 @@
                     <app-task-card></app-task-card>
                 </div>
             </div>
-
+            <app-text-overflow [templates]="items"></app-text-overflow>
             <app-pagination [pageSize]="20" [totalElements]="currentTotalElements" *ngIf="currentTotalElements == 0"></app-pagination>
         </div>
     </div>
 </div>
+<ng-template #ciao>
+    <div style="background-color: red;">
+        CIAO
+    </div>
+</ng-template>
 <ng-template #boardTemplate>
     <ng-container *ngTemplateOutlet="descriptionItem;context: {item: this.descriptionItems[0]}"></ng-container>
 </ng-template>

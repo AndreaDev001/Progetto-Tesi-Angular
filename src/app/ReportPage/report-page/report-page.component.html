@@ -1,7 +1,38 @@
-<div class = "container-fluid">
+<div class = "container-fluid p-3">
     <section id = "info-section">
         <h3>Reports</h3>
         <p class = "mt-1">Here you can see all the reports, use the filters to navigate</p>
     </section>
-    <app-report-filter></app-report-filter>
+    <div class = "d-none d-md-block">
+        <app-report-filter (filterChanged)="handleFilterChange($event)"></app-report-filter>
+    </div>
+    <div class = "d-block d-md-none text-center py-4">
+        <button class = "filter-button" (click)="openCanvas()">Filters</button>
+    </div>
+    <div class = "container-fluid">
+        <div *ngIf="currentTotalElements > 0">
+            <div class = "py-2">
+                <div class = "py-2">
+                    <h5 class = "p-0 m-0">Use the filters to find the desired reports</h5>
+                    <p class = "p-0 m-0">Try to be the most precise as possible</p>
+                </div>
+                <div class = "row mt-3">
+                    <div class = "col-md-3 mt-1" *ngFor="let current of currentItems">
+                        <app-report-card [report]="current"></app-report-card>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="currentTotalElements == 0">
+            <app-no-items (buttonClicked)="resetSearch()"></app-no-items>
+        </div>
+    </div>
+    <div class = "w-100 mt-4 text-center" *ngIf="currentTotalElements > 0 && !isSearching">
+        <app-pagination [pageSize]="20" [totalElements]="currentTotalElements"  (pageChanged)="handlePageChange($event)"></app-pagination>
+    </div>
 </div>
+<ng-template #reportFilters>
+    <div class = "px-2 w-100">
+        <app-report-filter (filterChanged)="handleFilterChange($event)"></app-report-filter>
+    </div>
+</ng-template>

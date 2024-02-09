@@ -13,6 +13,7 @@ import { AuthenticationHandlerService } from 'src/app/authentication-handler.ser
 import { DiscussionService } from 'src/model/services/discussion.service';
 import { PollService } from 'src/model/services/poll.service';
 import { BoardInviteService } from 'src/model/services/board-invite.service';
+import { TextOverflowItem } from 'src/app/Utility/text-overflow/text-overflow.component';
 
 interface OptionTemplate
 {
@@ -70,6 +71,8 @@ export class HomePageComponent implements AfterViewInit, OnDestroy {
   public currentUser: any = undefined;
 
   public descriptionItems: DescriptionItem[] = [];
+  public items: TextOverflowItem[] = [];
+  @ViewChild("ciao") ciao: any;
 
   constructor(private authenticationHandler: AuthenticationHandlerService,private boardInvitesService: BoardInviteService,private boardMemberService: BoardMemberService,private taskAssignmentService: TaskAssignmentService,private discussionService: DiscussionService,private pollService: PollService,private router: Router,private activatedRoute: ActivatedRoute) {
 
@@ -87,6 +90,7 @@ export class HomePageComponent implements AfterViewInit, OnDestroy {
     this.optionsTemplate.push({name: "Invites",icon: faMessage,requiredTemplate: this.boardInvitesTemplate,path: "invites"});
     this.optionsTemplate.push({name: "Discussions",icon: faDiscourse,requiredTemplate: this.discussionTemplate,path: "discussions"});
     this.optionsTemplate.push({name: "Polls",icon: faPoll,requiredTemplate: this.pollTemplate,path: "polls"});
+
     this.subscriptions.push(this.activatedRoute.queryParams.subscribe((value: any) => {
       let view: string = value.view;
       if(view == null) {
@@ -167,13 +171,11 @@ export class HomePageComponent implements AfterViewInit, OnDestroy {
     this.isSearching = true;
     observable.subscribe((value: PagedModel) => {
       this.isSearching = false;
-      if(value._embedded != null) {
-        if(value._embedded.content != null)
-            currentItems = value._embedded.content;
-        if(value._embedded.page != null) {
-          this.currentPage = value._embedded.page.page;
-          this.currentPageSize = value._embedded.page.size;
-        }
+      if(value._embedded != null && value._embedded.content)
+          currentItems = value._embedded.content;
+      if(value.page != undefined) {
+        this.currentPage = value.page.page;
+        this.currentTotalElements = value.page.totalElements;
       }
     },(err: any) => this.isSearching = false);
   }

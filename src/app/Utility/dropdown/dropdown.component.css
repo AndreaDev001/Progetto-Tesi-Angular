@@ -1,36 +1,37 @@
 button.dropdown-option
 {
-    background-color: var(--secondary-color);
+    background-color: var(--primary-color);
     width: 100%;
     border: 0px;
     font-size: 15px;
     color: whitesmoke;
     text-align: start;
-    padding: 2px 5px;
+    padding: 10px;
     cursor: pointer;
     transition: 0.2s ease-in-out all;
 }
 button.dropdown-toggle-button {
     border: 0px;
     margin: 0px;
-    padding: 5px 5px;
+    padding: 10px;
     background-color: var(--secondary-color);
+    border: 1px solid var(--tertiary-color);
     color: whitesmoke;
     border-radius: 2px;
     width: 100%;
     text-align: start;
-    border: 1px solid lightgray;
+
 }
 p.dropdown-label
 {
-    color: black;
+    color: whitesmoke;
     padding: 2px;
     margin: 0px;
     font-size: 15px;
 }
 p.dropdown-supporting-text
 {
-    color: black;
+    color: whitesmoke;
     padding: 2px;
     margin: 0px;
     font-size: 12px;
@@ -38,8 +39,9 @@ p.dropdown-supporting-text
 button.dropdown-option:hover
 {
     background-color: var(--tertiary-color);
-    color: black;
+    color: whitesmoke;
     text-decoration: underline;
+    padding-left: 20px;
 }
 div.dropdown-menu
 {

@@ -1,9 +1,10 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { DropdownOption } from '../../Utility/dropdown/dropdown.component';
 import { BanService } from 'src/model/services/ban.service';
 import { CollectionModel } from 'src/model/interfaces';
 import { ReportService } from 'src/model/services/report.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 export interface Filter
 {
@@ -25,8 +26,9 @@ export interface Filter
   templateUrl: './ban-filter.component.html',
   styleUrls: ['./ban-filter.component.css']
 })
-export class BanFilterComponent implements OnInit
+export class BanFilterComponent implements OnInit,OnDestroy
 {
+  private subscriptions: Subscription[] = [];
   public currentFilter: Filter = {page: 0,pageSize: 20};
   public currentReasons: DropdownOption[] = [];
   public currentTypes: DropdownOption[] = [];
@@ -37,7 +39,7 @@ export class BanFilterComponent implements OnInit
   }
 
   public ngOnInit(): void {
-    this.activatedRoute.queryParams.subscribe((value: any) => {
+    this.subscriptions.push(this.activatedRoute.queryParams.subscribe((value: any) => {
       let title: string = value.title;
       let description: string = value.description;
       let type: string = value.type;
@@ -52,7 +54,7 @@ export class BanFilterComponent implements OnInit
       let pageSize: number = value.pageSize != undefined ? value.pageSize : 20;
       this.currentFilter = {title: title,description: description,type: type,reason: reason,bannerName: bannerName,bannedName: bannedName,bannerSurname: bannerSurname,bannedSurname: bannedSurname, bannerUsername: bannerUsername,bannedUsername: bannedUsername,page: page,pageSize: pageSize};
       this.filterChanged.emit(this.currentFilter);
-    });
+    }));
     this.banService.getTypes().subscribe((value: CollectionModel) => {
       if(value._embedded != null) {
         value._embedded.content.forEach((current: string) => {
@@ -82,5 +84,9 @@ export class BanFilterComponent implements OnInit
       queryParamsHandling: 'merge',
       skipLocationChange: false
     })
+  }
+
+  public ngOnDestroy(): void {
+    this.subscriptions.forEach((value: Subscription) => value.unsubscribe());  
   }
 }

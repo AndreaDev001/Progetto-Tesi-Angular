@@ -1,0 +1,21 @@
+<div *ngIf="horizontalTemplate != undefined">
+    <ng-container *ngTemplateOutlet="horizontalTemplate"></ng-container>
+</div>
+<ng-template #horizontalTemplate>
+    <div class = "horizontal-container" (scroll)="handleHorizontalScroll($event)">
+        <div class = "d-flex">
+            <div class = "d-inline-block mx-1" *ngFor="let current of templates">
+                <ng-container [ngTemplateOutlet]="current.template" [ngTemplateOutletContext]="{$implicit: current.context}"></ng-container>
+            </div>
+        </div>
+    </div>
+</ng-template>
+<ng-template #verticalTemplate>
+    <div class = "vertical-container" (scroll)="handleVerticalScroll($event)">
+        <div class = "d-flex flex-column">
+            <div class = "mt-2" *ngFor="let current of templates">
+                <ng-container [ngTemplateOutlet]="current.template" [ngTemplateOutletContext]="{$implicit: current.context}"></ng-container>
+            </div>
+        </div>
+    </div>
+</ng-template>

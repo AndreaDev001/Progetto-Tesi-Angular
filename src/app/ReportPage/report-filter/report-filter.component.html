@@ -1,5 +1,5 @@
 <div>
-    <div class = "d-block">
+    <div class = "py-2">
         <div class = "d-inline-block mx-1">
             <app-search-bar (searchChanged)="updateFilter(currentFilter,'title',$event)" [currentLabel]="'Title'" [currentSupportingText]="'Write a title...'"></app-search-bar>
         </div>
@@ -7,10 +7,30 @@
             <app-search-bar (searchChanged)="updateFilter(currentFilter,'description',$event)" [currentLabel]="'Description'" [currentSupportingText]="'Write a description...'"></app-search-bar>
         </div>
         <div class = "d-inline-block mx-1">
-            <app-search-bar (searchChanged)="updateFilter(currentFilter,'reporterUsername',$event)" [currentLabel]="'Publisher email'" [currentSupportingText]="'Write an email'"></app-search-bar>
+            <app-search-bar (searchChanged)="updateFilter(currentFilter,'reporterName',$event)" [currentLabel]="'Reporter Name'" [currentSupportingText]="'Write the name of the reporter'" [currentPlaceholder]="'Reporter Name...'"></app-search-bar>
         </div>
         <div class = "d-inline-block mx-1">
-            <app-search-bar (searchChanged)="updateFilter(currentFilter,'reportedUsername',$event)" [currentLabel]="'Publisher username'" [currentSupportingText]="'Write an username...'"></app-search-bar>
+            <app-search-bar (searchChanged)="updateFilter(currentFilter,'reporterSurname',$event)" [currentLabel]="'Reporter Surname'" [currentSupportingText]="'Write the surname of the reporter'" [currentPlaceholder]="'Reporter Surname'"></app-search-bar>
+        </div>
+        <div class = "d-inline-block mx-1">
+            <app-search-bar (searchChanged)="updateFilter(currentFilter,'reporterUsername',$event)" [currentLabel]="'Reporter Username'" [currentSupportingText]="'Write the username of the reporter'" [currentPlaceholder]="'Reporter Username...'"></app-search-bar>
+        </div>
+        <div class = "d-inline-block mx-1">
+            <app-search-bar (searchChanged)="updateFilter(currentFilter,'reportedName',$event)" [currentLabel]="'Reported Name'" [currentSupportingText]="'Write the name of the reported'" [currentPlaceholder]="'Reported Name...'"></app-search-bar>
+        </div>
+        <div class = "d-inline-block mx-1">
+            <app-search-bar (searchChanged)="updateFilter(currentFilter,'reportedSurname',$event)" [currentLabel]="'Reported Surname'" [currentSupportingText]="'Write the surname of the reported'" [currentPlaceholder]="'Reported Surname...'"></app-search-bar>
+        </div>
+        <div class = "d-inline-block mx-1">
+            <app-search-bar (searchChanged)="updateFilter(currentFilter,'reportedUsername',$event)" [currentLabel]="'Reported Username'" [currentSupportingText]="'Write the username of the reported'" [currentPlaceholder]="'Reported Username...'"></app-search-bar>
+        </div>
+    </div>
+    <div class = "py-2">
+        <div class = "d-inline-block">
+            <app-dropdown [currentOptions]="currentReasons" [currentLabel]="'Reasons'" [currentSupportingText]="'Please choose one of the avaliable options'" [defaultValue]="'RACISM'"></app-dropdown>
+        </div>
+        <div class = "d-inline-block mx-1">
+            <app-dropdown [defaultValue]="'USER'"  [currentOptions]="currentTypes" [currentLabel]="'Types'" [currentSupportingText]="'Please choose one of the avaliable options'"></app-dropdown>
         </div>
     </div>
 </div>

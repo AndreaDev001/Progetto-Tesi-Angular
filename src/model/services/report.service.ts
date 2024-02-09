@@ -1,6 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { HttpUtilsService } from './http-utils.service';
+import { Filter } from 'src/app/ReportPage/report-filter/report-filter.component';
 
 @Injectable({
   providedIn: 'root'
@@ -25,9 +26,9 @@ export class ReportService {
     return this.httpClient.get(desiredURL,{params: queryParams});
   }
 
-  public getReportsBySpec(): any {
+  public getReportsBySpec(filter: Filter): any {
     const desiredURL: string = this.url + "/public/" + "spec";
-    let queryParams = new HttpParams();
+    let queryParams = this.httpUtils.generateParams(filter);
     return this.httpClient.get(desiredURL,{params: queryParams});
   }
 }

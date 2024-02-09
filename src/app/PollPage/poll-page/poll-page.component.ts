@@ -21,6 +21,7 @@ export class PollPageComponent implements OnInit,OnDestroy {
   public optionIcon: IconDefinition = faCheckToSlot;
   public pollOptions: PollOption[] = [];
   public currentPollOptionPage: number = 0;
+  public currentPollOptionTotalPages: number = 0;
 
   constructor(private activatedRoute: ActivatedRoute,private pollService: PollService,private pollOptionService: PollOptionService) {
     
@@ -34,8 +35,10 @@ export class PollPageComponent implements OnInit,OnDestroy {
         this.pollOptionService.getPollOptionsByPoll(this.currentPollID,{page: this.currentPollOptionPage,pageSize: 20}).subscribe((value: PagedModel) => {
           if(value._embedded != undefined && value._embedded.content != undefined)
               this.pollOptions = value._embedded.content;
-          if(value._embedded != undefined && value._embedded.page != undefined)
-              this.currentPollOptionPage = value._embedded.page.page;
+          if(value.page != undefined) {
+            this.currentPollOptionPage = value.page.page;
+            this.currentPollOptionPage = value.page.totalPages;
+          }
         })
       }
     }));

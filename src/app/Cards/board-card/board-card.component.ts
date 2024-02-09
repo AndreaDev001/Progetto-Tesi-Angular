@@ -9,7 +9,7 @@ import { BoardRef } from 'src/model/refs';
   templateUrl: './board-card.component.html',
   styleUrls: ['./board-card.component.css']
 })
-export class BoardCardComponent implements OnInit, OnChanges {
+export class BoardCardComponent implements OnInit {
 
   @Input() board?: Board = undefined;
   @Input() boardRef?: BoardRef = undefined;
@@ -18,10 +18,5 @@ export class BoardCardComponent implements OnInit, OnChanges {
 
   public ngOnInit(): void {
     
-  }
-  public ngOnChanges(changes: SimpleChanges): void {
-    if(changes['boardRef'] != undefined && this.boardRef != undefined) {
-        this.board = {title: this.boardRef.title,description: this.boardRef.description,minMembers: this.boardRef.minMembers,maxMembers: this.boardRef.maxMembers,publisher: this.boardRef.publisher,amountOfMembers: this.boardRef.amountOfMembers,amountOfGroups: this.boardRef.amountOfGroups};
-    }
   }
 }

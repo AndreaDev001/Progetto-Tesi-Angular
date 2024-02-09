@@ -1,4 +1,4 @@
-<button class = "card-wrapper">
+<button class = "card-wrapper" *ngIf="report != undefined">
     <div class = "report-card-header">
         <fa-icon [icon]="warningIcon" style="font-size: 25px;"></fa-icon>
         <p class = "report-title">Report</p>
@@ -10,7 +10,7 @@
                 <img class = "user-image" src="https://i0.wp.com/picjumbo.com/wp-content/uploads/beautiful-nature-mountain-scenery-with-flowers-free-photo.jpg?w=600&quality=80">
             </div>
             <div class = "d-inline-block mx-1">
-                <p class = "username">Username</p>
+                <p class = "username">{{report.reporter.username}}</p>
             </div>
         </div>
         <div class = "w-100 mt-2">
@@ -19,22 +19,22 @@
                 <img class = "user-image" src="https://i0.wp.com/picjumbo.com/wp-content/uploads/beautiful-nature-mountain-scenery-with-flowers-free-photo.jpg?w=600&quality=80">
             </div>
             <div class = "d-inline-block mx-1">
-                <p class = "username">Username</p>
+                <p class = "username">{{report.reported.username}}</p>
             </div>
         </div>
         <div class = "mt-1">
             <p class = "p-0 m-0 d-inline-block">Reason:</p>
-            <p class = "p-0 m-0 d-inline-block mx-1">RACISM</p>
+            <p class = "p-0 m-0 d-inline-block mx-1">{{report.reason}}</p>
         </div>
         <div class = "mt-1">
             <p class = "p-0 m-0 d-inline-block">Type:</p>
-            <p class = "p-0 m-0 d-inline-block mx-1">MESSAGE</p>
+            <p class = "p-0 m-0 d-inline-block mx-1">{{report.type}}</p>
         </div>
     </div>
     <div class = "report-card-footer text-center">
         <div class = "text-start" style="font-size: 15px;">
             <fa-icon class = "d-inline-block" [icon]="calendarIcon"></fa-icon>
-            <p class = "p-0 mx-1 d-inline-block">2024-07-25</p>
+            <p class = "p-0 mx-1 d-inline-block">{{report.createdDate}}</p>
         </div>
         <button class = "create-ban-button">Ban</button>
         <button class = "delete-button">Delete</button>

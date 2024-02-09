@@ -16,6 +16,7 @@ export class DiscussionPageComponent implements OnInit, OnDestroy {
   
   private subscriptions: Subscription[] = [];
   public discussionID: any = undefined;
+  public publisherID: any = undefined;
   public discussionIcon: IconDefinition = faMessage;
   public currentDiscussion: Discussion | undefined = undefined;
   public currentComments: Comment[] = [];
@@ -33,6 +34,7 @@ export class DiscussionPageComponent implements OnInit, OnDestroy {
         this.discussionID = value.id;
         this.discussionService.getDiscussionById(value.id).subscribe((value: Discussion) => {
           this.currentDiscussion = value;
+          this.publisherID = value.publisher.id;
           this.updateCurrentComments({page: this.currentPage,pageSize: this.currentPageSize})
         });
       }
@@ -44,11 +46,10 @@ export class DiscussionPageComponent implements OnInit, OnDestroy {
       this.commentService.getCommentsByDiscussion(this.discussionID,page).subscribe((value: PagedModel) => {
         if(value._embedded != undefined && value._embedded.content != undefined) {
           this.currentComments = value._embedded.content;
-          if(value._embedded.page != undefined) {
-            this.currentPage = value._embedded.page.page;
-            this.currentPageSize = value._embedded.page.size;
-            this.currentTotalPages = value._embedded.page.totalPages;
-          }
+        }
+        if(value.page != undefined) {
+          this.currentPage = value.page.page;
+          this.currentTotalPages = value.page.totalPages;
         }
       })
     }

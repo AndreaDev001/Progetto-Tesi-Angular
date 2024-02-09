@@ -1,0 +1,21 @@
+div.horizontal-container
+{
+    white-space: nowrap;
+    overflow-x: auto;
+    width: 100%;
+    padding-top: 5px;
+    padding-bottom: 20px;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+div.vertical-container
+{
+    text-align: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 5px;
+    padding-right: 5px;
+    white-space: nowrap;
+    overflow-y: auto;
+    max-height: 400px;
+}

@@ -1,6 +1,7 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faPoll, faUser } from '@fortawesome/free-solid-svg-icons';
+import { TextOverflowItem } from 'src/app/Utility/text-overflow/text-overflow.component';
 import { Page, PagedModel, PaginationRequest, Poll } from 'src/model/interfaces';
 import { PollService } from 'src/model/services/poll.service';
 
@@ -24,6 +25,11 @@ export class PollOptionsComponent implements OnChanges {
   public currentSimilarPage: number = 0;
   public currentSimilarTotalPages: number = 0;
 
+  public publisherItems: TextOverflowItem[] = [];
+  public similarItems: TextOverflowItem[] = [];
+
+  @ViewChild("pollTemplate") pollTemplate: any;
+
   constructor(private pollService: PollService) {
 
   }
@@ -43,28 +49,48 @@ export class PollOptionsComponent implements OnChanges {
 
   public updatePublisherPolls(page: PaginationRequest): void {
     this.pollService.getPollsByPublisher(this.publisherID,page).subscribe((value: PagedModel) => {
-      if(value._embedded != undefined) {
-        if(value._embedded.content != undefined) {
-          this.currentPublisherPolls.push.apply(this.currentPublisherPolls,value._embedded.content);
+      if(value._embedded != undefined && value._embedded.content != undefined) {
+        this.currentPublisherPolls.push.apply(this.currentPublisherPolls,value._embedded.content);
+        for(let current of value._embedded.content) {
+          let overflowItem: TextOverflowItem = {context: current,template: this.pollTemplate};
+          this.publisherItems.push(overflowItem);
         }
-        if(value._embedded.page != undefined) {
-          this.currentPublisherPage = value._embedded.page.page;
-          this.currentPublisherTotalPages = value._embedded.page.totalPages;
-        }
+      }
+      if(value.page != undefined) {
+        this.currentPublisherPage = value.page.page;
+        this.currentPublisherTotalPages = value.page.totalPages;
       }
     })
   }
   public updateSimilarPolls(page: PaginationRequest): void {
     this.pollService.getSimilarPolls(this.pollID,page).subscribe((value: PagedModel) => {
-      if(value._embedded != undefined) {
-        if(value._embedded.content != undefined) {
-          this.currentSimilarPolls.push.apply(this.currentSimilarPolls,value._embedded.content);
-        }
-        if(value._embedded.page != undefined) {
-          this.currentPublisherPage = value._embedded.page.page;
-          this.currentPublisherTotalPages = value._embedded.page.totalPages;
+      if(value._embedded != undefined && value._embedded.content != undefined) {
+        this.currentSimilarPolls.push.apply(this.currentSimilarPolls,value._embedded.content);
+        for(let current of value._embedded.content) {
+          let overflowItem: TextOverflowItem = {context: current,template: this.pollTemplate};
+          this.publisherItems.push(overflowItem);
         }
       }
+      if(value.page != undefined) {
+        this.currentSimilarPage = value.page.page;
+        this.currentSimilarTotalPages = value.page.totalPages;
+      }
     })
+  }
+
+  public updatePublisherMaxPage(): void {
+    if(this.currentPublisherPage + 1 < this.currentPublisherTotalPages) {
+      this.currentPublisherPage++;
+      let paginationRequest: PaginationRequest = {page: this.currentPublisherPage,pageSize: 20};
+      this.updatePublisherPolls(paginationRequest);
+    }
+  }
+  
+  public updateSimilarMaxPage(): void {
+    if(this.currentSimilarPage + 1 < this.currentSimilarTotalPages) {
+      this.currentSimilarPage++;
+      let paginationRequest: PaginationRequest = {page: this.currentSimilarPage,pageSize: 20};
+      this.updateSimilarPolls(paginationRequest);
+    }
   }
 }

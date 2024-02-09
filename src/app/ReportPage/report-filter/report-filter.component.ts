@@ -1,9 +1,10 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { DropdownOption } from '../../Utility/dropdown/dropdown.component';
 import { UserService } from 'src/model/services/user.service';
 import { ReportService } from 'src/model/services/report.service';
 import { CollectionModel } from 'src/model/interfaces';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 export interface Filter
 {
@@ -25,8 +26,9 @@ export interface Filter
   templateUrl: './report-filter.component.html',
   styleUrls: ['./report-filter.component.css']
 })
-export class ReportFilterComponent implements OnInit {
+export class ReportFilterComponent implements OnInit,OnDestroy {
 
+  private subscriptions: Subscription[] = [];
   public currentFilter: Filter = {page: 0,pageSize: 20};
   public currentGenders: DropdownOption[] = [];
   public currentReasons: DropdownOption[] = [];
@@ -38,7 +40,7 @@ export class ReportFilterComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.activatedRoute.params.subscribe((value: any) => {
+    this.subscriptions.push(this.activatedRoute.params.subscribe((value: any) => {
       let title: string = value.title;
       let description: string = value.description;
       let reporterName: string = value.reporterName;
@@ -52,7 +54,7 @@ export class ReportFilterComponent implements OnInit {
       let pageSize: number = value.pageSize != undefined ? value.pageSize : 20;
       this.currentFilter = {title: title,description: description,reporterName: reporterName,reportedName: reportedName,reportedSurname: reportedSurname,type: type,page: page,pageSize: pageSize,reporterSurname: reporterSurname,reporterUsername: reporterUsername,reportedUsername: reportedUsername}
       this.filterChanged.emit(this.currentFilter);
-    })
+    }));
     this.reportService.getReasons().subscribe((value: CollectionModel) => {
       if(value._embedded != null) {
         value._embedded.content.forEach((current: string) => {
@@ -69,6 +71,10 @@ export class ReportFilterComponent implements OnInit {
         })
       }
     })
+  }
+
+  public ngOnDestroy(): void {
+    this.subscriptions.forEach((value: Subscription) => value.unsubscribe());  
   }
 
   public updateFilter<Filter, K extends keyof Filter>(obj: Filter, key: K, value: Filter[K]) {

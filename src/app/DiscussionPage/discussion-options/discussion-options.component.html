@@ -6,9 +6,7 @@
     <p class = "p-0 m-0" style="font-size: 15px;">View other discussions created by the same user</p>
     <div class = "vertical-container">
         <div *ngIf="currentPublisherDiscussions.length > 0">
-            <div class = "mt-1" *ngFor="let current of currentPublisherDiscussions">
-                <app-discussion-card [discussion]="current"></app-discussion-card>
-            </div>
+            <app-text-overflow (scrollEndReached)="updatePublisherMaxPage()" [horizontal]="false" [templates]="publisherItems"></app-text-overflow>
         </div>
         <div *ngIf="currentPublisherDiscussions.length == 0">
             <app-no-items></app-no-items>
@@ -23,12 +21,14 @@
     <p class = "p-0 m-0" style="font-size: 15px;">View other similar discussions</p>
     <div class = "vertical-container">
         <div *ngIf="currentSimilarDiscussions.length > 0">
-            <div class = "mt-1" *ngFor="let current of currentSimilarDiscussions">
-                <app-discussion-card [discussion]="current"></app-discussion-card>
-            </div>
+            <app-text-overflow  (scrollEndReached)="updateSimilarMaxPage()"  [horizontal]="false" [templates]="similarItems"></app-text-overflow>
         </div>
         <div *ngIf="currentSimilarDiscussions.length == 0">
             <app-no-items></app-no-items>
         </div>
     </div>
 </div>
+
+<ng-template #discussionTemplate let-i>
+    <app-discussion-card [discussion]="i"></app-discussion-card>
+</ng-template>

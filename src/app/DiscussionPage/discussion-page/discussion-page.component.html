@@ -11,7 +11,7 @@
             <div class = "row py-4">
                 <div class = "col-12 col-md-8">
                     <div class = "left-side">
-                        <app-discussion-details></app-discussion-details>
+                        <app-discussion-details [discussion]="currentDiscussion"></app-discussion-details>
                     </div>
                     <div class = "mt-2" *ngFor="let current of currentComments">
                         <app-discussion-comment [comment]="current"></app-discussion-comment>
@@ -19,7 +19,7 @@
                 </div>
                 <div class = "col-12 col-md-4">
                     <div class = "right-side">
-                        <app-discussion-options></app-discussion-options>
+                        <app-discussion-options [discussionID]="currentDiscussion.id" [publisherID]="this.publisherID"></app-discussion-options>
                     </div>
                 </div>
             </div>

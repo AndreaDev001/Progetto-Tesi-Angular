@@ -1,4 +1,4 @@
-<button class = "card-wrapper">
+<button class = "card-wrapper" *ngIf="ban != undefined">
     <div class = "ban-card-header" style="font-size: 25px;">
         <fa-icon [icon]="banIcon"></fa-icon>
         <p class = "p-0 m-0" style="font-size: 17px;">Ban</p>
@@ -10,7 +10,7 @@
                 <img class = "user-image" src="https://i0.wp.com/picjumbo.com/wp-content/uploads/beautiful-nature-mountain-scenery-with-flowers-free-photo.jpg?w=600&quality=80">
             </div>
             <div class = "d-inline-block mx-1">
-                <span class = "username">Username</span>
+                <span class = "username">{{ban.banner.username}}</span>
             </div>
         </div>
         <div class = "w-100 mt-1">
@@ -19,26 +19,26 @@
                 <img class = "user-image" src="https://i0.wp.com/picjumbo.com/wp-content/uploads/beautiful-nature-mountain-scenery-with-flowers-free-photo.jpg?w=600&quality=80">
             </div>
             <div class = "d-inline-block mx-1">
-                <span class = "username">Username</span>
+                <span class = "username">{{ban.banned.username}}</span>
             </div>
         </div>
         <div class = "mt-1">
             <p class = "p-0 m-0 d-inline-block">Reason:</p>
-            <p class = "p-0 m-0 d-inline-block mx-1">RACISM</p>
+            <p class = "p-0 m-0 d-inline-block mx-1">{{ban.reason}}</p>
         </div>
         <div class = "mt-1">
             <p class = "p-0 m-0 d-inline-block">Type:</p>
-            <p class = "p-0 m-0 d-inline-block mx-1">BOARD</p>
+            <p class = "p-0 m-0 d-inline-block mx-1">{{ban.type}}</p>
         </div>
     </div>
     <div class = "ban-card-footer">
         <div style="font-size: 17px;" class = "d-inline-block w-50" [ngbTooltip]="'Created Date'">
             <fa-icon [icon]="clockIcon"></fa-icon>
-            <p class = "p-0 m-0 d-inline-block mx-1">2024-10-5</p>
+            <p class = "p-0 m-0 d-inline-block mx-1">{{ban.createdDate}}</p>
         </div>
         <div style="font-size: 17px;" class = "d-inline-block w-50" [ngbTooltip]="'Expiration Date'">
             <fa-icon [icon]="calendarIcon"></fa-icon>
-            <p class = "p-0 mx-1 d-inline-block">2024-10-2</p>
+            <p class = "p-0 mx-1 d-inline-block">{{ban.expirationDate}}</p>
         </div>
         <div class = "text-center">
             <button class = "delete-ban-button">Delete</button>

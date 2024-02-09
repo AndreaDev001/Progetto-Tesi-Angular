@@ -1,10 +1,11 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { DropdownOption } from '../../Utility/dropdown/dropdown.component';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { TaskService } from 'src/model/services/task.service';
 import { CollectionModel } from 'src/model/interfaces';
 import { UserService } from 'src/model/services/user.service';
+import { Subscription } from 'rxjs';
 
 export interface Filter
 {
@@ -26,10 +27,11 @@ export interface Filter
   templateUrl: './task-filter.component.html',
   styleUrls: ['./task-filter.component.css']
 })
-export class TaskFilterComponent implements OnInit {
+export class TaskFilterComponent implements OnInit, OnDestroy {
 
+  private subscriptions: Subscription[] = [];
   public currentFilter: Filter = {page: 0,pageSize: 20};
-  public currentPrioririties: DropdownOption[] = [];
+  public currentPriorities: DropdownOption[] = [];
   public currentGenders: DropdownOption[] = [];
   @Output() filterChanged: EventEmitter<Filter> = new EventEmitter();
 
@@ -38,7 +40,7 @@ export class TaskFilterComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.activatedRoute.queryParams.subscribe((value: any) => {
+   this.subscriptions.push(this.activatedRoute.queryParams.subscribe((value: any) => {
       let name: string = value.name;
       let description: string = value.description;
       let publisherEmail = value.publisherEmail;
@@ -48,12 +50,13 @@ export class TaskFilterComponent implements OnInit {
       let page: number = value.page != undefined ? value.page : 0;
       let pageSize: number = value.pageSize != undefined ? value.pageSize : 20;
       this.currentFilter = {name: name,description: description,publisherEmail: publisherEmail,publisherName: publisherName,publisherSurname: publisherSurname,publisherUsername: publisherUsername,page: page,pageSize: pageSize};
-    })
+      this.filterChanged.emit(this.currentFilter);
+    }));
     this.taskService.getPriorities().subscribe((value: CollectionModel) => {
       if(value._embedded != null) {
         value._embedded.content.forEach((current: string) => {
           let currentPriority: DropdownOption = {name: current,callback: () => this.updateFilter(this.currentFilter,'priority',current)}
-          this.currentPrioririties.push(currentPriority);
+          this.currentPriorities.push(currentPriority);
         })
       }
     })
@@ -66,6 +69,10 @@ export class TaskFilterComponent implements OnInit {
       }
     })
     
+  }
+
+  public ngOnDestroy(): void {
+    this.subscriptions.forEach((value: Subscription) => value.unsubscribe()); 
   }
 
   public updateFilter<Filter, K extends keyof Filter>(obj: Filter, key: K, value: Filter[K]) {

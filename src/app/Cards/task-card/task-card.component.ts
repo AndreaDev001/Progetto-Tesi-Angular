@@ -9,7 +9,7 @@ import { TaskRef } from 'src/model/refs';
   templateUrl: './task-card.component.html',
   styleUrls: ['./task-card.component.css']
 })
-export class TaskCardComponent implements OnInit,OnChanges{
+export class TaskCardComponent implements OnInit {
   
   @Input() task: Task | undefined = undefined;
   @Input() taskRef: TaskRef | undefined = undefined;
@@ -18,12 +18,8 @@ export class TaskCardComponent implements OnInit,OnChanges{
   public calendarIcon: IconDefinition = faCalendarDays;
 
   public ngOnInit(): void {
-
-  }
-
-  public ngOnChanges(changes: SimpleChanges): void {
-    if(changes['taskRef'] != undefined && this.taskRef != undefined) {
-        this.task = {createdDate: this.taskRef.createdDate,expirationDate: this.taskRef.expirationDate,publisher: this.taskRef.publisher,title: this.taskRef.title,description: this.taskRef.description,amountOfLikes: this.taskRef.amountOfLikes,amountOfAssignedMembers: this.taskRef.amountOfAssignedMembers}
+    if(this.taskRef != undefined) {
+      this.task = {createdDate: this.taskRef.createdDate,expirationDate: this.taskRef.expirationDate,publisher: this.taskRef.publisher,title: this.taskRef.title,description: this.taskRef.description,amountOfLikes: this.taskRef.amountOfLikes,amountOfAssignedMembers: this.taskRef.amountOfAssignedMembers}
     }
   }
 }

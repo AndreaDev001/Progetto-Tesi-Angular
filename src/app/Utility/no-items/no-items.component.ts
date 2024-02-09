@@ -1,4 +1,4 @@
-import { Component,Input, OnChanges, SimpleChanges} from '@angular/core';
+import { Component,EventEmitter,Input, OnChanges,Output, SimpleChanges} from '@angular/core';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faSearch, faSearchPlus } from '@fortawesome/free-solid-svg-icons';
 
@@ -12,7 +12,7 @@ export class NoItemsComponent implements OnChanges {
   @Input() missingButtonText?: string = "Retry";
   @Input() missingTitle?: string = "Empty";
   @Input() missingText?: string = "No items founds, set is empty";
-  @Input() buttonCallback: () => void = () => {};
+  @Output() buttonClicked: EventEmitter<any> = new EventEmitter<any>();
   @Input() searchIcon: IconDefinition = faSearch;
 
   public ngOnChanges(changes: SimpleChanges): void {
@@ -22,5 +22,9 @@ export class NoItemsComponent implements OnChanges {
         this.missingTitle = this.missingTitle != undefined ? this.missingTitle : "Empty";
     if(changes['missingText'] != null)
         this.missingText = this.missingText != undefined ? this.missingText : "No item founds, set is empty"
+  }
+
+  public handleClick(): void {
+    this.buttonClicked.emit();
   }
 }

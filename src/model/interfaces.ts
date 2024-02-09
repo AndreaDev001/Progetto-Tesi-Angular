@@ -2,6 +2,8 @@ import { BoardRef, CommentRef, DiscussionRef, PollOptionRef, PollRef, RoleRef, T
 
 export interface Board
 {
+    id: string,
+    createdDate: string
     title: string,
     description: string,
     minMembers: number,
@@ -12,6 +14,19 @@ export interface Board
     amountOfRoles?: number,
     amountOfTags?: number,
     amountOfMembers?: number
+}
+export interface Ban
+{
+    id: string,
+    createdDate: string,
+    title: string,
+    description: string,
+    expirationDate: string,
+    expired: boolean,
+    banner: UserRef,
+    banned: UserRef,
+    reason: string,
+    type: string
 }
 export interface BoardInvite
 {
@@ -151,8 +166,11 @@ export interface PollOption
     description: string,
     amountOfVotes: number
 }
+
 export interface Report
 {
+    id: string,
+    createdDate: string
     title: string,
     description: string,
     reason: string,
@@ -208,6 +226,7 @@ export interface PaginationRequest {
 export interface PagedModel
 {
     _embedded: EmbeddedPagedModel
+    page?: Page
 }
 export interface CollectionModel
 {
@@ -220,7 +239,6 @@ export interface EmbeddedCollectionModel
 export interface EmbeddedPagedModel
 {
     content: any[],
-    page?: Page
 }
 export interface Page
 {
