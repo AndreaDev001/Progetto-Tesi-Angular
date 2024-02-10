@@ -1,0 +1,20 @@
+<div class = "container py-4">
+    <div>
+        <h3 class = "d-inline-block">Discussions</h3>
+        <fa-icon [icon]="discussionIcon" class = "d-inline-block mx-2" style="font-size: 25px;"></fa-icon>
+    </div>
+    <p class = "p-0 m-0">Here you can see all of the discussions that you have created</p>
+    <div *ngIf="currentDiscussions.length > 0">
+        <div class = "row py-4">
+            <div class = "col-12 col-md-3 mt-2" *ngFor="let current of currentDiscussions">
+               <app-discussion-card [discussion]="current"></app-discussion-card>
+           </div>
+       </div>
+       <div class = "text-center py-2">
+         <app-pagination (pageChanged)="handlePageChange($event)" [pageSize]="20" [totalElements]="currentTotalElements"></app-pagination>
+       </div>
+    </div>
+    <div *ngIf="currentDiscussions.length == 0">
+        <app-no-items (buttonClicked)="resetSearch()"></app-no-items>
+    </div>
+</div>

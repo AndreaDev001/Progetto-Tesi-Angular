@@ -55,9 +55,11 @@ import { PollDetailsComponent } from './PollPage/poll-details/poll-details.compo
 import { PollOptionsComponent } from './PollPage/poll-options/poll-options.component';
 import { PollOptionComponent } from './PollPage/poll-option/poll-option.component';
 import { TextOverflowComponent } from './Utility/text-overflow/text-overflow.component';
-import { LikePagesComponent } from './like-pages/like-pages.component';
+import { LikePagesComponent } from './UserPages/LikePages/like-pages/like-pages.component';
 import { TabPaneComponent } from './Utility/tab-pane/tab-pane.component';
 import { CommentCardComponent } from './comment-card/comment-card.component';
+import { DiscussionsPageComponent } from './UserPages/DiscussionsPage/discussions-page/discussions-page.component';
+import { PollsPageComponent } from './UserPages/PollsPage/polls-page/polls-page.component';
 
 @NgModule({
   declarations: [
@@ -107,7 +109,9 @@ import { CommentCardComponent } from './comment-card/comment-card.component';
     TextOverflowComponent,
     LikePagesComponent,
     TabPaneComponent,
-    CommentCardComponent
+    CommentCardComponent,
+    DiscussionsPageComponent,
+    PollsPageComponent
   ],
   imports: [
     BrowserModule,

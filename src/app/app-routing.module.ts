@@ -7,8 +7,10 @@ import { BanPageComponent } from './SearchPages/BanPage/ban-page/ban-page.compon
 import { HomePageComponent } from './HomePage/home-page/home-page.component';
 import { UserPageComponent } from './UserPage/user-page/user-page.component';
 import { DiscussionPageComponent } from './DiscussionPage/discussion-page/discussion-page.component';
+import { DiscussionsPageComponent } from './UserPages/DiscussionsPage/discussions-page/discussions-page.component';
+import { PollsPageComponent } from './UserPages/PollsPage/polls-page/polls-page.component';
 import { PollPageComponent } from './PollPage/poll-page/poll-page.component';
-import { LikePagesComponent } from './like-pages/like-pages.component';
+import { LikePagesComponent } from './UserPages/LikePages/like-pages/like-pages.component';
 
 const routes: Routes = [
   {path: 'home',component: HomePageComponent,title: 'Home'},
@@ -19,7 +21,9 @@ const routes: Routes = [
   {path: 'user/:id',component: UserPageComponent,title: "User"},
   {path: 'discussion/:id',component: DiscussionPageComponent,title: "Discussion"},
   {path: 'poll/:id',component: PollPageComponent,title: "Poll"},
-  {path: 'likes/:id',component: LikePagesComponent,title: "Likes"}
+  {path: 'likes/:id',component: LikePagesComponent,title: "Likes"},
+  {path: 'discussions/:id',component: DiscussionsPageComponent,title: 'Discussions'},
+  {path: 'polls/:id',component: PollsPageComponent,title: 'Polls'}
 ];
 
 @NgModule({

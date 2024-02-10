@@ -1,0 +1,20 @@
+<div class = "container py-4">
+    <div>
+        <h3 class = "d-inline-block">Polls</h3>
+        <fa-icon class = "d-inline-block mx-2" [icon]="pollIcon" style="font-size: 25px;"></fa-icon>
+    </div>
+    <p class = "p-0 m-0">Here you can see all of the polls that you have created</p>
+    <div *ngIf="currentPolls.length > 0">
+        <div class = "row py-2">
+            <div class = "col-12 col-md-3 mt-2" *ngFor="let current of currentPolls">
+                <app-poll-card [poll]="current"></app-poll-card>
+            </div>
+            <div class = "text-center py-2">
+                <app-pagination [pageSize]="20" [totalElements]="currentTotalElements"></app-pagination>
+            </div>
+        </div>
+    </div>
+    <div class = "py-2" *ngIf="currentPolls.length == 0">
+        <app-no-items (buttonClicked)="resetSearch()"></app-no-items>
+    </div>
+</div>
