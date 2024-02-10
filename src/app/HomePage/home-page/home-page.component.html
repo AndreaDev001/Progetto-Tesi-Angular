@@ -7,8 +7,8 @@
     <div class = "row">
         <div class = "col-12 col-md-2">
             <ul class = "option-list mt-2">
-                <li [id]="current.name" *ngFor="let current of optionsTemplate">
-                    <ng-container *ngTemplateOutlet="optionTemplate;context: {item: current}"></ng-container>
+                <li [id]="current.name" *ngFor="let current of optionsTemplate;let i = index">
+                    <ng-container *ngTemplateOutlet="optionTemplate;context: {item: current,index: i}"></ng-container>
                 </li>
             </ul>
         </div>
@@ -16,47 +16,99 @@
             <div *ngIf="currentTemplate != undefined">
                 <ng-container *ngTemplateOutlet="currentTemplate"></ng-container>
             </div>
-            <div class = "row">
-                <div class = "col-3 mt-1">
-                    <app-task-card></app-task-card>
-                </div>
-                <div class = "col-3 mt-1">
-                    <app-task-card></app-task-card>
-                </div>
-                <div class = "col-3 mt-1">
-                    <app-task-card></app-task-card>
-                </div>
-                <div class = "col-3 mt-1">
-                    <app-task-card></app-task-card>
-                </div>
-            </div>
-            <app-text-overflow [templates]="items"></app-text-overflow>
             <app-pagination [pageSize]="20" [totalElements]="currentTotalElements" *ngIf="currentTotalElements == 0"></app-pagination>
         </div>
     </div>
 </div>
-<ng-template #ciao>
-    <div style="background-color: red;">
-        CIAO
-    </div>
-</ng-template>
 <ng-template #boardTemplate>
     <ng-container *ngTemplateOutlet="descriptionItem;context: {item: this.descriptionItems[0]}"></ng-container>
+    <div class = "container">
+        <div *ngIf="currentBoards.length > 0">
+            <div class = "row">
+                <div class = "col-12 col-md-3" *ngFor="let current of currentBoards">
+                    <app-board-card [boardRef]="current.board"></app-board-card>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="currentBoards.length == 0">
+            <app-no-items (buttonClicked)="resetPage()"></app-no-items>
+        </div>
+    </div>
 </ng-template>
 <ng-template #tasksTemplate>
     <ng-container *ngTemplateOutlet="descriptionItem;context: {item: this.descriptionItems[1]}"></ng-container>
+    <div class = "container">
+        <div *ngIf="currentTasks.length > 0">
+            <div class = "row">
+                <div class = "col-12 col-md-3 mt-2" *ngFor="let current of currentTasks">
+                    <app-task-card [taskRef]="current.task"></app-task-card>
+                </div>
+                <div class = "text-center mt-4">
+                    <app-pagination (pageChanged)="handlePageChange($event)"  [defaultPage]="0" [pageSize]="20" [totalElements]="this.currentTotalElements"></app-pagination>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="currentTasks.length == 0">
+            <app-no-items (buttonClicked)="resetPage()"></app-no-items>
+        </div>
+    </div>
 </ng-template>
 <ng-template #discussionTemplate>
     <ng-container *ngTemplateOutlet="descriptionItem;context: {item: this.descriptionItems[2]}"></ng-container>
+    <div class = "container">
+        <div *ngIf="currentDiscussions.length > 0">
+            <div class = "row">
+                <div class = "col-12 col-md-3 mt-2" *ngFor="let current of currentDiscussions">
+                    <app-discussion-card [discussion]="current"></app-discussion-card>
+                </div>
+                <div class = "text-center mt-4">
+                    <app-pagination (pageChanged)="handlePageChange($event)"  [defaultPage]="0" [pageSize]="20" [totalElements]="this.currentTotalElements"></app-pagination>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="currentDiscussions.length == 0">
+            <app-no-items (buttonClicked)="resetPage()"></app-no-items>
+        </div>
+    </div>
 </ng-template>
 <ng-template #boardInvitesTemplate>
     <ng-container *ngTemplateOutlet="descriptionItem;context: {item: this.descriptionItems[3]}"></ng-container>
+    <div class = "container">
+        <div *ngIf="currentBoardInvites.length > 0">
+            <div class = "row">
+                <div class = "col-12 col-md-3 mt-2" *ngFor="let current of currentBoardInvites">
+                    <app-board-invite-card [boardInvite]="current"></app-board-invite-card>
+                </div>
+                <div class = "text-center mt-4">
+                    <app-pagination (pageChanged)="handlePageChange($event)"  [defaultPage]="0" [pageSize]="20" [totalElements]="this.currentTotalElements"></app-pagination>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="currentBoardInvites.length == 0">
+            <app-no-items (buttonClicked)="resetPage()"></app-no-items>
+        </div>
+    </div>
 </ng-template>
 <ng-template #pollTemplate>
     <ng-container *ngTemplateOutlet="descriptionItem;context: {item: this.descriptionItems[4]}"></ng-container>
+    <div class = "container">
+        <div *ngIf="currentPolls.length > 0">
+            <div class = "row">
+                <div class = "col-12 col-md-3 mt-2" *ngFor="let current of currentPolls">
+                    <app-poll-card [poll]="current"></app-poll-card>
+                </div>
+                <div class = "text-center mt-4">
+                    <app-pagination (pageChanged)="handlePageChange($event)"  [defaultPage]="0" [pageSize]="20" [totalElements]="this.currentTotalElements"></app-pagination>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="currentPolls.length == 0">
+            <app-no-items></app-no-items>
+        </div>
+    </div>
 </ng-template>
-<ng-template #optionTemplate let-item="item">
-    <button  style="margin-top: 5px;" class = "option-holder" (click)="updateTemplate($event,item.requiredTemplate,item.path)">
+<ng-template #optionTemplate let-item="item" let-index="index">
+    <button  style="margin-top: 5px;" [ngClass]="currentSelectedIndex == index ? 'option-holder-selected' : 'option-holder'" (click)="updateTemplate($event,item.requiredTemplate,item.path)">
         <fa-icon class = "option-icon" [icon]="item.icon"></fa-icon>
         <p class = "option-name">{{item.name}}</p>
     </button>

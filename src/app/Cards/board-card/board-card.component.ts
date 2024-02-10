@@ -17,6 +17,9 @@ export class BoardCardComponent implements OnInit {
   public listIcon: IconDefinition = faList;
 
   public ngOnInit(): void {
-    
+    if(this.boardRef != undefined)
+    {
+      this.board = {amountOfMembers: this.boardRef.amountOfMembers,amountOfGroups: this.boardRef.amountOfGroups,id: this.boardRef.id,createdDate: this.boardRef.createdDate,title: this.boardRef.title,description: this.boardRef.description,publisher: this.boardRef.publisher};
+    }
   }
 }

@@ -2,14 +2,13 @@ div#header-holder
 {
     position: sticky;
     top: 0;
-    border-bottom: 1px solid var(--tertiary-color);
     width: 100%;
 }
 ul.header-list
 {
     margin: 0px;
     list-style-type: none;
-    padding: 5px;
+    padding: 10px 20px;
     background: var(--primary-color);
 }
 a.header-item
@@ -25,7 +24,7 @@ a.header-item
 a.header-item:hover
 {
     background-color: var(--tertiary-color);
-    color: black;
+    color: whitesmoke;
     text-decoration: underline;
 }
 button.header-show-button
@@ -41,5 +40,5 @@ button.header-show-button:hover
 {
     background-color: var(--tertiary-color);
     border-radius: 60%;
-    color: black;
+    color: whitesmoke;
 }

@@ -5,7 +5,7 @@ import { faDiscourse } from '@fortawesome/free-brands-svg-icons';
 import { faHandsWash, faHandshake, faMessage, faPoll, faTable, faTasks } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
 import { TaskAssignmentService } from 'src/model/services/task-assignment.service';
-import { Board, BoardInvite, BoardMember, Discussion, PagedModel, Poll, Task } from 'src/model/interfaces';
+import { Board, BoardInvite, BoardMember, Discussion, PagedModel, PaginationRequest, Poll, Task, TaskAssignment } from 'src/model/interfaces';
 import { BoardService } from 'src/model/services/board.service';
 import { TaskService } from 'src/model/services/task.service';
 import { BoardMemberService } from 'src/model/services/board-member.service';
@@ -43,17 +43,20 @@ export class HomePageComponent implements AfterViewInit, OnDestroy {
 
 
   private subscriptions: Subscription[] = [];
-  public currentPage: number = 0;
-  public currentPageSize: number = 20;
-  public currentTotalElements: number = 0;
+
   public currentTemplate: TemplateRef<any> | undefined = undefined;
   public currentViewPath: string = "boards";
 
   public currentBoards: BoardMember[] = [];
   public currentBoardInvites: BoardInvite[] = [];
-  public currentTasks: Task[] = [];
+  public currentTasks: TaskAssignment[] = [];
   public currentDiscussions: Discussion[] = [];
   public currentPolls: Poll[] = [];
+
+  public currentPage: number = 0;
+  public currentTotalPages: number = 0;
+  public currentTotalElements: number = 0;
+  public currentSelectedIndex: number = 0;
 
   public optionsTemplate: OptionTemplate[] = [];
   public welcomeBackIcon: IconDefinition = faHandshake;
@@ -64,22 +67,19 @@ export class HomePageComponent implements AfterViewInit, OnDestroy {
   public invitesIcon: IconDefinition = faMessage;
   public pollIcon: IconDefinition = faPoll;
   public isSearching: boolean = false;
-  public currentSelectedElement: any;
-  public elements: any = undefined;
 
   private currentUserID: any = undefined;
   public currentUser: any = undefined;
 
   public descriptionItems: DescriptionItem[] = [];
   public items: TextOverflowItem[] = [];
-  @ViewChild("ciao") ciao: any;
 
   constructor(private authenticationHandler: AuthenticationHandlerService,private boardInvitesService: BoardInviteService,private boardMemberService: BoardMemberService,private taskAssignmentService: TaskAssignmentService,private discussionService: DiscussionService,private pollService: PollService,private router: Router,private activatedRoute: ActivatedRoute) {
 
   }
 
-  public ngAfterViewInit(): void {
-    this.elements = document.getElementsByClassName("option-holder");
+  public ngAfterViewInit(): void 
+  {
     this.descriptionItems.push({name: "Boards",subtitle: "Here you can see all of the boards you partecipate in",icon: this.boardIcon})
     this.descriptionItems.push({name: "Tasks",subtitle: "Here you can see all of the tasks that have been assigned to you",icon: this.taskIcon})
     this.descriptionItems.push({name: "Discussions",subtitle: "Here you can see all of the discussions that have been assingned to you",icon: this.discussionIcon})
@@ -93,96 +93,93 @@ export class HomePageComponent implements AfterViewInit, OnDestroy {
 
     this.subscriptions.push(this.activatedRoute.queryParams.subscribe((value: any) => {
       let view: string = value.view;
-      if(view == null) {
+      let userID: string = value.userID;
+      if(userID != undefined)
+          this.currentUserID = value.userID;
+      if(view == null) 
+      {
         this.currentTemplate = this.boardTemplate;
         this.currentViewPath = "boards";
         this.updateRouter(this.currentViewPath);
       }
       else
-      {
-        switch(view) {
-          case "boards":
-            this.currentTemplate = this.boardTemplate;
-            this.currentViewPath = 'boards';
-            break;
-          case "invites":
-            this.currentTemplate = this.boardInvitesTemplate;
-            this.currentViewPath = 'invites';
-            break;
-          case "tasks":
-            this.currentTemplate = this.taskTemplate;
-            this.currentViewPath = 'tasks';
-            break;
-          case "discussions":
-            this.currentTemplate = this.discussionTemplate;
-            this.currentViewPath = 'discussions';
-            break;
-          case "polls":
-            this.currentTemplate = this.pollTemplate;
-            this.currentViewPath = 'polls';
-            break;
-          default:
-            this.currentTemplate = this.boardTemplate;
-            this.currentViewPath = 'boards';
-            break;
-        }
-        this.updateSelection(this.currentViewPath);
-        this.updateRouter(this.currentViewPath);
-      }
+        this.updateItems(view);
     }))
     this.subscriptions.push(this.authenticationHandler.getCurrentUser(false).subscribe((value: any) => this.currentUser = value));
     this.subscriptions.push(this.authenticationHandler.getCurrentUserID(false).subscribe((value: any) => this.currentUserID = value));
   }
 
-  private updateSelection(path: string): any {
-    for(let current of this.elements) {
-      if(current.textContent.toLowerCase() == path) {
-        this.currentSelectedElement = current;
-        this.currentSelectedElement.className = "option-holder-selected";
-      }
-    }
-  }
-  
-  public updateItems(view: string): void {
-    let observable: any = undefined;
-    let currentItems: any[] = [];
-    switch(view) {
-      case "boards":
-        observable = this.boardMemberService.getBoardMembersByMember(this.currentUserID,{page: this.currentPage,pageSize: this.currentPageSize})
-        currentItems = this.currentBoards;
-        break;
-      case "tasks":
-        observable = this.taskAssignmentService.getTaskAssignmentsByUser(this.currentUserID,{page: this.currentPage,pageSize: this.currentPageSize});
-        currentItems = this.currentTasks;
-        break;
-      case "invites":
-        observable = this.boardInvitesService.getInvitesByUser(this.currentUserID,{page: this.currentPage,pageSize: this.currentPageSize});
-        currentItems = this.currentBoardInvites;
-        break;
-      case "discussions":
-        observable = this.discussionService.getDiscussionsByPublisher(this.currentUserID,{page: this.currentPage,pageSize: this.currentPageSize});
-        currentItems = this.currentDiscussions;
-        break;
-      case "polls":
-        observable = this.pollService.getPollsByPublisher(this.currentUserID,{page: this.currentPage,pageSize: this.currentPageSize});
-        currentItems = this.currentPolls;
-        break;
-    }
-    this.isSearching = true;
-    observable.subscribe((value: PagedModel) => {
-      this.isSearching = false;
-      if(value._embedded != null && value._embedded.content)
-          currentItems = value._embedded.content;
+
+  public updateJoinedBoards(page: number,pageSize: number): void {
+    let paginationRequest: PaginationRequest = {page: page,pageSize: pageSize};
+    this.boardMemberService.getBoardMembersByMember(this.currentUserID,paginationRequest).subscribe((value: PagedModel) => {
+      this.currentBoards = value._embedded != undefined && value._embedded.content != undefined ? value._embedded.content : [];
       if(value.page != undefined) {
         this.currentPage = value.page.page;
+        this.currentTotalPages = value.page.totalPages;
         this.currentTotalElements = value.page.totalElements;
       }
-    },(err: any) => this.isSearching = false);
+    })
+  }
+
+  public updateTasks(page: number,pageSize: number): void {
+    let paginationRequest: PaginationRequest = {page: page,pageSize: pageSize};
+    this.taskAssignmentService.getTaskAssignmentsByUser(this.currentUserID,paginationRequest).subscribe((value: PagedModel) => {
+      this.currentTasks = value._embedded != undefined && value._embedded.content != undefined ? value._embedded.content : [];
+      if(value.page != undefined) {
+        this.currentPage = value.page.page;
+        this.currentTotalPages = value.page.totalPages;
+        this.currentTotalElements = value.page.totalElements;
+      }
+    })
+  }
+
+  public updateInvites(page: number,pageSize: number): void {
+    let paginationRequest: PaginationRequest = {page: page,pageSize: pageSize};
+    this.boardInvitesService.getInvitesByUser(this.currentUserID,paginationRequest).subscribe((value: PagedModel) => {
+      this.currentBoardInvites = value._embedded != undefined && value._embedded.content != undefined ? value._embedded.content : [];
+      if(value.page != undefined) {
+        this.currentPage = value.page.page;
+        this.currentTotalPages = value.page.totalPages;
+        this.currentTotalElements = value.page.totalElements;
+      }
+    });
+  }
+
+  public updateDiscussions(page: number,pageSize: number): void {
+    let paginationRequest: PaginationRequest = {page: page,pageSize: pageSize};
+    this.discussionService.getDiscussionsByPublisher(this.currentUserID,paginationRequest).subscribe((value: PagedModel) => {
+      this.currentDiscussions = value._embedded != undefined && value._embedded.content != undefined ? value._embedded.content : [];
+      if(value.page != undefined) {
+        this.currentPage = value.page.page;
+        this.currentTotalPages = value.page.totalPages;
+        this.currentTotalElements = value.page.totalElements;
+      }
+    })
+  }
+
+  public updatePolls(page: number,pageSize: number): void {
+    let paginationRequest: PaginationRequest = {page: page,pageSize: pageSize};
+    this.pollService.getPollsByPublisher(this.currentUserID,paginationRequest).subscribe((value: PagedModel) => {
+      this.currentPolls = value._embedded != undefined && value._embedded.content == undefined ? value._embedded.content : [];
+      if(value.page != undefined) {
+        this.currentPage = value.page.page;
+        this.currentTotalPages = value.page.totalPages;
+        this.currentTotalElements = value.page.totalElements;
+      }
+    })
   }
 
   public resetPage(): void {
     this.currentPage = 0;
-    this.currentPageSize = 20;
+    this.currentTotalPages = 0;
+    this.currentTotalElements = 0;
+    this.updateItems(this.currentViewPath);
+  }
+
+  public handlePageChange(event: any): void {
+    this.currentPage = event;
+    this.updateItems(this.currentViewPath);
   }
 
   public ngOnDestroy(): void {
@@ -197,14 +194,51 @@ export class HomePageComponent implements AfterViewInit, OnDestroy {
     });
   }
 
+  private updateItems(view: string): void 
+  {
+    switch(view) 
+    {
+      case "boards":
+        this.currentTemplate = this.boardTemplate;
+        this.currentViewPath = 'boards';
+        this.currentSelectedIndex = 0;
+        this.updateJoinedBoards(this.currentPage,20);
+        break;
+      case "tasks":
+        this.currentTemplate = this.taskTemplate;
+        this.currentViewPath = 'tasks';
+        this.currentSelectedIndex = 1;
+        this.updateTasks(this.currentPage,20);
+        break;
+      case "invites":
+        this.currentTemplate = this.boardInvitesTemplate;
+        this.currentViewPath = 'invites';
+        this.currentSelectedIndex = 2;
+        this.updateInvites(this.currentPage,20);
+        break;
+      case "discussions":
+        this.currentTemplate = this.discussionTemplate;
+        this.currentViewPath = 'discussions';
+        this.currentSelectedIndex = 3;
+        this.updateDiscussions(this.currentPage,20);
+        break;
+      case "polls":
+        this.currentTemplate = this.pollTemplate;
+        this.currentViewPath = 'polls';
+        this.currentSelectedIndex = 4;
+        this.updatePolls(this.currentPage,20);
+        break;
+      default:
+        this.currentTemplate = this.boardTemplate;
+        this.currentViewPath = 'boards';
+        this.currentSelectedIndex = 0;
+        this.updateJoinedBoards(this.currentPage,20);
+        break;
+    }
+  }
+
   public updateTemplate(event: any,requiredTemplate: any,path: string): void {
-    let oldElement = this.currentSelectedElement;
-    this.currentSelectedElement = event.target;
-    this.currentSelectedElement.className = "option-holder-selected";
-    if(oldElement != undefined)
-        oldElement.className = "option-holder";
     this.resetPage();
-    this.updateItems(path);
     this.currentTemplate = requiredTemplate;
     this.currentViewPath = path;
     this.updateRouter(path);

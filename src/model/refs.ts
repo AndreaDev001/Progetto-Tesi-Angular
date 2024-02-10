@@ -1,5 +1,7 @@
 export interface BoardRef
 {
+    id: string,
+    createdDate: string
     title: string,
     description: string
     minMembers: number
@@ -19,13 +21,23 @@ export interface UserRef
 }
 export interface DiscussionRef
 {
-    title: String,
-    topic: String
+    id: string,
+    createdDate: string
+    title: string,
+    topic: string,
+    publisher: UserRef,
+    amountOfComments: number,
+    amountOfLikes: number
 }
 export interface PollRef
 {
-    title: String,
-    description: String,
+    id: string,
+    createdDate: string
+    title: string
+    description: string
+    minimumVotes: number
+    maximumVotes: number
+    amountOfLikes: number
     publisher: UserRef
 }
 export interface PollOptionRef {

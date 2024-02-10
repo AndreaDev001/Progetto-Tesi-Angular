@@ -8,7 +8,7 @@ import { PaginationRequest } from '../interfaces';
 })
 export class BoardInviteService {
 
-  private url: string = "http://localhost:4200/api/v1/boardInvites";
+  private url: string = "http://localhost:8080/api/v1/boardInvites";
 
   constructor(private httpUtils: HttpUtilsService,private httpClient: HttpClient) {
 
@@ -21,7 +21,7 @@ export class BoardInviteService {
   }
 
   public getInvitesByUser(userID: any,page: PaginationRequest): any {
-    const desiredURL: string = this.url + "/public/" + userID;
+    const desiredURL: string = this.url + "/public/receiver/" + userID;
     let queryParams: HttpParams = this.httpUtils.generatePaginationParams(page);
     return this.httpClient.get(desiredURL,{params: queryParams});
   }

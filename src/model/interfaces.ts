@@ -6,8 +6,6 @@ export interface Board
     createdDate: string
     title: string,
     description: string,
-    minMembers: number,
-    maxMembers: number,
     visibility?: string,
     publisher: UserRef
     amountOfGroups?: number,
@@ -207,6 +205,26 @@ export interface PollReport
     reporter: UserRef,
     reported: UserRef,
     poll: PollRef
+}
+export interface DiscussionLike
+{
+    user: UserRef,
+    discussion: DiscussionRef
+}
+export interface PollLike 
+{
+    user: UserRef,
+    poll: PollRef
+}
+export interface TaskLike
+{
+    user: UserRef,
+    task: TaskRef
+}
+export interface CommentLike
+{
+    user: UserRef,
+    comment: CommentRef
 }
 export interface CommentReport
 {

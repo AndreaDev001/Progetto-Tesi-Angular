@@ -28,7 +28,7 @@ button.option-holder-selected
     background-color: var(--tertiary-color);
     padding: 5px 20px;
     border-radius: 2px;
-    color: black;
+    color: whitesmoke;
     border: 0;
     width: 100%;
     text-align: start;
@@ -37,7 +37,7 @@ button.option-holder-selected
 button.option-holder:hover
 {
     background-color: var(--tertiary-color);
-    color: black;
+    color: whitesmoke;
 }
 p.option-name
 {
@@ -58,8 +58,7 @@ ul.option-list
     list-style-type: none;
     padding: 10px 10px;
     border-radius: 2px;
-    background-color: var(--secondary-color);
-    border: 1px solid var(--tertiary-color);
+    background-color: var(--primary-color );
 }
 h4.description-item-name
 {

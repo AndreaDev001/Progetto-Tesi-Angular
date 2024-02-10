@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { HttpUtilsService } from './http-utils.service';
-import { Filter } from 'src/app/ReportPage/report-filter/report-filter.component';
+import { Filter } from 'src/app/SearchPages/ReportPage/report-filter/report-filter.component';
 
 @Injectable({
   providedIn: 'root'

@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { HttpUtilsService } from 'src/model/services/http-utils.service';
-import { Filter } from 'src/app/TaskPage/task-filter/task-filter.component';
+import { Filter } from 'src/app/SearchPages/TaskPage/task-filter/task-filter.component';
 
 @Injectable({
   providedIn: 'root'
