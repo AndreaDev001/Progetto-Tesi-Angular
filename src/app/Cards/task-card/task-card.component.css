@@ -1,6 +1,4 @@
 div.task-card-header {
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
     color: whitesmoke;
     overflow: hidden;
 }
@@ -15,9 +13,8 @@ button.card-wrapper
     border-top-right-radius: 10px;
     border-radius: 5px;
     background-color: var(--primary-color);
-    width: 265px;
+    width: 100%;
     color: whitesmoke;
-    border: 1px solid var(--tertiary-color);
     transition: 0.4s ease-in-out all;
     overflow: hidden;
 }

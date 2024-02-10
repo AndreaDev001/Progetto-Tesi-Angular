@@ -1,9 +1,8 @@
 div.default-page-container
 {
     display: inline-block;
-    background-color: var(--secondary-color);
-    border: 1px solid var(--tertiary-color);
-    border-radius: 20px;
+    background-color: var(--primary-color);
+    border-radius: 10px;
     box-sizing: border-box;
     padding: 2px 20px;
 }
@@ -19,8 +18,7 @@ button.button-page-arrow
     margin: 0px;
     padding: 0px 5px;
     border: 0;
-    background-color: var(--secondary-color);
-    border: 1px solid var(--secondary-color);
+    background-color: var(--primary-color);
     color: whitesmoke;
     transition: 0.2s ease-in-out all;
 }
@@ -28,7 +26,6 @@ button.button-page-arrow:hover
 {
     border-radius: 60%;
     background-color: var(--tertiary-color);
-    border: 1px solid lightblue;
     color: black;
 }
 button.button-page
@@ -36,7 +33,7 @@ button.button-page
     margin: 0px;
     padding: 10px 15px;
     border: 0;
-    background-color: var(--secondary-color);
+    background-color: var(--primary-color);
     color: whitesmoke;
     transition: 0.2s ease-in-out all;
 }

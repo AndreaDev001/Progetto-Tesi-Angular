@@ -6,16 +6,16 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './Utility/header/header.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { BoardPageComponent } from './BoardPage/board-page/board-page.component';
-import { TasksPageComponent } from './TaskPage/tasks-page/tasks-page.component';
+import { BoardPageComponent } from './SearchPages/BoardPage/board-page/board-page.component';
+import { TasksPageComponent } from './SearchPages/TaskPage/tasks-page/tasks-page.component';
 import { DropdownComponent } from './Utility/dropdown/dropdown.component';
 import { SearchBarComponent } from './Utility/search-bar/search-bar.component';
-import { BoardFilterComponent } from './BoardPage/board-filter/board-filter.component';
-import { TaskFilterComponent } from './TaskPage/task-filter/task-filter.component';
-import { ReportFilterComponent } from './ReportPage/report-filter/report-filter.component';
-import { BanFilterComponent } from './BanPage/ban-filter/ban-filter.component';
-import { ReportPageComponent } from './ReportPage/report-page/report-page.component';
-import { BanPageComponent } from './BanPage/ban-page/ban-page.component';
+import { BoardFilterComponent } from './SearchPages/BoardPage/board-filter/board-filter.component';
+import { TaskFilterComponent } from './SearchPages/TaskPage/task-filter/task-filter.component';
+import { ReportFilterComponent } from './SearchPages/ReportPage/report-filter/report-filter.component';
+import { BanFilterComponent } from './SearchPages/BanPage/ban-filter/ban-filter.component';
+import { ReportPageComponent } from './SearchPages/ReportPage/report-page/report-page.component';
+import { BanPageComponent } from './SearchPages/BanPage/ban-page/ban-page.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CreateBoardComponent } from './Forms/create-board/create-board.component';
 import { CreateTaskComponent } from './Forms/create-task/create-task.component';
@@ -55,6 +55,9 @@ import { PollDetailsComponent } from './PollPage/poll-details/poll-details.compo
 import { PollOptionsComponent } from './PollPage/poll-options/poll-options.component';
 import { PollOptionComponent } from './PollPage/poll-option/poll-option.component';
 import { TextOverflowComponent } from './Utility/text-overflow/text-overflow.component';
+import { LikePagesComponent } from './like-pages/like-pages.component';
+import { TabPaneComponent } from './Utility/tab-pane/tab-pane.component';
+import { CommentCardComponent } from './comment-card/comment-card.component';
 
 @NgModule({
   declarations: [
@@ -101,7 +104,10 @@ import { TextOverflowComponent } from './Utility/text-overflow/text-overflow.com
     PollDetailsComponent,
     PollOptionsComponent,
     PollOptionComponent,
-    TextOverflowComponent
+    TextOverflowComponent,
+    LikePagesComponent,
+    TabPaneComponent,
+    CommentCardComponent
   ],
   imports: [
     BrowserModule,

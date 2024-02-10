@@ -1,6 +1,5 @@
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { DropdownOption } from '../../Utility/dropdown/dropdown.component';
 import { UserService } from 'src/model/services/user.service';
 import { Board, CollectionModel, PagedModel } from 'src/model/interfaces';
 import { Filter } from '../board-filter/board-filter.component';

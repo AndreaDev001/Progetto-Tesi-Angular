@@ -6,8 +6,7 @@ button.card-wrapper {
     border-top-right-radius: 5px;
     border-radius: 10px;
     background-color: var(--primary-color);
-    border: 1px solid var(--tertiary-color);
-    width: 265px;
+    width: 100%;
     transition: 0.2s ease-in-out all;
 }
 button.card-wrapper:hover {

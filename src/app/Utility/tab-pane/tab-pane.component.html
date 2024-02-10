@@ -1,0 +1,17 @@
+<div *ngIf="currentTemplate != undefined">
+    <div class = "d-inline-flex w-100">
+        <div [ngClass]="currentSelectedTab == i ? 'option-container-selected' : 'option-container'" style="flex-grow: 1;"  *ngFor="let current of tabPaneOptions;let i = index">
+            <ng-container *ngTemplateOutlet="currentTemplate;context: {item: current,index: i}"></ng-container>
+        </div>
+    </div>  
+</div>
+
+<ng-template #defaultTemplate let-item="item" let-index="index">
+    <button class = "d-inline-block button-wrapper" (click)="updateCurrentSelectedTab(index)">
+        <div>
+            <p class = "d-inline-block option-text">{{item.name}}</p>
+            <fa-icon class = "d-inline-block mx-2" style="font-size: 20px;" [icon]="item.icon"></fa-icon>
+        </div>
+        <p class = "option-subtitle">{{item.subtitle}}</p>
+    </button>
+</ng-template>
