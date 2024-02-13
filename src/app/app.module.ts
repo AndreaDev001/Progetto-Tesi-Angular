@@ -59,7 +59,7 @@ import { TabPaneComponent } from './Utility/tab-pane/tab-pane.component';
 import { CommentCardComponent } from './Cards/comment-card/comment-card.component';
 import { DiscussionsPageComponent } from './UserPages/DiscussionsPage/discussions-page/discussions-page.component';
 import { PollsPageComponent } from './UserPages/PollsPage/polls-page/polls-page.component';
-import { OAuthModule } from 'angular-oauth2-oidc';
+import { OAuthModule, OAuthService } from 'angular-oauth2-oidc';
 import { UsersPageComponent } from './SearchPages/UserPage/users-page/users-page.component';
 import { SearchDiscussionsComponent } from './SearchPages/DiscussionPage/search-discussions/search-discussions.component';
 import { SearchPollsComponent } from './SearchPages/PollPage/search-polls/search-polls.component';
@@ -69,6 +69,7 @@ import { PollFilterComponent } from './SearchPages/PollPage/poll-filter/poll-fil
 import { DiscussionFilterComponent } from './SearchPages/DiscussionPage/discussion-filter/discussion-filter.component';
 import { HomePageComponent } from './HomePage/home-page/home-page.component';
 import { UnAuthorizedPageComponent } from './un-authorized-page/un-authorized-page.component';
+import { RefreshInterceptor } from './auth/RefreshInterceptor';
 
 @NgModule({
   declarations: [
@@ -149,6 +150,9 @@ import { UnAuthorizedPageComponent } from './un-authorized-page/un-authorized-pa
       }
     })
   ],
+  providers: [{
+    provide: HTTP_INTERCEPTORS,useClass: RefreshInterceptor,multi: true,deps: [OAuthService]
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule {

@@ -18,7 +18,7 @@ import { UnAuthorizedPageComponent } from './un-authorized-page/un-authorized-pa
 import { AuthGuard } from './auth/auth.guard';
 
 const routes: Routes = [
-  {path: 'home',component: HomePageComponent,title: 'Home',canActivate: [AuthGuard]},
+  {path: 'home',component: HomePageComponent,title: 'Home'},
   {path: 'search/boards',component: BoardPageComponent,title: "Search Boards",canActivate: [AuthGuard]},
   {path: 'search/tasks',component: TasksPageComponent,title: "Search Tasks",canActivate: [AuthGuard]},
   {path: 'search/reports',component: ReportPageComponent,title: "Search Reports",canActivate: [AuthGuard]},

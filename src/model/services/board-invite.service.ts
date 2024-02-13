@@ -21,7 +21,7 @@ export class BoardInviteService {
   }
 
   public getInvitesByUser(userID: any,page: PaginationRequest): any {
-    const desiredURL: string = this.url + "/public/receiver/" + userID;
+    const desiredURL: string = this.url + "/private/receiver/" + userID;
     let queryParams: HttpParams = this.httpUtils.generatePaginationParams(page);
     return this.httpClient.get(desiredURL,{params: queryParams});
   }

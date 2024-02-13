@@ -12,7 +12,7 @@ export class AuthHandlerService {
 
   private authenticationConfiguration: AuthConfig = {
     issuer: "http://localhost:9000",
-    redirectUri: window.location.origin + "/home",
+    redirectUri: window.location.origin + "/unauthorized",
     clientId: 'client',
     dummyClientSecret: 'secret',
     responseType: "code",
@@ -29,20 +29,52 @@ export class AuthHandlerService {
 
 
   constructor(private oauthService: OAuthService,private userService: UserService,private router: Router) {
-    if(this.oauthService.getAccessToken() != undefined) {
-      let accessToken: string = this.oauthService.getAccessToken();
-      this.currentAccessToken.next(accessToken);
-      this.readUserInfo(accessToken);
-    }
-    if(this.oauthService.getRefreshToken != undefined)
-        this.currentRefreshToken.next(this.oauthService.getRefreshToken());
-    
     this.oauthService.configure(this.authenticationConfiguration);
-    this.oauthService.loadDiscoveryDocumentAndTryLogin();
+    this.oauthService.loadDiscoveryDocumentAndTryLogin().then(() => {
+      let accessToken: string = this.oauthService.getAccessToken();
+      let refreshToken: string = this.oauthService.getRefreshToken();
+      if(accessToken != undefined && !this.isExpired(accessToken))
+      {
+        this.readUserInfo(accessToken);
+        this.currentAccessToken.next(accessToken);
+        this.currentRefreshToken.next(refreshToken);
+        this.authenticated.next(true);
+      }
+      else
+      { 
+        this.reset();
+      }
+    })
   }
 
-  public performLogin(): void {
-    this.oauthService.initCodeFlow();
+  private reset(): void {
+    this.authenticated.next(false);
+    this.currentUserID.next(undefined);
+    this.currentUser.next(undefined);
+    this.currentAccessToken.next(undefined);
+    this.currentRefreshToken.next(undefined);
+    this.router.navigate(['unauthorized']);
+  }
+
+  public isExpired(token: string): boolean {
+    let decodedJWT: any = JSON.parse(window.atob(token.split('.')[1]));
+    let expirationDate: any = decodedJWT.exp * 1000;
+    return Date.now() > expirationDate
+  }
+
+  public refreshToken(): void {
+    if(this.oauthService.getRefreshToken() != undefined) {
+      this.oauthService.refreshToken().then(() => {
+        let accessToken: string = this.oauthService.getAccessToken();
+        let refreshToken: string = this.oauthService.getRefreshToken();
+        this.currentAccessToken.next(accessToken);
+        this.currentRefreshToken.next(refreshToken);
+      })
+    }
+  }
+
+  public async performLogin() {
+    await this.oauthService.initCodeFlow();
   }
 
   private readUserInfo(token: string): void {
@@ -50,19 +82,11 @@ export class AuthHandlerService {
     let userID: string = decodedJWT.sub;
     this.currentUserID.next(userID);
     if(userID != undefined) {
-      this.authenticated.next(true);
       this.userService.getUser(userID).subscribe((value: any) => {
         this.currentUser.next(value);
       })
     }
   }
-
-  private isExpired(token: string): boolean {
-    let decodedJWT: any = JSON.parse(window.atob(token.split('.')[1]));
-    let expiration: any = decodedJWT.exp * 1000;
-    return Date.now() < expiration;
-  }
-
   public getCurrentUserID(value: boolean): any {return value ? this.currentUserID.value : this.currentUserID};
   public getCurrentUser(value: boolean): any {return value ? this.currentUser.value : this.currentUser};
   public isAuthenticated(value: boolean): any {return value ? this.authenticated.value : this.authenticated};

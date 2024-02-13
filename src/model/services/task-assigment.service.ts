@@ -15,8 +15,7 @@ export class TaskAssigmentService {
   }
 
   public getTaskAssigmentsByUser(id: any,paginationRequest: PaginationRequest): any {
-    const desiredURL: string = this.url + "/public/user/" + id;
-    console.log(desiredURL);
+    const desiredURL: string = this.url + "/private/user/" + id;
     let queryParams: HttpParams = this.httpUtils.generatePaginationParams(paginationRequest);
     return this.httpClient.get(desiredURL,{params: queryParams});
   }
