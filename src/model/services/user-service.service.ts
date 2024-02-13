@@ -14,7 +14,7 @@ export class UserServiceService {
   }
 
   public getUserDetails(userID: string): any {
-    const desiredURL: string = this.url + "/public/" + userID;
+    const desiredURL: string = this.url + "/private" + "/" + userID;
     console.log(desiredURL);
     let queryParams: HttpParams = new HttpParams();
     return this.httpClient.get(desiredURL,{params: queryParams});    

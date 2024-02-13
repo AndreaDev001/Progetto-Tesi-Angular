@@ -127,6 +127,7 @@ export interface TeamMember
 export interface User
 {
     id: string,
+    createdDate: string,
     email: string,
     username: string,
     name: string,

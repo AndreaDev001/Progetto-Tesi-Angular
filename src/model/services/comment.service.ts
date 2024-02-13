@@ -15,13 +15,13 @@ export class CommentService {
   }
 
   public getCommentsByPublisher(publisher: any,page: PaginationRequest): any {
-    const desiredURL: string = this.url + "/public/publisher/" + publisher;
+    const desiredURL: string = this.url + "/private" + "/publisher" + "/" + publisher;
     let queryParams: HttpParams = this.httpUtils.generatePaginationParams(page);
     return this.httpClient.get(desiredURL,{params: queryParams});
   }
 
   public getCommentsByDiscussion(discussion: any,page: PaginationRequest): any {
-    const desiredURL: string = this.url + "/public/discussion/" + discussion;
+    const desiredURL: string = this.url + "/private" + "/discussion" + "/" + discussion;
     let queryParams: HttpParams = this.httpUtils.generatePaginationParams(page);
     return this.httpClient.get(desiredURL,{params: queryParams});
   }

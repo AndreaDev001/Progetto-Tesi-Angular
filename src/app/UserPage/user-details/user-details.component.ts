@@ -4,7 +4,7 @@ import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faCheck, faMessage, faPoll, faTable, faTasks, faUser, faUserCircle } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
 import { TextOverflowItem } from 'src/app/Utility/text-overflow/text-overflow.component';
-import { TaskAssigmentService } from 'src/model/services/task-assigment.service';
+import { TaskAssignmentService } from 'src/model/services/task-assignment.service';
 import { Board, BoardMember, Discussion, PagedModel, PaginationRequest, Poll, PollVote, TaskAssignment, User } from 'src/model/interfaces';
 import { BoardMemberService } from 'src/model/services/board-member.service';
 import { DiscussionService } from 'src/model/services/discussion.service';
@@ -59,7 +59,7 @@ export class UserDetailsComponent implements AfterViewInit, OnDestroy{
   private currentUserID: string | undefined = undefined;
   private subscriptions: Subscription[] = [];
   
-  constructor(private discussionService: DiscussionService,private taskAssignmentService: TaskAssigmentService,private pollService: PollService,private boardMemberService: BoardMemberService) {
+  constructor(private discussionService: DiscussionService,private taskAssignmentService: TaskAssignmentService,private pollService: PollService,private boardMemberService: BoardMemberService) {
 
   }
 
@@ -79,7 +79,7 @@ export class UserDetailsComponent implements AfterViewInit, OnDestroy{
 
   public updateAssignments(currentPage: number,currentPageSize: number): void {
     let paginationRequest: PaginationRequest = {page: currentPage,pageSize: currentPageSize};
-    this.taskAssignmentService.getTaskAssigmentsByUser(this.currentUserID,paginationRequest).subscribe((value: PagedModel) => {
+    this.taskAssignmentService.getTaskAssignmentsByUser(this.currentUserID,paginationRequest).subscribe((value: PagedModel) => {
       if(value._embedded != undefined && value._embedded.content != undefined) {
         this.currentAssignedTasks.push.apply(this.currentAssignedTasks,value._embedded.content);
         console.log(this.currentAssignedTasks);

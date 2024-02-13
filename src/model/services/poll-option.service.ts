@@ -15,7 +15,7 @@ export class PollOptionService {
   }
 
   public getPollOptionsByPoll(pollID: string,page: PaginationRequest): any {
-    const desiredURL: string = this.url + "/public/poll/" + pollID;
+    const desiredURL: string = this.url + "/private" + "/poll" + "/" + pollID;
     let httpParams: HttpParams = this.httpUtils.generatePaginationParams(page);
     return this.httpClient.get(desiredURL,{params: httpParams});
   }

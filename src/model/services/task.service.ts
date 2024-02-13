@@ -21,7 +21,7 @@ export class TaskService {
   }
 
   public getTasksBySpec(filter: Filter): any {
-    const desiredURL: string = this.url + "/public/" + "spec";
+    const desiredURL: string = this.url + "/private" + "/spec";
     let queryParams: HttpParams = this.HttpUtils.generateParams(filter);
     return this.httpClient.get(desiredURL,{params: queryParams});
   }

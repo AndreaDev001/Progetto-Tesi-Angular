@@ -15,7 +15,7 @@ export class PollLikeService {
   }
 
   public getPollLikesByUser(userID: string,page: PaginationRequest): any {
-    const desiredURL: string = this.url + "/public/user/" + userID;
+    const desiredURL: string = this.url + "/private" + "/user" + "/" + userID;
     let queryParams: HttpParams = this.httpUtilsService.generatePaginationParams(page);
     return this.httpClient.get(desiredURL,{params: queryParams});
   }

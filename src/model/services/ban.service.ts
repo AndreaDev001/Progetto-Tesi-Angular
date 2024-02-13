@@ -21,7 +21,7 @@ export class BanService {
   }
 
   public getBansBySpec(filter: Filter): any {
-    const desiredURL: string = this.url + "/public/" + "spec";
+    const desiredURL: string = this.url + "/private/" + "spec";
     let queryParams: HttpParams = this.httpUtils.generateParams(filter);
     return this.httpClient.get(desiredURL,{params: queryParams});
   }

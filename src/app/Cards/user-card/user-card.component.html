@@ -1,1 +1,16 @@
-<p>user-card works!</p>
+<button class = "card-wrapper" *ngIf="user != undefined">
+    <div class = "user-card-header">
+        <img class = "user-image" src="https://i0.wp.com/picjumbo.com/wp-content/uploads/beautiful-nature-mountain-scenery-with-flowers-free-photo.jpg?w=600&quality=80">
+    </div>
+    <div class = "user-card-body">
+        <h4 class = "p-0 m-0">{{user.username}}</h4>
+        <div>
+            <span class = "p-0 m-0">{{user.name}}</span>
+            <span class = "p-0 mx-1">{{user.surname}}</span>
+        </div>
+        <div>
+            <span class = "p-0 m-0 d-block">{{user.gender}}</span>
+            <span class = "p-0 m-0 d-block">{{user.createdDate}}</span>
+        </div>
+    </div>
+</button>

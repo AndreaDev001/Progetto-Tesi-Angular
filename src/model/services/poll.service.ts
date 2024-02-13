@@ -17,31 +17,31 @@ export class PollService {
   }
 
   public getPollsByPublisher(publisherID: any,page: PaginationRequest): any {
-    const desiredURL: string = this.url + "/public/publisher/" + publisherID;
+    const desiredURL: string = this.url + "/private" + "/publisher" + "/" + publisherID;
     let queryParams: HttpParams = this.httpUtilsService.generatePaginationParams(page);
     return this.httpClient.get(desiredURL,{params: queryParams});
   }
 
   public getPollsBySpec(filter: Filter): any {
-    const desiredURL: string = this.url + "/private/spec";
+    const desiredURL: string = this.url + "/private" + "/spec";
     let queryParams: HttpParams = this.httpUtilsService.generateParams(filter);
     return this.httpClient.get(desiredURL,{params: queryParams});
   }
 
   public getStatues(): any {
-    const desiredURL: string = this.url + "/public/statues";
+    const desiredURL: string = this.url + "/public" + "/statues";
     let queryParams: HttpParams = new HttpParams();
     return this.httpClient.get(desiredURL,{params: queryParams});
   }
 
   public getSimilarPolls(pollID: any,page: PaginationRequest): any {
-    const desiredURL: string = this.url + "/public/similar/" + pollID;
+    const desiredURL: string = this.url + "/public" + "/similar" + "/" + pollID;
     let queryParams: HttpParams = this.httpUtilsService.generatePaginationParams(page);
     return this.httpClient.get(desiredURL,{params: queryParams});
   }
 
   public getPollByID(id: string): any {
-    const desiredURL: string = this.url + "/public/" + id;
+    const desiredURL: string = this.url + "/private" + "/" + id;
     let queryParams: HttpParams = new HttpParams();
     return this.httpClient.get(desiredURL,{params: queryParams});
   }

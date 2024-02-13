@@ -1,6 +1,9 @@
 <div class = "container-fluid p-3">
     <section id = "info-section">
-        <h3>Users</h3>
+        <div>
+            <h3 class = "d-inline-block">Users</h3>
+            <fa-icon class = "d-inline-block mx-2" [icon]="userIcon" style="font-size: 25px;"></fa-icon>
+        </div>
         <p class = "mt-1">Here you can see all of the users, use the filters to navigate</p>
     </section>
     <div class = "d-none d-md-block">
@@ -17,7 +20,7 @@
                     <p class = "p-0 m-0">Try to be the most precise as possible</p>
                 </div>
                 <div class = "row">
-                    <div class = "col-12 col-md-3 mt-1" *ngFor="let current of currentItems">
+                    <div class = "col-12 col-md-3 mt-3" *ngFor="let current of currentItems">
                         <app-user-card [user]="current"></app-user-card>
                     </div>
                 </div>

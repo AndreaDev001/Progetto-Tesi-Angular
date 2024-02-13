@@ -77,6 +77,7 @@ export class AuthHandlerService {
     await this.oauthService.initCodeFlow();
   }
 
+
   private readUserInfo(token: string): void {
     let decodedJWT: any = JSON.parse(window.atob(token.split('.')[1]));
     let userID: string = decodedJWT.sub;

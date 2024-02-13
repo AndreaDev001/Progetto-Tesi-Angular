@@ -15,19 +15,19 @@ export class ReportService {
   }
 
   public getReasons(): any {
-    const desiredURL: string = this.url + "/public/" + "reasons";
+    const desiredURL: string = this.url + "/public" + "/reasons";
     let queryParams = new HttpParams();
     return this.httpClient.get(desiredURL,{params: queryParams});
   }
 
   public getTypes(): any {
-    const desiredURL: string = this.url + "/public/" + "types";
+    const desiredURL: string = this.url + "/public" + "/types";
     let queryParams = new HttpParams();
     return this.httpClient.get(desiredURL,{params: queryParams});
   }
 
   public getReportsBySpec(filter: Filter): any {
-    const desiredURL: string = this.url + "/public/" + "spec";
+    const desiredURL: string = this.url + "/private" + "/spec";
     let queryParams = this.httpUtils.generateParams(filter);
     return this.httpClient.get(desiredURL,{params: queryParams});
   }
