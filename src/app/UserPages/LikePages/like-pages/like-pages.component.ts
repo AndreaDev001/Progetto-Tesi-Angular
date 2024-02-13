@@ -7,10 +7,10 @@ import { TextOverflowItem } from '../../../Utility/text-overflow/text-overflow.c
 import { ActivatedRoute } from '@angular/router';
 import { DiscussionService } from 'src/model/services/discussion.service';
 import { PollService } from 'src/model/services/poll.service';
-import { DiscussionLikeService } from '../../../discussion-like.service';
-import { PollLikeService } from '../../../poll-like.service';
-import { TaskLikeService } from '../../../task-like.service';
-import { CommentLikeService } from '../../../comment-like.service';
+import { DiscussionLikeService } from 'src/model/services/discussion-like.service';
+import { CommentLikeService } from 'src/model/services/comment-like.service';
+import { PollLikeService } from '../../../../model/services/poll-like.service';
+import { TaskLikeService } from '../../../../model/services/task-like.service';
 import { Subscription } from 'rxjs';
 
 @Component({

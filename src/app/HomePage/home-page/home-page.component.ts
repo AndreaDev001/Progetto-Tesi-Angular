@@ -9,11 +9,11 @@ import { Board, BoardInvite, BoardMember, Discussion, PagedModel, PaginationRequ
 import { BoardService } from 'src/model/services/board.service';
 import { TaskService } from 'src/model/services/task.service';
 import { BoardMemberService } from 'src/model/services/board-member.service';
-import { AuthenticationHandlerService } from 'src/app/authentication-handler.service';
 import { DiscussionService } from 'src/model/services/discussion.service';
 import { PollService } from 'src/model/services/poll.service';
 import { BoardInviteService } from 'src/model/services/board-invite.service';
 import { TextOverflowItem } from 'src/app/Utility/text-overflow/text-overflow.component';
+import { AuthHandlerService } from 'src/app/auth/auth-handler.service';
 
 interface OptionTemplate
 {
@@ -74,7 +74,7 @@ export class HomePageComponent implements AfterViewInit, OnDestroy {
   public descriptionItems: DescriptionItem[] = [];
   public items: TextOverflowItem[] = [];
 
-  constructor(private authenticationHandler: AuthenticationHandlerService,private boardInvitesService: BoardInviteService,private boardMemberService: BoardMemberService,private taskAssignmentService: TaskAssignmentService,private discussionService: DiscussionService,private pollService: PollService,private router: Router,private activatedRoute: ActivatedRoute) {
+  constructor(private authHandler: AuthHandlerService,private boardInvitesService: BoardInviteService,private boardMemberService: BoardMemberService,private taskAssignmentService: TaskAssignmentService,private discussionService: DiscussionService,private pollService: PollService,private router: Router,private activatedRoute: ActivatedRoute) {
 
   }
 
@@ -93,20 +93,22 @@ export class HomePageComponent implements AfterViewInit, OnDestroy {
 
     this.subscriptions.push(this.activatedRoute.queryParams.subscribe((value: any) => {
       let view: string = value.view;
-      let userID: string = value.userID;
-      if(userID != undefined)
-          this.currentUserID = value.userID;
       if(view == null) 
       {
         this.currentTemplate = this.boardTemplate;
         this.currentViewPath = "boards";
         this.updateRouter(this.currentViewPath);
       }
-      else
+      else if(this.currentUserID != undefined) {
         this.updateItems(view);
+      }
     }))
-    this.subscriptions.push(this.authenticationHandler.getCurrentUser(false).subscribe((value: any) => this.currentUser = value));
-    this.subscriptions.push(this.authenticationHandler.getCurrentUserID(false).subscribe((value: any) => this.currentUserID = value));
+    this.authHandler.getCurrentUserID(false).subscribe((value: any) => {
+      this.currentUserID = value;
+      if(this.currentUserID != undefined) {
+        this.updateItems(this.currentViewPath);
+      }
+    });
   }
 
 

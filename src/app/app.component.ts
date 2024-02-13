@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthHandlerService } from './auth-handler.service';
+import { AuthHandlerService } from './auth/auth-handler.service';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
@@ -10,14 +10,11 @@ import { HttpClient } from '@angular/common/http';
 export class AppComponent implements OnInit {
   title = 'Progetto-Tirocinio-Angular';
 
-  constructor(private authorizationHandler: AuthHandlerService) {
+  constructor() {
 
   }
 
   public ngOnInit(): void {
-
-  }
-  public performLogin(): void {
 
   }
 }

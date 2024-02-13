@@ -4,7 +4,7 @@ import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faCheck, faMessage, faPoll, faTable, faTasks, faUser, faUserCircle } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
 import { TextOverflowItem } from 'src/app/Utility/text-overflow/text-overflow.component';
-import { TaskAssigmentService } from 'src/app/task-assigment.service';
+import { TaskAssigmentService } from 'src/model/services/task-assigment.service';
 import { Board, BoardMember, Discussion, PagedModel, PaginationRequest, Poll, PollVote, TaskAssignment, User } from 'src/model/interfaces';
 import { BoardMemberService } from 'src/model/services/board-member.service';
 import { DiscussionService } from 'src/model/services/discussion.service';

@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
-import {HttpClientModule} from '@angular/common/http'
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http'
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './Utility/header/header.component';
@@ -36,7 +36,6 @@ import { OffCanvasComponent } from './Utility/off-canvas/off-canvas.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { PaginationComponent } from './Utility/pagination/pagination.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
-import { HomePageComponent } from './HomePage/home-page/home-page.component';
 import { BoardCardComponent } from './Cards/board-card/board-card.component';
 import { TaskCardComponent } from './Cards/task-card/task-card.component';
 import { DiscussionCardComponent } from './Cards/discussion-card/discussion-card.component';
@@ -57,7 +56,7 @@ import { PollOptionComponent } from './PollPage/poll-option/poll-option.componen
 import { TextOverflowComponent } from './Utility/text-overflow/text-overflow.component';
 import { LikePagesComponent } from './UserPages/LikePages/like-pages/like-pages.component';
 import { TabPaneComponent } from './Utility/tab-pane/tab-pane.component';
-import { CommentCardComponent } from './comment-card/comment-card.component';
+import { CommentCardComponent } from './Cards/comment-card/comment-card.component';
 import { DiscussionsPageComponent } from './UserPages/DiscussionsPage/discussions-page/discussions-page.component';
 import { PollsPageComponent } from './UserPages/PollsPage/polls-page/polls-page.component';
 import { OAuthModule } from 'angular-oauth2-oidc';
@@ -65,9 +64,11 @@ import { UsersPageComponent } from './SearchPages/UserPage/users-page/users-page
 import { SearchDiscussionsComponent } from './SearchPages/DiscussionPage/search-discussions/search-discussions.component';
 import { SearchPollsComponent } from './SearchPages/PollPage/search-polls/search-polls.component';
 import { UserFilterComponent } from './SearchPages/UserPage/user-filter/user-filter.component';
-import { UserCardComponent } from './user-card/user-card.component';
+import { UserCardComponent } from './Cards/user-card/user-card.component';
 import { PollFilterComponent } from './SearchPages/PollPage/poll-filter/poll-filter.component';
 import { DiscussionFilterComponent } from './SearchPages/DiscussionPage/discussion-filter/discussion-filter.component';
+import { HomePageComponent } from './HomePage/home-page/home-page.component';
+import { UnAuthorizedPageComponent } from './un-authorized-page/un-authorized-page.component';
 
 @NgModule({
   declarations: [
@@ -126,7 +127,8 @@ import { DiscussionFilterComponent } from './SearchPages/DiscussionPage/discussi
     UserFilterComponent,
     UserCardComponent,
     PollFilterComponent,
-    DiscussionFilterComponent
+    DiscussionFilterComponent,
+    UnAuthorizedPageComponent
   ],
   imports: [
     BrowserModule,
@@ -140,9 +142,13 @@ import { DiscussionFilterComponent } from './SearchPages/DiscussionPage/discussi
     ReactiveFormsModule,
     FontAwesomeModule,
     NgxSpinnerModule,
-    OAuthModule.forRoot()
+    OAuthModule.forRoot({
+      resourceServer: {
+        allowedUrls: ['http://localhost:8080/api/v1'],
+        sendAccessToken: true
+      }
+    })
   ],
-  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule {

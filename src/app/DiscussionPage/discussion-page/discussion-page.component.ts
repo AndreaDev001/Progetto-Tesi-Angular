@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faMessage } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
-import { CommentService } from 'src/app/comment.service';
+import { CommentService } from 'src/model/services/comment.service';
 import { Comment, Discussion, PagedModel, PaginationRequest } from 'src/model/interfaces';
 import { DiscussionService } from 'src/model/services/discussion.service';
 

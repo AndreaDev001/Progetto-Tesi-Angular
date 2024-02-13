@@ -14,22 +14,25 @@ import { LikePagesComponent } from './UserPages/LikePages/like-pages/like-pages.
 import { UsersPageComponent } from './SearchPages/UserPage/users-page/users-page.component';
 import { SearchDiscussionsComponent } from './SearchPages/DiscussionPage/search-discussions/search-discussions.component';
 import { SearchPollsComponent } from './SearchPages/PollPage/search-polls/search-polls.component';
+import { UnAuthorizedPageComponent } from './un-authorized-page/un-authorized-page.component';
+import { AuthGuard } from './auth/auth.guard';
 
 const routes: Routes = [
-  {path: 'home',component: HomePageComponent,title: 'Home'},
-  {path: 'search/boards',component: BoardPageComponent,title: "Search Boards"},
-  {path: 'search/tasks',component: TasksPageComponent,title: "Search Tasks"},
-  {path: 'search/reports',component: ReportPageComponent,title: "Search Reports"},
-  {path: 'search/bans',component: BanPageComponent,title: "Search Bans"},
-  {path: 'search/users',component: UsersPageComponent,title: "Search Users"},
-  {path: 'search/discussions',component: SearchDiscussionsComponent,title: "Search Discussions"},
-  {path: 'search/polls',component: SearchPollsComponent,title: "Search Polls"},
-  {path: 'user/:id',component: UserPageComponent,title: "User"},
-  {path: 'discussion/:id',component: DiscussionPageComponent,title: "Discussion"},
-  {path: 'poll/:id',component: PollPageComponent,title: "Poll"},
-  {path: 'likes/:id',component: LikePagesComponent,title: "Likes"},
-  {path: 'discussions/:id',component: DiscussionsPageComponent,title: 'Discussions'},
-  {path: 'polls/:id',component: PollsPageComponent,title: 'Polls'},
+  {path: 'home',component: HomePageComponent,title: 'Home',canActivate: [AuthGuard]},
+  {path: 'search/boards',component: BoardPageComponent,title: "Search Boards",canActivate: [AuthGuard]},
+  {path: 'search/tasks',component: TasksPageComponent,title: "Search Tasks",canActivate: [AuthGuard]},
+  {path: 'search/reports',component: ReportPageComponent,title: "Search Reports",canActivate: [AuthGuard]},
+  {path: 'search/bans',component: BanPageComponent,title: "Search Bans",canActivate: [AuthGuard]},
+  {path: 'search/users',component: UsersPageComponent,title: "Search Users",canActivate: [AuthGuard]},
+  {path: 'search/discussions',component: SearchDiscussionsComponent,title: "Search Discussions",canActivate: [AuthGuard]},
+  {path: 'search/polls',component: SearchPollsComponent,title: "Search Polls",canActivate: [AuthGuard]},
+  {path: 'user/:id',component: UserPageComponent,title: "User",canActivate: [AuthGuard]},
+  {path: 'discussion/:id',component: DiscussionPageComponent,title: "Discussion",canActivate: [AuthGuard]},
+  {path: 'poll/:id',component: PollPageComponent,title: "Poll",canActivate: [AuthGuard]},
+  {path: 'likes/:id',component: LikePagesComponent,title: "Likes",canActivate: [AuthGuard]},
+  {path: 'discussions/:id',component: DiscussionsPageComponent,title: 'Discussions',canActivate: [AuthGuard]},
+  {path: 'polls/:id',component: PollsPageComponent,title: 'Polls',canActivate: [AuthGuard]},
+  {path: 'unauthorized',component: UnAuthorizedPageComponent,title: "UnAuthorized"}
 ];
 
 @NgModule({

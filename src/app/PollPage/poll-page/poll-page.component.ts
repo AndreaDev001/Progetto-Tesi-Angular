@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faCheckToSlot, faPoll } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
-import { PollOptionService } from 'src/app/poll-option.service';
+import { PollOptionService } from 'src/model/services/poll-option.service';
 import { PagedModel, Poll, PollOption } from 'src/model/interfaces';
 import { PollService } from 'src/model/services/poll.service';
 
