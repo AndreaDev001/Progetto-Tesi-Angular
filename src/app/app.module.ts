@@ -60,6 +60,14 @@ import { TabPaneComponent } from './Utility/tab-pane/tab-pane.component';
 import { CommentCardComponent } from './comment-card/comment-card.component';
 import { DiscussionsPageComponent } from './UserPages/DiscussionsPage/discussions-page/discussions-page.component';
 import { PollsPageComponent } from './UserPages/PollsPage/polls-page/polls-page.component';
+import { OAuthModule } from 'angular-oauth2-oidc';
+import { UsersPageComponent } from './SearchPages/UserPage/users-page/users-page.component';
+import { SearchDiscussionsComponent } from './SearchPages/DiscussionPage/search-discussions/search-discussions.component';
+import { SearchPollsComponent } from './SearchPages/PollPage/search-polls/search-polls.component';
+import { UserFilterComponent } from './SearchPages/UserPage/user-filter/user-filter.component';
+import { UserCardComponent } from './user-card/user-card.component';
+import { PollFilterComponent } from './SearchPages/PollPage/poll-filter/poll-filter.component';
+import { DiscussionFilterComponent } from './SearchPages/DiscussionPage/discussion-filter/discussion-filter.component';
 
 @NgModule({
   declarations: [
@@ -111,7 +119,14 @@ import { PollsPageComponent } from './UserPages/PollsPage/polls-page/polls-page.
     TabPaneComponent,
     CommentCardComponent,
     DiscussionsPageComponent,
-    PollsPageComponent
+    PollsPageComponent,
+    UsersPageComponent,
+    SearchDiscussionsComponent,
+    SearchPollsComponent,
+    UserFilterComponent,
+    UserCardComponent,
+    PollFilterComponent,
+    DiscussionFilterComponent
   ],
   imports: [
     BrowserModule,
@@ -124,7 +139,8 @@ import { PollsPageComponent } from './UserPages/PollsPage/polls-page/polls-page.
     FormsModule,
     ReactiveFormsModule,
     FontAwesomeModule,
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    OAuthModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]

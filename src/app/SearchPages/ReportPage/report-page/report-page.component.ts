@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit,AfterViewInit, ViewChild } from '@angular/core';
+ import { Component, OnDestroy, OnInit,AfterViewInit, ViewChild } from '@angular/core';
 import { Filter } from '../report-filter/report-filter.component';
 import { Subscription } from 'rxjs';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';

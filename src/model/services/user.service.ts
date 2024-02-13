@@ -1,5 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { HttpUtilsService } from './http-utils.service';
+import { Filter } from 'src/app/SearchPages/UserPage/user-filter/user-filter.component';
 
 @Injectable({
   providedIn: 'root'
@@ -8,10 +10,15 @@ export class UserService {
 
   private url: string = "http://localhost:8080/api/v1/users";
 
-  constructor(private httpClient: HttpClient) { 
+  constructor(private httpClient: HttpClient,private httpUtils: HttpUtilsService) { 
 
   }
 
+  public getUsersBySpec(filter: Filter): any {
+    const desiredURL: string = this.url + "/private/spec";
+    let queryParams: HttpParams = this.httpUtils.generateParams(filter);
+    return this.httpClient.get(desiredURL,{params: queryParams});
+  }
   public getGenders(): any {
     const desiredURL: string = this.url + "/public/" + "genders"
     let queryParams: HttpParams = new HttpParams();

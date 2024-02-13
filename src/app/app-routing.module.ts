@@ -11,6 +11,9 @@ import { DiscussionsPageComponent } from './UserPages/DiscussionsPage/discussion
 import { PollsPageComponent } from './UserPages/PollsPage/polls-page/polls-page.component';
 import { PollPageComponent } from './PollPage/poll-page/poll-page.component';
 import { LikePagesComponent } from './UserPages/LikePages/like-pages/like-pages.component';
+import { UsersPageComponent } from './SearchPages/UserPage/users-page/users-page.component';
+import { SearchDiscussionsComponent } from './SearchPages/DiscussionPage/search-discussions/search-discussions.component';
+import { SearchPollsComponent } from './SearchPages/PollPage/search-polls/search-polls.component';
 
 const routes: Routes = [
   {path: 'home',component: HomePageComponent,title: 'Home'},
@@ -18,12 +21,15 @@ const routes: Routes = [
   {path: 'search/tasks',component: TasksPageComponent,title: "Search Tasks"},
   {path: 'search/reports',component: ReportPageComponent,title: "Search Reports"},
   {path: 'search/bans',component: BanPageComponent,title: "Search Bans"},
+  {path: 'search/users',component: UsersPageComponent,title: "Search Users"},
+  {path: 'search/discussions',component: SearchDiscussionsComponent,title: "Search Discussions"},
+  {path: 'search/polls',component: SearchPollsComponent,title: "Search Polls"},
   {path: 'user/:id',component: UserPageComponent,title: "User"},
   {path: 'discussion/:id',component: DiscussionPageComponent,title: "Discussion"},
   {path: 'poll/:id',component: PollPageComponent,title: "Poll"},
   {path: 'likes/:id',component: LikePagesComponent,title: "Likes"},
   {path: 'discussions/:id',component: DiscussionsPageComponent,title: 'Discussions'},
-  {path: 'polls/:id',component: PollsPageComponent,title: 'Polls'}
+  {path: 'polls/:id',component: PollsPageComponent,title: 'Polls'},
 ];
 
 @NgModule({

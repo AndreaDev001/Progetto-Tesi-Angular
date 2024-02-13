@@ -1,5 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Filter } from 'src/app/SearchPages/DiscussionPage/discussion-filter/discussion-filter.component';
 import { PaginationRequest } from 'src/model/interfaces';
 import { HttpUtilsService } from 'src/model/services/http-utils.service';
 
@@ -17,6 +18,12 @@ export class DiscussionService {
   public getDiscussionsByPublisher(publisherID: any,page: PaginationRequest): any {
     const desiredURL: string = this.url + "/public/publisher/" + publisherID;
     let queryParams: HttpParams = this.httpUtils.generatePaginationParams(page);
+    return this.httpClient.get(desiredURL,{params: queryParams});
+  }
+
+  public getDiscussionsBySpec(filter: Filter): any {
+    const desiredURL: string = this.url + "/private/spec";
+    let queryParams: HttpParams = this.httpUtils.generateParams(filter);
     return this.httpClient.get(desiredURL,{params: queryParams});
   }
 
