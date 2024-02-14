@@ -70,6 +70,12 @@ import { DiscussionFilterComponent } from './SearchPages/DiscussionPage/discussi
 import { HomePageComponent } from './HomePage/home-page/home-page.component';
 import { UnAuthorizedPageComponent } from './un-authorized-page/un-authorized-page.component';
 import { RefreshInterceptor } from './auth/RefreshInterceptor';
+import { ManageBoardPageComponent } from './ManageBoard/manage-board-page/manage-board-page.component';
+import { TaskGroupComponent } from './ManageBoard/task-group/task-group.component';
+import { TaskElementComponent } from './ManageBoard/task-element/task-element.component';
+import { TaskTagComponent } from './ManageBoard/task-tag/task-tag.component';
+import { BoardHeaderComponent } from './ManageBoard/board-header/board-header.component';
+import {DragDropModule} from '@angular/cdk/drag-drop'
 
 @NgModule({
   declarations: [
@@ -129,13 +135,19 @@ import { RefreshInterceptor } from './auth/RefreshInterceptor';
     UserCardComponent,
     PollFilterComponent,
     DiscussionFilterComponent,
-    UnAuthorizedPageComponent
+    UnAuthorizedPageComponent,
+    ManageBoardPageComponent,
+    TaskGroupComponent,
+    TaskElementComponent,
+    TaskTagComponent,
+    BoardHeaderComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     NgbModule,
     HttpClientModule,
+    DragDropModule,
     BrowserAnimationsModule,
     MatFormFieldModule,
     MatInputModule,

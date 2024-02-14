@@ -1,0 +1,52 @@
+<div class = "task-group-wrapper" *ngIf="!createNew">
+    <div class = "task-group-header">
+        <div class = "d-flex">
+            <div class = "w-50 text-start">
+                <p class = "group-title">In Progress</p>
+            </div>
+            <div class = "w-50 text-end">
+                <button class = "option-button">
+                    <fa-icon [icon]="optionIcon" style="font-size: 15px;"></fa-icon>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class = "task-group-body">
+        <div class = "task-element-wrapper">
+            <app-task-element></app-task-element>
+        </div>
+        <div class = "task-element-wrapper">
+            <app-task-element></app-task-element>
+        </div>
+        <div class = "task-element-wrapper">
+            <app-task-element></app-task-element>
+        </div>
+        <div class = "task-element-wrapper">
+            <app-task-element></app-task-element>
+        </div>
+    </div>
+    <div class = "task-group-footer">
+        <div class = "w-50 text-start d-inline-block">
+            <button class = "add-task-button">
+                <fa-icon class = "d-inline-block" [icon]="addTaskIcon"></fa-icon>
+                <span class = "d-inline-block mx-1">Add a task</span>
+            </button>
+        </div>
+        <div class = "w-50 text-end d-inline-block">
+            <button class = "info-button">
+                <fa-icon class = "d-inline-block" [icon]="infoIcon"></fa-icon>
+            </button>
+        </div>
+    </div>
+</div>
+<div class = "task-group-wrapper" *ngIf="createNew">
+    <div class = "task-group-header">
+        <p class = "group-title">Create a new group</p>
+    </div>
+    <div class = "task-group-body">
+        <p>Write the name of the task group...</p>
+    </div>
+    <div class = "task-group-footer">
+        <button class = "create-group-button">Create</button>
+    </div>
+</div>

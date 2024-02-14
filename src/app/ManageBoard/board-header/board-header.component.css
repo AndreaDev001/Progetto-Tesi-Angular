@@ -1,0 +1,41 @@
+button.option-template
+{
+    margin-left: 5px;
+    padding: 10px 10px; 
+    border-radius: 10px;
+    border: 0;
+    background-color: var(--primary-color);
+    transition: 0.2s ease-in-out all;
+}
+button.option-template:hover {
+    background-color: var(--tertiary-color);
+}
+div.image-wrapper
+{
+    position: absolute;
+}
+div.board-header-wrapper
+{
+    padding: 5px;
+}
+img.member-image
+{
+    border-radius: 60%;
+    width: 35px;
+    height: 35px;
+    filter: brightness(70%);
+    border: 1px solid var(--secondary-color);
+}
+button.image-wrapper
+{
+    border: 0;
+    background-color: inherit;
+}
+button.member-amount-button
+{
+    border: 0;
+    border-radius: 60%;
+    background-color: var(--primary-color);
+    width: 35px;
+    height: 35px;
+}

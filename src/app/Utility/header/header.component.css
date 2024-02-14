@@ -8,7 +8,7 @@ ul.header-list
 {
     margin: 0px;
     list-style-type: none;
-    padding: 10px 20px;
+    padding: 2px 20px;
     background: var(--primary-color);
 }
 a.header-item

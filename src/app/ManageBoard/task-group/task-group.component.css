@@ -1,0 +1,66 @@
+div.task-group-wrapper {
+    background-color: var(--primary-color);
+    padding: 5px;
+    border-radius: 10px;
+    width: 300px;
+}
+div.task-group-header {
+    position: relative;
+    padding: 5px;
+}
+div.task-group-footer {
+    position: relative;
+    padding: 5px;
+}
+div.task-group-body {
+    padding: 5px;
+    background-color: var(--secondary-color);
+}
+p.group-title {
+    padding: 5px;
+    margin: 0;
+    font-size: 15px
+}
+button.option-button
+{
+    border: 0;
+    background-color: var(--primary-color);
+    padding: 5px;
+    transition: 0.2s ease-in-out all;
+}
+button.option-button:hover {
+    background-color: var(--tertiary-color);
+    border-radius: 100px;
+}
+button.create-group-button {
+    border: 0;
+    padding: 5px;
+    background-color: var(--secondary-color);
+    border-radius: 5px;
+}
+button.add-task-button
+{
+    border: 0;
+    font-size: 15px;
+    background-color: var(--primary-color);
+    padding: 5px;
+    transition: 0.2s ease-in-out all;
+}
+button.info-button {
+    border: 0;
+    font-size: 15px;
+    background-color: var(--primary-color);
+    padding: 5px;
+    transition: 0.2s ease-in-out;
+}
+button.add-task-button:hover {
+    background-color: var(--tertiary-color);
+    border-radius: 20px;
+}
+button.info-button:hover {
+    background-color: var(--tertiary-color);
+    border-radius: 20px;
+}
+div.task-element-wrapper {
+    margin-top: 5px;
+}

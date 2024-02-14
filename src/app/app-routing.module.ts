@@ -16,6 +16,7 @@ import { SearchDiscussionsComponent } from './SearchPages/DiscussionPage/search-
 import { SearchPollsComponent } from './SearchPages/PollPage/search-polls/search-polls.component';
 import { UnAuthorizedPageComponent } from './un-authorized-page/un-authorized-page.component';
 import { AuthGuard } from './auth/auth.guard';
+import { ManageBoardPageComponent } from './ManageBoard/manage-board-page/manage-board-page.component';
 
 const routes: Routes = [
   {path: 'home',component: HomePageComponent,title: 'Home'},
@@ -32,7 +33,8 @@ const routes: Routes = [
   {path: 'likes/:id',component: LikePagesComponent,title: "Likes",canActivate: [AuthGuard]},
   {path: 'discussions/:id',component: DiscussionsPageComponent,title: 'Discussions',canActivate: [AuthGuard]},
   {path: 'polls/:id',component: PollsPageComponent,title: 'Polls',canActivate: [AuthGuard]},
-  {path: 'unauthorized',component: UnAuthorizedPageComponent,title: "UnAuthorized"}
+  {path: 'unauthorized',component: UnAuthorizedPageComponent,title: "UnAuthorized"},
+  {path: "board/:id",component: ManageBoardPageComponent,title: "Manage Board"}
 ];
 
 @NgModule({

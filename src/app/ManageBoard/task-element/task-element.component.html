@@ -1,0 +1,42 @@
+<button class = "task-element-wrapper">
+    <div class = "task-element-header">
+        <div class = "position-relative">
+            <div class = "d-flex">
+                <app-task-tag></app-task-tag>
+                <div style="margin-left: 5px;">
+                    <app-task-tag></app-task-tag>
+                </div>
+            </div>
+            <div class = "position-absolute" style="top: 0;right: 0">
+                <button class = "option-button">
+                    <fa-icon [icon]="optionIcon"></fa-icon>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class = "task-element-body">
+        <p class = "task-element-title">Task Title</p>
+        <p class = "task-element-subtitle">Task Subtitle, please enter a valid subtitle</p>
+    </div>
+    <div class = "task-element-footer">
+        <div class = "text-start">
+            <ng-container *ngTemplateOutlet="assigedTemplate"></ng-container>
+            <ng-container *ngTemplateOutlet="assigedTemplate"></ng-container>
+            <ng-container *ngTemplateOutlet="assigedTemplate"></ng-container>
+            <ng-container *ngTemplateOutlet="assigedTemplate"></ng-container>
+        </div>
+    </div>
+</button>
+<ng-template #descriptionTemplate let-item="item">
+    <div style="font-size: 14px;">
+        <fa-icon class = "d-inline-block" [icon]="item.icon"></fa-icon>
+        <span class = "mx-1 d-inline-block">{{item.value}}</span>
+    </div>
+</ng-template>
+<ng-template #assigedTemplate let-item="item">
+    <button class = "assigned-member-wrapper">
+        <div class = "image-wrapper">
+            <img class = "assigned-image" src="https://i0.wp.com/picjumbo.com/wp-content/uploads/beautiful-nature-mountain-scenery-with-flowers-free-photo.jpg?w=600&quality=80">
+        </div>
+    </button>
+</ng-template>
