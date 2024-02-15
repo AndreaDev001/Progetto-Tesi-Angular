@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { Tag } from 'src/model/interfaces';
 
 @Component({
   selector: 'app-task-tag',
@@ -6,5 +7,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./task-tag.component.css']
 })
 export class TaskTagComponent {
-
+  @Input() tag: Tag | undefined = undefined;
 }

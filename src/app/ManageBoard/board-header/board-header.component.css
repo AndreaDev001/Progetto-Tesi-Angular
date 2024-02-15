@@ -17,6 +17,7 @@ div.image-wrapper
 div.board-header-wrapper
 {
     padding: 5px;
+    opacity: 0.85;
 }
 img.member-image
 {

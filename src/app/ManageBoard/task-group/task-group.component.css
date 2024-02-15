@@ -3,6 +3,7 @@ div.task-group-wrapper {
     padding: 5px;
     border-radius: 10px;
     width: 300px;
+    opacity: 0.90;
 }
 div.task-group-header {
     position: relative;

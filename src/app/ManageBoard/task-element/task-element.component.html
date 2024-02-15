@@ -1,4 +1,4 @@
-<button class = "task-element-wrapper">
+<button class = "task-element-wrapper" *ngIf="task != undefined">
     <div class = "task-element-header">
         <div class = "position-relative">
             <div class = "d-flex">
@@ -15,15 +15,14 @@
         </div>
     </div>
     <div class = "task-element-body">
-        <p class = "task-element-title">Task Title</p>
-        <p class = "task-element-subtitle">Task Subtitle, please enter a valid subtitle</p>
+        <p class = "task-element-title">{{task.title}}</p>
+        <p class = "task-element-subtitle">{{task.subtitle}}</p>
     </div>
     <div class = "task-element-footer">
         <div class = "text-start">
-            <ng-container *ngTemplateOutlet="assigedTemplate"></ng-container>
-            <ng-container *ngTemplateOutlet="assigedTemplate"></ng-container>
-            <ng-container *ngTemplateOutlet="assigedTemplate"></ng-container>
-            <ng-container *ngTemplateOutlet="assigedTemplate"></ng-container>
+            <div class = "mx-1" *ngFor="let current of currentTaskAssignment">
+                <ng-container *ngTemplateOutlet="assigedTemplate;context: {item: current}"></ng-container>
+            </div>
         </div>
     </div>
 </button>

@@ -1,6 +1,9 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faCheck, faClockFour, faEllipsis } from '@fortawesome/free-solid-svg-icons';
+import { TagService } from 'src/app/tag.service';
+import { CollectionModel, Tag, Task, TaskAssignment } from 'src/model/interfaces';
+import { TaskAssignmentService } from 'src/model/services/task-assignment.service';
 
 
 interface DescriptionItem
@@ -13,17 +16,26 @@ interface DescriptionItem
   templateUrl: './task-element.component.html',
   styleUrls: ['./task-element.component.css']
 })
-export class TaskElementComponent implements OnInit,OnDestroy {
+export class TaskElementComponent implements OnInit {
 
-  public descriptionItems: DescriptionItem[] = [];
+  @Input() task: Task | undefined = undefined;
+  public currentTags: Tag[] = [];
+  public currentTaskAssignment: TaskAssignment[] = [];
+  public currentDescriptionItems: DescriptionItem[] = [];
   public optionIcon: IconDefinition = faEllipsis;
 
-  public ngOnInit(): void {
-    this.descriptionItems.push({icon: faClockFour,value: "24 Mar"});
-    this.descriptionItems.push({icon: faCheck,value: "3/4"});
+  constructor(private tagService: TagService,private taskAssignment: TaskAssignmentService) {
+
   }
 
-  public ngOnDestroy(): void {
-
+  public ngOnInit(): void {
+    if(this.task != undefined) {
+      this.tagService.getTagsByTask(this.task.id).subscribe((value: CollectionModel) => {
+        this.currentTags = value._embedded != undefined && value._embedded.content != undefined ? value._embedded.content : [];
+      })
+      this.taskAssignment.getTaskAssignmentsByTask(this.task.id).subscribe((value: CollectionModel) => {
+        this.currentTaskAssignment = value._embedded != undefined && value._embedded.content != undefined ? value._embedded.content : [];
+      })
+    }
   }
 }

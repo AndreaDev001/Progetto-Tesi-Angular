@@ -95,19 +95,23 @@ export interface Tag
 }
 export interface Task
 {
+    id: string,
+    createdDate: string,
     title: string,
+    subtitle: string,
     name?: string,
     description: string,
     priority?: string,
     publisher: UserRef,
     taskGroup?: TaskGroupRef,
     expirationDate: string,
-    createdDate: string,
     amountOfLikes: number,
     amountOfAssignedMembers: number
 }
 export interface TaskGroup
 {
+    id: string,
+    createdDate: string
     name: string,
     publisher: UserRef,
     board: BoardRef,

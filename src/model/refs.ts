@@ -58,6 +58,7 @@ export interface TaskRef
 {
     id: string;
     title: string,
+    subtitle: string,
     description: string
     amountOfLikes: number,
     amountOfAssignedMembers: number

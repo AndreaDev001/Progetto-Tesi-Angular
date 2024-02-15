@@ -19,4 +19,15 @@ export class TaskAssignmentService {
     let queryParams: HttpParams = this.httpUtils.generatePaginationParams(page);
     return this.httpClient.get(desiredURL,{params: queryParams});
   }
+
+  public getTaskAssignmentsByBoard(boardID: any): any {
+    const desiredURL: string = this.url + "/private" + "/board" + "/" + boardID;
+    let queryParams: HttpParams = new HttpParams();
+    return this.httpClient.get(desiredURL,{params: queryParams});
+  }
+  public getTaskAssignmentsByTask(taskID: any): any {
+    const desiredURL: string = this.url + "/private" + "/task" + "/" + taskID;
+    let queryParams: HttpParams = new HttpParams();
+    return this.httpClient.get(desiredURL,{params: queryParams});
+  }
 }

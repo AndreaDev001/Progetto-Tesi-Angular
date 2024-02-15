@@ -20,6 +20,13 @@ export class BoardService {
     return this.httpClient.get(desiredURL,{params: queryParams});
   }
 
+
+  public getBoardById(id: any): any {
+    const desiredURL: string = this.url + "/private" + "/" + id;
+    let queryParams: HttpParams = new HttpParams();
+    return this.httpClient.get(desiredURL,{params: queryParams});
+  }
+
   public getBoardsBySpec(filter: Filter): any {
     const desiredURL: string = this.url + "/private/" + "spec";
     let queryParams: HttpParams = this.httpUtils.generateParams(filter);

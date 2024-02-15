@@ -20,6 +20,12 @@ export class TaskService {
     return this.httpClient.get(desiredURL,{params: queryParams});
   }
 
+  public getTasksByGroup(id: string): any {
+    const desiredURL: string = this.url + "/private" + "/group" + "/" + id;
+    let queryParams: HttpParams = new HttpParams();
+    return this.httpClient.get(desiredURL,{params: queryParams})
+  }
+
   public getTasksBySpec(filter: Filter): any {
     const desiredURL: string = this.url + "/private" + "/spec";
     let queryParams: HttpParams = this.HttpUtils.generateParams(filter);
