@@ -1,0 +1,78 @@
+div.task-overlay-wrapper
+{
+    padding-left: 25%;
+    padding-right: 25%;
+}
+div.task-overlay-header {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+div.task-overlay-content {
+    padding: 10px;
+}
+div.task-overlay-footer {
+    padding: 10px;
+}
+button.default-button
+{
+    padding: 5px 15px;
+    border: 0;
+    border-radius: 5px;
+    background-color: var(--primary-color);
+}
+div.content-wrapper
+{
+    background-color: var(--secondary-color);
+    padding: 5px 20px;
+    border-radius: 10px;
+    border: 1px solid var(--primary-color);
+}
+p.overlay-section-title
+{
+    padding: 0;
+    margin: 0;
+    font-size: 17px;
+}
+button.add-member-button
+{
+    width: 30px;
+    height: 30px;
+    border: 0;
+    margin: 0;
+    background-color: var(--primary-color);
+    transition: 0.2s ease-in-out all;
+    border-radius: 60%;
+}
+button.add-member-button:hover
+{
+    background-color: var(--tertiary-color);
+}
+img.user-image
+{
+    width: 35px;
+    height: 35px;
+    border-radius: 60%;
+    border: 1px solid var(--tertiary-color);
+    filter: brightness(70%);
+}
+button.option-button
+{
+    width: 100%;
+    border: 0;
+    padding: 5px 10px;
+    border-radius: 10px;
+    text-align: start;
+    background-color: var(--primary-color);
+    transition: 0.2s ease-in-out all;
+}
+button.option-button:hover
+{
+    background-color: var(--tertiary-color);
+}
+ul.option-holder
+{
+    list-style-type: none;
+    margin-top: 5px;
+}

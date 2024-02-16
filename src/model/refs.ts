@@ -41,22 +41,29 @@ export interface PollRef
     publisher: UserRef
 }
 export interface PollOptionRef {
+    id: string,
+    createdDate: string
     poll: PollRef,
     name: string
 }
 export interface RoleRef
 {
+    id: string,
+    createdDate: string
     name: String,
     board: BoardRef
 }
 export interface TaskGroupRef
 {
+    id: string,
+    createdDate: string
     name: String,
     board: BoardRef
 }
 export interface TaskRef
 {
     id: string;
+    createdDate: string;
     title: string,
     subtitle: string,
     description: string
@@ -65,15 +72,26 @@ export interface TaskRef
     publisher: UserRef,
     taskGroup: TaskGroupRef
     expirationDate: string,
-    createdDate: string;
+}
+export interface CheckListRef
+{
+    id: string,
+    createdDate: string,
+    name: string,
+    publisher: UserRef
+    group: TaskGroupRef
 }
 export interface TeamRef
 {
+    id: string,
+    createdDate: string
     name: string,
     board: BoardRef
 }
 export interface CommentRef
 {
+    id: string,
+    createdDate: string
     title: string,
     text: string,
     publisher: UserRef

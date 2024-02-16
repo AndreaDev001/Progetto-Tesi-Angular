@@ -75,7 +75,10 @@ import { TaskGroupComponent } from './ManageBoard/task-group/task-group.componen
 import { TaskElementComponent } from './ManageBoard/task-element/task-element.component';
 import { TaskTagComponent } from './ManageBoard/task-tag/task-tag.component';
 import { BoardHeaderComponent } from './ManageBoard/board-header/board-header.component';
-import {DragDropModule} from '@angular/cdk/drag-drop'
+import {DragDropModule} from '@angular/cdk/drag-drop';
+import { OverlayComponent } from './Utility/overlay/overlay.component';
+import { TaskOverlayComponent } from './ManageBoard/task-overlay/task-overlay.component'
+import {MatSelectModule} from '@angular/material/select';
 
 @NgModule({
   declarations: [
@@ -95,9 +98,9 @@ import {DragDropModule} from '@angular/cdk/drag-drop'
     CreateTeamComponent,
     BanPageComponent,
     CreateCommentComponent,
+    CreateReportComponent,
     CreateDiscussionComponent,
     CreatePollComponent,
-    CreateReportComponent,
     CreateBanComponent,
     AlertComponentComponent,
     NoItemsComponent,
@@ -140,7 +143,9 @@ import {DragDropModule} from '@angular/cdk/drag-drop'
     TaskGroupComponent,
     TaskElementComponent,
     TaskTagComponent,
-    BoardHeaderComponent
+    BoardHeaderComponent,
+    OverlayComponent,
+    TaskOverlayComponent
   ],
   imports: [
     BrowserModule,
@@ -148,6 +153,7 @@ import {DragDropModule} from '@angular/cdk/drag-drop'
     NgbModule,
     HttpClientModule,
     DragDropModule,
+    MatSelectModule,
     BrowserAnimationsModule,
     MatFormFieldModule,
     MatInputModule,
@@ -163,7 +169,8 @@ import {DragDropModule} from '@angular/cdk/drag-drop'
     })
   ],
   providers: [{
-    provide: HTTP_INTERCEPTORS,useClass: RefreshInterceptor,multi: true,deps: [OAuthService]
+    provide: HTTP_INTERCEPTORS,useClass: RefreshInterceptor,multi: true,deps: [OAuthService],
+
   }],
   bootstrap: [AppComponent]
 })

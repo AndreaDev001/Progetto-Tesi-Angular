@@ -1,0 +1,49 @@
+p.header-text
+{
+    padding: 0;
+    margin: 0;
+    font-size: 30px;
+}
+p.context-text
+{
+    padding: 0;
+    margin: 0;
+    font-size: 15px;
+}
+button.close-button
+{
+    margin: 0;
+    border: 0;
+    padding: 10px 15px;
+    font-size: 30px;
+    background-color: var(--secondary-color);
+    transition: 0.2s ease-in-out all;
+}
+button.close-button:hover
+{
+    background-color: var(--tertiary-color);
+    border-radius: 60%;
+}
+div.overlay-wrapper
+{
+    padding: 20px;
+    background-color: var(--primary-color);
+    border-radius: 10px;
+    border: 1px solid var(--secondary-color);
+}
+div.overlay-header-wrapper
+{
+    padding: 5px;
+    background-color: var(--secondary-color);
+    border-radius: 10px;
+}
+div.overlay-content-wrapper
+{
+    background-color: var(--primary-color);
+}
+div.overlay-footer-wrapper
+{
+    padding: 20px 5px;
+    text-align: end;
+    background-color: var(--primary-color);
+}

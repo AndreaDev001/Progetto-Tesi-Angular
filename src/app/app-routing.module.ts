@@ -17,6 +17,10 @@ import { SearchPollsComponent } from './SearchPages/PollPage/search-polls/search
 import { UnAuthorizedPageComponent } from './un-authorized-page/un-authorized-page.component';
 import { AuthGuard } from './auth/auth.guard';
 import { ManageBoardPageComponent } from './ManageBoard/manage-board-page/manage-board-page.component';
+import { CreatePollComponent } from './Forms/create-poll/create-poll.component';
+import { CreateDiscussionComponent } from './Forms/create-discussion/create-discussion.component';
+import { CreateReportComponent } from './Forms/create-report/create-report.component';
+import { CreateBoardComponent } from './Forms/create-board/create-board.component';
 
 const routes: Routes = [
   {path: 'home',component: HomePageComponent,title: 'Home'},
@@ -33,8 +37,12 @@ const routes: Routes = [
   {path: 'likes/:id',component: LikePagesComponent,title: "Likes",canActivate: [AuthGuard]},
   {path: 'discussions/:id',component: DiscussionsPageComponent,title: 'Discussions',canActivate: [AuthGuard]},
   {path: 'polls/:id',component: PollsPageComponent,title: 'Polls',canActivate: [AuthGuard]},
+  {path: "board/:id",component: ManageBoardPageComponent,title: "Manage Board"},
+  {path: "create/poll",component: CreatePollComponent,title: "Create Poll"},
+  {path: "create/discussion",component: CreateDiscussionComponent,title: "Create Discussion"},
+  {path: "create/report",component: CreateReportComponent,title: "Create Report"},
+  {path: "create/board",component: CreateBoardComponent,title: "Create Board"},
   {path: 'unauthorized',component: UnAuthorizedPageComponent,title: "UnAuthorized"},
-  {path: "board/:id",component: ManageBoardPageComponent,title: "Manage Board"}
 ];
 
 @NgModule({

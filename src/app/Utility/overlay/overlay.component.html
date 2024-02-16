@@ -1,0 +1,36 @@
+<div class = "p-3 overlay-wrapper">
+    <div class = "overlay-header-wrapper">
+        <ng-container *ngTemplateOutlet="currentHeaderTemplate"></ng-container>
+    </div> 
+    <div class = "overlay-content-wrapper">
+        <ng-container *ngTemplateOutlet="currentBodyTemplate"></ng-container>
+    </div>
+    <div class = "overlay-footer-wrapper">
+        <ng-container *ngTemplateOutlet="currentFooterTemplate"></ng-container>
+    </div>
+</div>
+
+<ng-template #defaultHeaderTemplate>
+    <div class = "overlay-header-template">
+        <div>
+            <div class = "w-50 d-inline-block text-start px-2">
+                <p class = "header-text">Nome della Task</p>
+            </div>
+            <div class = "w-50 d-inline-block text-end px-2">
+                <button class = "close-button">
+                    <fa-icon [icon]="closeIcon"></fa-icon>
+                </button>
+            </div>
+        </div>
+    </div>
+</ng-template>
+<ng-template #defaultContentTemplate>
+    <div class = "overlay-content-template">
+        <p class = "content-text">Effettuare una pulizia sufficiente del codice, assicurarsi che non ci sia molto codice duplicato</p>
+    </div>
+</ng-template>
+<ng-template #defaultFooterTemplate>
+    <div class = "overlay-footer-template">
+        <button class = "close-button" style="font-size: 20px;border-radius: 10px;border: 1px solid var(--secondary-color)">Close</button>
+    </div>
+</ng-template>

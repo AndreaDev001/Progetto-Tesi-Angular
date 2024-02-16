@@ -1,4 +1,4 @@
-import { BoardRef, CommentRef, DiscussionRef, PollOptionRef, PollRef, RoleRef, TaskGroupRef, TaskRef, TeamRef, UserRef } from "./refs"
+import { BoardRef, CheckListRef, CommentRef, DiscussionRef, PollOptionRef, PollRef, RoleRef, TaskGroupRef, TaskRef, TeamRef, UserRef } from "./refs"
 
 export interface Board
 {
@@ -92,6 +92,24 @@ export interface Tag
     name: string,
     publisher: UserRef,
     board: BoardRef
+}
+export interface CheckList 
+{
+    id: string,
+    createdDate: string,
+    name: string,
+    amountOfOptions: number
+    publisher: UserRef,
+    group: TaskGroupRef
+}
+export interface CheckListOption
+{
+    id: string,
+    createdDate: string,
+    name: string,
+    completed: boolean,
+    checkList: CheckListRef,
+    publisher: UserRef
 }
 export interface Task
 {

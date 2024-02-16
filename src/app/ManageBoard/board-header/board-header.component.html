@@ -1,7 +1,7 @@
-<div class = "container-fluid board-header-wrapper">
+<div class = "container-fluid board-header-wrapper" *ngIf="board != undefined">
     <div class = "w-50 text-start d-inline-block">
         <div class = "d-inline-block">
-            <h5>Board Title</h5>
+            <h5>{{board.title}}</h5>
         </div>
         <div class = "d-inline-block mx-1">
             <button class = "option-template">

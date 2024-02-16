@@ -4,6 +4,7 @@ import { HttpUtilsService } from 'src/model/services/http-utils.service';
 import { PaginationComponent } from '../../app/Utility/pagination/pagination.component';
 import { PaginationRequest } from '../interfaces';
 import { Filter } from 'src/app/SearchPages/PollPage/poll-filter/poll-filter.component';
+import { CreatePoll } from 'src/app/Forms/create-poll/create-poll.component';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +15,12 @@ export class PollService {
 
   constructor(private httpUtilsService: HttpUtilsService,private httpClient: HttpClient) {
 
+  }
+
+  public createPoll(createPoll: CreatePoll): any {
+    const desiredURL: string = this.url + "/private";
+    let queryParams: HttpParams = new HttpParams();
+    return this.httpClient.post(desiredURL,createPoll,{params: queryParams})
   }
 
   public getPollsByPublisher(publisherID: any,page: PaginationRequest): any {

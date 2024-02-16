@@ -1,5 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { CreateDiscussion } from 'src/app/Forms/create-discussion/create-discussion.component';
 import { Filter } from 'src/app/SearchPages/DiscussionPage/discussion-filter/discussion-filter.component';
 import { PaginationRequest } from 'src/model/interfaces';
 import { HttpUtilsService } from 'src/model/services/http-utils.service';
@@ -13,6 +14,12 @@ export class DiscussionService {
 
   constructor(private httpClient: HttpClient,private httpUtils: HttpUtilsService) {
 
+  }
+
+  public createDiscussion(createDiscussion: CreateDiscussion): any {
+    const desiredURL: string = this.url + "/private";
+    let queryParams: HttpParams = new HttpParams();
+    return this.httpClient.post(desiredURL,createDiscussion,{params: queryParams});
   }
 
   public getDiscussionsByPublisher(publisherID: any,page: PaginationRequest): any {

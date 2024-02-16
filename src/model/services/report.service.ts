@@ -2,6 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { HttpUtilsService } from './http-utils.service';
 import { Filter } from 'src/app/SearchPages/ReportPage/report-filter/report-filter.component';
+import { CreateReport } from 'src/app/Forms/create-report/create-report.component';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +15,11 @@ export class ReportService {
 
   }
 
+  public createReport(createReport: CreateReport,reportedID: string): any {
+    const desiredURL: string = this.url + "/private" + "/" + reportedID;
+    let queryParams: HttpParams = new HttpParams();
+    return this.httpClient.post(desiredURL,createReport,{params: queryParams});
+  }
   public getReasons(): any {
     const desiredURL: string = this.url + "/public" + "/reasons";
     let queryParams = new HttpParams();
