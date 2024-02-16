@@ -1,4 +1,4 @@
-<button class = "task-element-wrapper" *ngIf="task != undefined">
+<button class = "task-element-wrapper">
     <div class = "task-element-header">
         <div class = "position-relative">
             <div class = "d-flex">
@@ -15,14 +15,15 @@
         </div>
     </div>
     <div class = "task-element-body">
-        <p class = "task-element-title">{{task.title}}</p>
-        <p class = "task-element-subtitle">{{task.subtitle}}</p>
+        <p class = "task-element-title">Title</p>
+        <p class = "task-element-subtitle">Please enter a valid subtitle</p>
     </div>
     <div class = "task-element-footer">
         <div class = "text-start">
-            <div class = "mx-1" *ngFor="let current of currentTaskAssignment">
-                <ng-container *ngTemplateOutlet="assigedTemplate;context: {item: current}"></ng-container>
-            </div>
+            <ng-container *ngTemplateOutlet="assignedTemplate"></ng-container>
+            <ng-container *ngTemplateOutlet="assignedTemplate"></ng-container>
+            <ng-container *ngTemplateOutlet="assignedTemplate"></ng-container>
+            <ng-container *ngTemplateOutlet="assignedTemplate"></ng-container>
         </div>
     </div>
 </button>
@@ -32,7 +33,7 @@
         <span class = "mx-1 d-inline-block">{{item.value}}</span>
     </div>
 </ng-template>
-<ng-template #assigedTemplate let-item="item">
+<ng-template #assignedTemplate let-item="item">
     <button class = "assigned-member-wrapper">
         <div class = "image-wrapper">
             <img class = "assigned-image" src="https://i0.wp.com/picjumbo.com/wp-content/uploads/beautiful-nature-mountain-scenery-with-flowers-free-photo.jpg?w=600&quality=80">

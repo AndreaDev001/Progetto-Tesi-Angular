@@ -1,8 +1,8 @@
-<div class = "task-group-wrapper" *ngIf="!createNew && taskGroup != undefined && currentTasks.length > 0">
+<div class = "task-group-wrapper" *ngIf="!createNew">
     <div class = "task-group-header">
         <div class = "d-flex">
             <div class = "w-50 text-start">
-                <p class = "group-title">{{taskGroup.name}}</p>
+                <p class = "group-title">Name</p>
             </div>
             <div class = "w-50 text-end">
                 <button class = "option-button">
@@ -12,10 +12,17 @@
         </div>
     </div>
     <div class = "task-group-body">
-        <div *ngFor="let current of currentTasks">
-            <div class = "task-element-wrapper">
-                <app-task-element></app-task-element>
-            </div>
+        <div class = "task-element-wrapper">
+            <app-task-element></app-task-element>
+        </div>
+        <div class = "task-element-wrapper">
+            <app-task-element></app-task-element>
+        </div>
+        <div class = "task-element-wrapper">
+            <app-task-element></app-task-element>
+        </div>
+        <div class = "task-element-wrapper">
+            <app-task-element></app-task-element>
         </div>
     </div>
     <div class = "task-group-footer">

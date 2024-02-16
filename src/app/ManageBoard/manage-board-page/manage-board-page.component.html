@@ -3,24 +3,60 @@
         <app-board-header></app-board-header>
     </div>
     <div class = "horizontal-container">
-        <div class = "d-flex">
-            <div class = "mx-1">
-                <app-task-group></app-task-group>
-            </div>
-            <div class = "mx-1">
-                <app-task-group></app-task-group>
-            </div>
-            <div class = "mx-1">
-                <app-task-group></app-task-group>
+        <div class = "d-flex" cdkDropList cdkDropListOrientation="horizontal" (cdkDropListDropped)="dropList($event)" >
+            <div cdkDrag  class = "draggable-box mx-1" *ngFor="let current of currentTaskGroups;let i = index">
+                <div class = "h-100" cdkDropList [cdkDropListData]="currentTasks[i]" [cdkDropListConnectedTo]="generateConnection(i)" [id]="'container' + i.toString()" (cdkDropListDropped)="dropItem($event)">
+                    <div class = "task-group-wrapper">
+                        <div class = "task-group-header">
+                            <div class = "d-flex">
+                                <div class = "w-50 text-start">
+                                    <p class = "group-title">{{current.name}}</p>
+                                </div>
+                                <div class = "w-50 text-end">
+                                    <button class = "option-button">
+                                        <fa-icon [icon]="optionIcon" style="font-size: 15px;"></fa-icon>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class = "task-group-body">
+                            <div class = "draggable-box" cdkDrag *ngFor="let value of currentTasks[i]">
+                                <app-task-element [task]="value"></app-task-element>
+                            </div>
+                        </div>
+                        <div class = "task-group-footer">
+                            <div class = "w-50 text-start d-inline-block">
+                                <button class = "add-task-button">
+                                    <fa-icon class = "d-inline-block" [icon]="addTaskIcon"></fa-icon>
+                                    <span class = "d-inline-block mx-1">Add a task</span>
+                                </button>
+                            </div>
+                            <div class = "w-50 text-end d-inline-block">
+                                <button class = "info-button">
+                                    <fa-icon class = "d-inline-block" [icon]="infoIcon"></fa-icon>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <div class = "mt-3 w-25">
             <button class = "close-button w-50">Close</button>
             <button class = "delete-button mx-1 w-50">Delete</button>
         </div>
-        <app-task-overlay></app-task-overlay>
     </div>
 </div>
-<ng-template #template>
-    
-</ng-template>
+
+<!--
+            <div class = "d-flex" cdkDropList cdkDropListOrientation="horizontal" (cdkDropListDropped)="dropList($event)">
+            <div cdkDrag class = "draggable mx-2 p-2 secondary-color" *ngFor="let current of values;let i = index">
+                <p>{{i}}</p>
+                <div style="width: 300px;height: 300px;" [cdkDropListData]="current" [cdkDropListConnectedTo]="generateConnection(i)" [id]="'container' + i" cdkDropList cdkDropListOrientation="vertical" (cdkDropListDropped)="dropItem($event)" >
+                    <div class = "draggable-box" cdkDrag *ngFor="let value of values[i]">
+                        <p>{{value}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+-->

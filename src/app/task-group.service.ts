@@ -14,13 +14,13 @@ export class TaskGroupService {
   }
 
   public getTaskGroupById(id: any): any {
-    const desiredURL: string = this.url + "/" + id;
+    const desiredURL: string = this.url + "/private" + "/" + id;
     let queryParams: HttpParams = new HttpParams();
     return this.httpClient.get(desiredURL,{params: queryParams});
   }
 
   public getTaskGroupsByBoard(id: any): any {
-    const desiredURL: string = this.url + "/board" + "/" + id;
+    const desiredURL: string = this.url + "/private" + "/board" + "/" + id;
     let queryParams: HttpParams = new HttpParams();
     return this.httpClient.get(desiredURL,{params: queryParams});
   }
