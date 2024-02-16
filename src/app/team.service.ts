@@ -1,6 +1,7 @@
 import { HttpClient, HttpParameterCodec, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { HttpUtilsService } from 'src/model/services/http-utils.service';
+import { CreateTeam } from './Forms/create-team/create-team.component';
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +12,12 @@ export class TeamService {
 
   constructor(private httpClient: HttpClient,private httpUtils: HttpUtilsService) {
 
+  }
+
+  public createTeam(createTeam: CreateTeam): any {
+    const desiredURL: string = this.url + "/private";
+    let queryParams: HttpParams = new HttpParams();
+    return this.httpClient.post(desiredURL,{params: queryParams});
   }
 
   public getTeamsByBoard(id: string): any 

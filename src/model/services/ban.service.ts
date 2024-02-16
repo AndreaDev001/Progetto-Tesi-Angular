@@ -2,6 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { HttpUtilsService } from './http-utils.service';
 import { Filter } from '../../app/SearchPages/BanPage/ban-filter/ban-filter.component';
+import { CreateBan } from 'src/app/Forms/create-ban/create-ban.component';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +13,12 @@ export class BanService {
 
   constructor(private httpClient: HttpClient,private httpUtils: HttpUtilsService) {
 
+  }
+
+  public createBan(createBan: CreateBan,bannedID: string): any {
+    const desiredURL: string = this.url + "/private" + "/" + bannedID;
+    let queryParams: HttpParams = new HttpParams();
+    return this.httpClient.post(desiredURL,createBan,{params: queryParams});
   }
 
   public getTypes(): any {

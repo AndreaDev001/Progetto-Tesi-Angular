@@ -21,6 +21,7 @@ import { CreatePollComponent } from './Forms/create-poll/create-poll.component';
 import { CreateDiscussionComponent } from './Forms/create-discussion/create-discussion.component';
 import { CreateReportComponent } from './Forms/create-report/create-report.component';
 import { CreateBoardComponent } from './Forms/create-board/create-board.component';
+import { CreateTeamComponent } from './Forms/create-team/create-team.component';
 
 const routes: Routes = [
   {path: 'home',component: HomePageComponent,title: 'Home'},
@@ -42,6 +43,7 @@ const routes: Routes = [
   {path: "create/discussion",component: CreateDiscussionComponent,title: "Create Discussion"},
   {path: "create/report",component: CreateReportComponent,title: "Create Report"},
   {path: "create/board",component: CreateBoardComponent,title: "Create Board"},
+  {path: "create/team",component: CreateTeamComponent,title: "Create Team"},
   {path: 'unauthorized',component: UnAuthorizedPageComponent,title: "UnAuthorized"},
 ];
 

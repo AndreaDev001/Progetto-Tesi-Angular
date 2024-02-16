@@ -7,13 +7,12 @@ import { DropdownOption } from 'src/app/Utility/dropdown/dropdown.component';
 import { CollectionModel } from 'src/model/interfaces';
 import { BoardService } from 'src/model/services/board.service';
 
-export interface FormOption
+export interface CreateBoard
 {
-  label: string,
-  supportingText: string,
-  placeholder: string,
-  type: string
-  changeCallback: () => void;
+  title: string,
+  description: string,
+  maxMembers: number,
+  visibility: string
 }
 @Component({
   selector: 'app-create-board',
@@ -42,8 +41,12 @@ export class CreateBoardComponent implements OnInit {
   }
 
   public handleSubmit(event:any): any {
-
+    if(this.formGroup.valid && this.title != undefined && this.description != undefined && this.maxMembers != undefined && this.visibility != undefined) {
+      let createBoard: CreateBoard = {title: this.title.value,description: this.description.value,maxMembers: this.maxMembers.value,visibility: this.visibility.value};
+      this.boardService.createBoard(createBoard).subscribe((value: any) => console.log(value));
+    }
   }
+   
 
   public reset(): void {
     this.formGroup.reset();

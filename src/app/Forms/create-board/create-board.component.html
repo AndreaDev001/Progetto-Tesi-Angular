@@ -45,7 +45,7 @@
             <mat-form-field class = "form-field" *ngIf="visibility != undefined">
                 <mat-label class = "input-label">Visibility</mat-label>
                 <mat-select formControlName="visibility">
-                    <mat-option style="color: black" *ngFor="let current of currentVisibilities" [value]="current">{{current}}</mat-option>
+                    <mat-option *ngFor="let current of currentVisibilities" [value]="current">{{current}}</mat-option>
                 </mat-select>
             </mat-form-field>
         </div>
