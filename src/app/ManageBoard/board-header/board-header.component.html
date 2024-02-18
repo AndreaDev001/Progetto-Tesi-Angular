@@ -4,14 +4,20 @@
             <h5>{{board.title}}</h5>
         </div>
         <div class = "d-inline-block mx-1">
-            <button class = "option-template">
-                <p class = "p-0 m-0 d-inline-block">Teams</p>
-                <fa-icon class = "d-inline-block mx-1" [icon]="teamsIcon"></fa-icon>
-            </button>
-            <button class = "option-template">
-                <p class = "p-0 m-0 d-inline-block">Add Like</p>
-                <fa-icon class = "d-inline-block mx-1" [icon]="likeIcon"></fa-icon>
-            </button>
+            <div container="body" ngbDropdown class="d-inline-block">
+                <button class = "option-template" type="button" ngbDropdownToggle>
+                    Teams
+                </button>
+                <div ngbDropdownMenu class = "default-dropdown">
+                    <div class = "team-option" ngbDropdownItem *ngFor="let current of currentTeamOptions">
+                        <ng-container *ngTemplateOutlet="teamTemplate;context: {team: current}"></ng-container> 
+                    </div>
+                    <button (click)="handleCreateTeam()" class = "create-team-button">
+                        <fa-icon [icon]="plusIcon"></fa-icon>
+                        <span class = "mx-2">Create a team</span>
+                    </button>
+                </div>
+            </div>
             <button class = "option-template">
                 <p class = "p-0 m-0 d-inline-block">Invite</p>
                 <fa-icon class = "d-inline-block mx-1" [icon]="inviteIcon"></fa-icon>
@@ -49,3 +55,14 @@
     </div>
 </div>
 
+<ng-template #teamTemplate let-team="team">
+    <div>
+        <fa-icon [icon]="team.icon" class = "d-inline-block"></fa-icon>
+        <span class = "mx-2">{{team.name}}</span>
+    </div>
+</ng-template>
+<ng-template #createTeamTemplate>
+    <div class = "secondary-color">
+        <app-create-team (successEvent)="this.handleSuccessTeam($event)" (failedEvent)="this.alertHandlerService.close()" [boardID]="board?.id"></app-create-team>
+    </div>
+</ng-template>

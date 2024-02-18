@@ -1,8 +1,10 @@
 import { Component, OnInit,Input, EventEmitter,Output, OnChanges,SimpleChanges} from '@angular/core';
+import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 
 export interface DropdownOption
 {
     name: string,
+    icon?: IconDefinition
     callback: () => void;
 }
 @Component({

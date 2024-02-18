@@ -1,8 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faUserGroup, faUsers } from '@fortawesome/free-solid-svg-icons';
-import { TeamService } from 'src/app/team.service';
+import { TeamService } from 'src/model/services/team.service';
+import { Team } from 'src/model/interfaces';
 
 export interface CreateTeam
 {
@@ -17,9 +18,12 @@ export interface CreateTeam
 export class CreateTeamComponent implements OnInit {
 
   public formGroup: FormGroup = new FormGroup({
-    name: new FormControl('name')
+    name: new FormControl('',[Validators.required,Validators.minLength(3),Validators.maxLength(10)])
   })
   @Input() boardID: string | undefined = undefined;
+  @Output() submitEvent: EventEmitter<any> = new EventEmitter();
+  @Output() successEvent: EventEmitter<any> = new EventEmitter();
+  @Output() failedEvent: EventEmitter<any> = new EventEmitter();
   public teamIcon: IconDefinition = faUsers;
   
   constructor(private teamService: TeamService) {
@@ -33,7 +37,8 @@ export class CreateTeamComponent implements OnInit {
   public handleSubmit(event: any): void {
     if(this.name != undefined && this.boardID != undefined && this.formGroup.valid) {
       let createTeam: CreateTeam = {name: this.name.value,boardID: this.boardID};
-      this.teamService.createTeam(createTeam).subscribe((value: any) => console.log(value));
+      this.submitEvent.emit(createTeam);
+      this.teamService.createTeam(createTeam).subscribe((value: Team) => this.successEvent.emit(value),(err: any) => this.failedEvent.emit(err));
     }
   }
 

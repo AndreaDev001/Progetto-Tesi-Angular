@@ -14,6 +14,12 @@ export class BoardMemberService {
 
   }
 
+  public getBoardMembersByBoard(boardID: any): any {
+    const desiredURL: string = this.url + "/private" + "/board" + "/" + boardID;
+    let queryParams: HttpParams = new HttpParams();
+    return this.httpClient.get(desiredURL,{params: queryParams});
+  }
+  
   public getBoardMembersByMember(memberID: any,page: PaginationRequest): any{
     const desiredURL: string = this.url + "/private" + "/user" + "/" + memberID;
     let queryParams: HttpParams = this.httpUtils.generatePaginationParams(page);

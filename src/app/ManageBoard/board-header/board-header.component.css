@@ -40,3 +40,36 @@ button.member-amount-button
     width: 35px;
     height: 35px;
 }
+div.team-option
+{
+    background-color: var(--secondary-color);
+    padding: 10px;
+    cursor: pointer;
+    transition: 0.2s ease-in-out all;
+    color: whitesmoke;
+}
+div.team-option:hover
+{
+    background-color: var(--tertiary-color);
+    text-decoration: underline;
+}
+div.default-dropdown
+{
+    padding: 0;
+    margin: 0;
+    background-color: var(--secondary-color);
+}
+button.create-team-button
+{
+    width: 100%;
+    border: 0;
+    padding: 10px;
+    transition: 0.2s ease-in-out all;
+    background-color: inherit;
+    color: whitesmoke;
+}
+button.create-team-button:hover
+{
+    background-color: var(--tertiary-color);
+    text-decoration: underline;
+}

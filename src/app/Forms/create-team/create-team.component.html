@@ -12,7 +12,7 @@
                 <span class = "d-block mx-2">Name</span>
                 <mat-form-field class = "form-field" *ngIf="name != undefined">
                     <mat-label class = "input-label">Name</mat-label>
-                    <input matInput placeholder="Name">
+                    <input matInput placeholder="Name" formControlName="name">
                     <mat-hint>Write a Name...</mat-hint>
                     <mat-error *ngIf="name.hasError('required') && (name.touched || name.dirty)">Name is required</mat-error>
                     <mat-error *ngIf="name.hasError('minlength') && (name.touched || name.dirty)">Name is too short, must be longer than 3 characters</mat-error>

@@ -4,11 +4,12 @@ import { ActivatedRoute, TitleStrategy } from '@angular/router';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faEllipsis, faInfo, faInfoCircle, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
-import { TaskGroupService } from 'src/app/task-group.service';
+import { TaskGroupService } from 'src/model/services/task-group.service';
 import { Board, CollectionModel, Task, TaskGroup } from 'src/model/interfaces';
 import { BoardService } from 'src/model/services/board.service';
+import { TaskAssignmentService } from 'src/model/services/task-assignment.service';
 import { TaskService } from 'src/model/services/task.service';
-import { UpdateTask } from 'src/model/update';
+import { UpdateTask, UpdateTaskGroup } from 'src/model/update';
 
 @Component({
   selector: 'app-manage-board-page',
@@ -27,7 +28,7 @@ export class ManageBoardPageComponent implements OnInit,OnDestroy {
   public infoIcon: IconDefinition = faInfoCircle;
   public currentSelectedTask: Task | undefined = undefined;
 
-  constructor(private activatedRoute: ActivatedRoute,private taskService: TaskService,private boardService: BoardService,private taskGroupService: TaskGroupService) {
+  constructor(private activatedRoute: ActivatedRoute,private taskAssignmentService: TaskAssignmentService,private taskService: TaskService,private boardService: BoardService,private taskGroupService: TaskGroupService) {
 
   }
 
@@ -51,15 +52,14 @@ export class ManageBoardPageComponent implements OnInit,OnDestroy {
             for(let i = 0;i < this.currentTaskGroups.length;i++)
               this.currentTasks.push([]);
             for(let i = 0;i < this.currentTaskGroups.length;i++)
-                this.updateTasksForGroup(this.currentTaskGroups[i],i);
-
+                this.updateTasksForGroup(i);
           })
         }
       });
     }
   }
 
-  private updateTasksForGroup(group: TaskGroup,index: any): void {
+  private updateTasksForGroup(index: any): void {
     let currentTaskGroup: TaskGroup = this.currentTaskGroups[index];
     this.taskService.getTasksByGroup(currentTaskGroup.id).subscribe((value: CollectionModel) => {
       this.currentTasks[index] = value._embedded != undefined && value._embedded.content != undefined ? value._embedded.content : [];
@@ -85,6 +85,10 @@ export class ManageBoardPageComponent implements OnInit,OnDestroy {
     let currentTasks = this.currentTasks[event.currentIndex];
     this.currentTasks[event.previousIndex] = currentTasks;
     this.currentTasks[event.currentIndex] = previousTasks;
+    let firstGroupUpdate: UpdateTaskGroup = {groupID: this.currentTaskGroups[event.previousIndex].id,order: event.currentIndex};
+    let secondGroupUpdate: UpdateTaskGroup = {groupID: this.currentTaskGroups[event.currentIndex].id,order: event.previousIndex};
+    this.taskGroupService.updateTaskGroup(firstGroupUpdate).subscribe((value: any) => console.log(value));
+    this.taskGroupService.updateTaskGroup(secondGroupUpdate).subscribe((value: any) => console.log(value));
     moveItemInArray(this.currentTaskGroups,event.previousIndex,event.currentIndex);
   }
 
@@ -101,9 +105,14 @@ export class ManageBoardPageComponent implements OnInit,OnDestroy {
     }
   }
   
+
+  public handleClick(event: any): void
+  {
+
+  }
+
   public updateCurrentTask(event: any,value: any): any {
     this.currentSelectedTask = value;
-    console.log(this.currentSelectedTask);
   }
 
   public resetCurrentTask(): void {
