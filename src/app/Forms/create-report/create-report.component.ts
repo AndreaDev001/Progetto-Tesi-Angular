@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faWarning } from '@fortawesome/free-solid-svg-icons';
@@ -29,6 +29,9 @@ export class CreateReportComponent implements OnInit {
   @Input() pollID: string | undefined = undefined;
   @Input() commentID: string | undefined = undefined;
   @Input() discussionID: string | undefined = undefined;
+  @Output() sumbitEvent: EventEmitter<any> = new EventEmitter();
+  @Output() successEvent: EventEmitter<any> = new EventEmitter();
+  @Output() failedEvent: EventEmitter<any> = new EventEmitter();
   public formGroup: FormGroup = new FormGroup({
     title: new FormControl<String>('',[Validators.required,Validators.minLength(3),Validators.maxLength(10)]),
     description: new FormControl<String>('',[Validators.required,Validators.minLength(10),Validators.maxLength(60)]),
@@ -51,34 +54,36 @@ export class CreateReportComponent implements OnInit {
     if(this.title != undefined && this.description != undefined && this.reason != undefined && this.formGroup.valid) 
     {
        let createReport: CreateReport = {title: this.title,description: this.description,reason: this.reason};
+       this.sumbitEvent.emit(createReport);
+       this.formGroup.reset();
        if(this.reportedID != undefined) {
         this.reportService.createReport(createReport,this.reportedID).subscribe((value: any) => {
-          console.log(value);
-        })
+          this.successEvent.emit(value);
+        },(err: any) => this.failedEvent.emit(err));
         return;
        }
        if(this.taskID != undefined) {
         this.taskReportService.createTaskReport(createReport,this.taskID).subscribe((value: any) => {
-          console.log(value);
-        })
+          this.successEvent.emit(value);
+        },(err: any) => this.failedEvent.emit(err));
         return;
        }
        if(this.pollID != undefined) {
         this.pollReportService.createPollReport(createReport,this.pollID).subscribe((value: any) => {
-          console.log(value);
-        })
+          this.successEvent.emit(value);
+        },(err: any) => this.failedEvent.emit(err));
         return;
        }
        if(this.commentID != undefined) {
         this.commentReportService.createCommentReport(createReport,this.commentID).subscribe((value: any) => {
-          console.log(value);
-        })
+          this.successEvent.emit(value);
+        },(err: any) => this.failedEvent.emit(err));
         return;
        }
        if(this.discussionID != undefined) {
         this.discussionReportService.createDiscussionReport(createReport,this.discussionID).subscribe((value: any) => {
-          console.log(value);
-        })
+          this.successEvent.emit(value);
+        },(err: any) => this.failedEvent.emit(err));
         return;
        }
     }

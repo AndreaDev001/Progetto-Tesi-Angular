@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Validators } from '@angular/forms';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
@@ -29,6 +29,9 @@ export class CreateBoardComponent implements OnInit {
   });
   public currentVisibilities: string[] = [];
   public boardIcon: IconDefinition = faTable;
+  @Output() submitEvent: EventEmitter<any> = new EventEmitter();
+  @Output() successEvent: EventEmitter<any> = new EventEmitter();
+  @Output() failedEvent: EventEmitter<any> = new EventEmitter();
 
   constructor(private boardService: BoardService) {
 
@@ -43,7 +46,9 @@ export class CreateBoardComponent implements OnInit {
   public handleSubmit(event:any): any {
     if(this.formGroup.valid && this.title != undefined && this.description != undefined && this.maxMembers != undefined && this.visibility != undefined) {
       let createBoard: CreateBoard = {title: this.title.value,description: this.description.value,maxMembers: this.maxMembers.value,visibility: this.visibility.value};
-      this.boardService.createBoard(createBoard).subscribe((value: any) => console.log(value));
+      this.formGroup.reset();
+      this.submitEvent.emit(createBoard);
+      this.boardService.createBoard(createBoard).subscribe((value: any) => this.successEvent.emit(value),(err: any) => this.failedEvent.emit(err));
     }
   }
    

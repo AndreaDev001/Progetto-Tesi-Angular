@@ -1,4 +1,4 @@
-import { Component, OnInit,Input } from '@angular/core';
+import { Component, OnInit,Input, Output, EventEmitter } from '@angular/core';
 import { DropdownOption } from '../../Utility/dropdown/dropdown.component';
 import { ReportService } from 'src/model/services/report.service';
 import { CollectionModel } from 'src/model/interfaces';
@@ -30,6 +30,9 @@ export class CreateBanComponent implements OnInit {
   @Input() bannedID: string | undefined = undefined;
   public reasons: string[] = [];
   public banIcon: IconDefinition = faBan;
+  @Output() submitEvent: EventEmitter<any> = new EventEmitter();
+  @Output() successEvent: EventEmitter<any> = new EventEmitter();
+  @Output() failedEvent: EventEmitter<any> = new EventEmitter();
 
   constructor(private reportService: ReportService,private banService: BanService) {
 
@@ -44,7 +47,9 @@ export class CreateBanComponent implements OnInit {
   public handleSubmit(event: any): void {
     if(this.bannedID != undefined && this.title != undefined && this.description != undefined && this.reason != undefined && this.formGroup.valid) {
       let createBan: CreateBan = {title: this.title.value,description: this.description.value,reason: this.reason.value,expirationDate: "2024-05-15"};
-      this.banService.createBan(createBan,this.bannedID).subscribe((value: any) => console.log(value));
+      this.formGroup.reset();
+      this.submitEvent.emit(createBan);
+      this.banService.createBan(createBan,this.bannedID).subscribe((value: any) => this.successEvent.emit(value),(err: any) => this.failedEvent.emit(err));
     }
   }
 

@@ -1,5 +1,5 @@
 <form [formGroup]="formGroup" (submit)="handleSubmit($event)">
-    <div class = "container py-4">
+    <div class = "container">
         <div class = "mx-1">
             <div class = "mx-1">
                 <h4 class = "d-inline-block">Create a new report</h4>
@@ -7,7 +7,7 @@
                 <p>Please specificy a title, a description and a reason</p>
             </div>
         </div>
-        <div class = "px-4">
+        <div>
             <div>
                 <span class = "d-block mx-2">Title</span>
                 <mat-form-field class = "form-field" *ngIf="title != undefined">

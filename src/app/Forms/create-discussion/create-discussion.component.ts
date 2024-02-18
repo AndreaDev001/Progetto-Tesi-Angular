@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { Router } from '@angular/router';
@@ -24,7 +24,9 @@ export class CreateDiscussionComponent {
     topic: new FormControl('',[Validators.required,Validators.minLength(3),Validators.maxLength(10)]),
   })
   public discussionIcon: IconDefinition = faDiscourse;
-  public errorStateMatcher: ErrorStateMatcher = new CostumErrorStateMatcher();
+  @Output() submitEvent: EventEmitter<any> = new EventEmitter();
+  @Output() successEvent: EventEmitter<any> = new EventEmitter();
+  @Output() failedEvent: EventEmitter<any> = new EventEmitter();
 
 
   constructor(private discussionService: DiscussionService,private router: Router) {
@@ -35,9 +37,10 @@ export class CreateDiscussionComponent {
     if(this.title != undefined && this.topic != undefined && this.formGroup.valid) {
       let createDiscussion: CreateDiscussion = {title: this.title.value,topic: this.topic.value};
       this.formGroup.reset();
+      this.submitEvent.emit(createDiscussion);
       this.discussionService.createDiscussion(createDiscussion).subscribe((value: Discussion) => {
-        console.log(value);
-      })
+        this.successEvent.emit(value);
+      },(err: any) => this.failedEvent.emit(err));
     }
   }
 
