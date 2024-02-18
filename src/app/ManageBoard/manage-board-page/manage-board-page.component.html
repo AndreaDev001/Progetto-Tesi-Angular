@@ -1,41 +1,39 @@
 <div class = "manage-board-wrapper">
     <div>
-        <app-board-header></app-board-header>
+        <app-board-header [board]="currentBoard"></app-board-header>
     </div>
-    <div class = "horizontal-container">
-        <div class = "d-flex" cdkDropList cdkDropListOrientation="horizontal" (cdkDropListDropped)="dropList($event)" >
-            <div cdkDrag  class = "draggable-box mx-1" *ngFor="let current of currentTaskGroups;let i = index">
-                <div class = "h-100" cdkDropList [cdkDropListData]="currentTasks[i]" [cdkDropListConnectedTo]="generateConnection(i)" [id]="'container' + i.toString()" (cdkDropListDropped)="dropItem($event)">
-                    <div class = "task-group-wrapper">
-                        <div class = "task-group-header">
-                            <div class = "d-flex">
-                                <div class = "w-50 text-start">
-                                    <p class = "group-title">{{current.name}}</p>
-                                </div>
-                                <div class = "w-50 text-end">
-                                    <button class = "option-button">
-                                        <fa-icon [icon]="optionIcon" style="font-size: 15px;"></fa-icon>
-                                    </button>
-                                </div>
+    <div class = "horizontal-container py-2" style="height: 92%;">
+        <div class = "d-flex" cdkDropList cdkDropListOrientation="horizontal" (cdkDropListDropped)="dropList($event)">
+            <div cdkDrag class = "draggable-box mx-1" *ngFor="let current of currentTaskGroups;let i = index">
+                <div class = "task-group-wrapper">
+                    <div class = "task-group-header">
+                        <div class = "d-flex">
+                            <div class = "w-50 text-start">
+                                <p class = "group-title">{{current.name}}</p>
                             </div>
-                        </div>
-                        <div class = "task-group-body">
-                            <div class = "draggable-box" cdkDrag *ngFor="let value of currentTasks[i]">
-                                <app-task-element [task]="value"></app-task-element>
-                            </div>
-                        </div>
-                        <div class = "task-group-footer">
-                            <div class = "w-50 text-start d-inline-block">
-                                <button class = "add-task-button">
-                                    <fa-icon class = "d-inline-block" [icon]="addTaskIcon"></fa-icon>
-                                    <span class = "d-inline-block mx-1">Add a task</span>
+                            <div class = "w-50 text-end">
+                                <button class = "option-button">
+                                    <fa-icon [icon]="optionIcon" style="font-size: 15px;"></fa-icon>
                                 </button>
                             </div>
-                            <div class = "w-50 text-end d-inline-block">
-                                <button class = "info-button">
-                                    <fa-icon class = "d-inline-block" [icon]="infoIcon"></fa-icon>
-                                </button>
-                            </div>
+                        </div>
+                    </div>
+                    <div class = "h-100 task-group-body" cdkDropList [cdkDropListData]="currentTasks[i]" [cdkDropListConnectedTo]="generateConnection(i)" [id]="'container' + i" (cdkDropListDropped)="dropItem($event)">
+                        <div (cdkDragStarted)="updateCurrentTask($event,value)" class = "task-element-wrapper draggable-box" cdkDrag *ngFor="let value of currentTasks[i]">
+                            <app-task-element [task]="value"></app-task-element>
+                        </div>
+                    </div>
+                    <div class = "task-group-footer">
+                        <div class = "w-50 text-start d-inline-block">
+                            <button class = "add-task-button">
+                                <fa-icon class = "d-inline-block" [icon]="addTaskIcon"></fa-icon>
+                                <span class = "d-inline-block mx-1">Add a task</span>
+                            </button>
+                        </div>
+                        <div class = "w-50 text-end d-inline-block">
+                            <button class = "info-button">
+                                <fa-icon class = "d-inline-block" [icon]="infoIcon"></fa-icon>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -60,3 +58,45 @@
             </div>
         </div>
 -->
+
+
+<!---
+
+<div class = "d-flex" cdkDropList cdkDropListOrientation="horizontal" (cdkDropListDropped)="dropList($event)" >
+    <div cdkDrag  class = "draggable mx-1" *ngFor="let current of currentTaskGroups;let i = index">
+        <div class = "h-100" cdkDropList [cdkDropListData]="currentTasks[i]" [cdkDropListConnectedTo]="generateConnection(i)" [id]="'container' + i" (cdkDropListDropped)="dropItem($event)">
+            <div class = "task-group-wrapper">
+                <div class = "task-group-header">
+                    <div class = "d-flex">
+                        <div class = "w-50 text-start">
+                            <p class = "group-title">{{current.name}}</p>
+                        </div>
+                        <div class = "w-50 text-end">
+                            <button class = "option-button">
+                                <fa-icon [icon]="optionIcon" style="font-size: 15px;"></fa-icon>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class = "task-group-body">
+                    <div class = "draggablen" cdkDrag *ngFor="let value of currentTasks[i]">
+                        <app-task-element [task]="value"></app-task-element>
+                    </div>
+                </div>
+                <div class = "task-group-footer">
+                    <div class = "w-50 text-start d-inline-block">
+                        <button class = "add-task-button">
+                            <fa-icon class = "d-inline-block" [icon]="addTaskIcon"></fa-icon>
+                            <span class = "d-inline-block mx-1">Add a task</span>
+                        </button>
+                    </div>
+                    <div class = "w-50 text-end d-inline-block">
+                        <button class = "info-button">
+                            <fa-icon class = "d-inline-block" [icon]="infoIcon"></fa-icon>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    --->

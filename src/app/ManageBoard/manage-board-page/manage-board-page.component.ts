@@ -8,6 +8,7 @@ import { TaskGroupService } from 'src/app/task-group.service';
 import { Board, CollectionModel, Task, TaskGroup } from 'src/model/interfaces';
 import { BoardService } from 'src/model/services/board.service';
 import { TaskService } from 'src/model/services/task.service';
+import { UpdateTask } from 'src/model/update';
 
 @Component({
   selector: 'app-manage-board-page',
@@ -24,6 +25,7 @@ export class ManageBoardPageComponent implements OnInit,OnDestroy {
   public optionIcon: IconDefinition = faEllipsis;
   public addTaskIcon: IconDefinition = faPlus;
   public infoIcon: IconDefinition = faInfoCircle;
+  public currentSelectedTask: Task | undefined = undefined;
 
   constructor(private activatedRoute: ActivatedRoute,private taskService: TaskService,private boardService: BoardService,private taskGroupService: TaskGroupService) {
 
@@ -46,18 +48,22 @@ export class ManageBoardPageComponent implements OnInit,OnDestroy {
         if(this.currentBoard != undefined) {
           this.taskGroupService.getTaskGroupsByBoard(this.boardID).subscribe((value: CollectionModel) => {
             this.currentTaskGroups = value._embedded != undefined && value._embedded.content != undefined ? value._embedded.content : [];
-            if(this.currentTaskGroups != undefined) {
-              this.currentTaskGroups.forEach((group: any) => {
-                this.taskService.getTasksByGroup(group.id).subscribe((task: CollectionModel) => {
-                  let values: Task[] = task._embedded != undefined && task._embedded.content != undefined ? task._embedded.content : [];
-                  this.currentTasks.push(values);
-                })
-              })
-            }
+            for(let i = 0;i < this.currentTaskGroups.length;i++)
+              this.currentTasks.push([]);
+            for(let i = 0;i < this.currentTaskGroups.length;i++)
+                this.updateTasksForGroup(this.currentTaskGroups[i],i);
+
           })
         }
       });
     }
+  }
+
+  private updateTasksForGroup(group: TaskGroup,index: any): void {
+    let currentTaskGroup: TaskGroup = this.currentTaskGroups[index];
+    this.taskService.getTasksByGroup(currentTaskGroup.id).subscribe((value: CollectionModel) => {
+      this.currentTasks[index] = value._embedded != undefined && value._embedded.content != undefined ? value._embedded.content : [];
+    })
   }
 
   public generateConnection(index: number): any {
@@ -82,16 +88,28 @@ export class ManageBoardPageComponent implements OnInit,OnDestroy {
     moveItemInArray(this.currentTaskGroups,event.previousIndex,event.currentIndex);
   }
 
-  public dropItem(event: any): any {
-    transferArrayItem(event.previousContainer.data,event.container.data,event.previousIndex,event.currentIndex);
+  public dropItem(event: any): any 
+  {
+    if(this.currentSelectedTask != undefined) 
+    {
+      let index: number = event.container.id.split("container")[1];
+      let updateTask: UpdateTask = {groupID: this.currentTaskGroups[index].id,taskID: this.currentSelectedTask.id};
+      this.taskService.updateTask(updateTask).subscribe((value: any) => {
+        this.currentSelectedTask = undefined;
+      },(err: any) => this.currentSelectedTask = undefined);
+      transferArrayItem(event.previousContainer.data,event.container.data,event.previousIndex,event.currentIndex);
+    }
   }
-
-  @HostListener('window:dragover', ['$event'])
-  windowDragOver(event: Event) {
-    event.preventDefault();
-  }
-
   
+  public updateCurrentTask(event: any,value: any): any {
+    this.currentSelectedTask = value;
+    console.log(this.currentSelectedTask);
+  }
+
+  public resetCurrentTask(): void {
+    this.currentSelectedTask = undefined;
+  }
+
   public ngOnDestroy(): void {
     this.subscriptions.forEach((value: Subscription) => value.unsubscribe());  
   }
