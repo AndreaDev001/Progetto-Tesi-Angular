@@ -2,8 +2,11 @@
     <ng-container *ngTemplateOutlet="modalTemplate"></ng-container>
 </div>
 <ng-template #defaultHeaderTemplate>
-    <div class = "modal-header default-modal-header border-0">
-        <h4 class = "modal-title">{{currentAlertTitle}}</h4>
+    <div class = "modal-header default-modal-header">
+        <div>
+            <h4 class = "modal-title">{{currentAlertTitle}}</h4>
+            <p class = "p-0 m-0" style="font-size: 15px;">{{currentAlertSubtitle}}</p>
+        </div>
         <button type = "button" class = "btn-close btn-close-white " aria-label="close" (click)="close()"></button>
     </div>
 </ng-template>

@@ -105,6 +105,13 @@ export class ManageBoardPageComponent implements OnInit,OnDestroy {
     }
   }
   
+  public nameChanged(event: any,groupID: any): any {
+    const requiredName = event.target.value;
+    if(requiredName != undefined) {
+      let updateTaskGroup: UpdateTaskGroup = {groupID: groupID,name: requiredName};
+      this.taskGroupService.updateTaskGroup(updateTaskGroup).subscribe((value: any) => console.log(value));
+    }
+  }
 
   public handleClick(event: any): void
   {

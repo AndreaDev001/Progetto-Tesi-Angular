@@ -14,6 +14,16 @@ div.image-wrapper
 {
     position: absolute;
 }
+button.delete-team-button
+{
+    padding: 0px 5px;
+    background-color: var(--secondary-color);
+    border: 0;
+    transition: 0.2s ease-in-out all;
+}
+button.delete-team-button:hover {
+    background-color: var(--tertiary-color);
+}
 div.board-header-wrapper
 {
     padding: 5px;
@@ -40,23 +50,15 @@ button.member-amount-button
     width: 35px;
     height: 35px;
 }
-div.team-option
-{
-    background-color: var(--secondary-color);
-    padding: 10px;
-    cursor: pointer;
-    transition: 0.2s ease-in-out all;
-    color: whitesmoke;
-}
-div.team-option:hover
-{
-    background-color: var(--tertiary-color);
-    text-decoration: underline;
-}
 div.default-dropdown
 {
     padding: 0;
     margin: 0;
+    background-color: var(--secondary-color);
+}
+div.team-list-wrapper
+{
+    padding: 10px;
     background-color: var(--secondary-color);
 }
 button.create-team-button
@@ -72,4 +74,31 @@ button.create-team-button:hover
 {
     background-color: var(--tertiary-color);
     text-decoration: underline;
+}
+button.team-option
+{
+    width: 100%;
+    border: 0;
+    padding: 5px;
+    background-color: var(--secondary-color);
+    cursor: pointer;
+    transition: 0.2s ease-in-out all;
+    color: whitesmoke;
+    text-align: start;
+}
+button.team-option:hover
+{
+    background-color: var(--tertiary-color);
+}
+button.remove-button
+{
+    border: 0;
+    background-color: var(--primary-color);
+    border-radius: 10px;
+    padding: 10px;
+    transition: 0.2s ease-in-out all;
+}
+button.remove-button:hover
+{
+    background-color: var(--tertiary-color);
 }

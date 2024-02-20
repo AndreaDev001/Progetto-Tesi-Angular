@@ -79,6 +79,8 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
 import { OverlayComponent } from './Utility/overlay/overlay.component';
 import { TaskOverlayComponent } from './ManageBoard/task-overlay/task-overlay.component'
 import {MatSelectModule} from '@angular/material/select';
+import { UserHolderComponent } from './Utility/user-holder/user-holder.component';
+import { AddPlayerComponent } from './add-player/add-player.component';
 
 @NgModule({
   declarations: [
@@ -145,7 +147,9 @@ import {MatSelectModule} from '@angular/material/select';
     TaskTagComponent,
     BoardHeaderComponent,
     OverlayComponent,
-    TaskOverlayComponent
+    TaskOverlayComponent,
+    UserHolderComponent,
+    AddPlayerComponent
   ],
   imports: [
     BrowserModule,

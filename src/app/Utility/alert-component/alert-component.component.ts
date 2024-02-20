@@ -16,6 +16,7 @@ export class AlertComponentComponent implements OnDestroy,AfterViewInit{
   @ViewChild("modalTemplate") modalTemplate: any;
 
   public currentAlertTitle: string | undefined = undefined;
+  public currentAlertSubtitle: string | undefined = undefined;
   public currentAlertText: string | undefined = undefined;
   public currentAlertOptions: AlertOption[] = [];
   public currentHeaderTemplate: any = undefined;
@@ -40,6 +41,7 @@ export class AlertComponentComponent implements OnDestroy,AfterViewInit{
     this.subscriptions.push(this.alertHandler.getCurrentAlertOptions(false).subscribe((value: any) => {
       this.currentAlertOptions = value;
     }));
+    this.subscriptions.push(this.alertHandler.getCurrentAlertSubtitle(false).subscribe((value: any) => this.currentAlertSubtitle = value));
     this.subscriptions.push(this.alertHandler.getCurrentAlertHeaderTemplate(false).subscribe((value: any) => this.currentHeaderTemplate = this.updateTemplate(value,this.defaultHeaderTemplate)));
     this.subscriptions.push(this.alertHandler.getCurrentAlertContentTemplate(false).subscribe((value: any) => this.currentContentTemplate = this.updateTemplate(value,this.defaultContentTemplate)));
     this.subscriptions.push(this.alertHandler.getCurrentAlertFooterTemplate(false).subscribe((value: any) => this.currentFooterTemplate = this.updateTemplate(value,this.defaultFooterTemplate)));

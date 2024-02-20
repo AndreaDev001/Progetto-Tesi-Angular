@@ -9,7 +9,7 @@
                     <div class = "task-group-header">
                         <div class = "d-flex">
                             <div class = "w-50 text-start">
-                                <p class = "group-title">{{current.name}}</p>
+                                <input (change)="nameChanged($event,current.id)" class = "default-input" [defaultValue]="current.name">
                             </div>
                             <div class = "w-50 text-end">
                                 <button class = "option-button">

@@ -15,6 +15,7 @@ export class AlertHandlerService {
 
   private currentAlertComponent: BehaviorSubject<any> = new BehaviorSubject(undefined);
   private currentAlertTitle: BehaviorSubject<string> = new BehaviorSubject('Title');
+  private currentAlertSubtitle: BehaviorSubject<string> = new BehaviorSubject("Subtitle");
   private currentAlertText: BehaviorSubject<string> = new BehaviorSubject('Text');
   private currentAlertOptions: BehaviorSubject<any> = new BehaviorSubject([]);
   private currentAlertHeaderTemplate: BehaviorSubject<any> = new BehaviorSubject(undefined);
@@ -36,6 +37,10 @@ export class AlertHandlerService {
 
   public setDefaultAlertTitle(value: string): void {
     this.currentAlertTitle.next(value);
+  }
+
+  public setDefaultAlertSubtitle(value: string): void {
+    this.currentAlertSubtitle.next(value);
   }
 
   public setDefaultAlertText(value: string): void {
@@ -76,8 +81,9 @@ export class AlertHandlerService {
     this.currentAlertFooterTemplate.next(footerTemplate);
   }
 
-  public setDefaultValues(title: string,text: string): void {
+  public setDefaultValues(title: string,subtitle: string,text: string): void {
     this.currentAlertTitle.next(title);
+    this.currentAlertSubtitle.next(subtitle);
     this.currentAlertText.next(text);
   }
 
@@ -86,8 +92,8 @@ export class AlertHandlerService {
     this.currentDismissCallback.next(dismissCallback);
   }
 
-  public openDefault(title: string,text: string): void {
-    this.setDefaultValues(title,text);
+  public openDefault(title: string,subtitle: string,text: string): void {
+    this.setDefaultValues(title,subtitle,text);
     this.open();
   }
 
@@ -108,6 +114,7 @@ export class AlertHandlerService {
   }
 
   public getCurrentAlertTitle(value: boolean) : any {return value ? this.currentAlertTitle.value : this.currentAlertTitle};
+  public getCurrentAlertSubtitle(value: boolean): any {return value ? this.currentAlertSubtitle.value : this.currentAlertSubtitle};
   public getCurrentAlertText(value: boolean): any {return value ? this.currentAlertText.value : this.currentAlertText};
   public getCurrentAlertOptions(value: boolean): any {return value ? this.currentAlertOptions.value : this.currentAlertOptions};
   public getCurrentAlertHeaderTemplate(value: boolean): any {return value ? this.currentAlertHeaderTemplate.value : this.currentAlertHeaderTemplate};

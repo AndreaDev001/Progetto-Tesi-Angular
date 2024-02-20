@@ -1,12 +1,16 @@
 import { Component, Input, OnInit,ViewChild } from '@angular/core';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
-import { faEllipsis, faGear, faHeart, faMessage, faPlus, faUser, faUserGroup, faUsers } from '@fortawesome/free-solid-svg-icons';
+import { faClose, faEllipsis, faGear, faHeart, faMessage, faPlus, faUser, faUserGroup, faUsers } from '@fortawesome/free-solid-svg-icons';
 import { DropdownOption } from 'src/app/Utility/dropdown/dropdown.component';
 import { AlertHandlerService } from 'src/app/services/alert-handler.service';
 import { TeamService } from 'src/model/services/team.service';
-import { Board, BoardMember, CollectionModel, Task, TaskAssignment, Team } from 'src/model/interfaces';
+import { Board, BoardMember, CollectionModel, Task, TaskAssignment, Team, TeamMember } from 'src/model/interfaces';
 import { BoardMemberService } from 'src/model/services/board-member.service';
 import { TaskAssignmentService } from 'src/model/services/task-assignment.service';
+import { CreateBoardInvite } from 'src/model/services/board-invite.service';
+import { TeamMemberService } from 'src/app/team-member.service';
+import { TextOverflowItem } from 'src/app/Utility/text-overflow/text-overflow.component';
+import { BoardInviteService } from 'src/model/services/board-invite.service';
 
 
 interface TeamOption
@@ -27,15 +31,23 @@ export class BoardHeaderComponent implements OnInit {
   public teamsIcon: IconDefinition = faUserGroup;
   public inviteIcon: IconDefinition = faMessage;
   public optionIcon: IconDefinition = faGear;
+  public closeIcon: IconDefinition = faClose;
 
   public currentMembers: BoardMember[] = [];
   public currentTeams: Team[] = [];
   public currentTeamOptions: TeamOption[] = [];
   public plusIcon: IconDefinition = faPlus;
 
-  @ViewChild("createTeamTemplate") createTeamTemplate: any;
+  public currentSelectedTeam: Team | undefined = undefined;
+  public currentTeamMembers: TeamMember[] = [];
+  public currentTeamMembersItem: TextOverflowItem[] = [];
 
-  constructor(private teamService: TeamService,private boardMemberService: BoardMemberService,public alertHandlerService: AlertHandlerService) {
+  @ViewChild("createTeamTemplate") createTeamTemplate: any;
+  @ViewChild("teamMemberItem") teamMemberItem: any;
+  @ViewChild("teamListTemplate") teamListTemplate: any;
+  @ViewChild("addUserTemplate") addUserTemplate: any;
+
+  constructor(private teamService: TeamService,private teamMemberService: TeamMemberService,private boardMemberService: BoardMemberService,private boardInviteService: BoardInviteService,public alertHandlerService: AlertHandlerService) {
 
   }
 
@@ -66,5 +78,63 @@ export class BoardHeaderComponent implements OnInit {
     this.alertHandlerService.setTextTemplate(this.createTeamTemplate);
     this.alertHandlerService.clearOptions();
     this.alertHandlerService.open();
+  }
+
+  public handleClickedTeam(team: any): any {
+    this.currentSelectedTeam = team;
+    this.alertHandlerService.setDefaultAlertTitle(team.name);
+    this.alertHandlerService.setDefaultAlertSubtitle("View all of the members of the team" + " " + team.name);
+    this.alertHandlerService.setTextTemplate(this.teamListTemplate);
+    this.alertHandlerService.clearOptions();
+    this.alertHandlerService.open();
+    this.loadTeamMembers();
+  }
+
+  public loadTeamMembers(): any {
+    this.currentTeamMembers = [];
+    this.currentTeamMembersItem = [];
+    if(this.currentSelectedTeam != undefined) {
+      this.teamMemberService.getTeamMembersByTeam(this.currentSelectedTeam.id).subscribe((value: CollectionModel) => {
+        this.currentTeamMembers = value._embedded != undefined && value._embedded.content != undefined ? value._embedded.content : [];
+        this.currentTeamMembers.forEach((current: TeamMember) => {
+          let textOverflowItem: TextOverflowItem = {context: current,template: this.teamMemberItem};
+          this.currentTeamMembersItem.push(textOverflowItem);
+        })
+      })
+    }
+  }
+
+  public removeTeam(team: any,index: number): any {
+    this.teamService.deleteTeamByID(team.id).subscribe((value: any) => {
+      this.currentTeamOptions = this.currentTeamOptions.splice(index,1);
+    })
+  }
+
+  public createInvite(): void {
+    this.alertHandlerService.clearOptions();
+    this.alertHandlerService.setDefaultAlertTitle("Invite");
+    this.alertHandlerService.setDefaultAlertSubtitle("Find an user to add to this board");
+    this.alertHandlerService.setTextTemplate(this.addUserTemplate);
+    this.alertHandlerService.open();
+  }
+
+  public createBoardInvite(event: any): void {
+    if(this.board != undefined) {
+      let createBoardInvite: CreateBoardInvite = {userID: event.id,boardID: this.board.id,text: "You have received an invite",expirationDate: "2030-05-12"};
+      this.boardInviteService.createBoardInvite(createBoardInvite).subscribe((value: any) => {
+        console.log(value);
+        this.closeCreateInvite();
+      },(err: any) => this.closeCreateInvite());
+    }
+  }
+
+  public closeCreateInvite(): void {
+    this.alertHandlerService.close();
+  }
+
+  public removeTeamMember(teamMemberID: any): any {
+    this.teamMemberService.deleteTeamMember(teamMemberID).subscribe((value: any) => {
+      this.alertHandlerService.close();
+    },(err: any) =>  this.alertHandlerService.close());
   }
 }

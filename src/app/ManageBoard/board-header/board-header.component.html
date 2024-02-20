@@ -9,8 +9,8 @@
                     Teams
                 </button>
                 <div ngbDropdownMenu class = "default-dropdown">
-                    <div class = "team-option" ngbDropdownItem *ngFor="let current of currentTeamOptions">
-                        <ng-container *ngTemplateOutlet="teamTemplate;context: {team: current}"></ng-container> 
+                    <div class = "p-0 m-0" ngbDropdownItem *ngFor="let current of currentTeamOptions;let i = index">
+                        <ng-container *ngTemplateOutlet="teamTemplate;context: {index: i,teamOption: current,team: this.currentTeams[i]}"></ng-container> 
                     </div>
                     <button (click)="handleCreateTeam()" class = "create-team-button">
                         <fa-icon [icon]="plusIcon"></fa-icon>
@@ -18,7 +18,7 @@
                     </button>
                 </div>
             </div>
-            <button class = "option-template">
+            <button class = "option-template" (click)="createInvite()">
                 <p class = "p-0 m-0 d-inline-block">Invite</p>
                 <fa-icon class = "d-inline-block mx-1" [icon]="inviteIcon"></fa-icon>
             </button>
@@ -55,14 +55,42 @@
     </div>
 </div>
 
-<ng-template #teamTemplate let-team="team">
-    <div>
-        <fa-icon [icon]="team.icon" class = "d-inline-block"></fa-icon>
-        <span class = "mx-2">{{team.name}}</span>
+<ng-template #teamTemplate let-teamOption="teamOption" let-team="team" let-index="index">
+    <div class = "d-flex">
+        <button class = "team-option" (click)="handleClickedTeam(team)">
+            <fa-icon [icon]="teamOption.icon" class = "d-inline-block"></fa-icon>
+            <span class = "mx-2">{{teamOption.name}}</span>
+        </button>
+        <button class = "delete-team-button" (click)="removeTeam(team,index)">
+            <fa-icon [icon]="closeIcon"></fa-icon>
+        </button>
     </div>
 </ng-template>
 <ng-template #createTeamTemplate>
     <div class = "secondary-color">
         <app-create-team (successEvent)="this.handleSuccessTeam($event)" (failedEvent)="this.alertHandlerService.close()" [boardID]="board?.id"></app-create-team>
     </div>
+</ng-template>
+<ng-template #teamListTemplate>
+    <div class = "team-list-wrapper">
+        <div *ngIf="currentTeamMembers.length == 0">
+            <app-no-items (buttonClicked)="loadTeamMembers()"></app-no-items>
+        </div>
+        <div *ngIf="currentTeamMembers.length > 0">
+            <app-text-overflow [horizontal]="false" [templates]="currentTeamMembersItem"></app-text-overflow>
+        </div>
+    </div>
+</ng-template>
+<ng-template #teamMemberItem let-i>
+    <div class = "position-relative">
+        <div class = "d-flex w-100 justify-content-between">
+            <app-user-holder class = "d-inline-block" [user]="i.member"></app-user-holder>
+            <div class = "text-end">
+                <button class = "remove-button" (click)="removeTeamMember(i.id)">Remove</button>
+            </div>
+        </div>
+    </div>
+</ng-template>
+<ng-template #addUserTemplate>
+    <app-add-player (confirmedEvent)="createBoardInvite($event)" (cancelEvent)="closeCreateInvite()"></app-add-player>
 </ng-template>

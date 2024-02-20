@@ -1,5 +1,5 @@
-<div *ngIf="horizontalTemplate != undefined">
-    <ng-container *ngTemplateOutlet="horizontalTemplate"></ng-container>
+<div *ngIf="currentTemplate != undefined">
+    <ng-container *ngTemplateOutlet="currentTemplate"></ng-container>
 </div>
 <ng-template #horizontalTemplate>
     <div class = "horizontal-container" (scroll)="handleHorizontalScroll($event)">

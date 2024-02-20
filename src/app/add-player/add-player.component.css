@@ -1,0 +1,40 @@
+div.add-player-wrapper
+{
+    padding: 10px;
+    background-color: var(--secondary-color);
+}
+button.confirm-button
+{
+    background-color: green;
+    border: 1px solid greenyellow;
+    padding: 10px 40px;
+    border-radius: 5px;
+}
+button.confirm-button:disabled {
+    opacity: 0.4;
+}
+button.cancel-button {
+    background-color: red;
+    border: 1px solid darkred;
+    padding: 10px 40px;
+    border-radius: 5px;
+    margin-left: 5px;
+}
+button.player-button-wrapper
+{
+    background-color: var(--secondary-color);
+    width: 100%;
+    border: 0;
+    border-radius: 5px;
+    transition: 0.2s ease-in-out all;
+}
+button.player-button-selected
+{
+    width: 100%;
+    background-color: var(--tertiary-color);
+    border: 0;
+    border-radius: 5px;
+}
+button.player-button-wrapper:hover {
+    background-color: var(--tertiary-color);
+}

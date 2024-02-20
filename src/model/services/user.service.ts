@@ -2,6 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { HttpUtilsService } from './http-utils.service';
 import { Filter } from 'src/app/SearchPages/UserPage/user-filter/user-filter.component';
+import { PaginationRequest } from '../interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +18,12 @@ export class UserService {
   public getUser(id: string): any {
     const desiredURL: string = this.url + "/private" + "/" + id;
     let queryParams: HttpParams = new HttpParams();
+    return this.httpClient.get(desiredURL,{params: queryParams});
+  }
+
+  public getUsersByUsername(username: string,paginationRequest: PaginationRequest): any {
+    const desiredURL: string = this.url + "/private" + "/username" + "/" + username + "/like";
+    let queryParams: HttpParams = this.httpUtils.generatePaginationParams(paginationRequest);
     return this.httpClient.get(desiredURL,{params: queryParams});
   }
 

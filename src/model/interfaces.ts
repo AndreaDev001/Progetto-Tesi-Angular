@@ -137,6 +137,8 @@ export interface TaskGroup
 }
 export interface Team
 {
+    id: string,
+    createdDate: string
     name: string,
     publisher: UserRef,
     board: BoardRef

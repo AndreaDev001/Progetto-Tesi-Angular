@@ -20,10 +20,22 @@ export class TeamService {
     return this.httpClient.post(desiredURL,createTeam,{params: queryParams});
   }
 
+  public getTeamById(id: string): any {
+    const desiredURL: string = this.url + "/private" + "/" + id;
+    let queryParams: HttpParams = new HttpParams();
+    return this.httpClient.get(desiredURL,{params: queryParams});
+  }
+
   public getTeamsByBoard(id: string): any 
   {
     const desiredURL: string = this.url + "/private" + "/board" + "/" + id;
     let queryParams: HttpParams = new HttpParams();
     return this.httpClient.get(desiredURL,{params: queryParams});
+  }
+
+  public deleteTeamByID(id: string): any {
+    const desiredURL: string = this.url + "/private" + "/" + id;
+    let queryParams: HttpParams = new HttpParams();
+    return this.httpClient.delete(desiredURL,{params: queryParams});
   }
 }
