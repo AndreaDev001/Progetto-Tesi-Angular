@@ -91,6 +91,11 @@
         </div>
     </div>
 </ng-template>
+<ng-template #createInviteTemplate let-userID="userID">
+    <div *ngIf="board != undefined" class = "secondary-color">
+        <app-create-invite [boardID]="board.id" [user]="currentInvitedUser" (successEvent)="closeCreateInvite()" (failedEvent)="closeCreateInvite()"></app-create-invite>
+    </div>
+</ng-template>
 <ng-template #addUserTemplate>
-    <app-add-player (confirmedEvent)="createBoardInvite($event)" (cancelEvent)="closeCreateInvite()"></app-add-player>
+    <app-add-user (confirmedEvent)="updateInvitedUser($event)" (cancelEvent)="closeCreateInvite()"></app-add-user>
 </ng-template>

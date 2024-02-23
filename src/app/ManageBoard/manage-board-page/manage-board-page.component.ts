@@ -1,8 +1,8 @@
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
-import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
+import { Component, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, TitleStrategy } from '@angular/router';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
-import { faEllipsis, faInfo, faInfoCircle, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faEllipsis, faInfo, faInfoCircle, faMagnifyingGlassMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
 import { TaskGroupService } from 'src/model/services/task-group.service';
 import { Board, CollectionModel, Task, TaskGroup } from 'src/model/interfaces';
@@ -10,6 +10,9 @@ import { BoardService } from 'src/model/services/board.service';
 import { TaskAssignmentService } from 'src/model/services/task-assignment.service';
 import { TaskService } from 'src/model/services/task.service';
 import { UpdateTask, UpdateTaskGroup } from 'src/model/update';
+import {CreateTaskGroup}from 'src/model/create';
+import { AlertHandlerService } from 'src/app/services/alert-handler.service';
+import { group } from '@angular/animations';
 
 @Component({
   selector: 'app-manage-board-page',
@@ -27,8 +30,13 @@ export class ManageBoardPageComponent implements OnInit,OnDestroy {
   public addTaskIcon: IconDefinition = faPlus;
   public infoIcon: IconDefinition = faInfoCircle;
   public currentSelectedTask: Task | undefined = undefined;
+  public currentNewGroupName: string | undefined = undefined;
+  public currentGroup: TaskGroup | undefined = undefined;
+  public emptyIcon: IconDefinition = faMagnifyingGlassMinus;
 
-  constructor(private activatedRoute: ActivatedRoute,private taskAssignmentService: TaskAssignmentService,private taskService: TaskService,private boardService: BoardService,private taskGroupService: TaskGroupService) {
+  @ViewChild("createTaskTemplate") createTaskTemplate: any;
+
+  constructor(private activatedRoute: ActivatedRoute,public alertHandler: AlertHandlerService,private taskAssignmentService: TaskAssignmentService,private taskService: TaskService,private boardService: BoardService,private taskGroupService: TaskGroupService) {
 
   }
 
@@ -59,6 +67,39 @@ export class ManageBoardPageComponent implements OnInit,OnDestroy {
     }
   }
 
+  public addNewTask(event: any): void {
+    if(this.currentGroup != undefined) 
+    {
+      let index: number = this.currentTaskGroups.indexOf(this.currentGroup);
+      this.currentTasks[index].push(event);
+    }
+  }
+
+  public deleteGroup(groupID: string,index: number): void {
+    let group: TaskGroup = this.currentTaskGroups[index];
+    this.taskGroupService.deleteTaskGroup(groupID).subscribe((value: any) => {
+      const requiredIndex = this.currentTaskGroups.indexOf(group);
+      this.currentTaskGroups = this.currentTaskGroups.filter(current => current !== group);
+    })
+  }
+
+  public clearGroup(groupID: string,index: number): void {
+    this.taskGroupService.clearTaskGroup(groupID).subscribe((value: any) => {
+      this.currentTasks[index] = [];
+    })
+  }
+
+  public createGroup(): void {
+    if(this.currentNewGroupName != undefined && this.boardID != undefined) {
+      let createGroup: CreateTaskGroup = {boardID: this.boardID,name: this.currentNewGroupName};
+      this.taskGroupService.createTaskGroup(createGroup).subscribe((value: any) => {
+        this.currentTaskGroups.push(value);
+        this.currentTasks.push([]);
+        this.currentNewGroupName = undefined;
+      },(err: any) => this.currentNewGroupName = undefined);
+    }
+  }
+
   private updateTasksForGroup(index: any): void {
     let currentTaskGroup: TaskGroup = this.currentTaskGroups[index];
     this.taskService.getTasksByGroup(currentTaskGroup.id).subscribe((value: CollectionModel) => {
@@ -78,6 +119,15 @@ export class ManageBoardPageComponent implements OnInit,OnDestroy {
     return values;
   }
 
+  public addTask(group: TaskGroup): void 
+  {
+    if(this.createTaskTemplate != undefined) {
+      this.currentGroup = group;
+      this.alertHandler.reset();
+      this.alertHandler.setTextTemplate(this.createTaskTemplate);
+      this.alertHandler.open();
+    }
+  }
 
   public dropList(event: any): void
   {
@@ -90,6 +140,10 @@ export class ManageBoardPageComponent implements OnInit,OnDestroy {
     this.taskGroupService.updateTaskGroup(firstGroupUpdate).subscribe((value: any) => console.log(value));
     this.taskGroupService.updateTaskGroup(secondGroupUpdate).subscribe((value: any) => console.log(value));
     moveItemInArray(this.currentTaskGroups,event.previousIndex,event.currentIndex);
+  }
+
+  public updateNewGroupName(event: any): void {
+    this.currentNewGroupName = event.target.value;
   }
 
   public dropItem(event: any): any 
@@ -111,11 +165,6 @@ export class ManageBoardPageComponent implements OnInit,OnDestroy {
       let updateTaskGroup: UpdateTaskGroup = {groupID: groupID,name: requiredName};
       this.taskGroupService.updateTaskGroup(updateTaskGroup).subscribe((value: any) => console.log(value));
     }
-  }
-
-  public handleClick(event: any): void
-  {
-
   }
 
   public updateCurrentTask(event: any,value: any): any {

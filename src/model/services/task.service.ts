@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { HttpUtilsService } from 'src/model/services/http-utils.service';
 import { Filter } from 'src/app/SearchPages/TaskPage/task-filter/task-filter.component';
 import { UpdateTask } from '../update';
+import { CreateTask } from '../create';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +14,12 @@ export class TaskService {
 
   constructor(private httpClient: HttpClient,private HttpUtils: HttpUtilsService) {
 
+  }
+
+  public createTask(createTask: CreateTask): any {
+    const desiredURL: string = this.url + "/private";
+    let queryParams: HttpParams = new HttpParams();
+    return this.httpClient.post(desiredURL,createTask,{params: queryParams});
   }
 
   public updateTask(updateTask: UpdateTask): any {

@@ -1,17 +1,58 @@
-<form [formGroup]="formGroup">
-    <mat-form-field class = "form-field">
-        <mat-label>Title</mat-label>
-        <input matInput placeholder="Title" type="text" formControlName="title">
-        <mat-hint class = "form-hint">Write a title for the task...</mat-hint>
-    </mat-form-field>
-    <mat-form-field class = "form-field">
-        <mat-label>Name</mat-label>
-        <input matInput placeholder="Name" type="text" formControlName="name">
-        <mat-hint class = "form-hint">Write a name for the task</mat-hint>
-    </mat-form-field>
-    <mat-form-field class = "form-field">
-        <mat-label>Description</mat-label>
-        <input matInput placeholder="Description" type="text" formControlName="description">
-        <mat-hint class = "form-hint">Write a description for the task</mat-hint>
-    </mat-form-field>
-</form>
+<form [formGroup]="formGroup" (submit)="handleSubmit($event)">
+    <div class = "container">
+        <div class = "mx-1">
+            <div class = "mx-1">
+                <h4 class = "d-inline-block">Create a new task</h4>
+                <fa-icon class = "mx-2" style="font-size: 25px;" [icon]="taskIcon"></fa-icon>
+                <p>Please specificy a title, a description and a reason</p>
+            </div>
+        </div>
+        <div>
+            <div>
+                <span class = "d-block mx-2">Title</span>
+                <mat-form-field class = "form-field" *ngIf="title != undefined">
+                    <mat-label class = "input-label">Title</mat-label>
+                    <input matInput placeholder="Title" formControlName="title">
+                    <mat-hint>Write a title...</mat-hint>
+                    <mat-error *ngIf="title.hasError('required') && (title.touched || title.dirty)">Title is required</mat-error>
+                    <mat-error *ngIf="title.hasError('minlength') && (title.touched || title.dirty)">Title is too short, must be longer than 3 characters</mat-error>
+                    <mat-error *ngIf="title.hasError('maxlength') && (title.touched || title.dirty)">Title is too long, must be shorter than 10 characters</mat-error>
+                </mat-form-field>
+            </div>
+            <div>
+                <span class = "d-block mx-2">Name</span>
+                <mat-form-field class = "form-field" *ngIf="name != undefined">
+                    <mat-label class  ="input-label">Name</mat-label>
+                    <input matInput placeholder="Name" formControlName="name">
+                    <mat-hint>Write a name..</mat-hint>
+                    <mat-error *ngIf="name.hasError('required') && (name.touched || name.dirty)">Name is required</mat-error>
+                    <mat-error *ngIf="name.hasError('minlength') && (name.touched || name.dirty)">Name is too short, must be longer than 3 characters</mat-error>
+                    <mat-error *ngIf="name.hasError('maxlength') && (name.touched || name.dirty)">Name is too long, must be shorter than 10 characters</mat-error>
+                </mat-form-field>
+            </div>
+            <div>
+                <span class = "d-block mx-2">Description</span>
+                <mat-form-field class = "form-field" *ngIf="description != undefined">
+                    <mat-label class  ="input-label">Description</mat-label>
+                    <textarea matInput placeholder="Description" formControlName="description"></textarea>
+                    <mat-hint>Write a description...</mat-hint>
+                    <mat-error *ngIf="description.hasError('required') && (description.touched || description.dirty)">Description is required</mat-error>
+                    <mat-error *ngIf="description.hasError('minlength') && (description.touched || description.dirty)">Description is too short, must be longer than 20 characters</mat-error>
+                    <mat-error *ngIf="description.hasError('maxlength') && (description.touched || description.dirty)">Description is too long, must be shorter than 60 characters</mat-error>
+                </mat-form-field>
+            </div>
+            <div>
+                <span class = "d-block mx-2">Priority</span>
+                <mat-form-field class = "form-field" *ngIf="priority != undefined">
+                    <mat-label class = "input-label">Priority</mat-label>
+                    <mat-select formControlName="priority">
+                        <mat-option style="color: black" *ngFor="let current of currentPriorities" [value]="current">CIAO   </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class = "mt-2 text-end mx-1">
+            <button type="submit" class = "confirm-button" [disabled]="!formGroup.valid">Confirm</button>
+            <button (click)="reset()" class = "stop-button">Clear</button>
+        </div>
+    </div>

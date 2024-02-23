@@ -1,9 +1,10 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faCheck, faClockFour, faEllipsis } from '@fortawesome/free-solid-svg-icons';
 import { TagService } from 'src/model/services/tag.service';
 import { CollectionModel, Tag, Task, TaskAssignment } from 'src/model/interfaces';
 import { TaskAssignmentService } from 'src/model/services/task-assignment.service';
+import { AlertHandlerService } from 'src/app/services/alert-handler.service';
 
 
 interface DescriptionItem
@@ -24,7 +25,9 @@ export class TaskElementComponent implements OnInit {
   public currentDescriptionItems: DescriptionItem[] = [];
   public optionIcon: IconDefinition = faEllipsis;
 
-  constructor(private tagService: TagService,private taskAssignment: TaskAssignmentService) {
+  @ViewChild("overlayTemplate") overlayTemplate: any;
+
+  constructor(private tagService: TagService,private taskAssignment: TaskAssignmentService,private alertHandler: AlertHandlerService) {
 
   }
 
@@ -39,5 +42,11 @@ export class TaskElementComponent implements OnInit {
         this.currentTags = value._embedded != undefined && value._embedded.content != undefined ? value._embedded.content : [];
       })
     }
+  }
+
+  public handleClick(): void {
+    this.alertHandler.reset();
+    this.alertHandler.setTextTemplate(this.overlayTemplate);
+    this.alertHandler.open();
   }
 }

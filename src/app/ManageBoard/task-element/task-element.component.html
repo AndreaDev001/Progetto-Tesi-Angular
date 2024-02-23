@@ -1,11 +1,8 @@
-<button class = "task-element-wrapper">
+<button (click)="handleClick()" class = "task-element-wrapper" *ngIf="task != undefined">
     <div class = "task-element-header">
         <div class = "position-relative">
             <div class = "d-flex">
-                <app-task-tag></app-task-tag>
-                <div style="margin-left: 5px;">
-                    <app-task-tag></app-task-tag>
-                </div>
+                <app-task-tag *ngFor="let current of currentTags" [tag]="current"></app-task-tag>
             </div>
             <div class = "position-absolute" style="top: 0;right: 0">
                 <button class = "option-button">
@@ -15,15 +12,14 @@
         </div>
     </div>
     <div class = "task-element-body">
-        <p class = "task-element-title">Title</p>
-        <p class = "task-element-subtitle">Please enter a valid subtitle</p>
+        <p class = "task-element-title">{{task.title}}</p>
+        <p class = "task-element-subtitle">{{task.name}}</p>
     </div>
     <div class = "task-element-footer">
         <div class = "text-start">
-            <ng-container *ngTemplateOutlet="assignedTemplate"></ng-container>
-            <ng-container *ngTemplateOutlet="assignedTemplate"></ng-container>
-            <ng-container *ngTemplateOutlet="assignedTemplate"></ng-container>
-            <ng-container *ngTemplateOutlet="assignedTemplate"></ng-container>
+            <div *ngFor="let current of currentTaskAssignment">
+                <ng-container *ngTemplateOutlet="assignedTemplate;context : {item: current}"></ng-container>
+            </div>
         </div>
     </div>
 </button>
@@ -39,4 +35,9 @@
             <img class = "assigned-image" src="https://i0.wp.com/picjumbo.com/wp-content/uploads/beautiful-nature-mountain-scenery-with-flowers-free-photo.jpg?w=600&quality=80">
         </div>
     </button>
+</ng-template>
+<ng-template #overlayTemplate>
+    <div>
+        <app-task-overlay [task]="task"></app-task-overlay>
+    </div>
 </ng-template>

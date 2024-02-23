@@ -132,6 +132,7 @@ export interface TaskGroup
     createdDate: string
     name: string,
     publisher: UserRef,
+    currentOrder: number,
     board: BoardRef,
     amountOfTasks: number
 }

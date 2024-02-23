@@ -4,7 +4,7 @@ import { faClose, faEllipsis, faGear, faHeart, faMessage, faPlus, faUser, faUser
 import { DropdownOption } from 'src/app/Utility/dropdown/dropdown.component';
 import { AlertHandlerService } from 'src/app/services/alert-handler.service';
 import { TeamService } from 'src/model/services/team.service';
-import { Board, BoardMember, CollectionModel, Task, TaskAssignment, Team, TeamMember } from 'src/model/interfaces';
+import { Board, BoardMember, CollectionModel, Task, TaskAssignment, Team, TeamMember, User } from 'src/model/interfaces';
 import { BoardMemberService } from 'src/model/services/board-member.service';
 import { TaskAssignmentService } from 'src/model/services/task-assignment.service';
 import { CreateBoardInvite } from 'src/model/services/board-invite.service';
@@ -42,6 +42,9 @@ export class BoardHeaderComponent implements OnInit {
   public currentTeamMembers: TeamMember[] = [];
   public currentTeamMembersItem: TextOverflowItem[] = [];
 
+  public currentInvitedUser: User | undefined = undefined;
+
+  @ViewChild("createInviteTemplate") createInviteTemplate: any;
   @ViewChild("createTeamTemplate") createTeamTemplate: any;
   @ViewChild("teamMemberItem") teamMemberItem: any;
   @ViewChild("teamListTemplate") teamListTemplate: any;
@@ -75,6 +78,7 @@ export class BoardHeaderComponent implements OnInit {
   public handleCreateTeam(): any
   {
     this.alertHandlerService.setDefaultAlertTitle("");
+    this.alertHandlerService.setDefaultAlertSubtitle("");
     this.alertHandlerService.setTextTemplate(this.createTeamTemplate);
     this.alertHandlerService.clearOptions();
     this.alertHandlerService.open();
@@ -103,6 +107,7 @@ export class BoardHeaderComponent implements OnInit {
       })
     }
   }
+  
 
   public removeTeam(team: any,index: number): any {
     this.teamService.deleteTeamByID(team.id).subscribe((value: any) => {
@@ -122,9 +127,20 @@ export class BoardHeaderComponent implements OnInit {
     if(this.board != undefined) {
       let createBoardInvite: CreateBoardInvite = {userID: event.id,boardID: this.board.id,text: "You have received an invite",expirationDate: "2030-05-12"};
       this.boardInviteService.createBoardInvite(createBoardInvite).subscribe((value: any) => {
-        console.log(value);
         this.closeCreateInvite();
       },(err: any) => this.closeCreateInvite());
+    }
+  }
+
+
+  public updateInvitedUser(event: any): void {
+    this.currentInvitedUser = event
+    if(this.currentInvitedUser != undefined) 
+    {
+      this.alertHandlerService.close();
+      this.alertHandlerService.reset();
+      this.alertHandlerService.setTextTemplate(this.createInviteTemplate);
+      this.alertHandlerService.open();
     }
   }
 

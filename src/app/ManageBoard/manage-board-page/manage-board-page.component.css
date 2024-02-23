@@ -112,12 +112,45 @@ button.assigned-member-wrapper
     padding: 0;
     background-color: inherit;
 }
+div.add-group-wrapper {
+    padding: 5px;
+    background-color: var(--primary-color);
+}
+input.create-group-input
+{
+    display: block;
+    width: 100%;
+    padding: 5px;
+    color: whitesmoke;
+    border: 1px solid var(--tertiary-color);
+    border-radius: 5px;
+    background-color: var(--secondary-color);
+}
+button.add-group-button
+{
+    background-color: var(--secondary-color);
+    border: 1px solid var(--primary-color);
+    border: 0;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    width: 100%;
+    border-radius: 5px;
+    transition: 0.2s ease-in-out all;
+}
+button.add-group-button:disabled {
+    opacity: 0.7;
+}
+button.add-group-button:hover
+{
+    background-color: var(--tertiary-color);
+}
 div.task-group-wrapper {
     background-color: var(--primary-color);
     padding: 5px;
     border-radius: 10px;
     width: 275px;
-    min-height: 400px ;
     opacity: 0.90;
 }
 div.task-group-header {
@@ -129,9 +162,23 @@ div.task-group-footer {
     padding: 5px;
 }
 div.task-group-body {
-    padding: 5px;
+    padding: 10px 5px;
+    min-height: 150px;
     background-color: var(--secondary-color);
-    min-height: 400px;
+}
+button.task-option
+{
+    text-align: start;
+    border: 0;
+    background-color: var(--secondary-color);
+    padding: 10px;
+    width: 100%;
+    display: block;
+    transition: 0.2s ease-in-out all;
+}
+button.task-option:hover {
+    background-color: var(--tertiary-color);
+    padding-left: 20px;
 }
 p.group-title {
     padding: 5px;

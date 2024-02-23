@@ -4,11 +4,11 @@ import { UserService } from 'src/model/services/user.service';
 import { TextOverflowItem } from '../Utility/text-overflow/text-overflow.component';
 
 @Component({
-  selector: 'app-add-player',
-  templateUrl: './add-player.component.html',
-  styleUrls: ['./add-player.component.css']
+  selector: 'app-add-user',
+  templateUrl: './add-user.component.html',
+  styleUrls: ['./add-user.component.css']
 })
-export class AddPlayerComponent {
+export class AddUserComponent {
 
   @ViewChild("userTemplate") userTemplate: any = undefined;
   @Input() boardID: any = undefined;

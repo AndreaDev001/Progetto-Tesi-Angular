@@ -102,6 +102,13 @@ export class AlertHandlerService {
     this.open();
   }
   
+  public reset(): void {
+    this.currentAlertTitle.next("");
+    this.currentAlertSubtitle.next("");
+    this.currentAlertOptions.next([]);
+    this.currentCloseCallback.next(() => {});
+    this.currentDismissCallback.next(() => {});
+  }
   public open(): void {
     if(this.currentAlertComponent.value != undefined) {
       this.currentAlertComponent.value.open();
