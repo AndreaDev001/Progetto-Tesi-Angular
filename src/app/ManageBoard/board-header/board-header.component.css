@@ -10,9 +10,65 @@ button.option-template
 button.option-template:hover {
     background-color: var(--tertiary-color);
 }
+div.member-dropdown
+{
+    background-color: var(--primary-color);
+}
 div.image-wrapper
 {
     position: absolute;
+}
+button.member-option
+{
+    background-color: var(--primary-color);
+    color: whitesmoke;
+    padding: 10px;
+    border: 0;
+    transition: 0.2s ease-in-out all;
+}
+button.add-team-member {
+    padding: 10px 20px;
+    background-color: var(--primary-color);
+    border: 0;
+    border-radius: 5px;
+    transition: 0.2s ease-in-out all;
+}
+div.add-member-wrapper {
+    background-color: var(--secondary-color);
+    padding: 10px;
+}
+button.confirm-member {
+    background-color: var(--primary-color);
+    padding: 10px 20px;
+    width: 50%;
+    border: 0;
+    border-radius: 5px;
+    transition: 0.2s ease-in-out all;
+}
+button.confirm-member:disabled {
+    opacity: 0.70;
+}
+button.confirm-member:hover {
+    background-color: var(--tertiary-color);
+}
+button.member-unselected {
+    background-color: var(--primary-color);
+    padding: 10px 20px;
+    border: 0;
+    border-radius: 5px;
+    transition: 0.2s ease-in-out all;
+}
+button.member-selected {
+    background-color: greenyellow;
+    border: 1px solid green;
+    color: black;
+}
+button.add-team-member:hover {
+    background-color: var(--tertiary-color);
+}
+button.member-option:hover {
+    background-color: var(--tertiary-color);
+    padding: 10px 20px;
 }
 button.delete-team-button
 {

@@ -14,10 +14,10 @@ export interface UserRef
 {
     id: string,
     createdDate: string
-    name: String,
-    surname: String,
-    username: String,
-    gender: String
+    name: string,
+    surname: string,
+    username: string,
+    gender: string
 }
 export interface DiscussionRef
 {

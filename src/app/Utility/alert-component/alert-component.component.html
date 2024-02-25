@@ -22,7 +22,9 @@
 </ng-template>
 
 <ng-template #modalTemplate>
-    <ng-container *ngTemplateOutlet="currentHeaderTemplate"></ng-container>
-    <ng-container *ngTemplateOutlet="currentContentTemplate"></ng-container>
-    <ng-container *ngTemplateOutlet="currentFooterTemplate"></ng-container>
+    <div class = "secondary-color">
+        <ng-container *ngTemplateOutlet="currentHeaderTemplate"></ng-container>
+        <ng-container *ngTemplateOutlet="currentContentTemplate"></ng-container>
+        <ng-container *ngTemplateOutlet="currentFooterTemplate"></ng-container>
+    </div>
 </ng-template>

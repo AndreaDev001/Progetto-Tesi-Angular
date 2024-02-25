@@ -11,6 +11,8 @@ import { CreateBoardInvite } from 'src/model/services/board-invite.service';
 import { TeamMemberService } from 'src/app/team-member.service';
 import { TextOverflowItem } from 'src/app/Utility/text-overflow/text-overflow.component';
 import { BoardInviteService } from 'src/model/services/board-invite.service';
+import { RoleOwnerService } from 'src/app/role-owner.service';
+import { CreateRoleOwner, CreateTeamMember } from 'src/model/create';
 
 
 interface TeamOption
@@ -39,18 +41,22 @@ export class BoardHeaderComponent implements OnInit {
   public plusIcon: IconDefinition = faPlus;
 
   public currentSelectedTeam: Team | undefined = undefined;
+  public currentSelectedNewMembers: BoardMember[] = [];
   public currentTeamMembers: TeamMember[] = [];
   public currentTeamMembersItem: TextOverflowItem[] = [];
 
+  public currentUserAdmin: boolean = false;
   public currentInvitedUser: User | undefined = undefined;
+
 
   @ViewChild("createInviteTemplate") createInviteTemplate: any;
   @ViewChild("createTeamTemplate") createTeamTemplate: any;
   @ViewChild("teamMemberItem") teamMemberItem: any;
   @ViewChild("teamListTemplate") teamListTemplate: any;
   @ViewChild("addUserTemplate") addUserTemplate: any;
+  @ViewChild("addMemberTemplate") addMemberTemplate: any;
 
-  constructor(private teamService: TeamService,private teamMemberService: TeamMemberService,private boardMemberService: BoardMemberService,private boardInviteService: BoardInviteService,public alertHandlerService: AlertHandlerService) {
+  constructor(private teamService: TeamService,private roleOwnerService: RoleOwnerService,private teamMemberService: TeamMemberService,private boardMemberService: BoardMemberService,private boardInviteService: BoardInviteService,public alertHandlerService: AlertHandlerService) {
 
   }
 
@@ -65,7 +71,10 @@ export class BoardHeaderComponent implements OnInit {
           this.currentTeamOptions.push({name: team.name,icon: faUsers});
         })
       });
-      this.boardMemberService.getBoardMembersByBoard(this.board.id).subscribe((value: CollectionModel) => this.currentMembers = value._embedded != undefined && value._embedded.content != undefined ? value._embedded.content : []);
+      this.boardMemberService.getBoardMembersByBoard(this.board.id).subscribe((value: CollectionModel) => {
+        this.currentMembers = value._embedded != undefined && value._embedded.content != undefined ? value._embedded.content : []
+        console.log(value);
+      });
     }
   }
 
@@ -144,13 +153,71 @@ export class BoardHeaderComponent implements OnInit {
     }
   }
 
+  public updateAdmin(member: BoardMember): void {
+    if(this.board != undefined) {
+      this.currentUserAdmin = false;
+      this.roleOwnerService.hasRole('ADMIN',member.user.id,this.board.id).subscribe((value: any) => {
+        this.currentUserAdmin = value != undefined;
+      })
+    }
+  }
+
   public closeCreateInvite(): void {
     this.alertHandlerService.close();
   }
 
+  public removeFromBoard(member: BoardMember): void {
+    if(this.board != undefined) {
+      this.boardMemberService.deleteMember(member.id).subscribe((value: any) => {
+        const index = this.currentMembers.indexOf(member);
+        this.currentMembers = this.currentMembers.splice(index,1);
+      })
+    }
+  }
+
   public removeTeamMember(teamMemberID: any): any {
     this.teamMemberService.deleteTeamMember(teamMemberID).subscribe((value: any) => {
-      this.alertHandlerService.close();
+      this.currentTeamMembers = this.currentTeamMembers.filter(current => current.id !== teamMemberID);
+      this.currentTeamMembersItem = this.currentTeamMembersItem.filter(current => current.context.id !== teamMemberID);
     },(err: any) =>  this.alertHandlerService.close());
+  }
+
+  public addTeamMember(): void {
+    this.alertHandlerService.close();
+    this.alertHandlerService.reset();
+    this.alertHandlerService.setDefaultAlertTitle("Add a member");
+    this.alertHandlerService.setDefaultAlertSubtitle("Choose one of the avaliable members");
+    this.alertHandlerService.setTextTemplate(this.addMemberTemplate);
+    this.alertHandlerService.open();
+  }
+
+  public addNewMemberToTeam(member: BoardMember): void {
+    const index = this.currentSelectedNewMembers.indexOf(member);
+    if(index != -1) {
+      this.currentSelectedNewMembers = this.currentSelectedNewMembers.filter(current => current !== member);
+    }
+    else
+      this.currentSelectedNewMembers.push(member);
+  }
+
+  public changeRole(member: BoardMember): void {
+    if(this.currentUserAdmin)
+      this.roleOwnerService.deleteRoleOwner("ADMIN",member.user.id,member.board.id).subscribe((value: any) => this.currentUserAdmin = false);
+    else
+    {
+      let createRoleOwner: CreateRoleOwner = {name: "ADMIN",userID: member.user.id,boardID: member.board.id};
+      this.roleOwnerService.createRoleOwner(createRoleOwner).subscribe((value: any) => this.currentUserAdmin = true);
+    }
+  }
+
+  public confirmTeamMembers(): void {
+    if(this.currentSelectedNewMembers.length > 0 && this.currentSelectedTeam != undefined) {
+      for(let current of this.currentSelectedNewMembers) {
+        let createTeamMember: CreateTeamMember = {teamID: this.currentSelectedTeam.id,userID: current.user.id};
+        this.teamMemberService.createTeamMember(createTeamMember).subscribe((value: any) => console.log(value));
+      }
+      this.currentSelectedNewMembers = [];
+    }
+    this.alertHandlerService.close();
   }
 }

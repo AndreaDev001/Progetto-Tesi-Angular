@@ -35,6 +35,8 @@ export interface BoardInvite
 }
 export interface BoardMember
 {
+    id: string,
+    createdDate: string,
     user: UserRef,
     board: BoardRef
 }
@@ -146,6 +148,8 @@ export interface Team
 }
 export interface TeamMember
 {
+    id: string,
+    createdDate: string
     member: UserRef,
     team: TeamRef
 }
@@ -153,26 +157,26 @@ export interface User
 {
     id: string,
     createdDate: string,
-    email: string,
+    email?: string,
     username: string,
-    name: string,
-    surname: string,
-    gender: string,
-    amountOfCreatedBoards: number,
-    amountOfCreatedTasks: number,
-    amountOfCreatedPolls: number,
-    amountOfCreatedTags: number,
-    amountOfCreatedRoles: number,
-    amountOfOwnedRoles: number,
-    amountOfJoinedBoards: number,
-    amountOfCreatedLikes: number,
-    amountOfCreatedReports: number,
-    amountOfReceivedReports: number,
-    amountOfCreatedBans: number,
-    amountOfReceivedBans: number,
-    amountOfAssignedTasks: number,
-    amountOfCreatedDiscussions: number,
-    amountOfCreatedVotes: number
+    name?: string,
+    surname?: string,
+    gender?: string,
+    amountOfCreatedBoards: any,
+    amountOfCreatedTasks: any,
+    amountOfCreatedPolls: any,
+    amountOfCreatedTags: any,
+    amountOfCreatedRoles: any,
+    amountOfOwnedRoles: any,
+    amountOfJoinedBoards: any,
+    amountOfCreatedLikes: any,
+    amountOfCreatedReports: any,
+    amountOfReceivedReports: any,
+    amountOfCreatedBans: any,
+    amountOfReceivedBans: any,
+    amountOfAssignedTasks: any,
+    amountOfCreatedDiscussions: any,
+    amountOfCreatedVotes: any
 }
 export interface PollVote
 {

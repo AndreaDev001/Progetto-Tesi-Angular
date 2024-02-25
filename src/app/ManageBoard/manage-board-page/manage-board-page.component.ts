@@ -78,7 +78,6 @@ export class ManageBoardPageComponent implements OnInit,OnDestroy {
   public deleteGroup(groupID: string,index: number): void {
     let group: TaskGroup = this.currentTaskGroups[index];
     this.taskGroupService.deleteTaskGroup(groupID).subscribe((value: any) => {
-      const requiredIndex = this.currentTaskGroups.indexOf(group);
       this.currentTaskGroups = this.currentTaskGroups.filter(current => current !== group);
     })
   }

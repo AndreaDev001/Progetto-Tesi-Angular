@@ -23,28 +23,10 @@
                 <fa-icon class = "d-inline-block mx-1" [icon]="inviteIcon"></fa-icon>
             </button>
         </div>
-        <div class = "d-inline-block mx-1 position-relative" style="padding: 12px 10px;">
-            <button class = "position-absolute image-wrapper" style="top: 0;left: 0">
-                <img class = "member-image" style="top: 0;left: 0" src="https://i0.wp.com/picjumbo.com/wp-content/uploads/beautiful-nature-mountain-scenery-with-flowers-free-photo.jpg?w=600&quality=80">
-            </button>
-            <button class = "position-absolute image-wrapper" style="top: 0;left: 25px">
-                <img class = "member-image" style="top: 0;left: 0" src="https://i0.wp.com/picjumbo.com/wp-content/uploads/beautiful-nature-mountain-scenery-with-flowers-free-photo.jpg?w=600&quality=80">
-            </button>
-            <button class = "position-absolute image-wrapper" style="top: 0;left: 50px">
-                <img class = "member-image" style="top: 0;left: 0" src="https://i0.wp.com/picjumbo.com/wp-content/uploads/beautiful-nature-mountain-scenery-with-flowers-free-photo.jpg?w=600&quality=80">
-            </button>
-            <button class = "position-absolute image-wrapper" style="top: 0;left: 75px">
-                <img class = "member-image" style="top: 0;left: 0" src="https://i0.wp.com/picjumbo.com/wp-content/uploads/beautiful-nature-mountain-scenery-with-flowers-free-photo.jpg?w=600&quality=80">
-            </button>
-            <button class = "position-absolute image-wrapper" style="top: 0;left: 90px">
-                <img class = "member-image" style="top: 0;left: 0" src="https://i0.wp.com/picjumbo.com/wp-content/uploads/beautiful-nature-mountain-scenery-with-flowers-free-photo.jpg?w=600&quality=80">
-            </button>
-            <button class = "position-absolute image-wrapper" style="top: 0;left: 115px">
-                <img class = "member-image" style="top: 0;left: 0" src="https://i0.wp.com/picjumbo.com/wp-content/uploads/beautiful-nature-mountain-scenery-with-flowers-free-photo.jpg?w=600&quality=80">
-            </button>
-            <button class = "position-absolute member-amount-button" style="top: 0;left: 130px">
-                12
-            </button>
+        <div class = "d-inline-block mx-1 position-relative">
+            <div class = "d-inline-block mx-1" *ngFor="let current of currentMembers">
+                <ng-container *ngTemplateOutlet="memberTemplate;context: {member: current}"></ng-container>
+            </div>
         </div>
     </div>
     <div class = "w-50 text-end d-inline-block">
@@ -79,6 +61,9 @@
         <div *ngIf="currentTeamMembers.length > 0">
             <app-text-overflow [horizontal]="false" [templates]="currentTeamMembersItem"></app-text-overflow>
         </div>
+        <div class = "text-center">
+            <button (click)="addTeamMember()" class = "add-team-member">Add a member</button>
+        </div>
     </div>
 </ng-template>
 <ng-template #teamMemberItem let-i>
@@ -98,4 +83,31 @@
 </ng-template>
 <ng-template #addUserTemplate>
     <app-add-user (confirmedEvent)="updateInvitedUser($event)" (cancelEvent)="closeCreateInvite()"></app-add-user>
+</ng-template>
+<ng-template #memberTemplate let-user="user" let-member="member">
+    <div ngbDropdown container="body" class = "d-inline-block">
+        <button (click)="updateAdmin(member)" class = "image-wrapper" ngbDropdownToggle>
+            <img class = "member-image" style="top: 0;left: 0" src="https://i0.wp.com/picjumbo.com/wp-content/uploads/beautiful-nature-mountain-scenery-with-flowers-free-photo.jpg?w=600&quality=80">
+        </button>
+        <div class = "member-dropdown" ngbDropdownMenu>
+            <button (click)="changeRole(member)" ngbDropdownItem class = "member-option">{{currentUserAdmin ? 'Demote to member' : 'Promote to admin'}}</button>
+            <button (click)="removeFromBoard(member)" ngbDropdownItem class = "member-option">Remove from board</button>
+            <button ngbDropdownItem class = "member-option">Visit profile</button>
+        </div>
+    </div>
+</ng-template>
+<ng-template #addMemberTemplate>
+    <div class = "py-2" style="background-color: var(--secondary-color);">
+        <div class = "position-relative add-member-wrapper" *ngFor="let current of currentMembers">
+            <div class = "d-flex w-100 justify-content-between">
+                <app-user-holder class = "d-inline-block" [userRef]="current.user"></app-user-holder>
+                <div class = "text-end">
+                    <button (click)="addNewMemberToTeam(current)" [ngClass]="currentSelectedNewMembers.indexOf(current) != -1 ? 'member-selected' : 'member-unselected'" class = "member-unselected">{{currentSelectedNewMembers.indexOf(current) != -1 ? 'Added' : 'Add to team'}}</button>
+                </div>
+            </div>
+        </div>
+        <div class = "text-center">
+            <button (click)="confirmTeamMembers()" [disabled]="currentSelectedNewMembers.length == 0" class = "confirm-member">Confirm</button>
+        </div>
+    </div>
 </ng-template>

@@ -25,4 +25,16 @@ export class BoardMemberService {
     let queryParams: HttpParams = this.httpUtils.generatePaginationParams(page);
     return this.httpClient.get(desiredURL,{params: queryParams});
   }
+
+  public deleteMember(memberID: string): any {
+    const desiredURL: string = this.url + "/private" + "/" + memberID;
+    let queryParams: HttpParams = new HttpParams();
+    return this.httpClient.delete(desiredURL,{params: queryParams});
+  }
+  
+  public deleteMemberFromBoard(boardID: string,userID: string): any {
+    const desiredURL: string = this.url + "/private" + "/board" + "/" + boardID + "/user" + "/" + userID;
+    let queryParams: HttpParams = new HttpParams();
+    return this.httpClient.delete(desiredURL,{params: queryParams});
+  }
 }

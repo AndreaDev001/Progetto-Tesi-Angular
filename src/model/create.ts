@@ -18,3 +18,13 @@ export interface CreateTask
     description: string,
     priority: string
 }
+export interface CreateTeamMember {
+    teamID: string,
+    userID: string
+}
+export interface CreateRoleOwner
+{
+    name: string,
+    userID: string,
+    boardID: string
+}

@@ -59,7 +59,7 @@
                         <p class = "p-0 m-0">Specify a name for this group</p>
                         <div class = "py-1">
                             <label for="groupName">Name:</label>
-                            <input (input)="updateNewGroupName($event)" [placeholder]="'Group name...'" class = "create-group-input" id="groupName" type="text">
+                            <input [value]="currentNewGroupName != undefined ? currentNewGroupName : ''" (input)="updateNewGroupName($event)" [placeholder]="'Group name...'" class = "create-group-input" id="groupName" type="text">
                             <span class = "d-block" style="font-size: 12px;">Write the name of the new group</span>
                         </div>
                     </div>
