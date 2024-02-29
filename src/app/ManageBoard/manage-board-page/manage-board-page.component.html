@@ -26,7 +26,7 @@
                     <div class = "h-100 task-group-body position-relative" cdkDropList [cdkDropListData]="currentTasks[i]" [cdkDropListConnectedTo]="generateConnection(i)" [id]="'container' + i" (cdkDropListDropped)="dropItem($event)">
                         <div *ngIf="currentTasks[i].length > 0">
                             <div (cdkDragStarted)="updateCurrentTask($event,value)" class = "task-element-wrapper draggable-box" cdkDrag *ngFor="let value of currentTasks[i]">
-                                <app-task-element [task]="value"></app-task-element>
+                                <app-task-element [board]="currentBoard" [task]="value"></app-task-element>
                             </div>
                         </div>
                         <div class = "position-absolute w-100" *ngIf="currentTasks[i].length == 0">

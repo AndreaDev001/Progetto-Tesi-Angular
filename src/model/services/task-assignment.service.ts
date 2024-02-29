@@ -2,6 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { PaginationRequest } from 'src/model/interfaces';
 import { HttpUtilsService } from 'src/model/services/http-utils.service';
+import { createTaskAssignment } from '../create';
 
 @Injectable({
   providedIn: 'root'
@@ -29,5 +30,16 @@ export class TaskAssignmentService {
     const desiredURL: string = this.url + "/private" + "/task" + "/" + taskID;
     let queryParams: HttpParams = new HttpParams();
     return this.httpClient.get(desiredURL,{params: queryParams});
+  }
+
+  public createTaskAssignment(createTaskAssignment: createTaskAssignment): any {
+    const desiredURL: string = this.url + "/private";
+    let queryParams: HttpParams = new HttpParams();
+    return this.httpClient.post(desiredURL,createTaskAssignment,{params: queryParams});
+  }
+  public deleteTaskAssignment(taskAssignmentID: any): any {
+    const desiredURL: string = this.url + "/private" + "/" + taskAssignmentID;
+    let queryParams: HttpParams = new HttpParams();
+    return this.httpClient.delete(desiredURL,{params: queryParams});
   }
 }

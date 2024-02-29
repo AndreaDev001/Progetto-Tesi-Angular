@@ -80,8 +80,10 @@ import { OverlayComponent } from './Utility/overlay/overlay.component';
 import { TaskOverlayComponent } from './ManageBoard/task-overlay/task-overlay.component'
 import {MatSelectModule} from '@angular/material/select';
 import { UserHolderComponent } from './Utility/user-holder/user-holder.component';
-import { AddUserComponent } from './add-user/add-user.component';
+import { AddUserComponent } from './Utility/add-user/add-user.component';
 import { CreateInviteComponent } from './Forms/create-invite/create-invite.component';
+import { CanvasComponent } from './canvas/canvas.component';
+import { AddUserMultipleComponent } from './Utility/add-user-multiple/add-user-multiple.component';
 
 @NgModule({
   declarations: [
@@ -151,7 +153,9 @@ import { CreateInviteComponent } from './Forms/create-invite/create-invite.compo
     TaskOverlayComponent,
     UserHolderComponent,
     AddUserComponent,
-    CreateInviteComponent
+    CreateInviteComponent,
+    CanvasComponent,
+    AddUserMultipleComponent
   ],
   imports: [
     BrowserModule,

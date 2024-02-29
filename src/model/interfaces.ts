@@ -184,6 +184,8 @@ export interface PollVote
     user: UserRef
 }
 export interface TaskAssignment {
+    id: string,
+    createdDate: string,
     user: UserRef,
     task: TaskRef
 }

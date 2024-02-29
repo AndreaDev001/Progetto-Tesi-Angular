@@ -28,3 +28,18 @@ export interface CreateRoleOwner
     userID: string,
     boardID: string
 }
+export interface CreateCheckList
+{
+    name: string,
+    taskID: string
+}
+export interface CreateCheckListOption
+{
+    name: string,
+    checkListID: string
+}
+export interface createTaskAssignment
+{
+    taskID: string,
+    userID: string
+}

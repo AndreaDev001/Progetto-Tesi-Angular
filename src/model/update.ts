@@ -15,3 +15,14 @@ export interface UpdateTaskGroup
     expirationDate?: string,
     order?: number
 }
+export interface UpdateCheckList
+{
+    checkListID: string
+    name?: string
+}
+export interface UpdateCheckListOption
+{
+    checkListOptionID: string,
+    name?: string,
+    completed?: boolean
+}

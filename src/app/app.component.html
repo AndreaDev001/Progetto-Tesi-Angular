@@ -1,4 +1,11 @@
-<app-header></app-header>
-<app-alert-component class = "d-none"></app-alert-component>
-<app-off-canvas class = "d-none"></app-off-canvas>
-<router-outlet></router-outlet>
+<div class = "h-100">
+    <div class = "position-relative h-100">
+        <app-header></app-header>
+        <app-alert-component class = "d-none"></app-alert-component>
+        <app-off-canvas class = "d-none"></app-off-canvas>
+        <router-outlet></router-outlet>
+        <div [ngClass]="canvasVisible ? 'canvas-wrapper-visible' : 'canvas-wrapper'">
+            <app-canvas></app-canvas>
+        </div>
+    </div>
+</div>

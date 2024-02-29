@@ -97,17 +97,7 @@
     </div>
 </ng-template>
 <ng-template #addMemberTemplate>
-    <div class = "py-2" style="background-color: var(--secondary-color);">
-        <div class = "position-relative add-member-wrapper" *ngFor="let current of currentMembers">
-            <div class = "d-flex w-100 justify-content-between">
-                <app-user-holder class = "d-inline-block" [userRef]="current.user"></app-user-holder>
-                <div class = "text-end">
-                    <button (click)="addNewMemberToTeam(current)" [ngClass]="currentSelectedNewMembers.indexOf(current) != -1 ? 'member-selected' : 'member-unselected'" class = "member-unselected">{{currentSelectedNewMembers.indexOf(current) != -1 ? 'Added' : 'Add to team'}}</button>
-                </div>
-            </div>
-        </div>
-        <div class = "text-center">
-            <button (click)="confirmTeamMembers()" [disabled]="currentSelectedNewMembers.length == 0" class = "confirm-member">Confirm</button>
-        </div>
+    <div *ngIf="board != undefined">
+        <app-add-user-multiple [boardID]="board.id" (confirmEvent)="confirmTeamMembers()" (selectedMemberEvent)="addNewMemberToTeam($event)"></app-add-user-multiple>
     </div>
 </ng-template>

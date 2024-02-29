@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { PagedModel, PaginationRequest, User } from 'src/model/interfaces';
 import { UserService } from 'src/model/services/user.service';
-import { TextOverflowItem } from '../Utility/text-overflow/text-overflow.component';
+import { TextOverflowItem } from '../text-overflow/text-overflow.component';
 
 @Component({
   selector: 'app-add-user',

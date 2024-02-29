@@ -12,10 +12,15 @@ div.task-overlay-footer {
 }
 button.default-button
 {
-    padding: 5px 15px;
+    padding: 10px 40px;
     border: 0;
-    border-radius: 5px;
+    border-radius: 2px;
+    font-size: 15px;
     background-color: var(--primary-color);
+    transition: 0.2s ease-in-out all;
+}
+button.default-button:hover {
+    background-color: var(--tertiary-color);
 }
 div.content-wrapper
 {
@@ -32,8 +37,8 @@ p.overlay-section-title
 }
 button.add-member-button
 {
-    width: 30px;
-    height: 30px;
+    width: 40px;
+    height: 40px;
     border: 0;
     margin: 0;
     background-color: var(--primary-color);
@@ -52,13 +57,32 @@ img.user-image
     border: 1px solid var(--tertiary-color);
     filter: brightness(70%);
 }
+.description-text-area
+{
+    width: 100%;
+    height: 100%;
+    padding: 5px;
+    background-color: inherit;
+    border: 0;
+    background-color: var(--secondary-color);
+}
+.description-text-area-selected
+{
+    width: 100%;
+    height: 100%;
+    padding: 5px;
+    background-color: var(--primary-color);
+    border: 1px solid var(--tertiary-color);
+    border-radius: 2px;
+}
 button.option-button
 {
     width: 100%;
     border: 0;
-    padding: 5px 10px;
-    border-radius: 10px;
+    padding: 10px 20px;
+    border-radius: 2px;
     text-align: start;
+    font-size: 15px;
     background-color: var(--primary-color);
     transition: 0.2s ease-in-out all;
 }
@@ -70,4 +94,31 @@ ul.option-holder
 {
     list-style-type: none;
     margin-top: 5px;
+}
+button.member-button
+{
+    border: 0;
+    background-color: var(--secondary-color);
+}
+button.member-option
+{
+    border: 0;
+    background-color: var(--primary-color);
+    transition: 0.2s ease-in all;
+    padding: 10px;
+    font-size: 15px;
+    color: whitesmoke;
+}
+button.member-option:hover
+{
+    padding-left: 20px;
+    background-color: var(--tertiary-color);
+}
+img.assigned-image
+{
+    border-radius: 60%;
+    width: 40px;
+    height: 40px;
+    filter: brightness(70%);
+    border: 1px solid var(--tertiary-color);
 }

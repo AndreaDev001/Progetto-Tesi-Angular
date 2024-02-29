@@ -17,7 +17,7 @@
     </div>
     <div class = "task-element-footer">
         <div class = "text-start">
-            <div *ngFor="let current of currentTaskAssignment">
+            <div *ngFor="let current of currentTaskAssignments">
                 <ng-container *ngTemplateOutlet="assignedTemplate;context : {item: current}"></ng-container>
             </div>
         </div>
@@ -38,6 +38,6 @@
 </ng-template>
 <ng-template #overlayTemplate>
     <div>
-        <app-task-overlay [task]="task"></app-task-overlay>
+        <app-task-overlay [board]="board" [task]="task"></app-task-overlay>
     </div>
 </ng-template>
