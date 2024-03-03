@@ -19,6 +19,13 @@ export interface UserRef
     username: string,
     gender: string
 }
+export interface TagRef
+{
+    id: string,
+    createdDate: string,
+    name: string,
+    color: string
+}
 export interface DiscussionRef
 {
     id: string,

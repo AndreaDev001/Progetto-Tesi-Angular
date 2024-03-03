@@ -40,9 +40,6 @@ export class TaskElementComponent implements OnInit {
       this.taskAssignment.getTaskAssignmentsByTask(this.task.id).subscribe((value: CollectionModel) => {
         this.currentTaskAssignments = value._embedded != undefined && value._embedded.content != undefined ? value._embedded.content : [];
       })
-      this.tagService.getTagsByTask(this.task.id).subscribe((value: CollectionModel) => {
-        this.currentTags = value._embedded != undefined && value._embedded.content != undefined ? value._embedded.content : [];
-      })
     }
   }
 

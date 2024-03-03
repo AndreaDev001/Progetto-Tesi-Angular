@@ -17,7 +17,7 @@
     </div>
     <div class = "task-element-footer">
         <div class = "text-start">
-            <div *ngFor="let current of currentTaskAssignments">
+            <div class = "d-inline-block" [ngStyle]="{'margin-left': i > 0 ? '3px' : '0px'}"  *ngFor="let current of currentTaskAssignments;let i = index">
                 <ng-container *ngTemplateOutlet="assignedTemplate;context : {item: current}"></ng-container>
             </div>
         </div>
@@ -32,7 +32,7 @@
 <ng-template #assignedTemplate let-item="item">
     <button class = "assigned-member-wrapper">
         <div class = "image-wrapper">
-            <img class = "assigned-image" src="https://i0.wp.com/picjumbo.com/wp-content/uploads/beautiful-nature-mountain-scenery-with-flowers-free-photo.jpg?w=600&quality=80">
+            <img class = "assigned-image" [src]="'http://localhost:8080/api/v1/userImages/public/user/' + item.user.id + '/image'">
         </div>
     </button>
 </ng-template>

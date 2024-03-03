@@ -9,8 +9,8 @@
                 </div>
             </div>
             <div class = "d-inline-block mx-1">
-                <p class = "p-0 m-0" style="font-size: 15px;">Members</p>
-                <div class = "d-inline-block" *ngFor="let current of currentMembers">
+                <p class = "p-0 mx-1 my-0" style="font-size: 15px;">Members</p>
+                <div class = "d-inline-block mx-1" *ngFor="let current of currentMembers">
                     <ng-container *ngTemplateOutlet="memberTemplate;context: {member: current}"></ng-container>
                 </div>
                 <div class = "d-inline-block mx-1">
@@ -19,11 +19,11 @@
             </div>
             <div class = "d-inline-block mx-1">
                 <p class = "p-0 m-0" style="font-size: 15px;">Tags</p>
-                <div class = "d-inline-block" *ngFor="let current of currentTags">
-                    <app-task-tag [tag]="current"></app-task-tag>
+                <div class = "d-inline-block mx-1" *ngFor="let current of currentTagAssignments">
+                    <ng-container *ngTemplateOutlet="tagTemplate;context: {item: current}"></ng-container>
                 </div>
                 <div class = "d-inline-block">
-                    <button class = "add-member-button">+</button>
+                    <button (click)="addTag()" class = "add-member-button">+</button>
                 </div>
             </div>
         </div>
@@ -65,9 +65,25 @@
                     <ul class = "option-holder">
                         <p class = "p-0 m-0" style="font-size: 15px;">Add elements</p>
                         <p class = "p-0 m-0" style="font-size: 15px;">Modify the task by adding one of the following elements</p>
-                        <li class = "mt-1" *ngFor="let current of buttonOptions">
-                            <ng-container *ngTemplateOutlet="buttonOption;context: {item: current}"></ng-container>
-                        </li>
+                        <div class = "mt-1" ngbDropdown>
+                            <button ngbDropdownToggle class = "option-button">
+                                <fa-icon [icon]="userIcon"></fa-icon>
+                                <span class = "mx-1">Members</span>
+                            </button>
+                            <div class = "secondary-color w-100 p-2" ngbDropdownMenu>
+                                <button class = "user-holder-wrapper" ngbDropdownItem *ngFor="let current of currentMembers">
+                                    <div class = "d-flex justify-content-between">
+                                        <app-user-holder [showNameInfo]="false" [imageWidth]="35" [imageHeight]="35" [userRef]="current.user"></app-user-holder>
+                                        <button class = "remove-button" (click)="removeMember(current)">
+                                            <fa-icon [icon]="removeIcon"></fa-icon>
+                                        </button>
+                                    </div>
+                                </button>
+                                <button class = "add-option-button" (click)="addMember()">
+                                    Add a member
+                                </button>
+                            </div>
+                        </div>
                     </ul>
                 </div>
             </div>
@@ -88,7 +104,7 @@
 <ng-template #memberTemplate let-member="member">
     <div ngbDropdown container="body">
         <button class = "member-button" ngbDropdownToggle>
-            <img class = "assigned-image" src="https://i0.wp.com/picjumbo.com/wp-content/uploads/beautiful-nature-mountain-scenery-with-flowers-free-photo.jpg?w=600&quality=80">
+            <img class = "assigned-image" [src]="'http://localhost:8080/api/v1/userImages/public/user/' + member.user.id + '/image'">
         </button>
         <div class = "primary-color" ngbDropdownMenu>
             <button (click)="removeMember(member)" class = "member-option" ngbDropdownItem>Remove</button>
@@ -97,6 +113,22 @@
 </ng-template>
 <ng-template #addMemberTemplate>
     <div *ngIf="board != undefined">
-        <app-add-user-multiple (confirmEvent)="confirmMembersChange($event)" (selectedMembersChanged)="handleMembersChange($event)" [boardID]="board.id"></app-add-user-multiple>
+        <app-multi-selection (cancelEvent)="this.alertHandlerService.close()" [requiredTemplate]="userHolder" (confirmEvent)="confirmMembersChange($event)" (selectionChanged)="handleMembersChange($event)" [requiredObservable]="this.boardMemberService.getBoardMembersByBoard(board.id)"></app-multi-selection>
     </div>
+</ng-template>
+<ng-template #addTagTemplate>
+    <div *ngIf="board != undefined">
+        <app-multi-selection [requiredTemplate]="tagHolder" [requiredObservable]="this.tagService.getTagsByBoard(board.id)" (cancelEvent)="this.alertHandlerService.close()" (selectionChanged)="handleTagsChange($event)" (confirmEvent)="confirmTagsChange($event)"></app-multi-selection>
+    </div>
+</ng-template>
+<ng-template #userHolder let-i>
+    <app-user-holder [userRef]="i.user"></app-user-holder>
+</ng-template>
+<ng-template #tagHolder let-i>
+    <div>
+        <app-task-tag [tag]="i" [padding]="'20px'"></app-task-tag>
+    </div>
+</ng-template>
+<ng-template #tagTemplate let-item="item">
+    <app-task-tag [canRemove]="true" [fontSize]="'10px'" [tag] = "item.tag"></app-task-tag>
 </ng-template>

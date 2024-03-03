@@ -1,4 +1,4 @@
-import { BoardRef, CheckListRef, CommentRef, DiscussionRef, PollOptionRef, PollRef, RoleRef, TaskGroupRef, TaskRef, TeamRef, UserRef } from "./refs"
+import { BoardRef, CheckListRef, CommentRef, DiscussionRef, PollOptionRef, PollRef, RoleRef, TagRef, TaskGroupRef, TaskRef, TeamRef, UserRef } from "./refs"
 
 export interface Board
 {
@@ -91,9 +91,12 @@ export interface RoleOwner
 }
 export interface Tag
 {
+    id: string,
+    createdDate: string,
     name: string,
-    publisher: UserRef,
-    board: BoardRef
+    color: string,
+    publisher?: UserRef,
+    board?: BoardRef
 }
 export interface CheckList 
 {
@@ -216,6 +219,13 @@ export interface TaskReport
     type: string,
     reporter: UserRef,
     reported: UserRef,
+    task: TaskRef
+}
+export interface TagAssignment
+{
+    id: string,
+    createdDate: string,
+    tag: TagRef,
     task: TaskRef
 }
 export interface DiscussionReport

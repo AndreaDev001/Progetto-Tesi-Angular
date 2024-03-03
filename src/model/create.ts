@@ -43,3 +43,14 @@ export interface createTaskAssignment
     taskID: string,
     userID: string
 }
+export interface CreateTagAssignment
+{
+    taskID: string,
+    tagID: string
+}
+export interface CreateTag
+{
+    name: string,
+    color: string,
+    boardID: string
+}

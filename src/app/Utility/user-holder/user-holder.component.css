@@ -1,8 +1,6 @@
 img.user-image
 {
     display: inline-block;
-    width: 60px;
-    height: 60px;
     border-radius: 60%;
     filter: brightness(60%);
     border: 1px solid var(--tertiary-color);

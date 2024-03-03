@@ -10,7 +10,10 @@ import { UserRef } from 'src/model/refs';
 export class UserHolderComponent implements OnInit {
   
   @Input() user: User | undefined = undefined;
+  @Input() imageWidth: number = 60;
+  @Input() imageHeight: number = 60;
   @Input() userRef: UserRef | undefined = undefined;
+  @Input() showNameInfo: boolean = true;
 
   public ngOnInit(): void {
     if(this.userRef != undefined)

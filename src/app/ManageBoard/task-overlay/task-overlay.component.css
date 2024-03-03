@@ -100,6 +100,11 @@ button.member-button
     border: 0;
     background-color: var(--secondary-color);
 }
+button.user-holder-wrapper {
+    background-color: var(--secondary-color);
+    padding: 0;
+    border: 0;
+}
 button.member-option
 {
     border: 0;
@@ -114,6 +119,16 @@ button.member-option:hover
     padding-left: 20px;
     background-color: var(--tertiary-color);
 }
+button.remove-button {
+    background-color: var(--secondary-color);
+    border: 0;
+    padding: 0px 5px;
+    transition: 0.2s ease-in-out all;
+    color: whitesmoke;
+}
+button.remove-button:hover {
+    background-color: var(--tertiary-color);
+}
 img.assigned-image
 {
     border-radius: 60%;
@@ -121,4 +136,19 @@ img.assigned-image
     height: 40px;
     filter: brightness(70%);
     border: 1px solid var(--tertiary-color);
+}
+button.add-option-button
+{
+    width: 100%;
+    font-size: 15px;
+    border: 0;
+    border-radius: 5px;
+    padding: 5px;
+    background-color: var(--primary-color);
+    color: whitesmoke;
+    transition: 0.2s ease-in-out all;
+}
+button.add-option-button:hover {
+    background-color: var(--tertiary-color);
+
 }

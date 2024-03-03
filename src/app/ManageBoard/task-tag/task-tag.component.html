@@ -1,3 +1,6 @@
-<div class = "tag-wrapper" *ngIf="tag != undefined">
-    <span class = "tag-text">{{tag.name}}</span>
+<div class = "tag-wrapper" [ngStyle]="{'background-color': tag.color}" *ngIf="tag != undefined">
+    <div class = "d-flex">
+        <span [ngStyle]="{'font-size': fontSize,'padding': padding}" class = "tag-text">{{tag.name}}</span>
+        <button class = "btn btn-close btn-close-white"></button>
+    </div>
 </div>
