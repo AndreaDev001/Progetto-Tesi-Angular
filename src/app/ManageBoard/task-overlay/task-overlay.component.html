@@ -1,11 +1,20 @@
 <div class = "task-overlay-wrapper" *ngIf="task != undefined">
     <div class = "content-wrapper">
         <div class = "task-overlay-header">
-            <div class = "d-flex">
-                <fa-icon style="font-size: 35px;" [icon]="taskIcon"></fa-icon>
-                <div class = "p-1 mx-2">
-                    <p class = "p-0 m-0">{{task.name}}</p>
-                    <p class = "p-0 m-0">{{task.title}}</p>
+            <div>
+                <div class = "w-75 text-start d-inline-block">
+                    <div class = "d-flex">
+                        <fa-icon style="font-size: 35px;" [icon]="taskIcon"></fa-icon>
+                        <div class = "p-1 mx-2">
+                            <p class = "p-0 m-0">{{task.name}}</p>
+                            <p class = "p-0 m-0">{{task.title}}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class = "w-25 text-end d-inline-block">
+                    <div class = "d-inline-block mx-1" *ngFor="let current of descriptionItems">
+                        <ng-container *ngTemplateOutlet="descriptionItem;context: {item: current}"></ng-container>
+                    </div>
                 </div>
             </div>
             <div class = "d-inline-block mx-1">
@@ -31,6 +40,25 @@
             <div class = "row">
                 <div class = "col-12 col-md-9">
                     <div class = "py-1">
+                        <div *ngIf="currentImages.length > 0">
+                            <div class = "d-flex">
+                                <fa-icon style="font-size: 25px;" [icon]="uploadIcon"></fa-icon>
+                                <div class = "mx-3 w-100">
+                                    <div class = "text-start w-75 d-inline-block">
+                                        <p class = "overlay-section-title">Images</p>
+                                        <p class = "overlay-section-subtitle">View and remove images that have been assigned to this task</p>
+                                    </div>
+                                    <div class = "text-end w-25 d-inline-block">
+                                        <button class = "default-button"  (click)="addNewImage()">Add</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class = "px-4">
+                            <app-text-overflow [templates]="currentImagesItems"></app-text-overflow>
+                        </div>
+                    </div>
+                    <div class = "py-1">
                         <div class = "d-flex">
                             <fa-icon [icon]="descriptionIcon" style="font-size: 25px;"></fa-icon>
                             <div class = "mx-3">
@@ -46,6 +74,11 @@
                                 <button (click)="resetDescription()"  *ngIf="isChangingDescription" class = "default-button mx-1">Cancel</button>
                                 <button (click)="updateDescription()" *ngIf="isChangingDescription" class = "default-button mx-1">Confirm</button>
                             </div>
+                        </div>
+                    </div>
+                    <div *ngIf="currentCheckLists.length > 0">
+                        <div *ngFor="let current of currentCheckLists">
+                            <app-checklist [checkList]="current"></app-checklist>
                         </div>
                     </div>
                     <div>
@@ -84,6 +117,65 @@
                                 </button>
                             </div>
                         </div>
+                        <div class = "mt-1" ngbDropdown>
+                            <button ngbDropdownToggle class = "option-button">
+                                <fa-icon [icon]="tagIcon"></fa-icon>
+                                <span class = "mx-1">Tags</span>
+                            </button>
+                            <div class = "secondary-color w-100 p-2" ngbDropdownMenu>
+                                <button class = "mt-1 user-holder-wrapper" ngbDropdownItem *ngFor="let current of currentTagAssignments">
+                                    <div>
+                                        <div class = "text-start w-75 d-inline-block">
+                                            <app-task-tag [tagRef]="current.tag" [fontSize]="'10px'"></app-task-tag>
+                                        </div>
+                                        <div class = "text-end w-25 d-inline-block">
+                                            <button class = "remove-button" (click)="removeTagAssignment(current)">
+                                                <fa-icon [icon]="removeIcon"></fa-icon>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </button>
+                                <div class = "mt-2">
+                                    <button class = "add-option-button mt-1" (click)="addTag()">Add a tag</button>
+                                    <button class = "add-option-button mt-1" (click)="createNewTag()">Create a tag</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class = "mt-1" ngbDropdown container="body">
+                            <button ngbDropdownToggle class = "option-button">
+                                <fa-icon [icon]="checkIcon"></fa-icon>
+                                <span class = "mx-1">CheckLists</span>
+                            </button>
+                            <div class = "secondary-color w-100 p-2" ngbDropdownMenu>
+                                <button class = "mt-1 user-holder-wrapper" ngbDropdownItem *ngFor="let current of currentCheckLists">
+                                    <div class = "text-start w-75 d-inline-block">
+                                        <span>{{current.name}}</span>
+                                    </div>
+                                    <div class = "text-end w-25 d-inline-block">
+                                        <button class = "remove-button" (click)="removeCheckList(current)">
+                                            <fa-icon [icon]="removeIcon"></fa-icon>
+                                        </button>
+                                    </div>
+                                </button>
+                                <div class = "mt-2">
+                                    <button class = "add-option-button" (click)="createNewCheckList()">Create a checklist</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class = "mt-1" ngbDropdown container="body">
+                            <button ngbDropdownToggle class = "option-button">
+                                <fa-icon [icon]="uploadIcon"></fa-icon>
+                                <span class = "mx-1">Images</span>
+                            </button>
+                            <div class = "secondary-color w-100 p-2" ngbDropdownMenu>
+                                <button class = "user-holder-wrapper" ngbDropdownItem>
+                                    <app-text-overflow [horizontal]="false" [templates]="currentImagesItems"></app-text-overflow>
+                                </button>
+                                <div class = "mt-2">
+                                    <button class = "add-option-button" (click)="addNewImage()">Add a new image</button>
+                                </div>
+                            </div>
+                        </div>
                     </ul>
                 </div>
             </div>
@@ -95,11 +187,6 @@
         <fa-icon [icon]="item.icon"></fa-icon>
         <span class = "mx-2 d-inline-block" style="font-size: 14px;">{{item.name}}</span> 
     </button>
-</ng-template>
-<ng-template #tagOption>
-    <div style="background-color: green;border-radius: 10px;padding: 2px 15px;">
-        <span style="font-size: 14px;">Tag</span>
-    </div>
 </ng-template>
 <ng-template #memberTemplate let-member="member">
     <div ngbDropdown container="body">
@@ -119,6 +206,9 @@
 <ng-template #addTagTemplate>
     <div *ngIf="board != undefined">
         <app-multi-selection [requiredTemplate]="tagHolder" [requiredObservable]="this.tagService.getTagsByBoard(board.id)" (cancelEvent)="this.alertHandlerService.close()" (selectionChanged)="handleTagsChange($event)" (confirmEvent)="confirmTagsChange($event)"></app-multi-selection>
+        <div class = "p-3 mt-1">
+            <button class = "option-button" style="text-align: center;" (click)="createNewTag()">Create a new tag</button>
+        </div>
     </div>
 </ng-template>
 <ng-template #userHolder let-i>
@@ -130,5 +220,32 @@
     </div>
 </ng-template>
 <ng-template #tagTemplate let-item="item">
-    <app-task-tag [canRemove]="true" [fontSize]="'10px'" [tag] = "item.tag"></app-task-tag>
+    <app-task-tag (removeEvent)="removeTagAssignment(item)" [canRemove]="true" [fontSize]="'10px'" [tag] = "item.tag"></app-task-tag>
+</ng-template>
+<ng-template #createTagTemplate>
+    <div *ngIf="board != undefined">
+        <app-create-tag (submitEvent)="this.alertHandlerService.close()" [boardID]="board.id" ></app-create-tag>
+    </div>
+</ng-template>
+<ng-template #createCheckListTemplate>
+    <div *ngIf="task != undefined">
+        <app-create-check-list (submitEvent)="this.alertHandlerService.close()" (successEvent)="this.currentCheckLists.push($event);this.taskChanged.emit()"  [taskID]="task.id"></app-create-check-list>
+    </div>
+</ng-template>
+<ng-template #descriptionItem let-item="item">
+    <div style="font-size: 20px;">
+        <fa-icon [icon]="item.icon" class = "d-inline-block"></fa-icon>
+        <span class = "mx-1">{{item.amount}}</span>
+    </div>
+</ng-template>
+<ng-template #addImageTemplate>
+    <app-create-task-image (submitEvent)="this.alertHandlerService.close()" (successEvent)="this.currentImages.push($event);this.currentImagesItems.push({template: this.taskImageTemplate,context: this.currentImages.length - 1});this.taskChanged.emit()" [taskID]="task?.id"></app-create-task-image>
+</ng-template>
+<ng-template #taskImageTemplate let-i>
+    <div class = "mx-1">
+        <img class = "task-image" [src]="'http://localhost:8080/api/v1/taskImages/public/task/' + task?.id + '/index/' + i + '/image'">
+        <div class = "text-center">
+            <button (click)="deleteImage(i)" class = "remove-image-button mt-1">Remove</button>
+        </div>
+    </div>
 </ng-template>

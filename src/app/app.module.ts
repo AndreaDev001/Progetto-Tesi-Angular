@@ -85,6 +85,12 @@ import { CreateInviteComponent } from './Forms/create-invite/create-invite.compo
 import { CanvasComponent } from './canvas/canvas.component';
 import { AddUserMultipleComponent } from './Utility/add-user-multiple/add-user-multiple.component';
 import { MultiSelectionComponent } from './multi-selection/multi-selection.component';
+import { CreateTagComponent } from './Forms/create-tag/create-tag.component';
+import { NgxColorsModule } from 'ngx-colors';
+import { CreateCheckListComponent } from './Forms/create-check-list/create-check-list.component';
+import { ChecklistComponent } from './ManageBoard/checklist/checklist.component';
+import { CreateCheckListOptionComponent } from './Forms/create-check-list-option/create-check-list-option.component';
+import { CreateTaskImageComponent } from './Forms/create-task-image/create-task-image.component';
 
 @NgModule({
   declarations: [
@@ -157,7 +163,12 @@ import { MultiSelectionComponent } from './multi-selection/multi-selection.compo
     CreateInviteComponent,
     CanvasComponent,
     AddUserMultipleComponent,
-    MultiSelectionComponent
+    MultiSelectionComponent,
+    CreateTagComponent,
+    CreateCheckListComponent,
+    ChecklistComponent,
+    CreateCheckListOptionComponent,
+    CreateTaskImageComponent
   ],
   imports: [
     BrowserModule,
@@ -170,6 +181,7 @@ import { MultiSelectionComponent } from './multi-selection/multi-selection.compo
     MatFormFieldModule,
     MatInputModule,
     FormsModule,
+    NgxColorsModule,
     ReactiveFormsModule,
     FontAwesomeModule,
     NgxSpinnerModule,

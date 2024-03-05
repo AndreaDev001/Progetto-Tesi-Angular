@@ -1,6 +1,6 @@
 <div class = "tag-wrapper" [ngStyle]="{'background-color': tag.color}" *ngIf="tag != undefined">
     <div class = "d-flex">
         <span [ngStyle]="{'font-size': fontSize,'padding': padding}" class = "tag-text">{{tag.name}}</span>
-        <button class = "btn btn-close btn-close-white"></button>
+        <button *ngIf="canRemove" (click)="removeTag()" class = "btn btn-close btn-close-white" style="font-size: 14px;"></button>
     </div>
 </div>

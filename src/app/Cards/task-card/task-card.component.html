@@ -17,14 +17,14 @@
                     <div class = "text-center">
                         <div class = "d-inline-block" style="font-size: 25px;">
                             <fa-icon [icon]="likeIcon"></fa-icon>
-                            <span class = "mx-1">{{task.amountOfLikes}}</span>
+                            <span class = "mx-1">{{task.amountOfReceivedLikes}}</span>
                         </div>
                     </div>
                 </div>
                 <div class = "position-absolute" style="top: 0;right: 0%;transform: translate(-50%,50%)">
                     <div [ngbTooltip]="'Amount of members assigned'">
                         <fa-icon [icon]="membersIcon"></fa-icon>
-                        <span class = "mx-1">{{task.amountOfAssignedMembers}}</span>
+                        <span class = "mx-1">{{task.amountOfAssignments}}</span>
                     </div>
                 </div>
                 <div class = "position-absolute" style="bottom: 0;right: 0;transform: translateY(-100%,100%)">

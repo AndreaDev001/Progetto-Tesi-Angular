@@ -48,3 +48,8 @@ button.assigned-member-wrapper
     padding: 0;
     background-color: inherit;
 }
+img.task-first-image {
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+}

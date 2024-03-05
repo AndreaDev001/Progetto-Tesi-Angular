@@ -174,6 +174,10 @@ export class ManageBoardPageComponent implements OnInit,OnDestroy {
     this.currentSelectedTask = undefined;
   }
 
+  public handleTaskChange(event: string): void {
+
+  }
+
   public ngOnDestroy(): void {
     this.subscriptions.forEach((value: Subscription) => value.unsubscribe());  
   }

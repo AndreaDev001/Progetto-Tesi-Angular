@@ -25,4 +25,11 @@ export class TagAssignmentService {
     let queryParams: HttpParams = new HttpParams();
     return this.httpClient.post(desiredURL,createTagAssignment,{params: queryParams});
   }
+
+  public deleteTagAssignment(tagAssignmentID: string): any {
+    const desiredURL: string = this.url + "/private" + "/" + tagAssignmentID;
+    let queryParams: HttpParams = new HttpParams();
+    return this.httpClient.delete(desiredURL,{params: queryParams});
+  }
+  
 }
