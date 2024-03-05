@@ -161,7 +161,6 @@ export class TaskOverlayComponent implements OnInit
       this.currentNewTags.forEach((value: Tag) => {
         if(this.task != undefined) {
           let createTagAssignment: CreateTagAssignment = {taskID: this.task.id,tagID: value.id};
-          console.log(createTagAssignment);
           this.tagAssignmentService.createTagAssignment(createTagAssignment).subscribe((currentValue: any) => {
             this.currentTagAssignments.push(currentValue)
             this.taskChanged.emit();

@@ -128,8 +128,11 @@ export interface Task
     publisher: UserRef,
     taskGroup?: TaskGroupRef,
     expirationDate: string,
-    amountOfLikes: number,
-    amountOfAssignedMembers: number
+    amountOfReceivedLikes: number,
+    amountOfAssignments: number,
+    amountOfImages: number,
+    amountOfCheckLists: number,
+    amountOfReceivedComments: number,
 }
 export interface TaskGroup
 {
@@ -148,6 +151,14 @@ export interface Team
     name: string,
     publisher: UserRef,
     board: BoardRef
+}
+export interface TaskImage
+{
+    id: string,
+    createdDate: string,
+    owner: string,
+    type: string,
+    uploader: UserRef
 }
 export interface TeamMember
 {

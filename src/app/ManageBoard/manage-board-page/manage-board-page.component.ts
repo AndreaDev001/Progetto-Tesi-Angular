@@ -150,10 +150,19 @@ export class ManageBoardPageComponent implements OnInit,OnDestroy {
     if(this.currentSelectedTask != undefined) 
     {
       let index: number = event.container.id.split("container")[1];
-      let updateTask: UpdateTask = {groupID: this.currentTaskGroups[index].id,taskID: this.currentSelectedTask.id};
-      this.taskService.updateTask(updateTask).subscribe((value: any) => {
-        this.currentSelectedTask = undefined;
-      },(err: any) => this.currentSelectedTask = undefined);
+      if(event.previousContainer == event.container) {
+        let updateFirstTask: UpdateTask = {order: event.currentIndex,taskID: this.currentSelectedTask.id};
+        let updateSecondTask: UpdateTask = {order: event.previousIndex,taskID: this.currentTasks[index][event.currentIndex].id};
+        this.taskService.updateTask(updateFirstTask).subscribe((value: any) => console.log(value));
+        this.taskService.updateTask(updateSecondTask).subscribe((value: any) => console.log(value));
+      }
+      else
+      {
+        let updateTask: UpdateTask = {groupID: this.currentTaskGroups[index].id,taskID: this.currentSelectedTask.id};
+        this.taskService.updateTask(updateTask).subscribe((value: any) => {
+          this.currentSelectedTask = undefined;
+        },(err: any) => this.currentSelectedTask = undefined);
+      }
       transferArrayItem(event.previousContainer.data,event.container.data,event.previousIndex,event.currentIndex);
     }
   }

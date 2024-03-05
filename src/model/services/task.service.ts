@@ -16,6 +16,12 @@ export class TaskService {
 
   }
 
+  public getTaskByID(id: string): any {
+    const desiredURL: string = this.url + "/private" + "/" + id;
+    let queryParams: HttpParams = new HttpParams();
+    return this.httpClient.get(desiredURL,{params: queryParams});
+  }
+
   public createTask(createTask: CreateTask): any {
     const desiredURL: string = this.url + "/private";
     let queryParams: HttpParams = new HttpParams();

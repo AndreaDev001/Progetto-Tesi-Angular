@@ -54,3 +54,8 @@ export interface CreateTag
     color: string,
     boardID: string
 }
+export interface CreateTaskImage
+{
+    taskID: string,
+    files: any[]
+}

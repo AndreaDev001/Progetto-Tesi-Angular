@@ -4,6 +4,7 @@ export interface UpdateTask
     title?: string,
     name?: string,
     description?: string,
+    order?: number,
     priority?: string,
     expirationDate?: string,
     groupID?: string
@@ -22,7 +23,7 @@ export interface UpdateCheckList
 }
 export interface UpdateCheckListOption
 {
-    checkListOptionID: string,
+    optionID: string,
     name?: string,
     completed?: boolean
 }

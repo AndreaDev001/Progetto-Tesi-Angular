@@ -35,7 +35,7 @@ export class CheckListOptionService {
   }
   
   public deleteOption(optionID: string): any {
-    const desiredURL: string = this.url + "/private";
+    const desiredURL: string = this.url + "/private" + "/" + optionID;
     let queryParams: HttpParams = new HttpParams();
     return this.httpClient.delete(desiredURL,{params: queryParams});
   }
