@@ -1,4 +1,4 @@
-import { Component, Input, OnInit,ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit,ViewChild,Output } from '@angular/core';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faClose, faEllipsis, faGear, faHeart, faMessage, faPlus, faUser, faUserGroup, faUsers } from '@fortawesome/free-solid-svg-icons';
 import { DropdownOption } from 'src/app/Utility/dropdown/dropdown.component';
@@ -13,6 +13,7 @@ import { TextOverflowItem } from 'src/app/Utility/text-overflow/text-overflow.co
 import { BoardInviteService } from 'src/model/services/board-invite.service';
 import { RoleOwnerService } from 'src/app/role-owner.service';
 import { CreateRoleOwner, CreateTeamMember } from 'src/model/create';
+import { OffCanvasHandlerService } from 'src/app/services/off-canvas-handler.service';
 
 
 interface TeamOption
@@ -55,6 +56,8 @@ export class BoardHeaderComponent implements OnInit {
   @ViewChild("teamListTemplate") teamListTemplate: any;
   @ViewChild("addUserTemplate") addUserTemplate: any;
   @ViewChild("addMemberTemplate") addMemberTemplate: any;
+  @ViewChild("modifyBoardTemplate") modifyBoardTemplate: any;
+  @Output("boardChanged") boardChanged: EventEmitter<any> = new EventEmitter();
 
   constructor(private teamService: TeamService,private roleOwnerService: RoleOwnerService,private teamMemberService: TeamMemberService,private boardMemberService: BoardMemberService,private boardInviteService: BoardInviteService,public alertHandlerService: AlertHandlerService) {
 
@@ -73,7 +76,6 @@ export class BoardHeaderComponent implements OnInit {
       });
       this.boardMemberService.getBoardMembersByBoard(this.board.id).subscribe((value: CollectionModel) => {
         this.currentMembers = value._embedded != undefined && value._embedded.content != undefined ? value._embedded.content : []
-        console.log(value);
       });
     }
   }
@@ -190,6 +192,14 @@ export class BoardHeaderComponent implements OnInit {
     this.alertHandlerService.setTextTemplate(this.addMemberTemplate);
     this.alertHandlerService.open();
   }
+
+  public modifyOptions(): void {
+    this.alertHandlerService.close();
+    this.alertHandlerService.reset();
+    this.alertHandlerService.setTextTemplate(this.modifyBoardTemplate);
+    this.alertHandlerService.open();
+  }
+  
 
   public addNewMemberToTeam(member: BoardMember): void {
     const index = this.currentSelectedNewMembers.indexOf(member);

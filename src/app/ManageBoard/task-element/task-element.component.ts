@@ -8,6 +8,7 @@ import { AlertHandlerService } from 'src/app/services/alert-handler.service';
 import { CanvasHandlerService } from 'src/app/canvas-handler.service';
 import { TagAssignmentService } from 'src/app/tag-assignment.service';
 import { TaskImageService } from 'src/app/task-image.service';
+import { TaskService } from 'src/model/services/task.service';
 
 
 interface DescriptionItem
@@ -28,17 +29,32 @@ export class TaskElementComponent implements OnInit {
   public currentTaskAssignments: TaskAssignment[] = [];
   public currentDescriptionItems: DescriptionItem[] = [];
   public optionIcon: IconDefinition = faEllipsis;
+  public photoURL: any = undefined;
 
   @ViewChild("overlayTemplate") overlayTemplate: any;
 
-  constructor(private taskAssignment: TaskAssignmentService,private tagAssignmentService: TagAssignmentService,private canvasService: CanvasHandlerService) {
+  constructor(private taskAssignment: TaskAssignmentService,private taskService: TaskService,private tagAssignmentService: TagAssignmentService,private canvasService: CanvasHandlerService) {
 
   }
 
   public ngOnInit(): void 
   {
+    this.getValues();
+  }
+
+  public updateTask(taskID: string): void {
+    this.taskService.getTaskByID(taskID).subscribe((value: any) => {
+      this.task = value
+      this.getValues();
+    });
+  }
+  
+  private getValues(): void {
     if(this.task != undefined)
     {
+      this.currentDescriptionItems = [];
+      let timeStamp = new Date().getTime();
+      this.photoURL = "http://localhost:8080/api/v1/taskImages/public/task/" + this.task?.id + "/first/image" + "?" + timeStamp;
       this.currentDescriptionItems.push({icon: faCheck,amount: this.task.amountOfCheckLists.toString()});
       this.currentDescriptionItems.push({icon: faImages,amount: this.task.amountOfImages.toString()})
       this.currentDescriptionItems.push({icon: faComments,amount: this.task.amountOfReceivedComments.toString()});

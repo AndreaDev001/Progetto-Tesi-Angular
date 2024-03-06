@@ -7,7 +7,8 @@ export interface Board
     title: string,
     description: string,
     visibility?: string,
-    publisher: UserRef
+    publisher: UserRef,
+    maxMembers?: number,
     amountOfGroups?: number,
     amountOfRoles?: number,
     amountOfTags?: number,
@@ -271,6 +272,8 @@ export interface PollLike
 }
 export interface TaskLike
 {
+    id: string,
+    createdDate: string
     user: UserRef,
     task: TaskRef
 }

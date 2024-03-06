@@ -19,4 +19,16 @@ export class TaskReportService {
     let queryParams: HttpParams = new HttpParams();
     return this.httpClient.post(desiredURL,createReport,{params: queryParams});
   }
+
+  public hasReported(userID: string,taskID: string): any {
+    const desiredURL: string = this.url + "/private" + "/task" + "/" + taskID + "/reporter" + "/" + userID;
+    let queryParams: HttpParams = new HttpParams();
+    return this.httpClient.get(desiredURL,{params: queryParams});
+  }
+
+  public deleteReport(reportID: string): any {
+    const desiredURL: string = this.url + "/private" + "/" + reportID;
+    let queryParams: HttpParams = new HttpParams();
+    return this.httpClient.delete(desiredURL,{params: queryParams});
+  }
 }

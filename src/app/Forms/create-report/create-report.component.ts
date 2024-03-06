@@ -53,7 +53,7 @@ export class CreateReportComponent implements OnInit {
   public handleSubmit(event: any): void {
     if(this.title != undefined && this.description != undefined && this.reason != undefined && this.formGroup.valid) 
     {
-       let createReport: CreateReport = {title: this.title,description: this.description,reason: this.reason};
+       let createReport: CreateReport = {title: this.title.value,description: this.description.value,reason: this.reason.value};
        this.sumbitEvent.emit(createReport);
        this.formGroup.reset();
        if(this.reportedID != undefined) {
@@ -65,7 +65,9 @@ export class CreateReportComponent implements OnInit {
        if(this.taskID != undefined) {
         this.taskReportService.createTaskReport(createReport,this.taskID).subscribe((value: any) => {
           this.successEvent.emit(value);
-        },(err: any) => this.failedEvent.emit(err));
+        },(err: any) => {
+          this.failedEvent.emit(err)
+        });
         return;
        }
        if(this.pollID != undefined) {

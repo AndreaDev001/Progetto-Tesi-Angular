@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
-import { faChain, faCheck, faClockFour, faClose, faHeart, faIdCard, faLineChart, faMessage, faPeopleGroup, faPlus, faTag, faTags, faTasks, faUpload, faUser, faUserGroup, faWarning } from '@fortawesome/free-solid-svg-icons';
+import { faChain, faCheck, faClockFour, faClose, faComments, faEllipsisVertical, faHeart, faHeartBroken, faIdCard, faImages, faLineChart, faMessage, faPeopleGroup, faPlus, faTag, faTags, faTasks, faUpload, faUser, faUserGroup, faUsers, faWarning } from '@fortawesome/free-solid-svg-icons';
 import { TagService } from 'src/model/services/tag.service';
-import { Board, BoardMember, CheckList, CheckListOption, CollectionModel, Tag, TagAssignment, Task, TaskAssignment, TaskImage } from 'src/model/interfaces';
+import { Board, BoardMember, CheckList, CheckListOption, CollectionModel, Tag, TagAssignment, Task, TaskAssignment, TaskImage, TaskLike } from 'src/model/interfaces';
 import { TaskAssignmentService } from 'src/model/services/task-assignment.service';
 import { CheckListService } from 'src/model/services/check-list.service';
 import { CheckListOptionService } from 'src/model/services/check-list-option.service';
@@ -14,6 +14,9 @@ import { TagAssignmentService } from 'src/app/tag-assignment.service';
 import { BoardMemberService } from 'src/model/services/board-member.service';
 import { TaskImageService } from 'src/app/task-image.service';
 import { TextOverflowItem } from 'src/app/Utility/text-overflow/text-overflow.component';
+import { TaskReportService } from 'src/model/services/task-report.service';
+import { AuthHandlerService } from 'src/app/auth/auth-handler.service';
+import { TaskLikeService } from 'src/model/services/task-like.service';
 
 interface ButtonOption
 {
@@ -21,11 +24,7 @@ interface ButtonOption
   icon: IconDefinition,
   callback: () => void;
 }
-interface DescriptionItem
-{
-  amount: string,
-  icon: IconDefinition
-}
+
 @Component({
   selector: 'app-task-overlay',
   templateUrl: './task-overlay.component.html',
@@ -42,7 +41,6 @@ export class TaskOverlayComponent implements OnInit
   public descriptionIcon: IconDefinition = faLineChart;
   public commentIcon: IconDefinition = faMessage;
   public buttonOptions: ButtonOption[] = [];
-  public descriptionItems: DescriptionItem[] = [];
 
   public currentTagAssignments: TagAssignment[] = [];
   public currentTags: Tag[] = [];
@@ -56,12 +54,18 @@ export class TaskOverlayComponent implements OnInit
   public userIcon: IconDefinition = faUserGroup;
   public tagIcon: IconDefinition = faTags;
   public likeIcon: IconDefinition = faHeart;
+  public unlikeIcon: IconDefinition = faHeartBroken;
   public reportIcon: IconDefinition = faWarning;
   public checkIcon: IconDefinition = faCheck;
   public uploadIcon: IconDefinition = faUpload;
+  public optionsIcon: IconDefinition = faEllipsisVertical;
+  public membersIcon: IconDefinition = faUsers;
 
   public currentNewTags: Tag[] = [];
   public currentNewMembers: BoardMember[] = [];
+  public hasReported: boolean = false;
+  public currentLike: TaskLike | undefined = undefined;
+  public numbersOfLike: number = 0;
 
   @ViewChild("addMemberTemplate") addMemberTemplate: any;
   @ViewChild("addTagTemplate") addTagTemplate: any;
@@ -69,17 +73,17 @@ export class TaskOverlayComponent implements OnInit
   @ViewChild("createCheckListTemplate") createCheckListTemplate: any;
   @ViewChild("addImageTemplate") createImageTemplate: any;
   @ViewChild("taskImageTemplate") taskImageTemplate: any;
+  @ViewChild("createReportTemplate") createReportTemplate: any;
   @Output() taskChanged: EventEmitter<any> = new EventEmitter();
 
-  constructor(private taskAssignmentsService: TaskAssignmentService,private taskImageService: TaskImageService,public tagService: TagService,public alertHandlerService: AlertHandlerService,private taskService: TaskService,private checkListOptionService: CheckListOptionService,private tagAssignmentService: TagAssignmentService,private checkListService: CheckListService,public boardMemberService:  BoardMemberService) {
+  constructor(private taskAssignmentsService: TaskAssignmentService,private taskLikeService: TaskLikeService,private authenticationHandler: AuthHandlerService,private taskReportService: TaskReportService,private taskImageService: TaskImageService,public tagService: TagService,public alertHandlerService: AlertHandlerService,private taskService: TaskService,private checkListOptionService: CheckListOptionService,private tagAssignmentService: TagAssignmentService,private checkListService: CheckListService,public boardMemberService:  BoardMemberService) {
 
   }
 
   public ngOnInit(): void {
     if(this.task != undefined && this.board != undefined)
     {
-      this.descriptionItems.push({amount: this.task.amountOfReceivedLikes.toString(),icon: faHeart});
-      this.descriptionItems.push({amount: this.task.amountOfAssignments.toString(),icon: faPeopleGroup});
+      this.numbersOfLike = this.task.amountOfReceivedLikes;
       this.currentDescription = this.task.description;
       this.taskAssignmentsService.getTaskAssignmentsByTask(this.task.id).subscribe((value: CollectionModel) => this.currentMembers = value._embedded != undefined && value._embedded.content != undefined ? value._embedded.content : []);
       this.checkListService.getCheckListsByTask(this.task.id).subscribe((value: CollectionModel) => {
@@ -94,13 +98,39 @@ export class TaskOverlayComponent implements OnInit
           this.currentImagesItems.push(overflowItem);
         }
       });
+      this.taskReportService.hasReported(this.authenticationHandler.getCurrentUserID(true),this.task.id).subscribe((value: any) => {
+        this.hasReported = true;
+      },(err: any) => this.hasReported = false);
+      this.taskLikeService.getTaskLikeBetween(this.task.id,this.authenticationHandler.getCurrentUserID(true)).subscribe((value: any) => {
+        this.currentLike = value;
+      },(err: any) => this.currentLike = undefined)
       this.tagService.getTagsByBoard(this.board.id).subscribe((value: CollectionModel) => this.currentTags = value._embedded != undefined && value._embedded.content != undefined ? value._embedded.content : []);
       this.tagAssignmentService.getTagAssignments(this.task.id).subscribe((value: CollectionModel) => this.currentTagAssignments = value._embedded != undefined && value._embedded.content != undefined ? value._embedded.content : []);
     }
   }
 
+  public deleteLike(): any {
+    if(this.currentLike != undefined) {
+      this.taskLikeService.deleteLike(this.currentLike.id).subscribe((value: any) => {
+        this.currentLike = undefined;
+        this.numbersOfLike--;
+      })
+    }
+  }
+
   public updateCurrentDescription(event: any): any {
     this.currentDescription = event.target.value;
+  }
+
+  public createLike(): any {
+    if(this.task != undefined) {
+      this.taskLikeService.createTaskLike(this.task.id).subscribe((value: any) => {
+          this.currentLike = value
+          this.numbersOfLike++;
+      },(err: any) => {
+        this.currentLike = undefined
+      });
+    }
   }
 
   public updateDescription(): any {
@@ -123,9 +153,8 @@ export class TaskOverlayComponent implements OnInit
 
   public removeMember(member: TaskAssignment): void {
     this.taskAssignmentsService.deleteTaskAssignment(member.id).subscribe((value: any) => {
-      this.taskChanged.emit();
-      const requiredIndex = this.currentMembers.indexOf(member);
       this.currentMembers= this.currentMembers.filter(current => current.id !== member.id);
+      this.taskChanged.emit(this.task?.id);
     })
   }
 
@@ -147,6 +176,7 @@ export class TaskOverlayComponent implements OnInit
         let createTaskAssignment: createTaskAssignment = {taskID: this.task.id,userID: value.user.id};
         this.taskAssignmentsService.createTaskAssignment(createTaskAssignment).subscribe((value: any) => {
           this.currentMembers.push(value);
+          this.taskChanged.emit(this.task?.id);
         })
         this.alertHandlerService.close();
       }
@@ -163,11 +193,21 @@ export class TaskOverlayComponent implements OnInit
           let createTagAssignment: CreateTagAssignment = {taskID: this.task.id,tagID: value.id};
           this.tagAssignmentService.createTagAssignment(createTagAssignment).subscribe((currentValue: any) => {
             this.currentTagAssignments.push(currentValue)
-            this.taskChanged.emit();
+            this.taskChanged.emit(this.task?.id);
           })
         }
         this.alertHandlerService.close();
       })
+  }
+
+  public updateImages(event: any): void {
+    if(event._embedded != undefined && event._embedded.content != undefined) {
+      for(let i = 0;i < event._embedded.content.length;i++) {
+        this.currentImages.push(event._embedded.content[i]);
+        this.currentImagesItems.push({template: this.taskImageTemplate,context: i});
+      }
+      this.taskChanged.emit(this.task?.id);
+    }
   }
 
   public addMember(): void {
@@ -218,6 +258,13 @@ export class TaskOverlayComponent implements OnInit
     this.alertHandlerService.close();
     this.alertHandlerService.reset();
     this.alertHandlerService.setTextTemplate(this.createCheckListTemplate);
+    this.alertHandlerService.open();
+  }
+
+  public createReport(): void {
+    this.alertHandlerService.close();
+    this.alertHandlerService.reset();
+    this.alertHandlerService.setTextTemplate(this.createReportTemplate);
     this.alertHandlerService.open();
   }
 }

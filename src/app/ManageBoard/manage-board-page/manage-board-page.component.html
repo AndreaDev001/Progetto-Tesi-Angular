@@ -1,6 +1,6 @@
-<div class = "manage-board-wrapper">
-    <div *ngIf="currentBoard != undefined">
-        <app-board-header [board]="currentBoard"></app-board-header>
+<div *ngIf="currentBoard" class = "manage-board-wrapper" [ngStyle]="{'background-image': 'url(http://localhost:8080/api/v1/boardImages/public/image/' + currentBoard.id + '),linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2))'}">
+    <div>
+        <app-board-header (boardChanged)="reloadBoard()" [board]="currentBoard"></app-board-header>
     </div>
     <div class = "horizontal-container py-2" style="height: 92%;">
         <div class = "d-flex" cdkDropList cdkDropListOrientation="horizontal" (cdkDropListDropped)="dropList($event)">
@@ -25,7 +25,7 @@
                     </div>
                     <div class = "h-100 task-group-body position-relative" cdkDropList [cdkDropListData]="currentTasks[i]" [cdkDropListConnectedTo]="generateConnection(i)" [id]="'container' + i" (cdkDropListDropped)="dropItem($event)">
                         <div *ngIf="currentTasks[i].length > 0">
-                            <div (cdkDragStarted)="updateCurrentTask($event,value)" class = "task-element-wrapper draggable-box" cdkDrag *ngFor="let value of currentTasks[i]">
+                            <div (cdkDragStarted)="updateCurrentTask($event,value)" class = "task-element-wrapper draggable-box" cdkDrag *ngFor="let value of currentTasks[i];let j = index">
                                 <app-task-element  [board]="currentBoard" [task]="value"></app-task-element>
                             </div>
                         </div>
@@ -72,9 +72,6 @@
         </div>
     </div>
 </div>
-<ng-template #modifyTaskContent let-item="item">
-    <app-task-overlay [task]="item"></app-task-overlay>
-</ng-template>
 <ng-template #createTaskTemplate>
     <div class = "secondary-color" *ngIf="currentGroup != undefined">
         <app-create-task (submitEvent)="alertHandler.close()" (successEvent)="addNewTask($event)" (failedEvent)="alertHandler.close()" [groupID]="currentGroup.id"></app-create-task>

@@ -1,0 +1,5 @@
+div.vertical-container
+{
+    white-space: nowrap;
+    overflow-y: auto;
+}

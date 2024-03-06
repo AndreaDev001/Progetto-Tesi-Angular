@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { HttpUtilsService } from 'src/model/services/http-utils.service';
 import { Filter } from 'src/app/SearchPages/TaskPage/task-filter/task-filter.component';
 import { CreateBoard } from 'src/app/Forms/create-board/create-board.component';
+import { UpdateBoard } from '../update';
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +20,12 @@ export class BoardService {
     const desiredURL: string = this.url + "/private";
     let queryParams: HttpParams = new HttpParams();
     return this.httpClient.post(desiredURL,createBoard,{params: queryParams});
+  }
+
+  public updateBoard(updateBoard: UpdateBoard): any {
+    const desiredURL: string = this.url + "/private";
+    let queryParams: HttpParams = new HttpParams();
+    return this.httpClient.put(desiredURL,updateBoard,{params: queryParams});
   }
 
   public getVisibilities(): any {

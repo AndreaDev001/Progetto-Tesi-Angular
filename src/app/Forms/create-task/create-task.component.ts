@@ -21,7 +21,7 @@ export class CreateTaskComponent implements AfterViewInit {
     title: new FormControl<String>('',[Validators.required,Validators.minLength(3),Validators.maxLength(10)]),
     name: new FormControl<String>('',[Validators.required,Validators.minLength(3),Validators.maxLength(10)]),
     description: new FormControl<String>('',[Validators.required,Validators.minLength(20),Validators.maxLength(60)]),
-    priority: new FormControl<String>('HIGH',Validators.required)
+    priority: new FormControl<String>('',Validators.required)
   })
   public taskIcon: IconDefinition = faTasks;
   @Output() submitEvent: EventEmitter<any> = new EventEmitter();
@@ -35,7 +35,6 @@ export class CreateTaskComponent implements AfterViewInit {
   public ngAfterViewInit(): void {
     this.taskService.getPriorities().subscribe((value: CollectionModel) => {
       this.currentPriorities = value._embedded != undefined && value._embedded.content != undefined ? value._embedded.content : [];
-      console.log(this.currentPriorities);
     });
   }
 

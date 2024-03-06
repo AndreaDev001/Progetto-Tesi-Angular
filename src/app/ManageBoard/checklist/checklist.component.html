@@ -4,10 +4,10 @@
         <fa-icon style="font-size: 25px;" [icon]="checkIcon"></fa-icon>
         <div class = "mx-3">
             <input class = "check-list-name" [defaultValue]="checkList.name" (change)="updateCheckList($event)">
-            <p class = "check-list-subtitle">Interact by modifying, adding or deleting options</p>
+            <p class = "check-list-subtitle mx-1">Interact by modifying, adding or deleting options</p>
         </div>
     </div>
-    <div class = "py-1 px-4">
+    <div class = "py-1 px-5">
         <div>
             <div class = "mt-2" *ngFor="let current of currentOptions">
                 <ng-container *ngTemplateOutlet="checkListOption;context: {option: current}"></ng-container>
@@ -24,7 +24,7 @@
 <ng-template #checkListOption let-option="option">
     <div class = "px-2 primary-color rounded-1">
         <div class = "text-start d-inline-block w-75">
-            <input (change)="updateOptionName($event,option)" class = "check-list-name" [defaultValue]="option.name">
+            <input (change)="updateOptionName($event,option)" class = "check-list-name-option" [defaultValue]="option.name">
         </div>
         <div class = "text-end d-inline-block w-25">
             <input [checked]="option.completed" (change)="updateOptionCompleted($event,option)" class = "option-checkbox" type="checkbox">

@@ -30,9 +30,9 @@
         </div>
     </div>
     <div class = "w-50 text-end d-inline-block">
-        <button class = "option-template">
+        <button (click)="modifyOptions()" class = "option-template">
             <fa-icon [icon]="optionIcon" class = "d-inline-block"></fa-icon>
-            <p class = "m-0 p-0 d-inline-block mx-1">Show menu</p>
+            <p class = "m-0 p-0 d-inline-block mx-1">Modify board</p>
         </button>
     </div>
 </div>
@@ -100,4 +100,7 @@
     <div *ngIf="board != undefined">
         <app-add-user-multiple [boardID]="board.id" (confirmEvent)="confirmTeamMembers()" (selectedMemberEvent)="addNewMemberToTeam($event)"></app-add-user-multiple>
     </div>
+</ng-template>
+<ng-template #modifyBoardTemplate>
+    <app-create-board (submitEvent)="this.alertHandlerService.close()" (successEvent)="this.alertHandlerService.close();this.boardChanged.emit(this.board?.id)" [update]="true" [boardID]="board?.id"></app-create-board>
 </ng-template>

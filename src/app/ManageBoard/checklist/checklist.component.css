@@ -1,9 +1,26 @@
 input.check-list-name
 {
     background-color: var(--secondary-color);
-    border: 1px solid var(--tertiary-color);
     padding:  5px;
     border-radius: 5px;
+    cursor: text;
+    transition: 0.2s ease-in-out all;
+}
+input.check-list-name-option
+{
+    background-color: inherit;
+    padding: 5px;
+    border-radius: 5px;
+    cursor: text;
+    transition: 0.2s ease-in-out all;
+}
+input.check-list-name-option
+{
+    background-color: var(--secondary-color);
+}
+input.check-list-name:hover
+{
+    background-color: var(--primary-color);
 }
 p.check-list-surname
 {

@@ -2,7 +2,7 @@
   <div class = "container py-4">
     <div class = "mx-1">
         <div class = "mx-1">
-            <h4 class = "d-inline-block">Create a new board</h4>
+            <h4 class = "d-inline-block">{{update ? "Update board" : "Create a board"}}</h4>
             <fa-icon class = "mx-2" style="font-size: 25px;" [icon]="boardIcon"></fa-icon>
             <p>Please specificy a title, a description, a maximum amount of members and a visibility</p>
         </div>
@@ -48,6 +48,15 @@
                     <mat-option *ngFor="let current of currentVisibilities" [value]="current">{{current}}</mat-option>
                 </mat-select>
             </mat-form-field>
+        </div>
+        <div class = "px-2">
+            <span class = "d-block">Background Image</span>
+            <p>Choose one image for the board</p>
+            <div *ngIf="canDeleteImage">
+                <img [src]="'http://localhost:8080/api/v1/boardImages/public/image' + '/' + boardID" *ngIf="canDeleteImage" class = "board-image">
+                <button *ngIf="canDeleteImage" class = "default-button w-100 mt-2" (click)="deleteImage()">Remove image</button>
+            </div>
+            <input class = "mt-2" (change)="updateCurrentImage($event)"  type="file" class="file-upload" onchange="console.log(event.target.files)">
         </div>
         </div> 
     </div> 

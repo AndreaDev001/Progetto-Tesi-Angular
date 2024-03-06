@@ -59,3 +59,8 @@ export interface CreateTaskImage
     taskID: string,
     files: any[]
 }
+export interface CreateBoardImage
+{
+    boardID: string,
+    file: any
+}

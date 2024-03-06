@@ -24,6 +24,12 @@
     padding-right: 10px;
     margin-bottom: 5px;
 }
+img.board-image
+{
+    width: 100%;
+    height: auto;
+    border-radius: 5%;
+}
 button.confirm-button
 {
     border: 0;

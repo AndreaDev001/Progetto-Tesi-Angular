@@ -27,3 +27,11 @@ export interface UpdateCheckListOption
     name?: string,
     completed?: boolean
 }
+export interface UpdateBoard
+{
+    boardID: string,
+    title?: string,
+    description?: string,
+    maxAmountOfMembers?: number,
+    visibility?: string
+}

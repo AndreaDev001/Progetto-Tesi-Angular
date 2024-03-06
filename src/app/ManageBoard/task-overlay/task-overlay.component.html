@@ -3,21 +3,47 @@
         <div class = "task-overlay-header">
             <div>
                 <div class = "w-75 text-start d-inline-block">
-                    <div class = "d-flex">
-                        <fa-icon style="font-size: 35px;" [icon]="taskIcon"></fa-icon>
-                        <div class = "p-1 mx-2">
-                            <p class = "p-0 m-0">{{task.name}}</p>
-                            <p class = "p-0 m-0">{{task.title}}</p>
+                    <div class = "d-inline-block">
+                        <div class = "d-flex">
+                            <fa-icon style="font-size: 35px;" [icon]="taskIcon"></fa-icon>
+                            <div class = "p-1 mx-2">
+                                <p class = "p-0 m-0">{{task.name}}</p>
+                                <p class = "p-0 m-0">{{task.title}}</p>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div class = "w-25 text-end d-inline-block">
-                    <div class = "d-inline-block mx-1" *ngFor="let current of descriptionItems">
-                        <ng-container *ngTemplateOutlet="descriptionItem;context: {item: current}"></ng-container>
+                    <div ngbDropdown container="body">
+                        <button class = "task-options-dropdown-toggle" ngbDropdownToggle></button>
+                        <div ngbDropdownMenu class = "primary-color">
+                            <button (click)="currentLike == undefined ? createLike() : deleteLike()" class = "default-button w-100" ngbDropdownItem>
+                                <fa-icon [icon]="currentLike != undefined ? unlikeIcon : likeIcon"></fa-icon>
+                                <span class = "mx-1">{{currentLike != undefined ? 'Remove Like' : 'Add Like'}}</span>
+                            </button>
+                            <button *ngIf="!hasReported" (click)="createReport()" class = "default-button w-100" ngbDropdownItem>
+                                <fa-icon [icon]="reportIcon"></fa-icon>
+                                <span class = "mx-1">Report</span>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class = "d-inline-block mx-1">
+            <div>
+                <div class = "d-inline-block">
+                    <div class = "d-flex">
+                        <fa-icon style="font-size: 20px;" [icon]="likeIcon"></fa-icon>
+                        <span class = "mx-1" style="font-size: 20px;">{{numbersOfLike}}</span>
+                    </div>
+                </div>
+                <div class = "d-inline-block mx-1">
+                    <div class = "d-flex">
+                        <fa-icon style="font-size: 20px;" [icon]="membersIcon"></fa-icon>
+                        <span class = "mx-1" style="font-size: 20px">{{task.amountOfAssignments}}</span>
+                    </div>
+                </div>
+            </div>
+            <div class = "d-inline-block mt-1">
                 <p class = "p-0 mx-1 my-0" style="font-size: 15px;">Members</p>
                 <div class = "d-inline-block mx-1" *ngFor="let current of currentMembers">
                     <ng-container *ngTemplateOutlet="memberTemplate;context: {member: current}"></ng-container>
@@ -232,20 +258,19 @@
         <app-create-check-list (submitEvent)="this.alertHandlerService.close()" (successEvent)="this.currentCheckLists.push($event);this.taskChanged.emit()"  [taskID]="task.id"></app-create-check-list>
     </div>
 </ng-template>
-<ng-template #descriptionItem let-item="item">
-    <div style="font-size: 20px;">
-        <fa-icon [icon]="item.icon" class = "d-inline-block"></fa-icon>
-        <span class = "mx-1">{{item.amount}}</span>
-    </div>
-</ng-template>
 <ng-template #addImageTemplate>
-    <app-create-task-image (submitEvent)="this.alertHandlerService.close()" (successEvent)="this.currentImages.push($event);this.currentImagesItems.push({template: this.taskImageTemplate,context: this.currentImages.length - 1});this.taskChanged.emit()" [taskID]="task?.id"></app-create-task-image>
+    <app-create-task-image (submitEvent)="this.alertHandlerService.close()" (successEvent)="updateImages($event)" [taskID]="task?.id"></app-create-task-image>
 </ng-template>
 <ng-template #taskImageTemplate let-i>
     <div class = "mx-1">
-        <img class = "task-image" [src]="'http://localhost:8080/api/v1/taskImages/public/task/' + task?.id + '/index/' + i + '/image'">
+        <div class = "task-image-wrapper">
+            <img class = "task-image" [src]="'http://localhost:8080/api/v1/taskImages/public/task/' + task?.id + '/index/' + i + '/image'">
+        </div>
         <div class = "text-center">
             <button (click)="deleteImage(i)" class = "remove-image-button mt-1">Remove</button>
         </div>
     </div>
+</ng-template>
+<ng-template #createReportTemplate>
+    <app-create-report [taskID]="task?.id" (successEvent)="this.hasReported = true" (failedEvent)="this.hasReported = false" (sumbitEvent)="this.alertHandlerService.close()"></app-create-report>
 </ng-template>

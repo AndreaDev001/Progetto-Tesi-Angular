@@ -13,6 +13,7 @@ import { UpdateTask, UpdateTaskGroup } from 'src/model/update';
 import {CreateTaskGroup}from 'src/model/create';
 import { AlertHandlerService } from 'src/app/services/alert-handler.service';
 import { group } from '@angular/animations';
+import { AuthHandlerService } from 'src/app/auth/auth-handler.service';
 
 @Component({
   selector: 'app-manage-board-page',
@@ -36,7 +37,7 @@ export class ManageBoardPageComponent implements OnInit,OnDestroy {
 
   @ViewChild("createTaskTemplate") createTaskTemplate: any;
 
-  constructor(private activatedRoute: ActivatedRoute,public alertHandler: AlertHandlerService,private taskAssignmentService: TaskAssignmentService,private taskService: TaskService,private boardService: BoardService,private taskGroupService: TaskGroupService) {
+  constructor(private activatedRoute: ActivatedRoute,private authHandler: AuthHandlerService,public alertHandler: AlertHandlerService,private taskService: TaskService,private boardService: BoardService,private taskGroupService: TaskGroupService) {
 
   }
 
@@ -50,6 +51,11 @@ export class ManageBoardPageComponent implements OnInit,OnDestroy {
     }))  
   }
 
+  public reloadBoard(): void {
+    this.boardService.getBoardById(this.boardID).subscribe((value: Board) => {
+      this.currentBoard = value;
+    })
+  }
   private updateItems(): void {
     if(this.boardID != undefined) {
       this.boardService.getBoardById(this.boardID).subscribe((value: Board) => {
@@ -158,8 +164,8 @@ export class ManageBoardPageComponent implements OnInit,OnDestroy {
       }
       else
       {
-        let updateTask: UpdateTask = {groupID: this.currentTaskGroups[index].id,taskID: this.currentSelectedTask.id};
-        this.taskService.updateTask(updateTask).subscribe((value: any) => {
+        let updateFirstTask: UpdateTask = {groupID: this.currentTaskGroups[index].id,taskID: this.currentSelectedTask.id};
+        this.taskService.updateTask(updateFirstTask).subscribe((value: any) => {
           this.currentSelectedTask = undefined;
         },(err: any) => this.currentSelectedTask = undefined);
       }
@@ -189,5 +195,12 @@ export class ManageBoardPageComponent implements OnInit,OnDestroy {
 
   public ngOnDestroy(): void {
     this.subscriptions.forEach((value: Subscription) => value.unsubscribe());  
+  }
+
+  public updateTask(event: any,groupIndex: number,taskIndex: number): void {
+    console.log("called");
+    this.taskService.getTaskByID(event).subscribe((value: any) => {
+      this.currentTasks[groupIndex][taskIndex] = value;
+    })
   }
 }
