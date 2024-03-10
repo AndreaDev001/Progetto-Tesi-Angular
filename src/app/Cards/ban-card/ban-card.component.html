@@ -6,21 +6,11 @@
     <div class = "ban-card-body">
         <div class = "w-100">
             <p class = "p-0 m-0">Banner:</p>
-            <div class = "d-inline-block">
-                <img class = "user-image" src="https://i0.wp.com/picjumbo.com/wp-content/uploads/beautiful-nature-mountain-scenery-with-flowers-free-photo.jpg?w=600&quality=80">
-            </div>
-            <div class = "d-inline-block mx-1">
-                <span class = "username">{{ban.banner.username}}</span>
-            </div>
+            <app-user-holder [userRef]="ban.banner" [showNameInfo]="false"></app-user-holder>
         </div>
         <div class = "w-100 mt-1">
             <p class = "p-0 m-0">Banned:</p>
-            <div class = "d-inline-block">
-                <img class = "user-image" src="https://i0.wp.com/picjumbo.com/wp-content/uploads/beautiful-nature-mountain-scenery-with-flowers-free-photo.jpg?w=600&quality=80">
-            </div>
-            <div class = "d-inline-block mx-1">
-                <span class = "username">{{ban.banned.username}}</span>
-            </div>
+            <app-user-holder [userRef]="ban.banned" [showNameInfo]="false"></app-user-holder>
         </div>
         <div class = "mt-1">
             <p class = "p-0 m-0 d-inline-block">Reason:</p>

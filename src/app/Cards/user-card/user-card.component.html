@@ -1,6 +1,6 @@
 <button class = "card-wrapper" *ngIf="user != undefined">
     <div class = "user-card-header">
-        <img class = "user-image" src="https://i0.wp.com/picjumbo.com/wp-content/uploads/beautiful-nature-mountain-scenery-with-flowers-free-photo.jpg?w=600&quality=80">
+        <app-better-image [requiredSource]="'http://localhost:8080/api/v1/public/userImages/user' + user.id + '/image'" [imageStyle]="{'border-radius': '60%','border': '1px solid var(--tertiary-color)','filter': 'brightness(70%)','width': '150px','height': '150px'}"></app-better-image>
     </div>
     <div class = "user-card-body">
         <h4 class = "p-0 m-0">{{user.username}}</h4>

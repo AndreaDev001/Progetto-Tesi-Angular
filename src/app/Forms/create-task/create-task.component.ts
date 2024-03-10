@@ -24,6 +24,7 @@ export class CreateTaskComponent implements AfterViewInit {
     priority: new FormControl<String>('',Validators.required)
   })
   public taskIcon: IconDefinition = faTasks;
+  public isCreating: boolean = false;
   @Output() submitEvent: EventEmitter<any> = new EventEmitter();
   @Output() successEvent: EventEmitter<any> = new EventEmitter();
   @Output() failedEvent: EventEmitter<any> = new EventEmitter();
@@ -45,7 +46,9 @@ export class CreateTaskComponent implements AfterViewInit {
         let createTask: CreateTask = {groupID: this.groupID,title: this.title.value,name: this.name.value,description: this.description.value,priority: this.priority.value};
         this.submitEvent.emit(createTask);
         this.formGroup.reset();
+        this.isCreating = true;
         this.taskService.createTask(createTask).subscribe((value: any) => {
+          this.isCreating = false;
           this.successEvent.emit(value);
         },(err: any) => this.failedEvent.emit(err));
       }

@@ -28,6 +28,8 @@ export class DiscussionOptionsComponent implements OnChanges {
 
   public publisherItems: TextOverflowItem[] = [];
   public similarItems: TextOverflowItem[] = [];
+  public searchingSimilarDiscussions: boolean = false;
+  public searchingPublisherDiscussions: boolean = false;
 
   @ViewChild("discussionTemplate") discussionTemplate: any;
   
@@ -37,15 +39,17 @@ export class DiscussionOptionsComponent implements OnChanges {
 
   public ngOnChanges(changes: SimpleChanges): void {
     if(changes['publisherID'] != undefined && this.publisherID != undefined) {
-      this.updatePublisherDiscussions({page: this.currentPublisherPage,pageSize: 20});
+      this.updatePublisherDiscussions({page: this.currentPublisherPage,pageSize: 20},false);
     }
     if(changes['discussionID'] != undefined && this.discussionID != undefined) {
-      this.updateSimilarDiscussions({page: this.currentSimilarPage,pageSize: 20});
+      this.updateSimilarDiscussions({page: this.currentSimilarPage,pageSize: 20},false);
     }
   }
 
-  private updatePublisherDiscussions(page: PaginationRequest): void {
+  private updatePublisherDiscussions(page: PaginationRequest,scroll: boolean): void {
+    this.searchingSimilarDiscussions = !scroll;
     this.discussionService.getDiscussionsByPublisher(this.publisherID,page).subscribe((value: PagedModel) => {
+      this.searchingPublisherDiscussions = false;
       if(value._embedded != undefined && value._embedded.content != undefined) {
         this.currentPublisherDiscussions.push.apply(this.currentPublisherDiscussions,value._embedded.content);
         for(let current of value._embedded.content) {
@@ -57,11 +61,13 @@ export class DiscussionOptionsComponent implements OnChanges {
         this.currentPublisherPage = value.page.page;
         this.currentPublisherTotalPages = value.page.totalPages;
       }
-    })
+    },(err: any) => this.searchingPublisherDiscussions = false)
   }
   
-  private updateSimilarDiscussions(page: PaginationRequest): void {
+  private updateSimilarDiscussions(page: PaginationRequest,scroll: boolean): void {
+    this.searchingSimilarDiscussions = !scroll; 
     this.discussionService.getSimilarDiscussions(this.discussionID,page).subscribe((value: PagedModel) => {
+      this.searchingSimilarDiscussions = false;
       if(value._embedded != undefined && value._embedded.content != undefined) {
         this.currentSimilarDiscussions.push.apply(this.currentSimilarDiscussions,value._embedded.content);
         for(let current of value._embedded.content) {
@@ -73,7 +79,7 @@ export class DiscussionOptionsComponent implements OnChanges {
         this.currentSimilarPage = value.page.page;
         this.currentTotalSimilarPages = value.page.totalPages;
       }
-    })
+    },(err: any) => this.searchingSimilarDiscussions = false)
   }
 
   public updatePublisherMaxPage(): void {
@@ -81,14 +87,14 @@ export class DiscussionOptionsComponent implements OnChanges {
     {
       this.currentPublisherPage++;
       let paginationRequest: PaginationRequest = {page: this.currentPublisherPage,pageSize: 20};
-      this.updatePublisherDiscussions(paginationRequest);
+      this.updatePublisherDiscussions(paginationRequest,true);
     }
   }
   public updateSimilarMaxPage(): void {
     if(this.currentTotalSimilarPages + 1 < this.currentTotalSimilarPages) {
       this.currentSimilarPage++;
       let paginationRequest: PaginationRequest = {page: this.currentSimilarPage,pageSize: 20};
-      this.updateSimilarDiscussions(paginationRequest);
+      this.updateSimilarDiscussions(paginationRequest,true);
     }
   }
 }

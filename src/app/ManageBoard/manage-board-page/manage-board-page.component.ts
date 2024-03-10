@@ -1,9 +1,9 @@
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
-import { Component, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, TitleStrategy } from '@angular/router';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faEllipsis, faInfo, faInfoCircle, faMagnifyingGlassMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
-import { Subscription } from 'rxjs';
+import { Subscription, Timestamp } from 'rxjs';
 import { TaskGroupService } from 'src/model/services/task-group.service';
 import { Board, CollectionModel, Task, TaskGroup } from 'src/model/interfaces';
 import { BoardService } from 'src/model/services/board.service';
@@ -20,12 +20,14 @@ import { AuthHandlerService } from 'src/app/auth/auth-handler.service';
   templateUrl: './manage-board-page.component.html',
   styleUrls: ['./manage-board-page.component.css']
 })
-export class ManageBoardPageComponent implements OnInit,OnDestroy {
+export class ManageBoardPageComponent implements OnInit,OnDestroy,AfterViewInit {
  
   private subscriptions: Subscription[] = [];
+  public backgroundURL: string | undefined = undefined;
   public boardID: string | undefined = undefined;
   public currentBoard: Board | undefined = undefined;
   public currentTaskGroups: TaskGroup[] = [];
+  public searchingTasks: boolean[] = [];
   public currentTasks: Task[][] = [];
   public optionIcon: IconDefinition = faEllipsis;
   public addTaskIcon: IconDefinition = faPlus;
@@ -34,8 +36,10 @@ export class ManageBoardPageComponent implements OnInit,OnDestroy {
   public currentNewGroupName: string | undefined = undefined;
   public currentGroup: TaskGroup | undefined = undefined;
   public emptyIcon: IconDefinition = faMagnifyingGlassMinus;
-
+  public searchingBoard: boolean = false;
+  public currentHeight: any = undefined;
   @ViewChild("createTaskTemplate") createTaskTemplate: any;
+  @ViewChild("taskElement") taskElement: any;
 
   constructor(private activatedRoute: ActivatedRoute,private authHandler: AuthHandlerService,public alertHandler: AlertHandlerService,private taskService: TaskService,private boardService: BoardService,private taskGroupService: TaskGroupService) {
 
@@ -51,20 +55,40 @@ export class ManageBoardPageComponent implements OnInit,OnDestroy {
     }))  
   }
 
+  public ngAfterViewInit(): void {
+  }
+
   public reloadBoard(): void {
     this.boardService.getBoardById(this.boardID).subscribe((value: Board) => {
+      this.alertHandler.close();
       this.currentBoard = value;
+      let timeStamp = (new Date()).getTime();
+      this.backgroundURL = "http://localhost:8080/api/v1/boardImages/public/image/" + this.currentBoard.id + "?" + 'time=' + timeStamp;
     })
+  }
+
+  public test(event: any): void {
+    this.currentHeight = event.source.element.nativeElement.offsetHeight;
+  }
+
+  public updateDraggedTask(event: any): void {
+    console.log(event.target.nativeElement.offsetHeight);
   }
   private updateItems(): void {
     if(this.boardID != undefined) {
+      this.searchingBoard = true;
       this.boardService.getBoardById(this.boardID).subscribe((value: Board) => {
         this.currentBoard = value;
+        this.searchingBoard = false;
         if(this.currentBoard != undefined) {
+          let timeStamp = (new Date()).getTime();
+          this.backgroundURL = "http://localhost:8080/api/v1/boardImages/public/image/" + this.currentBoard.id + "?" + 'time=' + timeStamp;
           this.taskGroupService.getTaskGroupsByBoard(this.boardID).subscribe((value: CollectionModel) => {
             this.currentTaskGroups = value._embedded != undefined && value._embedded.content != undefined ? value._embedded.content : [];
-            for(let i = 0;i < this.currentTaskGroups.length;i++)
+            for(let i = 0;i < this.currentTaskGroups.length;i++) {
               this.currentTasks.push([]);
+              this.searchingTasks.push(false);
+            }
             for(let i = 0;i < this.currentTaskGroups.length;i++)
                 this.updateTasksForGroup(i);
           })
@@ -72,6 +96,7 @@ export class ManageBoardPageComponent implements OnInit,OnDestroy {
       });
     }
   }
+
 
   public addNewTask(event: any): void {
     if(this.currentGroup != undefined) 
@@ -107,7 +132,9 @@ export class ManageBoardPageComponent implements OnInit,OnDestroy {
 
   private updateTasksForGroup(index: any): void {
     let currentTaskGroup: TaskGroup = this.currentTaskGroups[index];
+    this.searchingTasks[index] = true;
     this.taskService.getTasksByGroup(currentTaskGroup.id).subscribe((value: CollectionModel) => {
+      this.searchingTasks[index] = false;
       this.currentTasks[index] = value._embedded != undefined && value._embedded.content != undefined ? value._embedded.content : [];
     })
   }

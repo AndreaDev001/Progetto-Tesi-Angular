@@ -1,0 +1,9 @@
+<div *ngIf="isLoading">
+    <div style="display: flex;flex-direction: column;align-items: center;padding: 20px 0px;"  *ngIf="isLoading" >
+        <mat-progress-spinner [diameter]="60" [strokeWidth]="5" [mode]="'indeterminate'"></mat-progress-spinner>
+    </div>
+</div>
+<div [ngStyle]="wrapperStyle">
+    <img (load)="isLoading = false" (error)="isLoading = false;hasFailed=true" onerror="this.style.display = 'none'" onload="this.style.display='block'" [ngStyle]="!isLoading ? imageStyle : {'visibility': 'hidden'}" [src]="requiredSource">
+    <img *ngIf="hasFailed && alternativeImage != undefined" [ngStyle]="imageStyle" [src]="alternativeImage">
+</div>

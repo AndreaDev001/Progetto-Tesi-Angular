@@ -68,7 +68,7 @@ export class UserDetailsComponent implements AfterViewInit, OnDestroy{
     this.discussionService.getDiscussionsByPublisher(this.currentUserID,paginationRequest).subscribe((value: PagedModel) => {
       if(value._embedded != undefined && value._embedded.content != undefined) {
         this.currentDiscussions.push.apply(this.currentDiscussions,value._embedded.content);
-        value._embedded.content.forEach((value: any) => this.discussionItems.push({template: this.discussionTemplate,context: value}));
+        value._embedded.content.forEach((current: any) => this.discussionItems.push({template: this.discussionTemplate,context: current}));
       }
       if(value.page != undefined) {
         this.currentDiscussionsPage = value.page.page;
@@ -83,7 +83,7 @@ export class UserDetailsComponent implements AfterViewInit, OnDestroy{
       if(value._embedded != undefined && value._embedded.content != undefined) {
         this.currentAssignedTasks.push.apply(this.currentAssignedTasks,value._embedded.content);
         console.log(this.currentAssignedTasks);
-        value._embedded.content.forEach((value: any) => this.assignedTasksItems.push({template: this.taskAssignedTemplate,context: value}));
+        value._embedded.content.forEach((current: any) => this.assignedTasksItems.push({template: this.taskAssignedTemplate,context: current.task}));
       }
       if(value.page != undefined) {
         this.currentAssignedTasksPage = value.page.page;
@@ -97,7 +97,7 @@ export class UserDetailsComponent implements AfterViewInit, OnDestroy{
     this.pollService.getPollsByPublisher(this.currentUserID,paginationRequest).subscribe((value: PagedModel) => {
       if(value._embedded != undefined && value._embedded.content != undefined) {
         this.currentPolls.push.apply(this.currentPolls,value._embedded.content);
-        value._embedded.content.forEach((value: any) => this.pollsItem.push({template: this.pollTemplate,context: value}));
+        value._embedded.content.forEach((current: any) => this.pollsItem.push({template: this.pollTemplate,context: current}));
       }
       if(value.page != undefined) {
         this.currentPollPage = value.page.page;
@@ -111,8 +111,9 @@ export class UserDetailsComponent implements AfterViewInit, OnDestroy{
     this.boardMemberService.getBoardMembersByMember(this.currentUserID,paginationRequest).subscribe((value: PagedModel) => {
       if(value._embedded != undefined && value._embedded.content != undefined) {
         this.currentJoinedBoards.push.apply(this.currentJoinedBoards,value._embedded.content);
-        console.log(this.currentJoinedBoards);
-        value._embedded.content.forEach((value: any) => this.joinedBoardsItems.push({template: this.joinedBoardTemplate,context: value}));
+        value._embedded.content.forEach((current: any) => {
+          this.joinedBoardsItems.push({template: this.joinedBoardTemplate,context: current.board});
+        });
       }
       if(value.page != undefined) {
         this.currentJoinedBoardsPage = value.page.page;

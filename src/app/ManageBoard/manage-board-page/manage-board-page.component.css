@@ -14,20 +14,72 @@ input.default-input
     background-color: var(--primary-color);
     border: 0;
 }
-.draggable-box {
-    cursor: grab;
-    position: relative;
-    transition: all 0.1s cubic-bezier(0, 0, 0.2, 1);
-    box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2),
-                0 2px 2px 0 rgba(0, 0, 0, 0.14),
-                0 1px 5px 0 rgba(0, 0, 0, 0.12);
-  }
-  
-  .draggable-box:active {
-    box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
-                0 8px 10px 1px rgba(0, 0, 0, 0.14),
-                0 3px 14px 2px rgba(0, 0, 0, 0.12);
-  }
+.cdk-drag-preview
+{
+    cursor: grabbing;
+}
+.cdk-drag-preview div.task-group-wrapper
+{
+    background-color: inherit;
+    transform: rotate(20deg);
+    padding: 5px;
+    opacity: 1.00;
+    transition: 0.2s ease-in-out all;
+    animation-name: rotate;
+    cursor: move;
+    animation-duration: 50ms;
+    animation-iteration-count: 1;
+    animation-timing-function: linear;
+    animation-fill-mode: forwards;
+}
+.cdk-drag-preview div.task-group-body {
+    padding: 10px 5px;
+    min-height: 150px;
+}
+@keyframes rotate {
+    from
+    {
+        transform: rotate(0deg);
+    }
+    to
+    {
+        transform: rotate(3deg)
+    }
+}
+.cdk-drag-preview
+{
+    opacity: 0.5
+}
+.cdk-drag-preview div.task-group-wrapper div.task-group-header
+{
+    background-color: var(--primary-color);
+    padding: 5px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+.cdk-drag-preview div.task-group-wrapper div.task-group-footer {
+    background-color: var(--primary-color);
+    padding: 5px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+div.list-placeholder {
+    min-width: 275px;
+    background-color: var(--primary-color);
+    border-radius: 10px;
+    border: 3px dotted var(--tertiary-color);
+    padding: 10px;
+    opacity: 0.5;
+}
+.item-placeholder
+{
+    width: 100%;
+    background-color: var(--primary-color);
+    border-radius: 10px;
+    border: 3px dotted var(--tertiary-color);
+    opacity: 0.5;
+    min-height: 200px;
+}
 div.content-wrapper 
 {
     padding: 20px;

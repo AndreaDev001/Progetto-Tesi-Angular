@@ -26,14 +26,6 @@ p.task-invite-board-description {
     margin: 0;
     font-size: 12px;
 }
-img.board-image
-{
-    width: 100%;
-    height: auto;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-    filter: brightness(70%);
-}
 div.task-invite-card-body {
     padding-left: 10px;
     padding-right: 10px;
@@ -59,16 +51,4 @@ button.task-invite-reject-button {
 }
 div.task-invite-card-footer {
     padding: 5px 5px;
-}
-img.publisher-icon {
-    width: 40px;
-    height: 40px;
-    border: 1px solid var(--tertiary-color);
-    border-radius: 60%;
-    filter: brightness(70%)
-}
-p.publisher-username {
-    font-size: 15px;
-    padding: 0;
-    margin: 0;
 }

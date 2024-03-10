@@ -66,7 +66,7 @@
             <div class = "row">
                 <div class = "col-12 col-md-9">
                     <div class = "py-1">
-                        <div *ngIf="currentImages.length > 0">
+                        <div>
                             <div class = "d-flex">
                                 <fa-icon style="font-size: 25px;" [icon]="uploadIcon"></fa-icon>
                                 <div class = "mx-3 w-100">
@@ -79,9 +79,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class = "px-4">
-                            <app-text-overflow [templates]="currentImagesItems"></app-text-overflow>
+                            <app-loader [diameter]="50" [strokeWidth]="5" [isSearching]="searchingImages" [requiredTemplate]="imagesSection"></app-loader>
                         </div>
                     </div>
                     <div class = "py-1">
@@ -102,10 +100,8 @@
                             </div>
                         </div>
                     </div>
-                    <div *ngIf="currentCheckLists.length > 0">
-                        <div *ngFor="let current of currentCheckLists">
-                            <app-checklist [checkList]="current"></app-checklist>
-                        </div>
+                    <div>
+                        <app-loader [isSearching]="searchingChecklists" [requiredTemplate]="checkListSection"></app-loader>
                     </div>
                     <div>
                         <div class = "d-flex">
@@ -259,12 +255,12 @@
     </div>
 </ng-template>
 <ng-template #addImageTemplate>
-    <app-create-task-image (submitEvent)="this.alertHandlerService.close()" (successEvent)="updateImages($event)" [taskID]="task?.id"></app-create-task-image>
+    <app-create-task-image (successEvent)="updateImages($event)" [taskID]="task?.id"></app-create-task-image>
 </ng-template>
 <ng-template #taskImageTemplate let-i>
     <div class = "mx-1">
         <div class = "task-image-wrapper">
-            <img class = "task-image" [src]="'http://localhost:8080/api/v1/taskImages/public/task/' + task?.id + '/index/' + i + '/image'">
+            <img class = "task-image" [src]="i._links.image.href">
         </div>
         <div class = "text-center">
             <button (click)="deleteImage(i)" class = "remove-image-button mt-1">Remove</button>
@@ -273,4 +269,18 @@
 </ng-template>
 <ng-template #createReportTemplate>
     <app-create-report [taskID]="task?.id" (successEvent)="this.hasReported = true" (failedEvent)="this.hasReported = false" (sumbitEvent)="this.alertHandlerService.close()"></app-create-report>
+</ng-template>
+<ng-template #imagesSection>
+    <div *ngIf="currentImages.length > 0">
+        <div class = "px-4">
+            <app-text-overflow [templates]="currentImagesItems"></app-text-overflow>
+        </div>
+    </div>
+</ng-template>
+<ng-template #checkListSection>
+    <div *ngIf="currentCheckLists.length > 0">
+        <div *ngFor="let current of currentCheckLists">
+            <app-checklist [checkList]="current"></app-checklist>
+        </div>
+    </div>
 </ng-template>

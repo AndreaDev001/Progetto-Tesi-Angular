@@ -13,8 +13,8 @@
             </ul>
         </div>
         <div class = "col-12 col-md-10 mt-2">
-            <div *ngIf="currentTemplate != undefined">
-                <ng-container *ngTemplateOutlet="currentTemplate"></ng-container>
+            <div  *ngIf="currentTemplate != undefined">
+                <app-loader [diameter]="60" [strokeWidth]="7" [requiredTemplate]="currentTemplate" [isSearching]="isSearching"></app-loader>
             </div>
             <app-pagination [pageSize]="20" [totalElements]="currentTotalElements" *ngIf="currentTotalElements == 0"></app-pagination>
         </div>
@@ -25,6 +25,7 @@
     <div class = "container">
         <div *ngIf="currentBoards.length > 0">
             <div class = "row">
+                <app-loader></app-loader>
                 <div class = "col-12 col-md-3" *ngFor="let current of currentBoards">
                     <app-board-card [boardRef]="current.board"></app-board-card>
                 </div>

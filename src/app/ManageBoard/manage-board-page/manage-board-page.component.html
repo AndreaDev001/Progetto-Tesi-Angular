@@ -1,10 +1,11 @@
-<div *ngIf="currentBoard" class = "manage-board-wrapper" [ngStyle]="{'background-image': 'url(http://localhost:8080/api/v1/boardImages/public/image/' + currentBoard.id + '),linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2))'}">
+<div *ngIf="currentBoard" class = "manage-board-wrapper" [ngStyle]="{'background-image': 'url(' + backgroundURL + '),linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2))'}">
     <div>
         <app-board-header (boardChanged)="reloadBoard()" [board]="currentBoard"></app-board-header>
     </div>
     <div class = "horizontal-container py-2" style="height: 92%;">
-        <div class = "d-flex" cdkDropList cdkDropListOrientation="horizontal" (cdkDropListDropped)="dropList($event)">
-            <div cdkDrag class = "mx-1" *ngFor="let current of currentTaskGroups;let i = index">
+        <div class = "d-flex"  cdkDropList cdkDropListOrientation="horizontal" (cdkDropListDropped)="dropList($event)">
+            <div (cdkDragStarted)="test($event)" cdkDrag class = "mx-1 draggable-box" *ngFor="let current of currentTaskGroups;let i = index">
+                <div class = "list-placeholder" [ngStyle]="{'height.px': this.currentHeight}" *cdkDragPlaceholder></div>
                 <div class = "task-group-wrapper">
                     <div class = "task-group-header">
                         <div class = "d-flex">
@@ -24,12 +25,20 @@
                         </div>
                     </div>
                     <div class = "h-100 task-group-body position-relative" cdkDropList [cdkDropListData]="currentTasks[i]" [cdkDropListConnectedTo]="generateConnection(i)" [id]="'container' + i" (cdkDropListDropped)="dropItem($event)">
-                        <div *ngIf="currentTasks[i].length > 0">
-                            <div (cdkDragStarted)="updateCurrentTask($event,value)" class = "task-element-wrapper draggable-box" cdkDrag *ngFor="let value of currentTasks[i];let j = index">
-                                <app-task-element  [board]="currentBoard" [task]="value"></app-task-element>
+                        <div *ngIf="searchingTasks[i]" style="display: flex;flex-direction: column;align-items: center;padding: 10px 0px">
+                            <mat-progress-spinner [diameter]="60" [strokeWidth]="5" [mode]="'indeterminate'"></mat-progress-spinner>
+                        </div>
+                        <div *ngIf="!searchingTasks[i]">
+                            <div *ngIf="currentTasks[i].length > 0">
+                                <div (cdkDragStarted)="updateCurrentTask($event,value);" class = "task-element-draggable draggable-box" cdkDrag *ngFor="let value of currentTasks[i];let j = index">
+                                    <div class= "item-placeholder" *cdkDragPlaceholder></div>
+                                    <div (click)="updateDraggedTask($event)"  class = "task-element-wrapper">
+                                        <app-task-element [board]="currentBoard" [task]="value"></app-task-element>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class = "position-absolute w-100" *ngIf="currentTasks[i].length == 0">
+                        <div class = "position-absolute w-100" *ngIf="currentTasks[i].length == 0 && !searchingTasks[i]">
                             <div class = "text-center">
                                 <fa-icon style="font-size: 60px;" [icon]="emptyIcon"></fa-icon>
                                 <p>No Assigned Tasks, add one</p>
@@ -132,3 +141,10 @@
         </div>
     </div>
     --->
+<ng-template #taskGroupContainer let-i>
+    <div *ngIf="currentTasks[i].length > 0">
+        <div (cdkDragStarted)="updateCurrentTask($event,value)" class = "task-element-wrapper draggable-box" cdkDrag *ngFor="let value of currentTasks[i];let j = index">
+            <app-task-element  [board]="currentBoard" [task]="value"></app-task-element>
+        </div>
+    </div>
+</ng-template>

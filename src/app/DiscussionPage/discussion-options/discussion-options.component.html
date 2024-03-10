@@ -5,10 +5,8 @@
     </div>
     <p class = "p-0 m-0" style="font-size: 15px;">View other discussions created by the same user</p>
     <div class = "vertical-container">
-        <div *ngIf="currentPublisherDiscussions.length > 0">
-            <app-text-overflow (scrollEndReached)="updatePublisherMaxPage()" [horizontal]="false" [templates]="publisherItems"></app-text-overflow>
-        </div>
-        <div *ngIf="currentPublisherDiscussions.length == 0">
+        <app-loader [requiredTemplate]="publisherDiscussions" [isSearching]="searchingPublisherDiscussions" [strokeWidth]="7" [diameter]="60"></app-loader>
+        <div *ngIf="currentPublisherDiscussions.length == 0 && !searchingPublisherDiscussions">
             <app-no-items></app-no-items>
         </div>
     </div>
@@ -20,10 +18,8 @@
     </div>
     <p class = "p-0 m-0" style="font-size: 15px;">View other similar discussions</p>
     <div class = "vertical-container">
-        <div *ngIf="currentSimilarDiscussions.length > 0">
-            <app-text-overflow  (scrollEndReached)="updateSimilarMaxPage()"  [horizontal]="false" [templates]="similarItems"></app-text-overflow>
-        </div>
-        <div *ngIf="currentSimilarDiscussions.length == 0">
+        <app-loader [strokeWidth]="7" [diameter]="60" [requiredTemplate]="similarDiscussions" [isSearching]="searchingSimilarDiscussions"></app-loader>
+        <div *ngIf="currentSimilarDiscussions.length == 0 && !searchingSimilarDiscussions">
             <app-no-items></app-no-items>
         </div>
     </div>
@@ -31,4 +27,14 @@
 
 <ng-template #discussionTemplate let-i>
     <app-discussion-card [discussion]="i"></app-discussion-card>
+</ng-template>
+<ng-template #similarDiscussions>
+    <div *ngIf="currentSimilarDiscussions.length > 0">
+        <app-text-overflow  (scrollEndReached)="updateSimilarMaxPage()"  [horizontal]="false" [templates]="similarItems"></app-text-overflow>
+    </div>
+</ng-template>
+<ng-template #publisherDiscussions>
+    <div *ngIf="currentPublisherDiscussions.length > 0">
+        <app-text-overflow (scrollEndReached)="updatePublisherMaxPage()" [horizontal]="false" [templates]="publisherItems"></app-text-overflow>
+    </div>
 </ng-template>

@@ -70,7 +70,7 @@ export class ReportPageComponent implements AfterViewInit,OnDestroy {
           this.currentTotalPages = value.page.totalPages;
           this.currentTotalElements = value.page.totalElements;
         }
-      });
+      },(err: any) => this.isSearching = false);
     }
   }
 }

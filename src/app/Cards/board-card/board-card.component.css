@@ -8,10 +8,10 @@ p.board-title
 }
 div.board-card-body
 {
-    padding: 10px 5px;
+    padding: 10px;
 }
 div.board-card-footer {
-    padding: 10px 5px;
+    padding: 10px;
 }
 p.board-subtitle
 {
@@ -20,28 +20,21 @@ p.board-subtitle
     padding: 0;
     margin: 0;
 }
-img.board-image {
-    width: 100%;
-    height: auto;
-    border-top-left-radius: 20px;
-    border-top-right-radius: 20px;
-}
 button.card-wrapper {
     text-align: start;
     width: 265px;
-    background-color: var(--primary-color);
+    background-color: var(--secondary-color);
     border-radius: 10px;
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
-    border: 1px solid darkcyan;
     color: whitesmoke;
     transition: 0.2s ease-in-out all;
 }
 button.board-open-button {
     border: 0;
     font-size: 14px;
-    background-color: var(--secondary-color);
-    border: 1px solid lightblue;
+    background-color: var(--primary-color);
+    border: 1px solid var(--secondary-color);
     color: whitesmoke;
     padding: 10px 10px;
     border-radius: 10px;
@@ -61,30 +54,4 @@ button.board-leave-button {
 button.card-wrapper:hover{
     background-color: var(--tertiary-color);
     color: black;
-}
-img.board-publisher-image {
-    width: 40px;
-    height: 40px;
-    border-radius: 60%;
-    border: 1px solid var(--tertiary-color);
-    filter: brightness(70%)
-}
-p.board-publisher-username {
-    padding: 0;
-    margin: 0;
-    font-size: 15px;
-    color: inherit;
-}
-span.board-publisher-name {
-    padding: 0;
-    margin: 0;
-    font-size: 12px;
-    color: inherit;
-}
-span.board-publisher-surname {
-    padding: 0;
-    margin: 0;
-    font-size: 12px;
-    margin-left: 2px;
-    color: inherit;
 }

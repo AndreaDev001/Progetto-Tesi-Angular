@@ -12,14 +12,6 @@ button.card-wrapper:hover
 {
     background-color: var(--tertiary-color);
 }
-img.user-image
-{
-    border-radius: 60%;
-    border: 1px solid var(--tertiary-color);
-    filter: brightness(70%);
-    width: 150px;
-    height: 150px;
-}
 div.user-card-header
 {
     text-align: center;

@@ -9,6 +9,7 @@ import { CanvasHandlerService } from 'src/app/canvas-handler.service';
 import { TagAssignmentService } from 'src/app/tag-assignment.service';
 import { TaskImageService } from 'src/app/task-image.service';
 import { TaskService } from 'src/model/services/task.service';
+import { BetterImageComponent } from 'src/app/Utility/better-image/better-image.component';
 
 
 interface DescriptionItem
@@ -32,6 +33,7 @@ export class TaskElementComponent implements OnInit {
   public photoURL: any = undefined;
 
   @ViewChild("overlayTemplate") overlayTemplate: any;
+  @ViewChild("betterImage") betterImage?: BetterImageComponent;
 
   constructor(private taskAssignment: TaskAssignmentService,private taskService: TaskService,private tagAssignmentService: TagAssignmentService,private canvasService: CanvasHandlerService) {
 
@@ -42,19 +44,23 @@ export class TaskElementComponent implements OnInit {
     this.getValues();
   }
 
-  public updateTask(taskID: string): void {
-    this.taskService.getTaskByID(taskID).subscribe((value: any) => {
-      this.task = value
-      this.getValues();
-    });
+  public updateTask(): void {
+    console.log("task updated");
+    if(this.task != undefined) {
+      this.taskService.getTaskByID(this.task.id).subscribe((value: any) => {
+        this.task = value
+        this.getValues();
+        console.log("updated task")
+        this.betterImage?.reloadImage();
+      });
+    }
   }
   
   private getValues(): void {
     if(this.task != undefined)
     {
+      this.photoURL = "http://localhost:8080/api/v1/taskImages/public/task/" + this.task.id + "/first" + "/image";
       this.currentDescriptionItems = [];
-      let timeStamp = new Date().getTime();
-      this.photoURL = "http://localhost:8080/api/v1/taskImages/public/task/" + this.task?.id + "/first/image" + "?" + timeStamp;
       this.currentDescriptionItems.push({icon: faCheck,amount: this.task.amountOfCheckLists.toString()});
       this.currentDescriptionItems.push({icon: faImages,amount: this.task.amountOfImages.toString()})
       this.currentDescriptionItems.push({icon: faComments,amount: this.task.amountOfReceivedComments.toString()});

@@ -76,7 +76,7 @@ export class BoardPageComponent implements OnDestroy,AfterViewInit{
           this.currentTotalPages = value.page.totalPages;
           this.currentTotalElements = value.page.totalElements;
         }
-      })
+      },(err: any) => this.isSearching = false)
     }
   }
 }

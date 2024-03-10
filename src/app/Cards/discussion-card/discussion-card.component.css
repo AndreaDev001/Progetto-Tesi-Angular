@@ -64,21 +64,6 @@ img.publisher-image
 div.publisher-info-holder {
     padding: 0px 5px;
 }
-p.publisher-username {
-    padding: 0;
-    margin: 0;
-    font-size: 15px;
-    color: whitesmoke;
-}
-span.publisher-name {
-    font-size: 10px;
-    color: whitesmoke;
-}
-span.publisher-surname {
-    font-size: 10px;
-    color: whitesmoke;
-    margin-left: 2px;
-}
 p.discussion-card-title {
     padding: 0;
     margin: 0;

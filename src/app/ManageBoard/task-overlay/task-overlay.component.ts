@@ -66,6 +66,8 @@ export class TaskOverlayComponent implements OnInit
   public hasReported: boolean = false;
   public currentLike: TaskLike | undefined = undefined;
   public numbersOfLike: number = 0;
+  public searchingChecklists: boolean = false;
+  public searchingImages: boolean = false;
 
   @ViewChild("addMemberTemplate") addMemberTemplate: any;
   @ViewChild("addTagTemplate") addTagTemplate: any;
@@ -86,15 +88,19 @@ export class TaskOverlayComponent implements OnInit
       this.numbersOfLike = this.task.amountOfReceivedLikes;
       this.currentDescription = this.task.description;
       this.taskAssignmentsService.getTaskAssignmentsByTask(this.task.id).subscribe((value: CollectionModel) => this.currentMembers = value._embedded != undefined && value._embedded.content != undefined ? value._embedded.content : []);
+      this.searchingChecklists = true;
       this.checkListService.getCheckListsByTask(this.task.id).subscribe((value: CollectionModel) => {
+        this.searchingChecklists = false;
         if(value._embedded != undefined && value._embedded.content != undefined) {
           this.currentCheckLists = value._embedded.content;
         }
       })
+      this.searchingImages = true;
       this.taskImageService.getImagesByTask(this.task.id).subscribe((value: CollectionModel) => {
+        this.searchingImages = false;
         this.currentImages = value._embedded != undefined && value._embedded.content != undefined ? value._embedded.content : [];
         for(let i = 0;i < this.currentImages.length;i++) {
-          let overflowItem: TextOverflowItem = {context: i,template: this.taskImageTemplate};
+          let overflowItem: TextOverflowItem = {context: this.currentImages[i],template: this.taskImageTemplate};
           this.currentImagesItems.push(overflowItem);
         }
       });
@@ -158,10 +164,11 @@ export class TaskOverlayComponent implements OnInit
     })
   }
 
-  public deleteImage(index: number): void {
-    const requiredImage = this.currentImages[index];
-    this.taskImageService.deleteImage(requiredImage.id).subscribe((value: any) => {
-      this.currentImages = this.currentImages.filter((current: any) => current.id !== requiredImage.id);
+  public deleteImage(image: TaskImage): void {
+    const index = this.currentImages.indexOf(image);
+    this.taskImageService.deleteImage(image.id).subscribe((value: any) => {
+      this.taskChanged.emit();
+      this.currentImages = this.currentImages.filter((current: any) => current.id !== image.id);
       const overflowItem: TextOverflowItem = this.currentImagesItems[index];
       this.currentImagesItems = this.currentImagesItems.filter((current: any) => current !== overflowItem);
     })
@@ -201,13 +208,13 @@ export class TaskOverlayComponent implements OnInit
   }
 
   public updateImages(event: any): void {
-    if(event._embedded != undefined && event._embedded.content != undefined) {
-      for(let i = 0;i < event._embedded.content.length;i++) {
-        this.currentImages.push(event._embedded.content[i]);
-        this.currentImagesItems.push({template: this.taskImageTemplate,context: i});
-      }
-      this.taskChanged.emit(this.task?.id);
+    this.taskChanged.emit();
+    for(let i = 0;i < event._embedded.content.length;i++) {
+      let current: any = event._embedded.content[i];
+      this.currentImages.push(current);
+      this.currentImagesItems.push({template: this.taskImageTemplate,context: current});
     }
+    this.alertHandlerService.close();
   }
 
   public addMember(): void {

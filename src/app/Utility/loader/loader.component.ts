@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
@@ -8,15 +8,18 @@ import { NgxSpinnerService } from 'ngx-spinner';
 })
 export class LoaderComponent implements OnInit
 {
-  @ViewChild("defaultLoaderTemplate") defaultLoaderTemplate: any;
-  @Input() currentTitle: string = "Searching";
-  @Input() currentText: string = "Searching results, please wait...";
-
-  constructor(private spinner: NgxSpinnerService) {
-
-  }
+  @Input() isSearching: boolean = false;
+  @Input() requiredTemplate: any = undefined;
+  @Input() context: any = undefined;
+  @Input() diameter: any = '50';
+  @Input() strokeWidth: any = '2';
+  @Input() successTemplate: any = undefined;
+  @Input() failedTemplate: any = undefined;
+  @Input() loaderText: string = "Searching...";
+  @Input() fontSize: number = 15;
+  @Input() loaderSubtitle: string = "Searching for information, please wait";
 
   public ngOnInit(): void {
-    this.spinner.show();
+    
   }
 }

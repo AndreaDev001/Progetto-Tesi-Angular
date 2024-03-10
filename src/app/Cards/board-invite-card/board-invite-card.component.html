@@ -1,12 +1,9 @@
-<button class = "card-wrapper">
+<button class = "card-wrapper" *ngIf="boardInvite != undefined">
     <div class = "task-invite-card-header">
         <div class = "position-relative">
-            <img class = "board-image" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRMMKCFonjcGI2vneqwLAQDBybvouJCUgsdXbvoEB0GLA&s">
+            <app-better-image [imageStyle]="{'width': '100%','height': 'auto','border-top-left-radius': '10px','border-top-right-radius': '10px','filter': 'brightness(70%)'}" [requiredSource]="'http://localhost:8080/api/v1/boardImages/public/board/' + boardInvite.board.id + '/image'"></app-better-image>
             <div class = "position-absolute p-2" style="top: 0;left: 0">
-                <img class = "publisher-icon d-inline-block" src="https://i0.wp.com/picjumbo.com/wp-content/uploads/beautiful-nature-mountain-scenery-with-flowers-free-photo.jpg?w=600&quality=80">
-                <div class = "d-inline-block mx-1">
-                    <p class = "publisher-username">Username</p>
-                </div>
+                <app-user-holder [userRef]="boardInvite.publisher"></app-user-holder>
             </div>
             <div class = "position-absolute p-2" style="top: 0;right: 0;font-size: 20px;">
                 <fa-icon [icon]="inviteIcon"></fa-icon>
@@ -19,13 +16,13 @@
             </div>
             <div class = "position-absolute" style="bottom:0;right:0;">
                 <fa-icon class = "d-inline-block" [icon]="calendarIcon"></fa-icon>
-                <span class = "icon-text mx-1">2024-08-10</span>
+                <span class = "icon-text mx-1">{{boardInvite.createdDate}}</span>
             </div>
         </div>
     </div>
     <div class = "task-invite-card-body">
-        <p class = "task-invite-board-title">Board Title</p>
-        <p class = "task-invite-board-description">Please enter a valid description for this board</p>
+        <p class = "task-invite-board-title">{{boardInvite.board.title}}</p>
+        <p class = "task-invite-board-description">{{boardInvite.board.description}}</p>
     </div>
     <div class = "task-invite-card-footer">
         <div class = "text-center">

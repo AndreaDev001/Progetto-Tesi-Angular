@@ -2,14 +2,9 @@
     <div class = "discussion-card">
         <div class = "discussion-card-header">
             <div class = "position-absolute mt-1 mx-1" style="top:0;left:0;">
-                <div class = "d-inline-block">
-                    <img class = "publisher-image" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRMMKCFonjcGI2vneqwLAQDBybvouJCUgsdXbvoEB0GLA&s">
-                </div>
-                <div class = "d-inline-block mx-1">
-                    <p class = "publisher-username">{{discussion.publisher.username}}</p>
-                </div>
+                <app-user-holder [imageWidth]="35" [imageHeight]="35" [userRef]="discussion.publisher" [showNameInfo]="false"></app-user-holder>
             </div>
-            <div class = "position-absolute" style="top: 0;right: 0">
+            <div class = "position-absolute" style="top: 0;right: 0;padding: 5px">
                 <fa-icon [icon]="chatIcon"></fa-icon>
             </div>
         </div>

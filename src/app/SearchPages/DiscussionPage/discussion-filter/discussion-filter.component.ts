@@ -47,6 +47,7 @@ export class DiscussionFilterComponent implements OnInit,OnDestroy {
     this.userService.getGenders().subscribe((value: CollectionModel) => {
       if(value._embedded != undefined && value._embedded.content != undefined)
       {
+        console.log(value);
         value._embedded.content.forEach((current: string) => {
           let genderOption: DropdownOption = {name: current,callback: () => this.updateFilter(this.currentFilter,'publisherGender',current)};
           this.currentGenders.push(genderOption);

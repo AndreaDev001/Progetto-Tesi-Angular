@@ -9,9 +9,9 @@
         </div>
         <div class = "row">
             <div class = "col-12 col-md-3">
-                    <div class = "secondary-color text-center" style="padding: 20px;border-radius: 10px;">
+                    <div class = "primary-color text-center" style="padding: 20px;border-radius: 10px;">
                         <div class = "image-wrapper">
-                            <img class = "user-image" src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Altja_j%C3%B5gi_Lahemaal.jpg/1200px-Altja_j%C3%B5gi_Lahemaal.jpg">
+                            <app-better-image [imageStyle]="{'width': '240px','height': '240px','border-radius': '60%','border': '1px solid var(--tertiary-color)','filter': 'brightness(80%)'}" [requiredSource]="'http://localhost:8080/api/v1/userImages/public/user/' + user.id + '/image'"></app-better-image>
                         </div>
                         <div class = "mt-1">
                             <h3 class = "p-0 m-0">{{user.username}}</h3>
@@ -50,7 +50,7 @@
     </div>
 </ng-template>
 <ng-template #boardTemplate>
-    <div class = "mt-2 py-2 px-4 secondary-color" style="border-radius: 10px;">
+    <div class = "mt-2 py-2 px-4 primary-color" style="border-radius: 10px;">
         <div class = "py-2">
             <div>
                 <h3 class = "d-inline-block">Boards</h3>
@@ -69,7 +69,7 @@
     </div>
 </ng-template>
 <ng-template #taskTemplate>
-    <div class = "mt-2 py-2 px-4 secondary-color" style="border-radius: 10px;">
+    <div class = "mt-2 py-2 px-4 primary-color" style="border-radius: 10px;">
         <div class = "py-2">
             <div>
                 <h3 class = "d-inline-block">Tasks</h3>
@@ -88,7 +88,7 @@
     </div>
 </ng-template>
 <ng-template #discussionTemplate>
-    <div class = "mt-1 py-2 px-4 secondary-color" style="border-radius: 10px;">
+    <div class = "mt-1 py-2 px-4 primary-color" style="border-radius: 10px;">
         <div class = "py-2">
             <div>
                 <h3 class = "d-inline-block">Discussions</h3>
@@ -107,7 +107,7 @@
     </div>
 </ng-template>
 <ng-template #pollTemplate>
-    <div class = "mt-1 py-2 px-4 secondary-color" style="border-radius: 10px;">
+    <div class = "mt-1 py-2 px-4 primary-color" style="border-radius: 10px;">
         <div class = "py-2">
             <div>
                 <h3 class = "d-inline-block">Polls</h3>

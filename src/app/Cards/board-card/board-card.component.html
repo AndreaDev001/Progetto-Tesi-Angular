@@ -2,7 +2,7 @@
     <div class = "board-card">
         <div class = "board-card-header">
             <div class = "position-relative text-center">
-                <div class = "position-absolute" style="top: 50%;left: 50%;transform: translate(-50%, -50%);">
+                <div class = "position-absolute" style="top: 50%;left: 50%;transform: translate(-50%, -50%);z-index: 1000">
                     <div class = "d-inline-block" [ngbTooltip]="'Member Amount'">
                         <fa-icon [icon]="membersIcon" style="font-size: 20px;color: whitesmoke"></fa-icon>
                         <span class = "mx-1" style="font-size: 20px;color: whitesmoke">{{board.amountOfMembers}}</span>
@@ -12,7 +12,7 @@
                         <span class = "mx-1" style="font-size: 20px;color: whitesmoke">{{board.amountOfGroups}}</span>
                     </div>
                 </div>
-                <img class = "board-image" src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Altja_j%C3%B5gi_Lahemaal.jpg/1200px-Altja_j%C3%B5gi_Lahemaal.jpg">
+                <app-better-image [imageStyle]="{'width': '100%','height': 'auto','border-top-left-radius': '20px','border-top-right-radius': '20px','filter': 'brightness(70%)'}" [requiredSource]="'http://localhost:8080/api/v1/boardImages/public/image/' + board.id" [alternativeImage]="'https://react.semantic-ui.com/images/wireframe/image.png'"></app-better-image>
             </div>
         </div>
         <div class = "board-card-body">
@@ -25,14 +25,7 @@
         </div>
         <div class = "board-card-footer">
             <div class = "d-flex">
-                <div>
-                    <img class = "board-publisher-image" src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Altja_j%C3%B5gi_Lahemaal.jpg/1200px-Altja_j%C3%B5gi_Lahemaal.jpg">
-                </div>
-                <div class = "px-2">
-                    <p class = "board-publisher-username">{{board.publisher.username}}</p>
-                    <span class = "board-publisher-name">{{board.publisher.name}}</span>
-                    <span class = "board-publisher-surname">{{board.publisher.surname}}</span>
-                </div>
+                <app-user-holder [userRef]="boardRef?.publisher"></app-user-holder>
             </div>
         </div>
     </div>

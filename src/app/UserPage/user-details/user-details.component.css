@@ -2,14 +2,6 @@ div.details-holder
 {
     padding: 5px;
 }
-img.user-image
-{
-    width: 240px;
-    height: 240px;
-    border-radius: 60%;
-    border: 1px solid var(--tertiary-color);
-    filter: brightness(80%);
-}
 button.follow-button
 {
     display: block;

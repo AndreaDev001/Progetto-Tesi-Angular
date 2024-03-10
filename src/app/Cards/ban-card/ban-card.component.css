@@ -11,13 +11,6 @@ button.card-wrapper
     transition: 0.2s ease-in-out all;
     text-align: start;
 }
-img.user-image {
-    width: 40px;
-    height: 40px;
-    border: 1px solid var(--tertiary-color);
-    filter: brightness(70%);
-    border-radius: 60%;
-}
 div.ban-card-header {
     padding: 5px;
     background-color: var(--secondary-color);
@@ -40,7 +33,4 @@ button.delete-ban-button {
     border: 1px solid red;
     background-color: darkred;
     border-radius: 10px;
-}
-span.username {
-    font-size: 15px;
 }

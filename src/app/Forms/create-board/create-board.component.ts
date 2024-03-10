@@ -33,6 +33,7 @@ export class CreateBoardComponent implements OnInit {
     visibility: new FormControl<String>('PUBLIC',Validators.required)
   });
   public currentBoard: Board | undefined = undefined;
+  public backgroundURL: string | undefined = undefined;
   public currentVisibilities: string[] = [];
   public boardIcon: IconDefinition = faTable;
   public currentImage: any = undefined;
@@ -47,6 +48,10 @@ export class CreateBoardComponent implements OnInit {
   }
 
   public ngOnInit(): void {
+    if(this.boardID != undefined) {
+      let timeStamp = (new Date()).getTime();
+      this.backgroundURL = "http://localhost:8080/api/v1/boardImages/public/image" + "/" + this.boardID + "?" + "time=" + timeStamp;
+    }
     this.boardService.getVisibilities().subscribe((value: CollectionModel) => {
       this.currentVisibilities = value._embedded != undefined && value._embedded.content != undefined ? value._embedded.content : [];
     })

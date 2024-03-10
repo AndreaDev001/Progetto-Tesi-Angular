@@ -2,7 +2,7 @@
     <div class = "task-element-header">
         <div>
             <div>
-                <img onerror="this.style.display = 'none'" alt="" class = "task-first-image" [src]="photoURL">
+                <app-better-image #betterImage [requiredSource]="photoURL" [imageStyle]="{'width': '100%','height': 'auto','border-radius': '5px'}"></app-better-image>
             </div>
             <div class = "d-flex mt-1">
                 <div class = "d-inline-block" [ngStyle]="{'margin-left': i > 0 ? '5px' : '0px'}"  *ngFor="let current of currentTagAssignments;let i = index">
@@ -45,7 +45,7 @@
 </ng-template>
 <ng-template #overlayTemplate>
     <div>
-        <app-task-overlay [board]="board" [task]="task" (taskChanged)="this.updateTask($event)"></app-task-overlay>
+        <app-task-overlay [board]="board" [task]="task" (taskChanged)="this.updateTask()"></app-task-overlay>
     </div>
 </ng-template>
 <ng-template #descriptionItem let-item="item">

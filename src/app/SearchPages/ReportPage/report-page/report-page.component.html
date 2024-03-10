@@ -10,20 +10,15 @@
         <button class = "filter-button" (click)="openCanvas()">Filters</button>
     </div>
     <div class = "container-fluid">
-        <div *ngIf="currentTotalElements > 0">
+        <div class = "py-2">
             <div class = "py-2">
-                <div class = "py-2">
-                    <h5 class = "p-0 m-0">Use the filters to find the desired reports</h5>
-                    <p class = "p-0 m-0">Try to be the most precise as possible</p>
-                </div>
-                <div class = "row mt-3">
-                    <div class = "col-md-3 mt-1" *ngFor="let current of currentItems">
-                        <app-report-card [report]="current"></app-report-card>
-                    </div>
-                </div>
-            </div>
+                <h5 class = "p-0 m-0">Use the filters to find the desired reports</h5>
+                <p class = "p-0 m-0">Try to be the most precise as possible</p>
         </div>
-        <div *ngIf="currentTotalElements == 0">
+        <div *ngIf="currentTotalElements > 0 || isSearching">
+            <app-loader [diameter]="100" [strokeWidth]="8" [requiredTemplate]="reportElements" [isSearching]="isSearching"></app-loader>
+        </div>
+        <div *ngIf="currentTotalElements == 0 && !isSearching">
             <app-no-items (buttonClicked)="resetSearch()"></app-no-items>
         </div>
     </div>
@@ -34,5 +29,12 @@
 <ng-template #reportFilters>
     <div class = "px-2 w-100">
         <app-report-filter (filterChanged)="handleFilterChange($event)"></app-report-filter>
+    </div>
+</ng-template>
+<ng-template #reportElements>
+    <div class = "row py-1">
+        <div class = "col-md-3 mt-1" *ngFor="let current of currentItems">
+            <app-report-card [report]="current"></app-report-card>
+        </div>
     </div>
 </ng-template>

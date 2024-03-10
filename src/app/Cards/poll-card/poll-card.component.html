@@ -1,8 +1,7 @@
 <button class = "card-wrapper" *ngIf="poll != undefined">
     <div class = "poll-card-header">
         <div class = "d-inline-block w-50 text-start">
-           <img class = "publisher-image d-inline-block" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRMMKCFonjcGI2vneqwLAQDBybvouJCUgsdXbvoEB0GLA&s">
-           <p class = "d-inline-block mx-2 publisher-username">Ciao</p>
+            <app-user-holder [userRef]="poll.publisher"></app-user-holder>
         </div>
         <div class = "d-inline-block w-50 text-end">
             <fa-icon [icon]="pollIcon"></fa-icon>

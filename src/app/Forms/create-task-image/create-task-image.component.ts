@@ -42,14 +42,12 @@ export class CreateTaskImageComponent {
   }
 
   public handleSubmit(event: any): void {
-    console.log("called");
     if(this.currentFiles.length > 0 && this.taskID != undefined) {
-      console.log("HERE");
       let createTaskImage: CreateTaskImage = {taskID: this.taskID,files: this.currentFiles};
       this.submitEvent.emit(createTaskImage);
       this.taskImageService.createImage(createTaskImage).subscribe((value: any) => {
         this.successEvent.emit(value);
-      },(err: any) => this.failedEvent.emit(err));
+      })
     }
   }
 

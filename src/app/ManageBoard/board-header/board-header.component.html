@@ -102,5 +102,5 @@
     </div>
 </ng-template>
 <ng-template #modifyBoardTemplate>
-    <app-create-board (submitEvent)="this.alertHandlerService.close()" (successEvent)="this.alertHandlerService.close();this.boardChanged.emit(this.board?.id)" [update]="true" [boardID]="board?.id"></app-create-board>
+    <app-create-board  (successEvent)="this.boardChanged.emit(this.board?.id)" [update]="true" [boardID]="board?.id"></app-create-board>
 </ng-template>

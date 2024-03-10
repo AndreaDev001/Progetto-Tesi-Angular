@@ -3,7 +3,7 @@
         <img class = "user-image" [ngStyle]="{'width.px': imageWidth,'height.px': imageHeight}" [src]="'http://localhost:8080/api/v1/userImages/public/user/' + user.id + '/image'">
         <div class = "mx-2">
             <span class = "user-username w-100">{{user.username}}</span>
-            <div *ngIf="showNameInfo">
+            <div class = "p-0" *ngIf="showNameInfo">
                 <span class = "user-name">{{user.name}}</span>
                 <span class = "user-surname">{{user.surname}}</span>
             </div>

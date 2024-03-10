@@ -115,8 +115,10 @@ export class HomePageComponent implements AfterViewInit, OnDestroy {
   public updateJoinedBoards(page: number,pageSize: number): void {
     let paginationRequest: PaginationRequest = {page: page,pageSize: pageSize};
     this.boardMemberService.getBoardMembersByMember(this.currentUserID,paginationRequest).subscribe((value: PagedModel) => {
+      this.isSearching = true;
       this.currentBoards = value._embedded != undefined && value._embedded.content != undefined ? value._embedded.content : [];
       if(value.page != undefined) {
+        this.isSearching = false;
         this.currentPage = value.page.page;
         this.currentTotalPages = value.page.totalPages;
         this.currentTotalElements = value.page.totalElements;
@@ -126,7 +128,9 @@ export class HomePageComponent implements AfterViewInit, OnDestroy {
 
   public updateTasks(page: number,pageSize: number): void {
     let paginationRequest: PaginationRequest = {page: page,pageSize: pageSize};
+    this.isSearching = true;
     this.taskAssignmentService.getTaskAssignmentsByUser(this.currentUserID,paginationRequest).subscribe((value: PagedModel) => {
+      this.isSearching = false;
       this.currentTasks = value._embedded != undefined && value._embedded.content != undefined ? value._embedded.content : [];
       if(value.page != undefined) {
         this.currentPage = value.page.page;
@@ -138,7 +142,9 @@ export class HomePageComponent implements AfterViewInit, OnDestroy {
 
   public updateInvites(page: number,pageSize: number): void {
     let paginationRequest: PaginationRequest = {page: page,pageSize: pageSize};
+    this.isSearching = true;
     this.boardInvitesService.getInvitesByUser(this.currentUserID,paginationRequest).subscribe((value: PagedModel) => {
+      this.isSearching = false;
       this.currentBoardInvites = value._embedded != undefined && value._embedded.content != undefined ? value._embedded.content : [];
       if(value.page != undefined) {
         this.currentPage = value.page.page;
@@ -150,7 +156,9 @@ export class HomePageComponent implements AfterViewInit, OnDestroy {
 
   public updateDiscussions(page: number,pageSize: number): void {
     let paginationRequest: PaginationRequest = {page: page,pageSize: pageSize};
+    this.isSearching = true;
     this.discussionService.getDiscussionsByPublisher(this.currentUserID,paginationRequest).subscribe((value: PagedModel) => {
+      this.isSearching = false;
       this.currentDiscussions = value._embedded != undefined && value._embedded.content != undefined ? value._embedded.content : [];
       if(value.page != undefined) {
         this.currentPage = value.page.page;
@@ -162,7 +170,9 @@ export class HomePageComponent implements AfterViewInit, OnDestroy {
 
   public updatePolls(page: number,pageSize: number): void {
     let paginationRequest: PaginationRequest = {page: page,pageSize: pageSize};
+    this.isSearching = true;
     this.pollService.getPollsByPublisher(this.currentUserID,paginationRequest).subscribe((value: PagedModel) => {
+      this.isSearching = false;
       this.currentPolls = value._embedded != undefined && value._embedded.content == undefined ? value._embedded.content : [];
       if(value.page != undefined) {
         this.currentPage = value.page.page;

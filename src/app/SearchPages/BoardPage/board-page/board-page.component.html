@@ -10,9 +10,7 @@
         <app-board-filter (filterChanged)="handleFilterChange($event)"></app-board-filter>
     </div>
     <div class = "d-block d-md-none text-center py-4">
-        <button class = "filter-button" (click)="openCanvas()">
-            Filters
-        </button>
+        <button class = "filter-button" (click)="openCanvas()">Filters</button>
     </div>
     <div class = "container-fluid">
         <div *ngIf="currentTotalElements > 0">
@@ -20,13 +18,9 @@
                 <h5 class = "p-0 m-0">Use the filters to find the desired boards</h5>
                 <p class = "p-0 m-0">Try to be the most precise as possible</p>
             </div>
-            <div class = "row mt-3">
-                <div class = "col-md-3 mt-1" *ngFor="let current of currentItems">
-                    <app-board-card [board]="current"></app-board-card>
-                </div>
-            </div>
+            <app-loader [diameter]="100" [strokeWidth]="8" [requiredTemplate]="boardElements" [fontSize]="20" [isSearching]="isSearching"></app-loader>
         </div>
-        <div *ngIf="currentTotalElements == 0">
+        <div *ngIf="currentTotalElements == 0 && !isSearching">
             <app-no-items (buttonClicked)="resetSearch()"></app-no-items>
         </div>
     </div>
@@ -37,5 +31,12 @@
 <ng-template #boardFilters>
     <div class = "px-2 w-100">
         <app-board-filter [rowDisplay]="true" (filterChanged)="handleFilterChange($event)"></app-board-filter>
+    </div>
+</ng-template>
+<ng-template #boardElements>
+    <div class = "row py-1">
+        <div class = "col-md-3 mt-1" *ngFor="let current of currentItems">
+            <app-board-card [board]="current"></app-board-card>
+        </div>
     </div>
 </ng-template>

@@ -6,21 +6,11 @@
     <div class = "report-card-body">
         <div class = "w-100">
             <p class = "p-0 m-0">Reporter:</p>
-            <div class = "d-inline-block">
-                <img class = "user-image" src="https://i0.wp.com/picjumbo.com/wp-content/uploads/beautiful-nature-mountain-scenery-with-flowers-free-photo.jpg?w=600&quality=80">
-            </div>
-            <div class = "d-inline-block mx-1">
-                <p class = "username">{{report.reporter.username}}</p>
-            </div>
+            <app-user-holder [userRef]="report.reporter" [showNameInfo]="false"></app-user-holder>
         </div>
         <div class = "w-100 mt-2">
             <p class = "p-0 m-0">Reported:</p>
-            <div class = "d-inline-block">
-                <img class = "user-image" src="https://i0.wp.com/picjumbo.com/wp-content/uploads/beautiful-nature-mountain-scenery-with-flowers-free-photo.jpg?w=600&quality=80">
-            </div>
-            <div class = "d-inline-block mx-1">
-                <p class = "username">{{report.reported.username}}</p>
-            </div>
+            <app-user-holder [userRef]="report.reported" [showNameInfo]="false"></app-user-holder>
         </div>
         <div class = "mt-1">
             <p class = "p-0 m-0 d-inline-block">Reason:</p>
