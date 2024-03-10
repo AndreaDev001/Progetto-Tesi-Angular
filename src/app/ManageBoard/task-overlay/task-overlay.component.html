@@ -221,8 +221,8 @@
     </div>
 </ng-template>
 <ng-template #addMemberTemplate>
-    <div *ngIf="board != undefined">
-        <app-multi-selection (cancelEvent)="this.alertHandlerService.close()" [requiredTemplate]="userHolder" (confirmEvent)="confirmMembersChange($event)" (selectionChanged)="handleMembersChange($event)" [requiredObservable]="this.boardMemberService.getBoardMembersByBoard(board.id)"></app-multi-selection>
+    <div *ngIf="board != undefined && task != undefined">
+        <app-multi-selection (cancelEvent)="this.alertHandlerService.close()" [requiredTemplate]="userHolder" (confirmEvent)="confirmMembersChange($event)" (selectionChanged)="handleMembersChange($event)" [requiredObservable]="this.boardMemberService.getPossibleTaskMembers(board.id,task.id)"></app-multi-selection>
     </div>
 </ng-template>
 <ng-template #addTagTemplate>

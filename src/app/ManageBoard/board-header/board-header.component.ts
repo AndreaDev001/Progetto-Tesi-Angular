@@ -59,7 +59,7 @@ export class BoardHeaderComponent implements OnInit {
   @ViewChild("modifyBoardTemplate") modifyBoardTemplate: any;
   @Output("boardChanged") boardChanged: EventEmitter<any> = new EventEmitter();
 
-  constructor(private teamService: TeamService,private roleOwnerService: RoleOwnerService,private teamMemberService: TeamMemberService,private boardMemberService: BoardMemberService,private boardInviteService: BoardInviteService,public alertHandlerService: AlertHandlerService) {
+  constructor(private teamService: TeamService,private roleOwnerService: RoleOwnerService,private teamMemberService: TeamMemberService,public boardMemberService: BoardMemberService,private boardInviteService: BoardInviteService,public alertHandlerService: AlertHandlerService) {
 
   }
 
@@ -200,16 +200,6 @@ export class BoardHeaderComponent implements OnInit {
     this.alertHandlerService.open();
   }
   
-
-  public addNewMemberToTeam(member: BoardMember): void {
-    const index = this.currentSelectedNewMembers.indexOf(member);
-    if(index != -1) {
-      this.currentSelectedNewMembers = this.currentSelectedNewMembers.filter(current => current !== member);
-    }
-    else
-      this.currentSelectedNewMembers.push(member);
-  }
-
   public changeRole(member: BoardMember): void {
     if(this.currentUserAdmin)
       this.roleOwnerService.deleteRoleOwner("ADMIN",member.user.id,member.board.id).subscribe((value: any) => this.currentUserAdmin = false);
@@ -220,8 +210,14 @@ export class BoardHeaderComponent implements OnInit {
     }
   }
 
+  public handleSelectionChange(event: any): void {
+    this.currentSelectedNewMembers = event;
+    console.log(this.currentSelectedNewMembers);
+  }
+
   public confirmTeamMembers(): void {
     if(this.currentSelectedNewMembers.length > 0 && this.currentSelectedTeam != undefined) {
+      this.alertHandlerService.close()
       for(let current of this.currentSelectedNewMembers) {
         let createTeamMember: CreateTeamMember = {teamID: this.currentSelectedTeam.id,userID: current.user.id};
         this.teamMemberService.createTeamMember(createTeamMember).subscribe((value: any) => console.log(value));

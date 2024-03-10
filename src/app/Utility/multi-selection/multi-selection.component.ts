@@ -10,6 +10,7 @@ export class MultiSelectionComponent implements OnInit
 {
   public currentValues: any[] = [];
   public currentSelectedValues: any[] = [];
+  public isSearching: boolean = false;
   @Input() requiredObservable: any = undefined;
   @Input() requiredTemplate: any = undefined;
   @Input() selectedText: string = "Added";
@@ -22,11 +23,19 @@ export class MultiSelectionComponent implements OnInit
   @Output() confirmEvent: EventEmitter<any> = new EventEmitter();
 
   public ngOnInit(): void {
-    console.log(this.requiredTemplate);
+    this.searchValues();
+  }
+
+  public searchValues(): void {
+    this.isSearching = true;
     this.requiredObservable.subscribe((value: any) => {
+      this.isSearching = false;
       this.currentValues = value._embedded != undefined && value._embedded.content != undefined ? value._embedded.content : [];
       this.successEvent.emit(value);
-    },(err: any) => this.failEvent.emit(err));
+    },(err: any) => {
+      this.isSearching = false;
+      this.failEvent.emit(err);
+    });
   }
 
   public updateCurrentValues(value: any): void {

@@ -29,10 +29,13 @@ export interface Ban
 }
 export interface BoardInvite
 {
+    id: string,
+    createdDate: string,
     text: String,
     status: String,
     user: UserRef,
-    board: BoardRef
+    board: BoardRef,
+    publisher: UserRef
 }
 export interface BoardMember
 {
@@ -159,7 +162,8 @@ export interface TaskImage
     createdDate: string,
     owner: string,
     type: string,
-    uploader: UserRef
+    uploader: UserRef;
+    _links: any;
 }
 export interface TeamMember
 {

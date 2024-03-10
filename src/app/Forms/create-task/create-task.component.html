@@ -45,7 +45,7 @@
                     <span class = "d-block mx-2">Priority</span>
                     <mat-form-field class = "form-field" *ngIf="priority != undefined">
                         <mat-label class = "input-label">Priority</mat-label>
-                        <mat-select formControlName="priority">
+                        <mat-select style="color:black" formControlName="priority">
                             <mat-option style="color: black" *ngFor="let current of currentPriorities" [value]="current">{{current}}</mat-option>
                         </mat-select>
                     </mat-form-field>

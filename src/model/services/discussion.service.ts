@@ -23,7 +23,7 @@ export class DiscussionService {
   }
 
   public getDiscussionsByPublisher(publisherID: any,page: PaginationRequest): any {
-    const desiredURL: string = this.url + +"/private" + "/publisher" + "/" + publisherID;
+    const desiredURL: string = this.url +"/private" + "/publisher" + "/" + publisherID;
     let queryParams: HttpParams = this.httpUtils.generatePaginationParams(page);
     return this.httpClient.get(desiredURL,{params: queryParams});
   }
@@ -35,7 +35,7 @@ export class DiscussionService {
   }
 
   public getSimilarDiscussions(discussionID: any,page: PaginationRequest): any {
-    const desiredURL: string = this.url + + "/private" + "/similar" + "/" + discussionID;
+    const desiredURL: string = this.url + "/private" + "/similar" + "/" + discussionID;
     let queryParams: HttpParams = this.httpUtils.generatePaginationParams(page);
     return this.httpClient.get(desiredURL,{params: queryParams});
   }

@@ -83,8 +83,7 @@ import { UserHolderComponent } from './Utility/user-holder/user-holder.component
 import { AddUserComponent } from './Utility/add-user/add-user.component';
 import { CreateInviteComponent } from './Forms/create-invite/create-invite.component';
 import { CanvasComponent } from './canvas/canvas.component';
-import { AddUserMultipleComponent } from './Utility/add-user-multiple/add-user-multiple.component';
-import { MultiSelectionComponent } from './multi-selection/multi-selection.component';
+import { MultiSelectionComponent } from './Utility/multi-selection/multi-selection.component';
 import { CreateTagComponent } from './Forms/create-tag/create-tag.component';
 import { NgxColorsModule } from 'ngx-colors';
 import { CreateCheckListComponent } from './Forms/create-check-list/create-check-list.component';
@@ -165,7 +164,6 @@ import { BetterImageComponent } from './Utility/better-image/better-image.compon
     AddUserComponent,
     CreateInviteComponent,
     CanvasComponent,
-    AddUserMultipleComponent,
     MultiSelectionComponent,
     CreateTagComponent,
     CreateCheckListComponent,

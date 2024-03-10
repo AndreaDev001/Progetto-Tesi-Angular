@@ -20,6 +20,18 @@ export class BoardMemberService {
     return this.httpClient.get(desiredURL,{params: queryParams});
   }
   
+  public getPossibleTaskMembers(boardID: string,taskID: string): any {
+    const desiredURL: string = this.url + "/private" + "/possible/task" + "/board" + "/" + boardID + "/task" + "/" + taskID;
+    let queryParams: HttpParams = new HttpParams();
+    return this.httpClient.get(desiredURL,{params: queryParams});
+  }
+
+  public getPossibleTeamMembers(boardID: string,teamID: string): any {
+    const desiredURL: string = this.url + "/private" + "/possible/team/board" + "/" + boardID + "/team/" + teamID;
+    let queryParams: HttpParams = new HttpParams();
+    return this.httpClient.get(desiredURL,{params: queryParams});
+  }
+
   public getBoardMembersByMember(memberID: any,page: PaginationRequest): any{
     const desiredURL: string = this.url + "/private" + "/user" + "/" + memberID;
     let queryParams: HttpParams = this.httpUtils.generatePaginationParams(page);

@@ -97,10 +97,13 @@
     </div>
 </ng-template>
 <ng-template #addMemberTemplate>
-    <div *ngIf="board != undefined">
-        <app-add-user-multiple [boardID]="board.id" (confirmEvent)="confirmTeamMembers()" (selectedMemberEvent)="addNewMemberToTeam($event)"></app-add-user-multiple>
+    <div *ngIf="board != undefined && this.currentSelectedTeam != undefined">
+        <app-multi-selection [requiredTemplate]="userHolder" (confirmEvent)="confirmTeamMembers()" (selectionChanged)="handleSelectionChange($event)" [requiredObservable]="this.boardMemberService.getPossibleTeamMembers(this.board.id,this.currentSelectedTeam.id)" (cancelEvent)="this.alertHandlerService.close()" ></app-multi-selection>
     </div>
 </ng-template>
 <ng-template #modifyBoardTemplate>
     <app-create-board  (successEvent)="this.boardChanged.emit(this.board?.id)" [update]="true" [boardID]="board?.id"></app-create-board>
+</ng-template>
+<ng-template #userHolder let-i>
+    <app-user-holder [userRef]="i.user"></app-user-holder>
 </ng-template>
