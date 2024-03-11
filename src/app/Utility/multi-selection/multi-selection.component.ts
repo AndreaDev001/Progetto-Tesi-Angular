@@ -11,6 +11,7 @@ export class MultiSelectionComponent implements OnInit
   public currentValues: any[] = [];
   public currentSelectedValues: any[] = [];
   public isSearching: boolean = false;
+  @Input() showAlwaysButton: boolean = true;
   @Input() requiredObservable: any = undefined;
   @Input() requiredTemplate: any = undefined;
   @Input() selectedText: string = "Added";

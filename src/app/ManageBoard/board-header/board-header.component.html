@@ -54,26 +54,8 @@
     </div>
 </ng-template>
 <ng-template #teamListTemplate>
-    <div class = "team-list-wrapper">
-        <div *ngIf="currentTeamMembers.length == 0">
-            <app-no-items (buttonClicked)="loadTeamMembers()"></app-no-items>
-        </div>
-        <div *ngIf="currentTeamMembers.length > 0">
-            <app-text-overflow [horizontal]="false" [templates]="currentTeamMembersItem"></app-text-overflow>
-        </div>
-        <div class = "text-center">
-            <button (click)="addTeamMember()" class = "add-team-member">Add a member</button>
-        </div>
-    </div>
-</ng-template>
-<ng-template #teamMemberItem let-i>
-    <div class = "position-relative">
-        <div class = "d-flex w-100 justify-content-between">
-            <app-user-holder class = "d-inline-block" [user]="i.member"></app-user-holder>
-            <div class = "text-end">
-                <button class = "remove-button" (click)="removeTeamMember(i.id)">Remove</button>
-            </div>
-        </div>
+    <div *ngIf="this.currentSelectedTeam != undefined">
+        <app-multi-selection (confirmEvent)="this.deleteTeamMembers($event)" (cancelEvent)="this.alertHandlerService.close()" [showAlwaysButton]="false" [selectedText]="'Removed'" [unselectedText]="'Remove'" [requiredTemplate]="teamMemberHolder" [requiredObservable]="this.teamMemberService.getTeamMembersByTeam(this.currentSelectedTeam.id)"></app-multi-selection>
     </div>
 </ng-template>
 <ng-template #createInviteTemplate let-userID="userID">
@@ -109,6 +91,9 @@
 </ng-template>
 <ng-template #userHolder let-i>
     <app-user-holder [userRef]="i.user"></app-user-holder>
+</ng-template>
+<ng-template #teamMemberHolder let-i>
+    <app-user-holder [userRef]="i.member"></app-user-holder>
 </ng-template>
 <ng-template #userTemplate let-i>
     <app-user-holder [user]="i"></app-user-holder>

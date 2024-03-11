@@ -1,6 +1,6 @@
 <div class = "py-2" style="background-color: var(--secondary-color);">
     <app-loader [requiredTemplate]="loaderTemplate" [isSearching]="isSearching" [diameter]="60" [strokeWidth]="7" [fontSize]="15"></app-loader>
-    <div class = "text-center d-flex px-4 py-2">
+    <div class = "text-center d-flex px-4 py-2" *ngIf="showAlwaysButton || currentSelectedValues.length != 0">
         <button (click)="confirmMembers()" [disabled]="currentSelectedValues.length == 0" class = "confirm-member">Confirm</button>
         <button (click)="cancel()" class = "confirm-member mx-1">Cancel</button>
     </div>

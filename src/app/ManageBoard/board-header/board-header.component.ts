@@ -49,6 +49,7 @@ export class BoardHeaderComponent implements OnInit {
 
   public currentUserAdmin: boolean = false;
   public currentInvitedUser: User | undefined = undefined;
+  public searchingTeamMembers: boolean = false;
 
 
   @ViewChild("createInviteTemplate") createInviteTemplate: any;
@@ -59,9 +60,10 @@ export class BoardHeaderComponent implements OnInit {
   @ViewChild("addMemberTemplate") addMemberTemplate: any;
   @ViewChild("modifyBoardTemplate") modifyBoardTemplate: any;
   @Output("usersChanged") usersChanged: EventEmitter<any> = new EventEmitter();
+  @Output("teamsChanged") teamsChanged: EventEmitter<any> = new EventEmitter();
   @Output("modifiedBoard") modifiedBoard: EventEmitter<any> = new EventEmitter();
 
-  constructor(private teamService: TeamService,public userService: UserService,private roleOwnerService: RoleOwnerService,private teamMemberService: TeamMemberService,public boardMemberService: BoardMemberService,private boardInviteService: BoardInviteService,public alertHandlerService: AlertHandlerService) {
+  constructor(private teamService: TeamService,public userService: UserService,private roleOwnerService: RoleOwnerService,public teamMemberService: TeamMemberService,public boardMemberService: BoardMemberService,private boardInviteService: BoardInviteService,public alertHandlerService: AlertHandlerService) {
 
   }
 
@@ -104,23 +106,7 @@ export class BoardHeaderComponent implements OnInit {
     this.alertHandlerService.setTextTemplate(this.teamListTemplate);
     this.alertHandlerService.clearOptions();
     this.alertHandlerService.open();
-    this.loadTeamMembers();
-  }
-
-  public loadTeamMembers(): any {
-    this.currentTeamMembers = [];
-    this.currentTeamMembersItem = [];
-    if(this.currentSelectedTeam != undefined) {
-      this.teamMemberService.getTeamMembersByTeam(this.currentSelectedTeam.id).subscribe((value: CollectionModel) => {
-        this.currentTeamMembers = value._embedded != undefined && value._embedded.content != undefined ? value._embedded.content : [];
-        this.currentTeamMembers.forEach((current: TeamMember) => {
-          let textOverflowItem: TextOverflowItem = {context: current,template: this.teamMemberItem};
-          this.currentTeamMembersItem.push(textOverflowItem);
-        })
-      })
-    }
-  }
-  
+  }  
 
   public removeTeam(team: any,index: number): any {
     this.teamService.deleteTeamByID(team.id).subscribe((value: any) => {
@@ -175,11 +161,13 @@ export class BoardHeaderComponent implements OnInit {
     }
   }
 
-  public removeTeamMember(teamMemberID: any): any {
-    this.teamMemberService.deleteTeamMember(teamMemberID).subscribe((value: any) => {
-      this.currentTeamMembers = this.currentTeamMembers.filter(current => current.id !== teamMemberID);
-      this.currentTeamMembersItem = this.currentTeamMembersItem.filter(current => current.context.id !== teamMemberID);
-    },(err: any) =>  this.alertHandlerService.close());
+  public deleteTeamMembers(event: any): void {
+    for(let current of event) {
+      this.teamMemberService.deleteTeamMember(current.id).subscribe((value: any) => {
+        this.teamsChanged.emit();
+      })
+    }
+    this.alertHandlerService.close();
   }
 
   public addTeamMember(): void {
