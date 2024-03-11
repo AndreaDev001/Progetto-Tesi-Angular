@@ -7,8 +7,8 @@
                         <div class = "d-flex">
                             <fa-icon style="font-size: 35px;" [icon]="taskIcon"></fa-icon>
                             <div class = "p-1 mx-2">
-                                <p class = "p-0 m-0">{{task.name}}</p>
-                                <p class = "p-0 m-0">{{task.title}}</p>
+                                <input (change)="updateTask($event,false)" class = "modify-task-input" [value]="this.currentTitle">
+                                <input (change)="updateTask($event,true)" class = "modify-task-input" [value]="this.currentName">
                             </div>
                         </div>
                     </div>

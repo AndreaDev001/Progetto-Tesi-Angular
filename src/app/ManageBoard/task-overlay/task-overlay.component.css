@@ -184,6 +184,17 @@ button.task-options-dropdown-toggle
 }
 div.task-image-wrapper
 {
+    display: block;
     width: 150px;
     height: 150px;
+}
+input.modify-task-input {
+    display: block;
+    background-color: var(--secondary-color);
+    border-radius: 5px;
+    cursor: text;
+    transition: 0.2s ease-in-out all;
+}
+input.modify-task-input:focus {
+    padding: 10px 0px;
 }

@@ -70,6 +70,8 @@ export class TaskOverlayComponent implements OnInit
   public numbersOfLike: number = 0;
   public searchingChecklists: boolean = false;
   public searchingImages: boolean = false;
+  public currentName: any = undefined;
+  public currentTitle: any = undefined;
 
   @ViewChild("addMemberTemplate") addMemberTemplate: any;
   @ViewChild("addTagTemplate") addTagTemplate: any;
@@ -90,6 +92,8 @@ export class TaskOverlayComponent implements OnInit
     {
       this.numbersOfLike = this.task.amountOfReceivedLikes;
       this.currentDescription = this.task.description;
+      this.currentName = this.task.name;
+      this.currentTitle = this.task.title;
       this.taskAssignmentsService.getTaskAssignmentsByTask(this.task.id).subscribe((value: CollectionModel) => {
         this.currentMembers = value._embedded != undefined && value._embedded.content != undefined ? value._embedded.content : [];
       });
@@ -150,7 +154,7 @@ export class TaskOverlayComponent implements OnInit
       let updateTask: UpdateTask = {taskID: this.task.id,description: this.currentDescription};
       this.taskService.updateTask(updateTask).subscribe((value: any) => {
         this.currentDescription = value.description;
-        this.taskChanged.emit();
+        this.taskChanged.emit(this.task?.id);
       })
     }
   }
@@ -172,7 +176,7 @@ export class TaskOverlayComponent implements OnInit
   public deleteImage(image: TaskImage): void {
     const index = this.currentImages.indexOf(image);
     this.taskImageService.deleteImage(image.id).subscribe((value: any) => {
-      this.taskChanged.emit();
+      this.taskChanged.emit(this.task?.id);
       this.currentImages = this.currentImages.filter((current: any) => current.id !== image.id);
       const overflowItem: TextOverflowItem = this.currentImagesItems[index];
       this.currentImagesItems = this.currentImagesItems.filter((current: any) => current !== overflowItem);
@@ -213,7 +217,7 @@ export class TaskOverlayComponent implements OnInit
   }
 
   public updateImages(event: any): void {
-    this.taskChanged.emit();
+    this.taskChanged.emit(this.task?.id);
     for(let i = 0;i < event._embedded.content.length;i++) {
       let current: any = event._embedded.content[i];
       this.currentImages.push(current);
@@ -221,6 +225,7 @@ export class TaskOverlayComponent implements OnInit
     }
     this.alertHandlerService.close();
   }
+
 
   public confirmTeams(event: any): void {
     if(this.task != undefined) {
@@ -234,6 +239,22 @@ export class TaskOverlayComponent implements OnInit
           this.taskChanged.emit(this.task?.id);
         })
       }
+    }
+  }
+
+  public updateTask(event: any,name: boolean): void {
+    if(this.task != undefined) {
+      if(name)
+        this.currentName = event.target.value != undefined ? event.target.value : this.currentName;
+      else
+        this.currentTitle = event.target.value != undefined ? event.target.value : this.currentTitle;
+      let updateTask: UpdateTask = {taskID: this.task.id,name: this.currentName,title: this.currentTitle};
+      this.taskService.updateTask(updateTask).subscribe((value: any) => {
+        this.task = value;
+        this.currentName = value.name;
+        this.currentTitle = value.title;
+        this.taskChanged.emit(this.task?.id);
+      })
     }
   }
 
@@ -267,12 +288,14 @@ export class TaskOverlayComponent implements OnInit
   public removeTagAssignment(tagAssignment: TagAssignment): void {
     this.tagAssignmentService.deleteTagAssignment(tagAssignment.id).subscribe((value: any) => {
       this.currentTagAssignments = this.currentTagAssignments.filter(current => current.id !== tagAssignment.id);
+      this.taskChanged.emit(this.task?.id);
     })
   }
 
   public removeCheckList(checkList: CheckList): void {
     this.checkListService.deleteCheckList(checkList.id).subscribe((value: any) => {
       this.currentCheckLists = this.currentCheckLists.filter(current => current.id !== checkList.id);
+      this.taskChanged.emit(this.task?.id);
     })
   }
 

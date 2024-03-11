@@ -93,7 +93,7 @@
     <app-user-holder [userRef]="i.user"></app-user-holder>
 </ng-template>
 <ng-template #teamMemberHolder let-i>
-    <app-user-holder [userRef]="i.member"></app-user-holder>
+    <app-user-holder [userRef]="i.member.user"></app-user-holder>
 </ng-template>
 <ng-template #userTemplate let-i>
     <app-user-holder [user]="i"></app-user-holder>

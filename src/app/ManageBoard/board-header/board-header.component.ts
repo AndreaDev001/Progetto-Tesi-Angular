@@ -162,12 +162,12 @@ export class BoardHeaderComponent implements OnInit {
   }
 
   public deleteTeamMembers(event: any): void {
+    this.alertHandlerService.close();
     for(let current of event) {
       this.teamMemberService.deleteTeamMember(current.id).subscribe((value: any) => {
         this.teamsChanged.emit();
       })
     }
-    this.alertHandlerService.close();
   }
 
   public addTeamMember(): void {
@@ -198,12 +198,10 @@ export class BoardHeaderComponent implements OnInit {
 
   public handleSelectionChange(event: any): void {
     this.currentSelectedNewMembers = event;
-    console.log(this.currentSelectedNewMembers);
   }
 
   public confirmTeamMembers(): void {
     if(this.currentSelectedNewMembers.length > 0 && this.currentSelectedTeam != undefined) {
-      this.alertHandlerService.close()
       for(let current of this.currentSelectedNewMembers) {
         let createTeamMember: CreateTeamMember = {teamID: this.currentSelectedTeam.id,userID: current.user.id};
         this.teamMemberService.createTeamMember(createTeamMember).subscribe((value: any) => console.log(value));
