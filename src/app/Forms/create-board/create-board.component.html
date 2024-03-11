@@ -52,7 +52,7 @@
         <div class = "px-2">
             <span class = "d-block">Background Image</span>
             <p>Choose one image for the board</p>
-            <div *ngIf="canDeleteImage">
+            <div class = "py-2" *ngIf="canDeleteImage">
                 <img [src]="backgroundURL" *ngIf="canDeleteImage" class = "board-image">
                 <button *ngIf="canDeleteImage" class = "default-button w-100 mt-2" (click)="deleteImage()">Remove image</button>
             </div>
@@ -61,7 +61,7 @@
         </div> 
     </div> 
     <div class = "mt-2 text-end mx-1">
-        <button type="submit" class = "confirm-button" [disabled]="!formGroup.valid">Confirm</button>
+        <button type="submit" class = "confirm-button" [disabled]="!formGroup.valid && currentImage == null">Confirm</button>
         <button (click)="reset()" class = "stop-button">Clear</button>
     </div>
 </div>

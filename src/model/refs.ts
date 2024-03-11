@@ -26,6 +26,13 @@ export interface TagRef
     name: string,
     color: string
 }
+export interface BoardMemberRef
+{
+    id: string,
+    createdDate: string,
+    user: UserRef,
+    board: BoardRef
+}
 export interface DiscussionRef
 {
     id: string,

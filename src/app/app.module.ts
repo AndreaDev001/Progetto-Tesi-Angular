@@ -92,7 +92,8 @@ import { CreateCheckListOptionComponent } from './Forms/create-check-list-option
 import { CreateTaskImageComponent } from './Forms/create-task-image/create-task-image.component';
 import { NgxEditorModule } from 'ngx-editor';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-import { BetterImageComponent } from './Utility/better-image/better-image.component'
+import { BetterImageComponent } from './Utility/better-image/better-image.component';
+import { SearchSelectionComponent } from './Utility/search-selection/search-selection.component'
 
 @NgModule({
   declarations: [
@@ -171,6 +172,7 @@ import { BetterImageComponent } from './Utility/better-image/better-image.compon
     CreateCheckListOptionComponent,
     CreateTaskImageComponent,
     BetterImageComponent,
+    SearchSelectionComponent,
   ],
   imports: [
     BrowserModule,

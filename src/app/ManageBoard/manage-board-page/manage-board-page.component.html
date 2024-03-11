@@ -1,6 +1,6 @@
 <div *ngIf="currentBoard" class = "manage-board-wrapper" [ngStyle]="{'background-image': 'url(' + backgroundURL + '),linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2))'}">
     <div>
-        <app-board-header (boardChanged)="reloadBoard()" [board]="currentBoard"></app-board-header>
+        <app-board-header (usersChanged)="this.updateItems()" (modifiedBoard)="reloadBoardInfo()" [board]="currentBoard"></app-board-header>
     </div>
     <div class = "horizontal-container py-2" style="height: 92%;">
         <div class = "d-flex"  cdkDropList cdkDropListOrientation="horizontal" (cdkDropListDropped)="dropList($event)">

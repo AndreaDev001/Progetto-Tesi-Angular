@@ -47,9 +47,12 @@ export class ManageBoardPageComponent implements OnInit,OnDestroy,AfterViewInit 
 
   public ngOnInit(): void {
 
+    
     this.subscriptions.push(this.activatedRoute.params.subscribe((value: any) => {
       if(value.id != undefined) {
         this.boardID = value.id;
+        let timeStamp = (new Date()).getTime();
+        this.backgroundURL = "http://localhost:8080/api/v1/boardImages/public/image/" + value.id + "?" + 'time=' + timeStamp;
         this.updateItems();
       }
     }))  
@@ -58,7 +61,7 @@ export class ManageBoardPageComponent implements OnInit,OnDestroy,AfterViewInit 
   public ngAfterViewInit(): void {
   }
 
-  public reloadBoard(): void {
+  public reloadBoardInfo(): void {
     this.boardService.getBoardById(this.boardID).subscribe((value: Board) => {
       this.alertHandler.close();
       this.currentBoard = value;
@@ -67,6 +70,7 @@ export class ManageBoardPageComponent implements OnInit,OnDestroy,AfterViewInit 
     })
   }
 
+
   public test(event: any): void {
     this.currentHeight = event.source.element.nativeElement.offsetHeight;
   }
@@ -74,15 +78,13 @@ export class ManageBoardPageComponent implements OnInit,OnDestroy,AfterViewInit 
   public updateDraggedTask(event: any): void {
     console.log(event.target.nativeElement.offsetHeight);
   }
-  private updateItems(): void {
+  public updateItems(): void {
     if(this.boardID != undefined) {
       this.searchingBoard = true;
       this.boardService.getBoardById(this.boardID).subscribe((value: Board) => {
         this.currentBoard = value;
         this.searchingBoard = false;
         if(this.currentBoard != undefined) {
-          let timeStamp = (new Date()).getTime();
-          this.backgroundURL = "http://localhost:8080/api/v1/boardImages/public/image/" + this.currentBoard.id + "?" + 'time=' + timeStamp;
           this.taskGroupService.getTaskGroupsByBoard(this.boardID).subscribe((value: CollectionModel) => {
             this.currentTaskGroups = value._embedded != undefined && value._embedded.content != undefined ? value._embedded.content : [];
             for(let i = 0;i < this.currentTaskGroups.length;i++) {

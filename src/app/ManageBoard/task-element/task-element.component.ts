@@ -50,7 +50,6 @@ export class TaskElementComponent implements OnInit {
       this.taskService.getTaskByID(this.task.id).subscribe((value: any) => {
         this.task = value
         this.getValues();
-        console.log("updated task")
         this.betterImage?.reloadImage();
       });
     }

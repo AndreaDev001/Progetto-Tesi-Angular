@@ -1,4 +1,4 @@
-import { BoardRef, CheckListRef, CommentRef, DiscussionRef, PollOptionRef, PollRef, RoleRef, TagRef, TaskGroupRef, TaskRef, TeamRef, UserRef } from "./refs"
+import { BoardMemberRef, BoardRef, CheckListRef, CommentRef, DiscussionRef, PollOptionRef, PollRef, RoleRef, TagRef, TaskGroupRef, TaskRef, TeamRef, UserRef } from "./refs"
 
 export interface Board
 {
@@ -205,7 +205,7 @@ export interface PollVote
 export interface TaskAssignment {
     id: string,
     createdDate: string,
-    user: UserRef,
+    member: BoardMemberRef
     task: TaskRef
 }
 export interface PollOption

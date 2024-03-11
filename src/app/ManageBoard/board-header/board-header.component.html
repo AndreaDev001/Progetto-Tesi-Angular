@@ -78,11 +78,14 @@
 </ng-template>
 <ng-template #createInviteTemplate let-userID="userID">
     <div *ngIf="board != undefined" class = "secondary-color">
-        <app-create-invite [boardID]="board.id" [user]="currentInvitedUser" (successEvent)="closeCreateInvite()" (failedEvent)="closeCreateInvite()"></app-create-invite>
+        <app-create-invite [boardID]="board.id" [user]="currentInvitedUser" (successEvent)="this.alertHandlerService.close()" (failedEvent)="this.alertHandlerService.close()"></app-create-invite>
     </div>
 </ng-template>
 <ng-template #addUserTemplate>
-    <app-add-user (confirmedEvent)="updateInvitedUser($event)" (cancelEvent)="closeCreateInvite()"></app-add-user>
+    <app-search-selection (confirmEvent)="updateInvitedUser($event)" (cancelEvent)="this.alertHandlerService.close()" [requiredContext]="this.userService" [requiredTemplate]="userTemplate" [requiredObservable]="this.userService.getPossibleBoardUsers" [boardID]="this.board?.id" [placeholder]="'Username...'" [label]="'Username'" [supportingText]="'Write the username of the desired user...'"></app-search-selection>
+    <!--
+            <app-add-user (confirmedEvent)="updateInvitedUser($event)" (cancelEvent)="closeCreateInvite()"></app-add-user>
+    -->
 </ng-template>
 <ng-template #memberTemplate let-user="user" let-member="member">
     <div ngbDropdown container="body" class = "d-inline-block">
@@ -102,8 +105,11 @@
     </div>
 </ng-template>
 <ng-template #modifyBoardTemplate>
-    <app-create-board  (successEvent)="this.boardChanged.emit(this.board?.id)" [update]="true" [boardID]="board?.id"></app-create-board>
+    <app-create-board  (successEvent)="this.modifiedBoard.emit(this.board?.id)" [update]="true" [boardID]="board?.id"></app-create-board>
 </ng-template>
 <ng-template #userHolder let-i>
     <app-user-holder [userRef]="i.user"></app-user-holder>
+</ng-template>
+<ng-template #userTemplate let-i>
+    <app-user-holder [user]="i"></app-user-holder>
 </ng-template>

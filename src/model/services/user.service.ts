@@ -27,6 +27,12 @@ export class UserService {
     return this.httpClient.get(desiredURL,{params: queryParams});
   }
 
+  public getPossibleBoardUsers(context: any,username: string,boardID: string,paginationRequest: PaginationRequest): any {
+    const desiredURL: string = context.url + "/private" + "/possible" + "/board" + "/" + boardID + "/user" + "/" + username;
+    let queryParams: HttpParams = context.httpUtils.generatePaginationParams(paginationRequest);
+    return context.httpClient.get(desiredURL,{params: queryParams})
+  }
+
   public getUsersBySpec(filter: Filter): any {
     const desiredURL: string = this.url + "/private" + "/spec"
     let queryParams: HttpParams = this.httpUtils.generateParams(filter);

@@ -17,6 +17,7 @@ import { TextOverflowItem } from 'src/app/Utility/text-overflow/text-overflow.co
 import { TaskReportService } from 'src/model/services/task-report.service';
 import { AuthHandlerService } from 'src/app/auth/auth-handler.service';
 import { TaskLikeService } from 'src/model/services/task-like.service';
+import { TeamService } from 'src/model/services/team.service';
 
 interface ButtonOption
 {
@@ -60,6 +61,7 @@ export class TaskOverlayComponent implements OnInit
   public uploadIcon: IconDefinition = faUpload;
   public optionsIcon: IconDefinition = faEllipsisVertical;
   public membersIcon: IconDefinition = faUsers;
+  public teamIcon: IconDefinition = faPeopleGroup;
 
   public currentNewTags: Tag[] = [];
   public currentNewMembers: BoardMember[] = [];
@@ -74,11 +76,12 @@ export class TaskOverlayComponent implements OnInit
   @ViewChild("createTagTemplate") createTagTemplate: any;
   @ViewChild("createCheckListTemplate") createCheckListTemplate: any;
   @ViewChild("addImageTemplate") createImageTemplate: any;
+  @ViewChild("addTeamTemplate") addTeamTemplate: any;
   @ViewChild("taskImageTemplate") taskImageTemplate: any;
   @ViewChild("createReportTemplate") createReportTemplate: any;
   @Output() taskChanged: EventEmitter<any> = new EventEmitter();
 
-  constructor(private taskAssignmentsService: TaskAssignmentService,private taskLikeService: TaskLikeService,private authenticationHandler: AuthHandlerService,private taskReportService: TaskReportService,private taskImageService: TaskImageService,public tagService: TagService,public alertHandlerService: AlertHandlerService,private taskService: TaskService,private checkListOptionService: CheckListOptionService,private tagAssignmentService: TagAssignmentService,private checkListService: CheckListService,public boardMemberService:  BoardMemberService) {
+  constructor(private taskAssignmentsService: TaskAssignmentService,public teamService: TeamService,private taskLikeService: TaskLikeService,private authenticationHandler: AuthHandlerService,private taskReportService: TaskReportService,private taskImageService: TaskImageService,public tagService: TagService,public alertHandlerService: AlertHandlerService,private taskService: TaskService,private checkListOptionService: CheckListOptionService,private tagAssignmentService: TagAssignmentService,private checkListService: CheckListService,public boardMemberService:  BoardMemberService) {
 
   }
 
@@ -87,7 +90,9 @@ export class TaskOverlayComponent implements OnInit
     {
       this.numbersOfLike = this.task.amountOfReceivedLikes;
       this.currentDescription = this.task.description;
-      this.taskAssignmentsService.getTaskAssignmentsByTask(this.task.id).subscribe((value: CollectionModel) => this.currentMembers = value._embedded != undefined && value._embedded.content != undefined ? value._embedded.content : []);
+      this.taskAssignmentsService.getTaskAssignmentsByTask(this.task.id).subscribe((value: CollectionModel) => {
+        this.currentMembers = value._embedded != undefined && value._embedded.content != undefined ? value._embedded.content : [];
+      });
       this.searchingChecklists = true;
       this.checkListService.getCheckListsByTask(this.task.id).subscribe((value: CollectionModel) => {
         this.searchingChecklists = false;
@@ -217,12 +222,36 @@ export class TaskOverlayComponent implements OnInit
     this.alertHandlerService.close();
   }
 
+  public confirmTeams(event: any): void {
+    if(this.task != undefined) {
+      for(let current of event) {
+        this.taskAssignmentsService.createTaskAssignmentFromTeam(this.task.id,current.id).subscribe((value: any) => {
+          if(value._embedded != undefined && value._embedded.content != undefined) {
+            value._embedded.content.forEach((newMember: any) => {
+              this.currentMembers.push(newMember);
+            })
+          }
+          this.taskChanged.emit(this.task?.id);
+        })
+      }
+    }
+  }
+
   public addMember(): void {
     this.alertHandlerService.close();
     this.alertHandlerService.reset();
     this.alertHandlerService.setDefaultAlertTitle("Members");
     this.alertHandlerService.setDefaultAlertSubtitle("Assign a task to one of the avaliable members");
     this.alertHandlerService.setTextTemplate(this.addMemberTemplate);
+    this.alertHandlerService.open();
+  }
+
+  public addTeam(): void {
+    this.alertHandlerService.close();
+    this.alertHandlerService.reset();
+    this.alertHandlerService.setDefaultAlertTitle("Teams");
+    this.alertHandlerService.setDefaultAlertSubtitle("Assign a team, all of it's members will be assigned to the task");
+    this.alertHandlerService.setTextTemplate(this.addTeamTemplate);
     this.alertHandlerService.open();
   }
 

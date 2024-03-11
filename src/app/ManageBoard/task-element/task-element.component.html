@@ -39,7 +39,7 @@
 <ng-template #assignedTemplate let-item="item">
     <button class = "assigned-member-wrapper">
         <div class = "image-wrapper">
-            <img class = "assigned-image" [src]="'http://localhost:8080/api/v1/userImages/public/user/' + item.user.id + '/image'">
+            <img class = "assigned-image" [src]="'http://localhost:8080/api/v1/userImages/public/user/' + item.member.user.id + '/image'">
         </div>
     </button>
 </ng-template>

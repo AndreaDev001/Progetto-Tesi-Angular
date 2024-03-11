@@ -1,0 +1,27 @@
+<div class = "search-selection-wrapper">
+    <div class = "d-block">
+        <div class = "px-2 text-center">
+            <app-search-bar (searchChanged)="handleChange($event)" [currentPlaceholder]="placeholder" [currentLabel]="label" [currentSupportingText]="supportingText"></app-search-bar>
+        </div>
+    </div>
+    <div class = "py-1">
+        <div *ngIf="currentElements.length == 0 && !isSearching">
+            <app-no-items (buttonClicked)="searchValues(false)"></app-no-items>
+        </div>
+        <div *ngIf="currentElements.length > 0 || isSearching">
+            <app-loader [isSearching]="isSearching" [diameter]="60" [strokeWidth]="8" [fontSize]="15" [requiredTemplate]="requiredValues"></app-loader>
+        </div>
+    </div>
+    <div class = "py-2 text-center">
+        <button  (click)="confirmSelection()" [disabled]="currentSelectedElement == undefined"  class = "confirm-button">Confirm</button>
+        <button (click)="cancelSelection()" class = "confirm-button mx-1">Cancel</button>
+    </div>
+</div>
+<ng-template #requiredValues>
+    <app-text-overflow [horizontal]="false" [templates]="currentOverflowItems" (scrollEndReached)="updateMaxPage()"></app-text-overflow>
+</ng-template>
+<ng-template #elementTemplate let-i>
+    <button (click)="currentSelectedElement = currentSelectedElement == i ? undefined : i" [ngClass]="currentSelectedElement == i ? 'selected-element' : 'unselected-element'">
+        <ng-container *ngTemplateOutlet="requiredTemplate;context: {$implicit: i}"></ng-container>
+    </button>
+</ng-template>

@@ -14,6 +14,7 @@ import { BoardInviteService } from 'src/model/services/board-invite.service';
 import { RoleOwnerService } from 'src/app/role-owner.service';
 import { CreateRoleOwner, CreateTeamMember } from 'src/model/create';
 import { OffCanvasHandlerService } from 'src/app/services/off-canvas-handler.service';
+import { UserService } from 'src/model/services/user.service';
 
 
 interface TeamOption
@@ -57,9 +58,10 @@ export class BoardHeaderComponent implements OnInit {
   @ViewChild("addUserTemplate") addUserTemplate: any;
   @ViewChild("addMemberTemplate") addMemberTemplate: any;
   @ViewChild("modifyBoardTemplate") modifyBoardTemplate: any;
-  @Output("boardChanged") boardChanged: EventEmitter<any> = new EventEmitter();
+  @Output("usersChanged") usersChanged: EventEmitter<any> = new EventEmitter();
+  @Output("modifiedBoard") modifiedBoard: EventEmitter<any> = new EventEmitter();
 
-  constructor(private teamService: TeamService,private roleOwnerService: RoleOwnerService,private teamMemberService: TeamMemberService,public boardMemberService: BoardMemberService,private boardInviteService: BoardInviteService,public alertHandlerService: AlertHandlerService) {
+  constructor(private teamService: TeamService,public userService: UserService,private roleOwnerService: RoleOwnerService,private teamMemberService: TeamMemberService,public boardMemberService: BoardMemberService,private boardInviteService: BoardInviteService,public alertHandlerService: AlertHandlerService) {
 
   }
 
@@ -138,8 +140,8 @@ export class BoardHeaderComponent implements OnInit {
     if(this.board != undefined) {
       let createBoardInvite: CreateBoardInvite = {userID: event.id,boardID: this.board.id,text: "You have received an invite",expirationDate: "2030-05-12"};
       this.boardInviteService.createBoardInvite(createBoardInvite).subscribe((value: any) => {
-        this.closeCreateInvite();
-      },(err: any) => this.closeCreateInvite());
+        this.alertHandlerService.close()
+      },(err: any) => this.alertHandlerService.close());
     }
   }
 
@@ -164,15 +166,11 @@ export class BoardHeaderComponent implements OnInit {
     }
   }
 
-  public closeCreateInvite(): void {
-    this.alertHandlerService.close();
-  }
-
   public removeFromBoard(member: BoardMember): void {
     if(this.board != undefined) {
       this.boardMemberService.deleteMember(member.id).subscribe((value: any) => {
-        const index = this.currentMembers.indexOf(member);
-        this.currentMembers = this.currentMembers.splice(index,1);
+        this.currentMembers = this.currentMembers.filter((current: any) => current.id !== member.id);
+        this.usersChanged.emit();
       })
     }
   }

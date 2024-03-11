@@ -37,6 +37,13 @@ export class TaskAssignmentService {
     let queryParams: HttpParams = new HttpParams();
     return this.httpClient.post(desiredURL,createTaskAssignment,{params: queryParams});
   }
+
+  public createTaskAssignmentFromTeam(taskID: string,teamID: string) {
+    const desiredURL: string = this.url + "/private" + "/task" + "/" + taskID + "/team" + "/" + teamID;
+    let queryParams: HttpParams = new HttpParams();
+    return this.httpClient.post(desiredURL,{params: queryParams});
+  }
+
   public deleteTaskAssignment(taskAssignmentID: any): any {
     const desiredURL: string = this.url + "/private" + "/" + taskAssignmentID;
     let queryParams: HttpParams = new HttpParams();

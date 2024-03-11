@@ -128,7 +128,7 @@
                             <div class = "secondary-color w-100 p-2" ngbDropdownMenu>
                                 <button class = "user-holder-wrapper" ngbDropdownItem *ngFor="let current of currentMembers">
                                     <div class = "d-flex justify-content-between">
-                                        <app-user-holder [showNameInfo]="false" [imageWidth]="35" [imageHeight]="35" [userRef]="current.user"></app-user-holder>
+                                        <app-user-holder [showNameInfo]="false" [imageWidth]="35" [imageHeight]="35" [userRef]="current.member.user"></app-user-holder>
                                         <button class = "remove-button" (click)="removeMember(current)">
                                             <fa-icon [icon]="removeIcon"></fa-icon>
                                         </button>
@@ -213,7 +213,7 @@
 <ng-template #memberTemplate let-member="member">
     <div ngbDropdown container="body">
         <button class = "member-button" ngbDropdownToggle>
-            <img class = "assigned-image" [src]="'http://localhost:8080/api/v1/userImages/public/user/' + member.user.id + '/image'">
+            <img class = "assigned-image" [src]="'http://localhost:8080/api/v1/userImages/public/user/' + member.member.user.id + '/image'">
         </button>
         <div class = "primary-color" ngbDropdownMenu>
             <button (click)="removeMember(member)" class = "member-option" ngbDropdownItem>Remove</button>
@@ -223,6 +223,12 @@
 <ng-template #addMemberTemplate>
     <div *ngIf="board != undefined && task != undefined">
         <app-multi-selection (cancelEvent)="this.alertHandlerService.close()" [requiredTemplate]="userHolder" (confirmEvent)="confirmMembersChange($event)" (selectionChanged)="handleMembersChange($event)" [requiredObservable]="this.boardMemberService.getPossibleTaskMembers(board.id,task.id)"></app-multi-selection>
+        <div class = "text-center px-2 py-1">
+            <button class = "default-button w-75" (click)="addTeam()">
+                <fa-icon [icon]="teamIcon"></fa-icon>
+                <span class = "mx-1">Add all members of a team</span>
+            </button>
+        </div>
     </div>
 </ng-template>
 <ng-template #addTagTemplate>
@@ -282,5 +288,16 @@
         <div *ngFor="let current of currentCheckLists">
             <app-checklist [checkList]="current"></app-checklist>
         </div>
+    </div>
+</ng-template>
+<ng-template #addTeamTemplate>
+    <div *ngIf="board != undefined">
+        <app-multi-selection [requiredTemplate]="teamTemplate" [requiredObservable]="this.teamService.getTeamsByBoard(this.board.id)" (cancelEvent)="this.alertHandlerService.close()" (confirmEvent)="this.confirmTeams($event)"></app-multi-selection>
+    </div>
+</ng-template>
+<ng-template #teamTemplate let-i>
+    <div class = "p-2" style="font-size: 20px;">
+        <fa-icon [icon]="teamIcon"></fa-icon>
+        <span class = "mx-1">{{i.name}}</span>
     </div>
 </ng-template>
