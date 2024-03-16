@@ -63,13 +63,14 @@ export class UsersPageComponent implements AfterViewInit,OnDestroy
     if(this.currentFilter != undefined) {
       this.isSearching = true;
       this.userService.getUsersBySpec(this.currentFilter).subscribe((value: PagedModel) => {
+        this.isSearching = false;
         this.currentItems = value._embedded != undefined && value._embedded.content != undefined ? value._embedded.content : [];
         if(value.page != undefined) {
           this.currentPage = value.page.page;
           this.currentTotalPages = value.page.totalPages;
           this.currentTotalElements = value.page.totalElements;
         }
-      })
+      },(err: any) => this.isSearching = false);
     }
   }
 }

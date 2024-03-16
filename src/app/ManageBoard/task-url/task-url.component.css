@@ -1,0 +1,10 @@
+div.url-wrapper
+{
+    padding: 10px;
+    background-color: var(--primary-color);
+    border-radius: 5px;
+    text-align: start;
+    max-width: 600px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

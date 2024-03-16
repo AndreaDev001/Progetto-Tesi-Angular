@@ -19,7 +19,7 @@
             <p class = "board-title">{{board.title}}</p>
             <p class = "board-subtitle">{{board.description}}</p>
             <div class = "text-center mt-1">
-                <button class = "board-open-button">Open</button>
+                <button class = "board-open-button" (click)="openBoard(board.id)">Open</button>
                 <button class = "board-leave-button">Leave</button>
             </div>
         </div>

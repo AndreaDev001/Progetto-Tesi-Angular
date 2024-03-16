@@ -6,6 +6,8 @@ import { TaskService } from 'src/model/services/task.service';
 import { CollectionModel } from 'src/model/interfaces';
 import { UserService } from 'src/model/services/user.service';
 import { Subscription } from 'rxjs';
+import { Input } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 
 export interface Filter
 {
@@ -33,6 +35,19 @@ export class TaskFilterComponent implements OnInit, OnDestroy {
   public currentFilter: Filter = {page: 0,pageSize: 20};
   public currentPriorities: DropdownOption[] = [];
   public currentGenders: DropdownOption[] = [];
+  public searchingPriorities: boolean = true;
+  public searchingGenders: boolean = true;
+  public formGroup: FormGroup = new FormGroup({
+    name: new FormControl(),
+    description: new FormControl(),
+    publisherEmail: new FormControl(),
+    publisherName: new FormControl(),
+    publisherSurname: new FormControl(),
+    publisherUsername: new FormControl(),
+    page: new FormControl(),
+    pageSize: new FormControl(),
+  })
+  @Input() rowDisplay: boolean = false;
   @Output() filterChanged: EventEmitter<Filter> = new EventEmitter();
 
   constructor(private router: Router,private activatedRoute: ActivatedRoute,private taskService: TaskService,private userService: UserService) {
@@ -52,22 +67,26 @@ export class TaskFilterComponent implements OnInit, OnDestroy {
       this.currentFilter = {name: name,description: description,publisherEmail: publisherEmail,publisherName: publisherName,publisherSurname: publisherSurname,publisherUsername: publisherUsername,page: page,pageSize: pageSize};
       this.filterChanged.emit(this.currentFilter);
     }));
+    this.searchingPriorities = true;
     this.taskService.getPriorities().subscribe((value: CollectionModel) => {
+      this.searchingPriorities = false;
       if(value._embedded != null) {
         value._embedded.content.forEach((current: string) => {
           let currentPriority: DropdownOption = {name: current,callback: () => this.updateFilter(this.currentFilter,'priority',current)}
           this.currentPriorities.push(currentPriority);
         })
       }
-    })
+    },(err: any) => this.searchingPriorities = false)
+    this.searchingGenders = true;
     this.userService.getGenders().subscribe((value: CollectionModel) => {
+      this.searchingGenders = false;
       if(value._embedded != null) {
         value._embedded.content.forEach((current: string) => {
           let currentGender: DropdownOption = {name: current,callback: () => this.updateFilter(this.currentFilter,'publisherGender',current)};
           this.currentGenders.push(currentGender);
         })
       }
-    })
+    },(err: any) => this.searchingGenders = false)
     
   }
 

@@ -34,6 +34,8 @@ export class TasksPageComponent implements AfterViewInit,OnDestroy{
   }
 
   public openCanvas(): void {
+    this.offCanvasHandler.setTitle("Filters");
+    this.offCanvasHandler.setSubtitle("Use the filters to find the desired tasks");
     this.offCanvasHandler.open();
   }
 

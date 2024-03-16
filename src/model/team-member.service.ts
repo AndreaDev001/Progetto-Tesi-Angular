@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { CreateTeamMember } from 'src/model/create';
-import { HttpUtilsService } from 'src/model/services/http-utils.service';
+import { HttpUtilsService } from './services/http-utils.service';
+import { CreateTeamMember } from './create';
 
 @Injectable({
   providedIn: 'root'

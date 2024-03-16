@@ -1,40 +1,48 @@
-<div id = "header-holder" style="z-index: 1000;">
-    <nav class = "d-block">
-        <div class = "d-none d-md-block">
-            <div class = "d-inline-block w-50 text-start">
-                <ul class = "header-list">
-                    <li class = "d-inline-block" *ngFor="let current of items">
-                        <ng-container *ngTemplateOutlet="routerItem;context: {item: current}"></ng-container>
-                    </li>
-                </ul>
-            </div>
-            <div class = "d-inline-block  w-50 text-end">
-                <ul class = "header-list">
-                    <a class = "header-item">
-                        <fa-icon [icon]="userIcon"></fa-icon>
-                    </a>
-                </ul>
-            </div>
+<div class = "header-wrapper">
+    <div class = "w-50 d-inline-block">
+        <button (click)="router.navigate(['/home'])" class = "header-button">
+            <fa-icon [icon]="homeIcon"></fa-icon>
+            <span class = "mx-1">Home</span>
+        </button>
+        <div class = "d-inline-block" *ngFor="let current of leftDropdowns">
+            <ng-container *ngTemplateOutlet="dropdownTemplate;context: {dropdown: current}"></ng-container>
         </div>
-        <div class = "d-block d-md-none text-end primary-color" style="padding: 8px">
-            <button [ngbTooltip]="'Show options'"   placement="left" class = "header-show-button" (click)="toggleCollapse()">
-                <fa-icon [icon]="hamburgerIcon"></fa-icon>
+        <button class = "header-button">
+            <fa-icon [icon]="aboutIcon"></fa-icon>
+            <span class = "mx-1">About</span>
+        </button>
+    </div>
+    <div class = "w-50 text-end d-inline-block">
+        <div class = "d-inline-block" *ngFor="let current of rightDropdowns">
+            <ng-container *ngTemplateOutlet="dropdownTemplate;context : {dropdown: current}"></ng-container>
+        </div>
+    </div>
+</div>
+<ng-template #dropdownTemplate let-dropdown="dropdown">
+    <div container="body" class = "d-inline-block" ngbDropdown>
+        <button class = "header-button" ngbDropdownToggle>
+            <fa-icon [icon]="dropdown.icon"></fa-icon>
+            <span class = "mx-1">{{dropdown.name}}</span>
+        </button>
+        <div class = "header-menu-wrapper" ngbDropdownMenu>
+            <button class = "header-button-option" *ngFor="let current of dropdown.options" (click)="current.callback()">
+                <ng-container *ngTemplateOutlet="optionTemplate;context: {option: current}"></ng-container>
             </button>
         </div>
-        <div class = "d-block d-md-none">
-            <div #collapse = "ngbCollapse" [(ngbCollapse)]="isCollapsed">
-                <ul class = "header-list">
-                    <li class = "d-block" *ngFor="let current of items">
-                        <ng-container *ngTemplateOutlet="routerItem;context: {item: current}"></ng-container>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-</div>
-<ng-template #routerItem let-item="item">
-    <a [routerLink]="item.path" class = "header-item">
-        <fa-icon [icon]="item.icon"></fa-icon>
-        {{item.name}}
-    </a>
+    </div>
+</ng-template>
+<ng-template #optionTemplate let-option="option">
+    <div>
+        <fa-icon [icon]="option.icon"></fa-icon>
+        <span class = "mx-1">{{option.name}}</span>
+    </div>
+</ng-template>
+<ng-template #createBoardTemplate>
+    <app-create-board (failedEvent)="this.alertHandler.close()" (successEvent)="navigateTo('/board',$event)"></app-create-board>
+</ng-template>
+<ng-template #createDiscussionTemplate>
+    <app-create-discussion (failedEvent)="this.alertHandler.close()" (successEvent)="navigateTo('/discussion',$event)"></app-create-discussion>
+</ng-template>
+<ng-template #createPollTemplate>
+    <app-create-poll (failedEvent)="this.alertHandler.close()" (successEvent)="navigateTo('/poll',$event)"></app-create-poll>
 </ng-template>

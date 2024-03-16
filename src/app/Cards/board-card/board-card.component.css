@@ -22,12 +22,13 @@ p.board-subtitle
 }
 button.card-wrapper {
     text-align: start;
-    width: 265px;
     background-color: var(--secondary-color);
     border-radius: 10px;
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
     color: whitesmoke;
+    width: 100%;
+    border: 1px solid var(--tertiary-color);
     transition: 0.2s ease-in-out all;
 }
 button.board-open-button {

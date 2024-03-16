@@ -1,12 +1,12 @@
 <form [formGroup]="formGroup" (submit)="handleSubmit($event)">
-    <div class = "container">
+    <div class = "container py-4">
         <div class = "mx-1">
             <div class = "mx-1">
                 <h4 class = "d-inline-block">Create a new discussion</h4>
                 <fa-icon class = "mx-2" style="font-size: 25px;" [icon]="discussionIcon"></fa-icon>
                 <p>Please specificy a title and and topic name</p>
             </div>
-            <div>
+            <div class = "vertical-container py-2">
                 <div>
                     <span class = "d-block mx-2">Title</span>
                     <mat-form-field class = "form-field" *ngIf="title != undefined">

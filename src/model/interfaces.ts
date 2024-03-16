@@ -51,8 +51,7 @@ export interface Comment
     title: string,
     text: string,
     publisher: UserRef,
-    discussion: DiscussionRef,
-    amountOfLikes: number
+    amountOfReceivedLikes: number
 }
 export interface Discussion
 {
@@ -80,6 +79,14 @@ export interface Poll
     minimumVotes: number,
     maximumVotes: number,
     amountOfLikes: number
+}
+export interface TaskURL
+{
+    id: string,
+    createdDate: string,
+    url: string,
+    publisher: BoardMemberRef,
+    task: TaskRef
 }
 export interface Role
 {
@@ -324,4 +331,34 @@ export interface Page
     size: number,
     totalPages: number,
     totalElements: number
+}
+export interface TaskComment
+{
+    id: string,
+    createdDate: string,
+    task: TaskRef,
+    title: string,
+    text: string,
+    publisher: UserRef,
+    amountOfLikes: number
+}
+export interface DiscussionComment
+{
+    id: string,
+    createdDate: string,
+    discussion: DiscussionRef,
+    title: string,
+    text: string,
+    publisher: UserRef,
+    amountOfLikes: number
+}
+export interface PollComment
+{
+    id: string,
+    createdDate: string,
+    poll: PollRef,
+    title: string,
+    text: string
+    publisher: UserRef,
+    amountOfLikes: number
 }

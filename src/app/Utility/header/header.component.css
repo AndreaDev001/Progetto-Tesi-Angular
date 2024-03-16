@@ -1,44 +1,37 @@
-div#header-holder
+button.header-button
 {
-    position: sticky;
-    top: 0;
-    width: 100%;
-}
-ul.header-list
-{
-    margin: 0px;
-    list-style-type: none;
-    padding: 2px 20px;
-    background: var(--primary-color);
-}
-a.header-item
-{
+    padding: 12px;
     display: inline-block;
-    font-size: 20px;
-    padding: 8px;
-    transition: 0.3s ease-in-out all;
-    cursor: pointer;
-    color: whitesmoke;
-    text-decoration: none;
-}
-a.header-item:hover
-{
-    background-color: var(--tertiary-color);
-    color: whitesmoke;
-    text-decoration: underline;
-}
-button.header-show-button
-{
     background-color: var(--primary-color);
-    color: whitesmoke;
-    border: 0px;
-    font-size: 20px;
-    padding: 5px 10px;
+    font-size: 18px;
     transition: 0.2s ease-in-out all;
 }
-button.header-show-button:hover
-{
+button.header-button:hover {
     background-color: var(--tertiary-color);
-    border-radius: 60%;
-    color: whitesmoke;
+}
+div.header-wrapper {
+     background-color: var(--primary-color);
+     position: sticky;
+     top: 0;
+     z-index: 1000;
+}
+button.header-button-option
+{
+    text-align: start;
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: var(--primary-color);
+    font-size: 17px;
+    transition: 0.2s ease-in-out all;
+}
+button.header-button-option:hover {
+    background-color: var(--tertiary-color);
+}
+div.header-menu-wrapper
+{
+    background-color: var(--primary-color);
+}
+.dropdown-toggle::after {
+    display:none;
 }

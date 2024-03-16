@@ -10,6 +10,11 @@ export interface CreateTaskGroup
     boardID: string,
     name: string
 }
+export interface CreateComment
+{
+    title: string,
+    text: string,
+}
 export interface CreateTask
 {
     groupID: string,
@@ -63,4 +68,9 @@ export interface CreateBoardImage
 {
     boardID: string,
     file: any
+}
+export interface CreateTaskURL
+{
+    taskID: string,
+    url: string,
 }

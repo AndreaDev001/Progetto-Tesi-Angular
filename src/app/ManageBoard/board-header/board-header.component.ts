@@ -1,20 +1,17 @@
 import { Component, EventEmitter, Input, OnInit,ViewChild,Output } from '@angular/core';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faClose, faEllipsis, faGear, faHeart, faMessage, faPlus, faUser, faUserGroup, faUsers } from '@fortawesome/free-solid-svg-icons';
-import { DropdownOption } from 'src/app/Utility/dropdown/dropdown.component';
 import { AlertHandlerService } from 'src/app/services/alert-handler.service';
 import { TeamService } from 'src/model/services/team.service';
 import { Board, BoardMember, CollectionModel, Task, TaskAssignment, Team, TeamMember, User } from 'src/model/interfaces';
 import { BoardMemberService } from 'src/model/services/board-member.service';
-import { TaskAssignmentService } from 'src/model/services/task-assignment.service';
 import { CreateBoardInvite } from 'src/model/services/board-invite.service';
-import { TeamMemberService } from 'src/app/team-member.service';
 import { TextOverflowItem } from 'src/app/Utility/text-overflow/text-overflow.component';
 import { BoardInviteService } from 'src/model/services/board-invite.service';
-import { RoleOwnerService } from 'src/app/role-owner.service';
+import { RoleOwnerService } from 'src/model/services/role-owner.service';
 import { CreateRoleOwner, CreateTeamMember } from 'src/model/create';
-import { OffCanvasHandlerService } from 'src/app/services/off-canvas-handler.service';
 import { UserService } from 'src/model/services/user.service';
+import { TeamMemberService } from 'src/model/team-member.service';
 
 
 interface TeamOption
@@ -50,6 +47,7 @@ export class BoardHeaderComponent implements OnInit {
   public currentUserAdmin: boolean = false;
   public currentInvitedUser: User | undefined = undefined;
   public searchingTeamMembers: boolean = false;
+  public searchingMember: boolean = false;
 
 
   @ViewChild("createInviteTemplate") createInviteTemplate: any;
@@ -146,9 +144,11 @@ export class BoardHeaderComponent implements OnInit {
   public updateAdmin(member: BoardMember): void {
     if(this.board != undefined) {
       this.currentUserAdmin = false;
+      this.searchingMember = true;
       this.roleOwnerService.hasRole('ADMIN',member.user.id,this.board.id).subscribe((value: any) => {
         this.currentUserAdmin = value != undefined;
-      })
+        this.searchingMember = false;
+      },(err: any) => this.searchingMember = false);
     }
   }
 

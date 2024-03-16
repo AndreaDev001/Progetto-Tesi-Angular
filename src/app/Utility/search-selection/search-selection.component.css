@@ -22,7 +22,7 @@ button.selected-element
     background-color: var(--tertiary-color);
     text-align: start;
     width: 100%;
-    border-radius: 5px;
+    border-radius: 2px;
 }
 button.unselected-element {
     background-color: var(--secondary-color);

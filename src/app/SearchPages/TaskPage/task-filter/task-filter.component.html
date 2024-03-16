@@ -1,22 +1,19 @@
 <div>
     <div>
-        <div class = "d-inline-block mx-1">
-            <app-search-bar (searchChanged)="updateFilter(currentFilter,'name',$event)" [currentLabel]="'Name'" [currentSupportingText]="'Write a name...'" [currentPlaceholder]="'Name'"></app-search-bar>
+        <div [ngClass]="rowDisplay ? 'd-inline-block mx-1' : 'd-block'">
+            <app-search-bar [defaultValue]="currentFilter.name" (searchChanged)="updateFilter(currentFilter,'name',$event)" [currentLabel]="'Name'" [currentSupportingText]="'Write a name...'" [currentPlaceholder]="'Name'"></app-search-bar>
         </div>
-        <div class = "d-inline-block mx-1">
-            <app-search-bar (searchChanged)="updateFilter(currentFilter,'description',$event)" [currentLabel]="'Description'" [currentSupportingText]="'Write a description...'" [currentPlaceholder]="'Surname...'"></app-search-bar>
+        <div [ngClass]="rowDisplay ? 'd-inline-block mx-1' : 'd-block'">
+            <app-search-bar [defaultValue]="currentFilter.description" (searchChanged)="updateFilter(currentFilter,'description',$event)" [currentLabel]="'Description'" [currentSupportingText]="'Write a description...'" [currentPlaceholder]="'Surname...'"></app-search-bar>
         </div>
-        <div class = "d-inline-block mx-1">
-            <app-search-bar (searchChanged)="updateFilter(currentFilter,'publisherEmail',$event)" [currentLabel]="'Publisher email'" [currentSupportingText]="'Write an email'" [currentPlaceholder]="'Email...'"></app-search-bar>
+        <div [ngClass]="rowDisplay ? 'd-inline-block mx-1' : 'd-block'">
+            <app-search-bar [defaultValue]="currentFilter.publisherUsername" (searchChanged)="updateFilter(currentFilter,'publisherUsername',$event)" [currentLabel]="'Publisher username'" [currentSupportingText]="'Write an username...'" [currentPlaceholder]="'Username...'"></app-search-bar>
         </div>
-        <div class = "d-inline-block mx-1">
-            <app-search-bar (searchChanged)="updateFilter(currentFilter,'publisherUsername',$event)" [currentLabel]="'Publisher username'" [currentSupportingText]="'Write an username...'" [currentPlaceholder]="'Username...'"></app-search-bar>
+        <div [ngClass]="rowDisplay ? 'd-inline-block mx-1' : 'd-block'">
+            <app-search-bar [defaultValue]="currentFilter.publisherName" (searchChanged)="updateFilter(currentFilter,'publisherName', $event)" [currentLabel]="'Publisher name'" [currentSupportingText]="'Write a name...'" [currentPlaceholder]="'Name...'"></app-search-bar>
         </div>
-        <div class = "d-inline-block mx-1">
-            <app-search-bar (searchChanged)="updateFilter(currentFilter,'publisherName', $event)" [currentLabel]="'Publisher name'" [currentSupportingText]="'Write a name...'" [currentPlaceholder]="'Name...'"></app-search-bar>
-        </div>
-        <div class = "d-inline-block mx-1">
-            <app-search-bar (searchChanged)="updateFilter(currentFilter,'publisherSurname',$event)" [currentLabel]="'Publisher surname'" [currentSupportingText]="'Write a surname...'" [currentPlaceholder]="'Surname...'"></app-search-bar>
+        <div [ngClass]="rowDisplay ? 'd-inline-block mx-1' : 'd-block'">
+            <app-search-bar [defaultValue]="currentFilter.publisherSurname" (searchChanged)="updateFilter(currentFilter,'publisherSurname',$event)" [currentLabel]="'Publisher surname'" [currentSupportingText]="'Write a surname...'" [currentPlaceholder]="'Surname...'"></app-search-bar>
         </div>
     </div>
     <div class = "mt-1">

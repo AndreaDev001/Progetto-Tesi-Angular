@@ -19,14 +19,10 @@
                     <h5 class = "p-0 m-0">Use the filters to find the desired users</h5>
                     <p class = "p-0 m-0">Try to be the most precise as possible</p>
                 </div>
-                <div class = "row">
-                    <div class = "col-12 col-md-3 mt-3" *ngFor="let current of currentItems">
-                        <app-user-card [user]="current"></app-user-card>
-                    </div>
-                </div>
+                <app-loader [diameter]="100" [strokeWidth]="10" [isSearching]="isSearching" [fontSize]="20" [requiredTemplate]="usersTemplate"></app-loader>
             </div>
         </div>
-        <div *ngIf="currentItems.length == 0">
+        <div *ngIf="currentItems.length == 0 && !isSearching">
             <app-no-items (buttonClicked)="resetSearch()"></app-no-items>
         </div>
     </div>
@@ -37,5 +33,12 @@
 <ng-template #userFilters>
     <div class = "px-2 w-100">
         <app-user-filter (filterChanged)="handleFilterChange($event)"></app-user-filter>
+    </div>
+</ng-template>
+<ng-template #usersTemplate>
+    <div class = "row">
+        <div class = "col-12 col-md-2 mt-3" *ngFor="let current of currentItems">
+            <app-user-card [user]="current"></app-user-card>
+        </div>
     </div>
 </ng-template>

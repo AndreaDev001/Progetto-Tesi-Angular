@@ -1,5 +1,5 @@
 <div class = "task-overlay-wrapper" *ngIf="task != undefined">
-    <div class = "content-wrapper">
+    <div class = "content-wrapper vertical-container text-start">
         <div class = "task-overlay-header">
             <div>
                 <div class = "w-75 text-start d-inline-block">
@@ -15,13 +15,13 @@
                 </div>
                 <div class = "w-25 text-end d-inline-block">
                     <div ngbDropdown container="body">
-                        <button class = "task-options-dropdown-toggle" ngbDropdownToggle></button>
+                        <button *ngIf="!isOwner"  class = "task-options-dropdown-toggle" ngbDropdownToggle></button>
                         <div ngbDropdownMenu class = "primary-color">
                             <button (click)="currentLike == undefined ? createLike() : deleteLike()" class = "default-button w-100" ngbDropdownItem>
                                 <fa-icon [icon]="currentLike != undefined ? unlikeIcon : likeIcon"></fa-icon>
                                 <span class = "mx-1">{{currentLike != undefined ? 'Remove Like' : 'Add Like'}}</span>
                             </button>
-                            <button *ngIf="!hasReported" (click)="createReport()" class = "default-button w-100" ngbDropdownItem>
+                            <button *ngIf="!hasReported" (click)="addReport()" class = "default-button w-100" ngbDropdownItem>
                                 <fa-icon [icon]="reportIcon"></fa-icon>
                                 <span class = "mx-1">Report</span>
                             </button>
@@ -105,21 +105,33 @@
                     </div>
                     <div>
                         <div class = "d-flex">
+                            <fa-icon [icon]="urlIcon" style="font-size: 25px;"></fa-icon>
+                            <div class = "mx-3">
+                                <p class = "overlay-section-title">URLS</p>
+                                <p class = "mt-1" style="font-size: 15px;">Add or remove one of the attached URLS</p>
+                            </div>
+                        </div>
+                        <app-loader [requiredTemplate]="urlsTemplate" [diameter]="60" [strokeWidth]="8" [isSearching]="searchingURLS"></app-loader>
+                        <div class = "text-end mt-2">
+                            <button (click)="createURL()" class = "default-button">Add an URL</button>
+                        </div>
+                    </div>
+                    <div>
+                        <div class = "d-flex">
                             <fa-icon [icon]="commentIcon" style="font-size: 25px;"></fa-icon>
                             <div class = "mx-3">
                                 <p class = "overlay-section-title">Activity</p>
                                 <p class = "mt-1" style="font-size: 15px;">You can interact by commenting</p>
                             </div>
                         </div>
-                        <div class = "text-end" style="margin-top: 2px;">
-                            <button class = "default-button">Comment</button>
+                        <app-loader [requiredTemplate]="commentsTemplate" [isSearching]="searchingComments" [diameter]="60" [strokeWidth]="7"></app-loader>
+                        <div class = "text-end mt-2">
+                            <button (click)="addComment()" class = "default-button">Comment</button>
                         </div>
                     </div>
                 </div>
                 <div class = "col-12 col-md-3">
                     <ul class = "option-holder">
-                        <p class = "p-0 m-0" style="font-size: 15px;">Add elements</p>
-                        <p class = "p-0 m-0" style="font-size: 15px;">Modify the task by adding one of the following elements</p>
                         <div class = "mt-1" ngbDropdown>
                             <button ngbDropdownToggle class = "option-button">
                                 <fa-icon [icon]="userIcon"></fa-icon>
@@ -134,9 +146,7 @@
                                         </button>
                                     </div>
                                 </button>
-                                <button class = "add-option-button" (click)="addMember()">
-                                    Add a member
-                                </button>
+                                <button class = "add-option-button" (click)="addMember()">Add a member</button>
                             </div>
                         </div>
                         <div class = "mt-1" ngbDropdown>
@@ -276,6 +286,9 @@
 <ng-template #createReportTemplate>
     <app-create-report [taskID]="task?.id" (successEvent)="this.hasReported = true" (failedEvent)="this.hasReported = false" (sumbitEvent)="this.alertHandlerService.close()"></app-create-report>
 </ng-template>
+<ng-template #createURLTemplate>
+    <app-create-task-url [taskID]="task?.id" (successEvent)="this.currentURLS.push($event);this.currentURLSItems.push({template: this.urlTemplate,context: $event});this.alertHandlerService.close()" (failedEvent)="this.alertHandlerService.close()"></app-create-task-url>
+</ng-template>
 <ng-template #imagesSection>
     <div *ngIf="currentImages.length > 0">
         <div class = "px-4">
@@ -299,5 +312,26 @@
     <div class = "p-2" style="font-size: 20px;">
         <fa-icon [icon]="teamIcon"></fa-icon>
         <span class = "mx-1">{{i.name}}</span>
+    </div>
+</ng-template>
+<ng-template #addCommentTemplate>
+    <app-create-comment [taskID]="task?.id"  (successEvent)="createComment($event)" (cancelEvent)="this.alertHandlerService.close()"></app-create-comment>
+</ng-template>
+<ng-template #commentTemplate let-i>
+    <app-comment-card  (deletedEvent)="removeComment(i)" [taskComment]="i"></app-comment-card>
+</ng-template>
+<ng-template #commentsTemplate>
+    <div *ngIf="currentComments.length > 0">
+        <div style="padding: 0px 2%" class = "primary-color">
+            <app-text-overflow [horizontal]="false" [templates]="currentCommentsItems"></app-text-overflow>
+        </div>
+    </div>
+</ng-template>
+<ng-template #urlTemplate let-i>
+    <app-task-url [taskURL]="i"></app-task-url>
+</ng-template>
+<ng-template #urlsTemplate>
+    <div style="padding: 0px 2%">
+        <app-text-overflow [horizontal]="false" [templates]="currentURLSItems"></app-text-overflow>
     </div>
 </ng-template>

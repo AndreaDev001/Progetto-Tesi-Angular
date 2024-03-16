@@ -1,6 +1,8 @@
 <div class = "tag-wrapper" [ngStyle]="{'background-color': tag.color}" *ngIf="tag != undefined">
-    <div class = "d-flex">
+    <div class = "position-relative w-100">
         <span [ngStyle]="{'font-size': fontSize,'padding': padding}" class = "tag-text">{{tag.name}}</span>
-        <button *ngIf="canRemove" (click)="removeTag()" class = "btn btn-close btn-close-white" style="font-size: 14px;"></button>
+        <button (click)="removeTag()" *ngIf="canRemove" style="background-color: inherit;">
+            <fa-icon [icon]="removeIcon"></fa-icon>
+        </button>
     </div>
 </div>

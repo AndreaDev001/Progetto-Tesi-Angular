@@ -75,9 +75,7 @@
             <img class = "member-image" style="top: 0;left: 0" [src]="'http://localhost:8080/api/v1/userImages/public/user/' + member.user.id + '/image'">
         </button>
         <div class = "member-dropdown" ngbDropdownMenu>
-            <button (click)="changeRole(member)" ngbDropdownItem class = "member-option">{{currentUserAdmin ? 'Demote to member' : 'Promote to admin'}}</button>
-            <button (click)="removeFromBoard(member)" ngbDropdownItem class = "member-option">Remove from board</button>
-            <button ngbDropdownItem class = "member-option">Visit profile</button>
+            <app-loader [diameter]="60" [strokeWidth]="6" [isSearching]="searchingMember" [requiredTemplate]="memberDropdown"></app-loader>
         </div>
     </div>
 </ng-template>
@@ -97,4 +95,11 @@
 </ng-template>
 <ng-template #userTemplate let-i>
     <app-user-holder [user]="i"></app-user-holder>
+</ng-template>
+<ng-template #memberDropdown let-member>
+    <div>
+        <button (click)="changeRole(member)" ngbDropdownItem class = "member-option">{{currentUserAdmin ? 'Demote to member' : 'Promote to admin'}}</button>
+        <button (click)="removeFromBoard(member)" ngbDropdownItem class = "member-option">Remove from board</button>
+        <button ngbDropdownItem class = "member-option">Visit profile</button>
+    </div>
 </ng-template>

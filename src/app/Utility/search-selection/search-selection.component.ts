@@ -35,7 +35,8 @@ export class SearchSelectionComponent implements AfterViewInit,OnDestroy {
   }
 
   public searchValues(page: boolean): void {
-    if(this.currentText != undefined) {
+    if(this.currentText != undefined) 
+    {
       let paginationRequest: PaginationRequest = {page: this.currentPage,pageSize: 20};
       let observable: any = this.boardID != undefined ? this.requiredObservable(this.requiredContext,this.currentText,this.boardID,paginationRequest) : this.requiredObservable(this.requiredContext,this.currentText,paginationRequest);
       this.isSearching = !page;
@@ -45,7 +46,8 @@ export class SearchSelectionComponent implements AfterViewInit,OnDestroy {
           if(page) {
             this.currentElements.push(value._embedded.content);
           }
-          else {
+          else 
+          {
             this.currentElements = value._embedded.content;
             this.currentOverflowItems = [];
           }
@@ -54,10 +56,8 @@ export class SearchSelectionComponent implements AfterViewInit,OnDestroy {
             this.currentOverflowItems.push(overflowItem);
           })
         }
-        else
-        {
-          this.reset();
-        }
+        else if(!page)
+            this.reset();
         if(value.page != undefined) {
           this.currentPage = value.page.number;
           this.currentTotalPages = value.page.totalPages;

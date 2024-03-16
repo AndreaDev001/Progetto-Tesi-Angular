@@ -13,6 +13,7 @@ button.option-template:hover {
 div.member-dropdown
 {
     background-color: var(--primary-color);
+    padding: 10px 20px;
 }
 div.image-wrapper
 {
@@ -157,4 +158,7 @@ button.remove-button
 button.remove-button:hover
 {
     background-color: var(--tertiary-color);
+}
+.image-wrapper::after {
+    display: none;
 }

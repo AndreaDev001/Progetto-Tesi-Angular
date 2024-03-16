@@ -39,11 +39,6 @@ const routes: Routes = [
   {path: 'discussions/:id',component: DiscussionsPageComponent,title: 'Discussions',canActivate: [AuthGuard]},
   {path: 'polls/:id',component: PollsPageComponent,title: 'Polls',canActivate: [AuthGuard]},
   {path: "board/:id",component: ManageBoardPageComponent,title: "Manage Board"},
-  {path: "create/poll",component: CreatePollComponent,title: "Create Poll"},
-  {path: "create/discussion",component: CreateDiscussionComponent,title: "Create Discussion"},
-  {path: "create/report",component: CreateReportComponent,title: "Create Report"},
-  {path: "create/board",component: CreateBoardComponent,title: "Create Board"},
-  {path: "create/team",component: CreateTeamComponent,title: "Create Team"},
   {path: 'unauthorized',component: UnAuthorizedPageComponent,title: "UnAuthorized"},
 ];
 

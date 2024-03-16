@@ -7,9 +7,9 @@
         <p>Here you can see all the tasks that have been assigned to you and the ones you created</p>
     </section>
     <div class = "d-none d-md-block">
-        <app-task-filter (filterChanged)="handleFilterChange($event)"></app-task-filter>
+        <app-task-filter [rowDisplay]="true" (filterChanged)="handleFilterChange($event)"></app-task-filter>
     </div>
-    <div class = "d-block d-md-none text-center py-4">
+    <div class = "d-block d-md-none text-center py-1">
         <button class = "filter-button" (click)="openCanvas()">Filters</button>
     </div>
     <div class = "mt-1">
@@ -30,15 +30,15 @@
         <app-pagination [pageSize]="20" [totalElements]="currentTotalElements"  (pageChanged)="handlePageChange($event)"></app-pagination>
     </div>
 </div>
-<ng-template #taskFilter>
-    <div class = "px-2 w-100">
-        <app-task-filter (filterChanged)="handleFilterChange($event)"></app-task-filter>
+<ng-template #taskFilters>
+    <div class = "px-2 w-100 secondary-color">
+        <app-task-filter [rowDisplay]="false" (filterChanged)="handleFilterChange($event)"></app-task-filter>
     </div>
 </ng-template>
 <ng-template #taskElements>
     <div class = "row py-1">
-        <div class = "col-md-3 mt-1" *ngFor="let current of currentItems">
-            <app-task-card [task]="current"></app-task-card>
+        <div class = "col-6 col-md-2 mt-3" *ngFor="let current of currentItems">
+            <app-task-card  [task]="current"></app-task-card>
         </div>
     </div>
 </ng-template>

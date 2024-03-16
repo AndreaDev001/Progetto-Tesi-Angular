@@ -1,8 +1,8 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
-import { faChain, faCheck, faClockFour, faClose, faComments, faEllipsisVertical, faHeart, faHeartBroken, faIdCard, faImages, faLineChart, faMessage, faPeopleGroup, faPlus, faTag, faTags, faTasks, faUpload, faUser, faUserGroup, faUsers, faWarning } from '@fortawesome/free-solid-svg-icons';
+import { faChain, faCheck, faClockFour, faClose, faComments, faEllipsisVertical, faHeart, faHeartBroken, faIdCard, faImages, faLineChart, faMessage, faPaperclip, faPeopleGroup, faPlus, faTag, faTags, faTasks, faUpload, faUser, faUserGroup, faUsers, faWarning } from '@fortawesome/free-solid-svg-icons';
 import { TagService } from 'src/model/services/tag.service';
-import { Board, BoardMember, CheckList, CheckListOption, CollectionModel, Tag, TagAssignment, Task, TaskAssignment, TaskImage, TaskLike } from 'src/model/interfaces';
+import { Board, BoardMember, CheckList, CheckListOption, CollectionModel, Comment, Tag, TagAssignment, Task, TaskAssignment, TaskComment, TaskImage, TaskLike, TaskURL } from 'src/model/interfaces';
 import { TaskAssignmentService } from 'src/model/services/task-assignment.service';
 import { CheckListService } from 'src/model/services/check-list.service';
 import { CheckListOptionService } from 'src/model/services/check-list-option.service';
@@ -10,14 +10,17 @@ import { TaskService } from 'src/model/services/task.service';
 import { UpdateTask } from 'src/model/update';
 import { AlertHandlerService } from 'src/app/services/alert-handler.service';
 import { CreateTagAssignment, createTaskAssignment } from 'src/model/create';
-import { TagAssignmentService } from 'src/app/tag-assignment.service';
+import { TagAssignmentService } from 'src/model/services/tag-assignment.service';
 import { BoardMemberService } from 'src/model/services/board-member.service';
-import { TaskImageService } from 'src/app/task-image.service';
+import { TaskImageService } from 'src/model/services/task-image.service';
 import { TextOverflowItem } from 'src/app/Utility/text-overflow/text-overflow.component';
 import { TaskReportService } from 'src/model/services/task-report.service';
 import { AuthHandlerService } from 'src/app/auth/auth-handler.service';
 import { TaskLikeService } from 'src/model/services/task-like.service';
 import { TeamService } from 'src/model/services/team.service';
+import { TaskCommentService } from 'src/model/services/task-comment.service';
+import { Subscription } from 'rxjs';
+import { TaskURLService } from 'src/app/task-url.service';
 
 interface ButtonOption
 {
@@ -31,7 +34,7 @@ interface ButtonOption
   templateUrl: './task-overlay.component.html',
   styleUrls: ['./task-overlay.component.css']
 })
-export class TaskOverlayComponent implements OnInit 
+export class TaskOverlayComponent implements OnInit,OnDestroy
 {
   @Input() task: Task | undefined = undefined;
   @Input() board: Board | undefined = undefined;
@@ -43,14 +46,20 @@ export class TaskOverlayComponent implements OnInit
   public commentIcon: IconDefinition = faMessage;
   public buttonOptions: ButtonOption[] = [];
 
-  public currentTagAssignments: TagAssignment[] = [];
   public currentTags: Tag[] = [];
+  public currentTagAssignments: TagAssignment[] = [];
+  public currentComments: TaskComment[] = [];
+  public currentCommentsItems: TextOverflowItem[] = [];
   public currentDescription: string | undefined = undefined;
   public currentMembers: TaskAssignment[] = [];
   public currentCheckLists: CheckList[] = [];
   public currentImages: TaskImage[] = [];
   public currentImagesItems: TextOverflowItem[] = [];
+  public currentURLS: TaskURL[] = [];
+  public currentURLSItems: TextOverflowItem[] = [];
   public isChangingDescription: boolean = false;
+
+
   public removeIcon: IconDefinition = faClose;
   public userIcon: IconDefinition = faUserGroup;
   public tagIcon: IconDefinition = faTags;
@@ -62,7 +71,10 @@ export class TaskOverlayComponent implements OnInit
   public optionsIcon: IconDefinition = faEllipsisVertical;
   public membersIcon: IconDefinition = faUsers;
   public teamIcon: IconDefinition = faPeopleGroup;
+  public urlIcon: IconDefinition = faPaperclip;
 
+
+  public isOwner: boolean = false;
   public currentNewTags: Tag[] = [];
   public currentNewMembers: BoardMember[] = [];
   public hasReported: boolean = false;
@@ -70,20 +82,27 @@ export class TaskOverlayComponent implements OnInit
   public numbersOfLike: number = 0;
   public searchingChecklists: boolean = false;
   public searchingImages: boolean = false;
+  public searchingComments: boolean = false;
+  public searchingURLS: boolean = false;
   public currentName: any = undefined;
   public currentTitle: any = undefined;
+  private subscriptions: Subscription[] = [];
 
   @ViewChild("addMemberTemplate") addMemberTemplate: any;
   @ViewChild("addTagTemplate") addTagTemplate: any;
+  @ViewChild("addCommentTemplate") addCommentTemplate: any;
   @ViewChild("createTagTemplate") createTagTemplate: any;
   @ViewChild("createCheckListTemplate") createCheckListTemplate: any;
   @ViewChild("addImageTemplate") createImageTemplate: any;
   @ViewChild("addTeamTemplate") addTeamTemplate: any;
   @ViewChild("taskImageTemplate") taskImageTemplate: any;
   @ViewChild("createReportTemplate") createReportTemplate: any;
+  @ViewChild("createURLTemplate") createURLTemplate: any;
+  @ViewChild("commentTemplate") commentTemplate: any;
+  @ViewChild("urlTemplate") urlTemplate: any;
   @Output() taskChanged: EventEmitter<any> = new EventEmitter();
 
-  constructor(private taskAssignmentsService: TaskAssignmentService,public teamService: TeamService,private taskLikeService: TaskLikeService,private authenticationHandler: AuthHandlerService,private taskReportService: TaskReportService,private taskImageService: TaskImageService,public tagService: TagService,public alertHandlerService: AlertHandlerService,private taskService: TaskService,private checkListOptionService: CheckListOptionService,private tagAssignmentService: TagAssignmentService,private checkListService: CheckListService,public boardMemberService:  BoardMemberService) {
+  constructor(private taskAssignmentsService: TaskAssignmentService,private taskURLSService: TaskURLService,private authHandler: AuthHandlerService,public taskCommentService: TaskCommentService,public teamService: TeamService,private taskLikeService: TaskLikeService,private authenticationHandler: AuthHandlerService,private taskReportService: TaskReportService,private taskImageService: TaskImageService,public tagService: TagService,public alertHandlerService: AlertHandlerService,private taskService: TaskService,private checkListOptionService: CheckListOptionService,private tagAssignmentService: TagAssignmentService,private checkListService: CheckListService,public boardMemberService:  BoardMemberService) {
 
   }
 
@@ -104,6 +123,10 @@ export class TaskOverlayComponent implements OnInit
           this.currentCheckLists = value._embedded.content;
         }
       })
+      this.subscriptions.push(this.authHandler.getCurrentUserID(false).subscribe((value: any) => {
+        if(this.task != undefined)
+            this.isOwner = this.task.publisher.id == value;
+      }));
       this.searchingImages = true;
       this.taskImageService.getImagesByTask(this.task.id).subscribe((value: CollectionModel) => {
         this.searchingImages = false;
@@ -118,10 +141,34 @@ export class TaskOverlayComponent implements OnInit
       },(err: any) => this.hasReported = false);
       this.taskLikeService.getTaskLikeBetween(this.task.id,this.authenticationHandler.getCurrentUserID(true)).subscribe((value: any) => {
         this.currentLike = value;
-      },(err: any) => this.currentLike = undefined)
+      },(err: any) => this.currentLike = undefined);
+      this.searchingComments = true;
+      this.taskCommentService.getCommentsByTask(this.task.id).subscribe((value: CollectionModel) => {
+        if(value._embedded != undefined && value._embedded.content != undefined) {
+          this.currentComments = value._embedded.content;
+          value._embedded.content.forEach((current: any) => {
+            let overflowItem: TextOverflowItem = {template: this.commentTemplate,context: current};
+            this.currentCommentsItems.push(overflowItem);
+          })
+        }
+        this.searchingComments = false;
+      },(err: any) => this.searchingComments = false);
       this.tagService.getTagsByBoard(this.board.id).subscribe((value: CollectionModel) => this.currentTags = value._embedded != undefined && value._embedded.content != undefined ? value._embedded.content : []);
       this.tagAssignmentService.getTagAssignments(this.task.id).subscribe((value: CollectionModel) => this.currentTagAssignments = value._embedded != undefined && value._embedded.content != undefined ? value._embedded.content : []);
+      this.searchingURLS = true;
+      this.taskURLSService.getTaskURLSByTask(this.task.id).subscribe((value: CollectionModel) => {
+        this.searchingURLS = false;
+        this.currentURLS = value._embedded != undefined && value._embedded.content != undefined ? value._embedded.content : [];
+        value._embedded.content.forEach((current: any) => {
+          let overflowItem: TextOverflowItem = {template: this.urlTemplate,context: current};
+          this.currentURLSItems.push(overflowItem);
+        })
+      },(err: any) => this.searchingURLS = false);
     }
+  }
+
+  public ngOnDestroy(): void {
+      this.subscriptions.forEach((value: Subscription) => value.unsubscribe());  
   }
 
   public deleteLike(): any {
@@ -137,6 +184,10 @@ export class TaskOverlayComponent implements OnInit
     this.currentDescription = event.target.value;
   }
 
+  public removeComment(comment: TaskComment): any {
+    this.currentComments = this.currentComments.filter((current: any) => current.id !== comment.id);
+  }
+
   public createLike(): any {
     if(this.task != undefined) {
       this.taskLikeService.createTaskLike(this.task.id).subscribe((value: any) => {
@@ -146,6 +197,13 @@ export class TaskOverlayComponent implements OnInit
         this.currentLike = undefined
       });
     }
+  }
+
+  public createComment(event: any): any {
+      this.currentComments.push(event);
+      let overflowItem: TextOverflowItem = {template: this.commentTemplate,context: event};
+      this.currentCommentsItems.push(overflowItem);
+      this.alertHandlerService.close();
   }
 
   public updateDescription(): any {
@@ -267,6 +325,13 @@ export class TaskOverlayComponent implements OnInit
     this.alertHandlerService.open();
   }
 
+  public addComment(): void {
+    this.alertHandlerService.close();
+    this.alertHandlerService.reset();
+    this.alertHandlerService.setTextTemplate(this.addCommentTemplate);
+    this.alertHandlerService.open();
+  }
+
   public addTeam(): void {
     this.alertHandlerService.close();
     this.alertHandlerService.reset();
@@ -282,6 +347,20 @@ export class TaskOverlayComponent implements OnInit
     this.alertHandlerService.setDefaultAlertTitle("Tags");
     this.alertHandlerService.setDefaultAlertSubtitle("Choose one of the avaliable tags to add to this task");
     this.alertHandlerService.setTextTemplate(this.addTagTemplate);
+    this.alertHandlerService.open();
+  }
+
+  public createURL(): void {
+    this.alertHandlerService.close();
+    this.alertHandlerService.reset();
+    this.alertHandlerService.setTextTemplate(this.createURLTemplate);
+    this.alertHandlerService.open();
+  }
+
+  public addReport(): void {
+    this.alertHandlerService.close();
+    this.alertHandlerService.reset();
+    this.alertHandlerService.setTextTemplate(this.createReportTemplate);
     this.alertHandlerService.open();
   }
 
@@ -317,13 +396,6 @@ export class TaskOverlayComponent implements OnInit
     this.alertHandlerService.close();
     this.alertHandlerService.reset();
     this.alertHandlerService.setTextTemplate(this.createCheckListTemplate);
-    this.alertHandlerService.open();
-  }
-
-  public createReport(): void {
-    this.alertHandlerService.close();
-    this.alertHandlerService.reset();
-    this.alertHandlerService.setTextTemplate(this.createReportTemplate);
     this.alertHandlerService.open();
   }
 }

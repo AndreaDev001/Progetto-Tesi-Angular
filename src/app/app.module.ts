@@ -93,7 +93,10 @@ import { CreateTaskImageComponent } from './Forms/create-task-image/create-task-
 import { NgxEditorModule } from 'ngx-editor';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { BetterImageComponent } from './Utility/better-image/better-image.component';
-import { SearchSelectionComponent } from './Utility/search-selection/search-selection.component'
+import { SearchSelectionComponent } from './Utility/search-selection/search-selection.component';
+import { ModifyUserComponent } from './Forms/modify-user/modify-user.component';
+import { CreateTaskURLComponent } from './Forms/create-task-url/create-task-url.component';
+import { TaskURLComponent } from './ManageBoard/task-url/task-url.component';
 
 @NgModule({
   declarations: [
@@ -173,6 +176,9 @@ import { SearchSelectionComponent } from './Utility/search-selection/search-sele
     CreateTaskImageComponent,
     BetterImageComponent,
     SearchSelectionComponent,
+    ModifyUserComponent,
+    CreateTaskURLComponent,
+    TaskURLComponent,
   ],
   imports: [
     BrowserModule,

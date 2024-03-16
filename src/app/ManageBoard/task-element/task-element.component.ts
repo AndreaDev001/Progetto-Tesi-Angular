@@ -6,8 +6,8 @@ import { Board, CollectionModel, Tag, TagAssignment, Task, TaskAssignment } from
 import { TaskAssignmentService } from 'src/model/services/task-assignment.service';
 import { AlertHandlerService } from 'src/app/services/alert-handler.service';
 import { CanvasHandlerService } from 'src/app/canvas-handler.service';
-import { TagAssignmentService } from 'src/app/tag-assignment.service';
-import { TaskImageService } from 'src/app/task-image.service';
+import { TagAssignmentService } from 'src/model/services/tag-assignment.service';
+import { TaskImageService } from 'src/model/services/task-image.service';
 import { TaskService } from 'src/model/services/task.service';
 import { BetterImageComponent } from 'src/app/Utility/better-image/better-image.component';
 

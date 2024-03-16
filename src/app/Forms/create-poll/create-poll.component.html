@@ -1,5 +1,5 @@
 <form [formGroup]="formGroup" (submit)="handleSubmit($event)">
-    <div class = "container">
+    <div class = "container py-4">
         <div class = "mx-1">
             <div>
                 <h4 class = "d-inline-block">Create a poll</h4>
@@ -7,7 +7,7 @@
             </div>
             <p class = "p-0 m-0">Please specify a title, a description, a minimum amount of votes and a maximum amount</p>
         </div>
-        <div class = "py-2">
+        <div class = "py-2 vertical-container">
             <div>
                 <span class = "d-block mx-2">Title</span>
                 <mat-form-field class = "form-field" *ngIf="title != undefined">
@@ -52,10 +52,10 @@
                     <mat-error *ngIf="maximumVotes.hasError('max') && (maximumVotes.touched || maximumVotes.dirty)">Maximum amount of votes must be smaller than 40</mat-error>
                 </mat-form-field>
             </div>
-            <div class = "mt-2 text-end mx-1">
-                <button class = "confirm-button" [disabled]="!formGroup.valid">Confirm</button>
-                <button class = "stop-button">Delete</button>
-            </div>
+        </div>
+        <div class = "mt-2 text-end mx-1">
+            <button class = "confirm-button" [disabled]="!formGroup.valid">Confirm</button>
+            <button class = "stop-button">Delete</button>
         </div>
     </div>
 </form>

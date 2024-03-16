@@ -2,7 +2,7 @@ import { Component, EventEmitter,Output,Input } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faFileUpload, faImage, faImagePortrait, faRemove } from '@fortawesome/free-solid-svg-icons';
-import { TaskImageService } from 'src/app/task-image.service';
+import { TaskImageService } from 'src/model/services/task-image.service';
 import { CreateTaskImage } from 'src/model/create';
 
 @Component({

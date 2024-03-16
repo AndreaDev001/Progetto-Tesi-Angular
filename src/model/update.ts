@@ -35,3 +35,9 @@ export interface UpdateBoard
     maxAmountOfMembers?: number,
     visibility?: string
 }
+export interface UpdateComment
+{
+    commentID: string,
+    title?: string,
+    text?: string
+}
