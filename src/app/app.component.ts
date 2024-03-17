@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { AuthHandlerService } from './auth/auth-handler.service';
+import { AuthHandlerService } from '../model/auth/auth-handler.service';
 import { HttpClient } from '@angular/common/http';
 import { Subscription } from 'rxjs';
 import { CanvasHandlerService } from './canvas-handler.service';

@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faWarning } from '@fortawesome/free-solid-svg-icons';
-import { AuthHandlerService } from '../auth/auth-handler.service';
+import { AuthHandlerService } from '../../model/auth/auth-handler.service';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 

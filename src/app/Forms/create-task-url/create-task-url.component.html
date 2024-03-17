@@ -9,6 +9,15 @@
         </div>
         <div *ngIf="!isCreating">
             <div>
+                <span class = "d-block mx-2">Name</span>
+                <mat-form-field class = "form-field" *ngIf="name != undefined">
+                    <mat-label class = "input-label">Name</mat-label>
+                    <input matInput placeholder="Name" formControlName="name">
+                    <mat-hint>The name of the link</mat-hint>
+                    <mat-error *ngIf="name.hasError('required') && (name.touched || name.dirty)">Name is required</mat-error>
+                </mat-form-field>
+            </div>
+            <div>
                 <span class = "d-block mx-2">URL</span>
                 <mat-form-field class = "form-field" *ngIf="url != undefined">
                     <mat-label class = "input-label">URL</mat-label>

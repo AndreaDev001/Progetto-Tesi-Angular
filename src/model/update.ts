@@ -41,3 +41,14 @@ export interface UpdateComment
     title?: string,
     text?: string
 }
+export interface UpdateUser
+{
+    name?: string,
+    surname?: string,
+    username?: string,
+    gender?: string
+}
+export interface UpdateUserImage
+{
+    file: any
+}

@@ -69,7 +69,7 @@ import { PollFilterComponent } from './SearchPages/PollPage/poll-filter/poll-fil
 import { DiscussionFilterComponent } from './SearchPages/DiscussionPage/discussion-filter/discussion-filter.component';
 import { HomePageComponent } from './HomePage/home-page/home-page.component';
 import { UnAuthorizedPageComponent } from './un-authorized-page/un-authorized-page.component';
-import { RefreshInterceptor } from './auth/RefreshInterceptor';
+import { RefreshInterceptor } from '../model/auth/RefreshInterceptor';
 import { ManageBoardPageComponent } from './ManageBoard/manage-board-page/manage-board-page.component';
 import { TaskGroupComponent } from './ManageBoard/task-group/task-group.component';
 import { TaskElementComponent } from './ManageBoard/task-element/task-element.component';
@@ -82,7 +82,7 @@ import {MatSelectModule} from '@angular/material/select';
 import { UserHolderComponent } from './Utility/user-holder/user-holder.component';
 import { AddUserComponent } from './Utility/add-user/add-user.component';
 import { CreateInviteComponent } from './Forms/create-invite/create-invite.component';
-import { CanvasComponent } from './canvas/canvas.component';
+import { CanvasComponent } from './Utility/canvas/canvas.component';
 import { MultiSelectionComponent } from './Utility/multi-selection/multi-selection.component';
 import { CreateTagComponent } from './Forms/create-tag/create-tag.component';
 import { NgxColorsModule } from 'ngx-colors';
@@ -97,6 +97,8 @@ import { SearchSelectionComponent } from './Utility/search-selection/search-sele
 import { ModifyUserComponent } from './Forms/modify-user/modify-user.component';
 import { CreateTaskURLComponent } from './Forms/create-task-url/create-task-url.component';
 import { TaskURLComponent } from './ManageBoard/task-url/task-url.component';
+import { CreateTaskFileComponent } from './Forms/create-task-file/create-task-file.component';
+import { TaskFileComponent } from './ManageBoard/task-file/task-file.component';
 
 @NgModule({
   declarations: [
@@ -179,6 +181,8 @@ import { TaskURLComponent } from './ManageBoard/task-url/task-url.component';
     ModifyUserComponent,
     CreateTaskURLComponent,
     TaskURLComponent,
+    CreateTaskFileComponent,
+    TaskFileComponent,
   ],
   imports: [
     BrowserModule,

@@ -84,6 +84,7 @@ export interface TaskURL
 {
     id: string,
     createdDate: string,
+    name: string,
     url: string,
     publisher: BoardMemberRef,
     task: TaskRef
@@ -94,6 +95,13 @@ export interface Role
     publisher: UserRef,
     board: BoardRef,
     amountOfPermissions: number
+}
+export interface TaskFile
+{
+    id: string,
+    createdDate: string,
+    name: string,
+    type: string,
 }
 export interface RoleOwner
 {

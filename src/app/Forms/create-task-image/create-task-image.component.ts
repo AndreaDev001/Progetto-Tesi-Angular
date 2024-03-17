@@ -47,7 +47,7 @@ export class CreateTaskImageComponent {
       this.submitEvent.emit(createTaskImage);
       this.taskImageService.createImage(createTaskImage).subscribe((value: any) => {
         this.successEvent.emit(value);
-      })
+      },(err: any) => this.failedEvent.emit(err));
     }
   }
 

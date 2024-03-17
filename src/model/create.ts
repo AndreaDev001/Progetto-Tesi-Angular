@@ -73,4 +73,11 @@ export interface CreateTaskURL
 {
     taskID: string,
     url: string,
+    name: string
+}
+export interface CreateTaskFile
+{
+    name: string,
+    taskID: string,
+    multipartFile: any
 }

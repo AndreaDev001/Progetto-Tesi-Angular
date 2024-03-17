@@ -46,3 +46,6 @@
 <ng-template #createPollTemplate>
     <app-create-poll (failedEvent)="this.alertHandler.close()" (successEvent)="navigateTo('/poll',$event)"></app-create-poll>
 </ng-template>
+<ng-template #updateUserTemplate>
+    <app-modify-user (successEvent)="this.alertHandler.close()" (failedEvent)="this.alertHandler.close()"></app-modify-user>
+</ng-template>

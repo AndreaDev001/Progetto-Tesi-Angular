@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { HttpUtilsService } from './http-utils.service';
 import { Filter } from 'src/app/SearchPages/UserPage/user-filter/user-filter.component';
 import { PaginationRequest } from '../interfaces';
+import { UpdateUser } from '../update';
 
 @Injectable({
   providedIn: 'root'
@@ -31,6 +32,12 @@ export class UserService {
     const desiredURL: string = context.url + "/private" + "/possible" + "/board" + "/" + boardID + "/user" + "/" + username;
     let queryParams: HttpParams = context.httpUtils.generatePaginationParams(paginationRequest);
     return context.httpClient.get(desiredURL,{params: queryParams})
+  }
+
+  public updateUser(updateUser: UpdateUser): any {
+    const desiredURL: string = this.url + "/private";
+    let queryParams: HttpParams = new HttpParams();
+    return this.httpClient.put(desiredURL,updateUser,{params: queryParams});
   }
 
   public getUsersBySpec(filter: Filter): any {

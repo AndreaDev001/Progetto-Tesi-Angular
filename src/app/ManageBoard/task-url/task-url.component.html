@@ -1,3 +1,9 @@
-<div class = "url-wrapper" *ngIf="taskURL != undefined">
-    <a target="_blank" class = "task-url" [href]="taskURL.url">{{taskURL.url}}</a>
+<div class = "d-flex" *ngIf="taskURL != undefined">
+    <div class = "url-wrapper">
+        <p class = "p-0 m-0" style="font-size: 15px;">{{taskURL.name}}</p>
+        <a target="_blank" class = "task-url" [href]="taskURL.url">{{taskURL.url}}</a>
+    </div>
+    <div style="flex-basis: 15%;text-align: center;">
+        <button (click)="deleteURL()" class = "default-button">Remove</button>
+    </div>
 </div>

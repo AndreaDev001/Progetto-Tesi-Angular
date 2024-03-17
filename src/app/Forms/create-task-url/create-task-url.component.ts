@@ -14,7 +14,8 @@ import { CreateTaskURL } from 'src/model/create';
 export class CreateTaskURLComponent {
   @Input() taskID: any = undefined;
   public formGroup: FormGroup = new FormGroup({
-    url: new FormControl<String>('',[Validators.required()])
+    url: new FormControl<String>('',[Validators.required()]),
+    name: new FormControl<String>('',[Validators.required()])
   })
   public urlIcon: IconDefinition = faPaperclip;
   public isCreating: boolean = false;
@@ -27,8 +28,8 @@ export class CreateTaskURLComponent {
   }
 
   public handleSubmit(event: any): void {
-    if(this.url != undefined && this.formGroup.valid && this.taskID != undefined) {
-      let createTaskURL: CreateTaskURL = {url: this.url.value,taskID: this.taskID};
+    if(this.url != undefined && this.name != undefined && this.formGroup.valid && this.taskID != undefined) {
+      let createTaskURL: CreateTaskURL = {url: this.url.value,taskID: this.taskID,name: this.name.value};
       this.submitEvent.emit(createTaskURL);
       this.formGroup.reset();
       this.isCreating = true;
@@ -46,4 +47,5 @@ export class CreateTaskURLComponent {
     this.formGroup.reset();
   }
   get url(): any {return this.formGroup.get("url")};
+  get name(): any {return this.formGroup.get("name");};
 }

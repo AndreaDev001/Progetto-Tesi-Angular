@@ -13,7 +13,7 @@ import { UpdateTask, UpdateTaskGroup } from 'src/model/update';
 import {CreateTaskGroup}from 'src/model/create';
 import { AlertHandlerService } from 'src/app/services/alert-handler.service';
 import { group } from '@angular/animations';
-import { AuthHandlerService } from 'src/app/auth/auth-handler.service';
+import { AuthHandlerService } from 'src/model/auth/auth-handler.service';
 
 @Component({
   selector: 'app-manage-board-page',

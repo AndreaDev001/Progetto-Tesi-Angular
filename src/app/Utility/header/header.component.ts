@@ -38,6 +38,7 @@ export class HeaderComponent implements OnInit,OnDestroy {
   @ViewChild("createBoardTemplate") createBoardTemplate: any;
   @ViewChild("createDiscussionTemplate") createDiscussionTemplate: any;
   @ViewChild("createPollTemplate") createPollTemplate: any;
+  @ViewChild("updateUserTemplate") updateUserTemplate: any;
 
   constructor(public router: Router,public alertHandler: AlertHandlerService) {
 
@@ -74,7 +75,11 @@ export class HeaderComponent implements OnInit,OnDestroy {
     this.userOptions.push({name: "Tasks",icon: faTasks,callback: () => {}});
     this.userOptions.push({name: "Invites",icon :faMessage,callback: () => {}});
     this.userOptions.push({name: "Likes",icon: faHeart,callback: () => {}});
-    this.userOptions.push({name: "Modify",icon: faGear,callback: () => {}});
+    this.userOptions.push({name: "Modify",icon: faGear,callback: () => {
+      this.alertHandler.reset();
+      this.alertHandler.setTextTemplate(this.updateUserTemplate);
+      this.alertHandler.open();
+    }});
   }
 
   public ngOnDestroy(): void {

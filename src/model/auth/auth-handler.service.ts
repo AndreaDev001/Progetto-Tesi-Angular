@@ -73,6 +73,10 @@ export class AuthHandlerService {
     }
   }
 
+  public refreshUserInfo(): void {
+    this.readUserInfo(this.currentAccessToken.value);
+  }
+
   public async performLogin() {
     await this.oauthService.initCodeFlow();
   }

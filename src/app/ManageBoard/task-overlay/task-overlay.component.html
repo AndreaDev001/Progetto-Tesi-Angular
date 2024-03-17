@@ -79,7 +79,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <app-loader [diameter]="50" [strokeWidth]="5" [isSearching]="searchingImages" [requiredTemplate]="imagesSection"></app-loader>
+                            <app-loader [diameter]="60" [strokeWidth]="8" [isSearching]="searchingImages" [requiredTemplate]="imagesSection"></app-loader>
                         </div>
                     </div>
                     <div class = "py-1">
@@ -101,7 +101,7 @@
                         </div>
                     </div>
                     <div>
-                        <app-loader [isSearching]="searchingChecklists" [requiredTemplate]="checkListSection"></app-loader>
+                        <app-loader [diameter]="60" [strokeWidth]="8" [isSearching]="searchingChecklists" [requiredTemplate]="checkListSection"></app-loader>
                     </div>
                     <div>
                         <div class = "d-flex">
@@ -118,13 +118,26 @@
                     </div>
                     <div>
                         <div class = "d-flex">
+                            <fa-icon [icon]="fileIcon" style="font-size: 25px;"></fa-icon>
+                            <div class = "mx-3">
+                                <p class = "overlay-section-title">Files</p>
+                                <p class = "mt-1" style="font-size: 15px;">Add or remove one attached file</p>
+                            </div>
+                        </div>
+                        <app-loader [requiredTemplate]="filesTemplate" [diameter]="60" [strokeWidth]="8" [isSearching]="searchingFiles"></app-loader>
+                        <div class = "text-end mt-2">
+                            <button (click)="createFile()" class = "default-button">Add a file</button>
+                        </div>
+                    </div>
+                    <div>
+                        <div class = "d-flex">
                             <fa-icon [icon]="commentIcon" style="font-size: 25px;"></fa-icon>
                             <div class = "mx-3">
                                 <p class = "overlay-section-title">Activity</p>
                                 <p class = "mt-1" style="font-size: 15px;">You can interact by commenting</p>
                             </div>
                         </div>
-                        <app-loader [requiredTemplate]="commentsTemplate" [isSearching]="searchingComments" [diameter]="60" [strokeWidth]="7"></app-loader>
+                        <app-loader [requiredTemplate]="commentsTemplate" [isSearching]="searchingComments" [diameter]="60" [strokeWidth]="8"></app-loader>
                         <div class = "text-end mt-2">
                             <button (click)="addComment()" class = "default-button">Comment</button>
                         </div>
@@ -206,6 +219,26 @@
                                 <div class = "mt-2">
                                     <button class = "add-option-button" (click)="addNewImage()">Add a new image</button>
                                 </div>
+                            </div>
+                        </div>
+                        <div class = "mt-1" ngbDropdown container="body">
+                            <button ngbDropdownToggle class = "option-button">
+                                <fa-icon [icon]="urlIcon"></fa-icon>
+                                <span class = "mx-1">URLS</span>
+                            </button>
+                            <div class = "secondary-color w-100 p-2" ngbDropdownMenu>
+                                <app-loader [diameter]="60" [strokeWidth]="8" [requiredTemplate]="urlsTemplate" [isSearching]="searchingURLS"></app-loader>
+                                <button class = "add-option-button px-2" (click)="createURL()">Add a URL</button>
+                            </div>
+                        </div>
+                        <div class = "mt-1" ngbDropdown container="body">
+                            <button ngbDropdownToggle class = "option-button">
+                                <fa-icon [icon]="fileIcon"></fa-icon>
+                                <span class = "mx-1">Files</span>
+                            </button>
+                            <div class = "secondary-color w-100 p-2" ngbDropdownMenu>
+                                <app-loader [diameter]="60" [strokeWidth]="8" [requiredTemplate]="filesTemplate" [isSearching]="searchingFiles"></app-loader>
+                                <button class = "add-option-button px-2" (click)="createFile()">Add a file</button>
                             </div>
                         </div>
                     </ul>
@@ -328,10 +361,21 @@
     </div>
 </ng-template>
 <ng-template #urlTemplate let-i>
-    <app-task-url [taskURL]="i"></app-task-url>
+    <app-task-url (deletedEvent)="deleteURL($event)" [taskURL]="i"></app-task-url>
 </ng-template>
 <ng-template #urlsTemplate>
     <div style="padding: 0px 2%">
         <app-text-overflow [horizontal]="false" [templates]="currentURLSItems"></app-text-overflow>
+    </div>
+</ng-template>
+<ng-template #createFileTemplate>
+    <app-create-task-file [taskID]="task?.id" (successEvent)="this.currentFiles.push($event);this.currentFileItems.push({template: this.fileTemplate,context: $event});this.alertHandlerService.close()" (failedEvent)="this.alertHandlerService.close()"></app-create-task-file>
+</ng-template>
+<ng-template #fileTemplate let-i>
+    <app-task-file (deletedEvent)="deleteFile($event)" [taskFile]="i"></app-task-file>
+</ng-template>
+<ng-template #filesTemplate>
+    <div style="padding: 0px 2%">
+        <app-text-overflow [horizontal]="false" [templates]="currentFileItems"></app-text-overflow>
     </div>
 </ng-template>

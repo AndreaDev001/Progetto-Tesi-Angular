@@ -15,7 +15,7 @@ import { UsersPageComponent } from './SearchPages/UserPage/users-page/users-page
 import { SearchDiscussionsComponent } from './SearchPages/DiscussionPage/search-discussions/search-discussions.component';
 import { SearchPollsComponent } from './SearchPages/PollPage/search-polls/search-polls.component';
 import { UnAuthorizedPageComponent } from './un-authorized-page/un-authorized-page.component';
-import { AuthGuard } from './auth/auth.guard';
+import { AuthGuard } from '../model/auth/auth.guard';
 import { ManageBoardPageComponent } from './ManageBoard/manage-board-page/manage-board-page.component';
 import { CreatePollComponent } from './Forms/create-poll/create-poll.component';
 import { CreateDiscussionComponent } from './Forms/create-discussion/create-discussion.component';
