@@ -85,10 +85,13 @@ export class DiscussionDetailsComponent implements OnInit, OnDestroy{
         this.discussionLikeService.createDiscussionLike(this.discussion.id).subscribe((value: any) => {
         callback(true,value)
         this.discussion!!.amountOfReceivedLikes = this.discussion!!.amountOfReceivedLikes + 1;
+        this.descriptionItems[0].amount = this.discussion!!.amountOfReceivedLikes.toString();
       },(err: any) => callback(false,undefined))
     else
         this.discussionLikeService.deleteDiscussionLike(this.currentLike.id).subscribe((value: any) => {
+          this.currentLike = undefined;
           this.discussion!!.amountOfReceivedLikes = this.discussion!!.amountOfReceivedLikes - 1;
+          this.descriptionItems[0].amount = this.discussion!!.amountOfReceivedLikes.toString();
         })
   }
 

@@ -22,6 +22,7 @@ export class DiscussionReportService {
 
   public getReportBetween(discussionID: string,reporterID: string): any {
     const desiredURL: string = this.url + "/private" + "/discussion/" + discussionID + "/reporter" + "/" + reporterID;
+    console.log("URL" + desiredURL);
     let queryParams: HttpParams = new HttpParams();
     return this.httpClient.get(desiredURL,{params: queryParams});
   }

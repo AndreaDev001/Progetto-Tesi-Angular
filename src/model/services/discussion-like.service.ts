@@ -15,7 +15,7 @@ export class DiscussionLikeService {
   }
 
   public getLikeBetween(discussionID: string,userID: string): any {
-    const desiredURL: string = this.url + "/private" + "/discussion" + "/" + discussionID + "/user" + "/" + userID;
+    const desiredURL: string = this.url + "/private" + "/user" + "/" + userID + "/discussion" + "/" + discussionID;
     let queryParams: HttpParams = new HttpParams();
     return this.httpClient.get(desiredURL,{params: queryParams});
   }
