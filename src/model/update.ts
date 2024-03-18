@@ -48,6 +48,13 @@ export interface UpdateUser
     username?: string,
     gender?: string
 }
+export interface UpdateDiscussion
+{
+    discussionID: string
+    title?: string,
+    topic?: string,
+    text?: string
+}
 export interface UpdateUserImage
 {
     file: any

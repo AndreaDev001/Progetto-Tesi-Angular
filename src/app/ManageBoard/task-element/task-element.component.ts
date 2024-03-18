@@ -1,6 +1,6 @@
 import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
-import { faCheck, faCheckCircle, faClockFour, faComment, faComments, faEllipsis, faImage, faImages } from '@fortawesome/free-solid-svg-icons';
+import { faCheck, faCheckCircle, faClockFour, faComment, faComments, faEllipsis, faFileDownload, faImage, faImages, faPaperclip } from '@fortawesome/free-solid-svg-icons';
 import { TagService } from 'src/model/services/tag.service';
 import { Board, CollectionModel, Tag, TagAssignment, Task, TaskAssignment } from 'src/model/interfaces';
 import { TaskAssignmentService } from 'src/model/services/task-assignment.service';
@@ -45,7 +45,6 @@ export class TaskElementComponent implements OnInit {
   }
 
   public updateTask(): void {
-    console.log("task updated");
     if(this.task != undefined) {
       this.taskService.getTaskByID(this.task.id).subscribe((value: any) => {
         this.task = value
@@ -63,6 +62,8 @@ export class TaskElementComponent implements OnInit {
       this.currentDescriptionItems.push({icon: faCheck,amount: this.task.amountOfCheckLists.toString()});
       this.currentDescriptionItems.push({icon: faImages,amount: this.task.amountOfImages.toString()})
       this.currentDescriptionItems.push({icon: faComments,amount: this.task.amountOfReceivedComments.toString()});
+      this.currentDescriptionItems.push({icon: faPaperclip,amount: this.task.amountOfURLs.toString()});
+      this.currentDescriptionItems.push({icon: faFileDownload,amount: this.task.amountOfFiles.toString()});
       this.taskAssignment.getTaskAssignmentsByTask(this.task.id).subscribe((value: CollectionModel) => {
         this.currentTaskAssignments = value._embedded != undefined && value._embedded.content != undefined ? value._embedded.content : [];
       })

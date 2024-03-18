@@ -59,15 +59,32 @@ export interface Discussion
     createdDate: string
     title: string,
     topic: string,
+    text?: string,
     publisher: UserRef,
-    amountOfComments: number,
-    amountOfLikes: number
+    amountOfReceivedComments: number,
+    amountOfReceivedLikes: number
 }
 export interface Permission
 {
     name: string,
     publisher: UserRef,
     role: RoleRef
+}
+export interface DiscussionComment
+{
+    id: string,
+    createdDate: string,
+    title: string,
+    text: string,
+    discussion: DiscussionRef
+}
+export interface PollComment
+{
+    id: string,
+    createdDate: string
+    title: string,
+    text: string,
+    poll: PollRef
 }
 export interface Poll
 {
@@ -152,6 +169,8 @@ export interface Task
     amountOfImages: number,
     amountOfCheckLists: number,
     amountOfReceivedComments: number,
+    amountOfURLs: number,
+    amountOfFiles: number
 }
 export interface TaskGroup
 {
@@ -281,6 +300,8 @@ export interface PollReport
 }
 export interface DiscussionLike
 {
+    id: string,
+    createdDate: string,
     user: UserRef,
     discussion: DiscussionRef
 }

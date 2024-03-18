@@ -18,6 +18,6 @@ export class DiscussionCardComponent implements OnInit {
 
   public ngOnInit(): void {
     if(this.discussionRef != undefined)
-        this.discussion = {title: this.discussionRef.title,topic: this.discussionRef.topic,id: this.discussionRef.id,createdDate: this.discussionRef.createdDate,publisher: this.discussionRef.publisher,amountOfLikes: this.discussionRef.amountOfLikes,amountOfComments: this.discussionRef.amountOfComments};  
+        this.discussion = {title: this.discussionRef.title,topic: this.discussionRef.topic,id: this.discussionRef.id,createdDate: this.discussionRef.createdDate,publisher: this.discussionRef.publisher,amountOfReceivedLikes: this.discussionRef.amountOfLikes,amountOfReceivedComments: this.discussionRef.amountOfComments};  
   }
 }

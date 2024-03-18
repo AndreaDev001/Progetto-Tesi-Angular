@@ -14,6 +14,7 @@ export class UserHolderComponent implements OnInit {
   @Input() imageHeight: number = 60;
   @Input() userRef: UserRef | undefined = undefined;
   @Input() showNameInfo: boolean = true;
+  public wrapperStyle: any = undefined;
 
   public ngOnInit(): void {
     if(this.userRef != undefined)

@@ -19,4 +19,10 @@ export class DiscussionReportService {
     let queryParams: HttpParams = new HttpParams();
     return this.httpClient.post(desiredURL,createReport,{params: queryParams});
   }
+
+  public getReportBetween(discussionID: string,reporterID: string): any {
+    const desiredURL: string = this.url + "/private" + "/discussion/" + discussionID + "/reporter" + "/" + reporterID;
+    let queryParams: HttpParams = new HttpParams();
+    return this.httpClient.get(desiredURL,{params: queryParams});
+  }
 }

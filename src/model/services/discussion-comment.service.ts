@@ -8,7 +8,7 @@ import { CreateComment } from '../create';
 })
 export class DiscussionCommentService {
 
-  private url: string = "http://localhost:8080/api/v1/discussionComments";
+  private url: string = "http://localhost:8080/api/v1/commentDiscussions";
 
   constructor(private httpClient: HttpClient,private httpUtilsService: HttpUtilsService) {
 

@@ -9,7 +9,7 @@
         </div>
         <div>
             <div class = "p-2 text-center">
-                <img class = "user-image" [src]="'http://localhost:8080/api/v1/userImages/public/user/' + authHandler.getCurrentUserID(true) + '/image'">
+                <app-better-image [wrapperStyle]="{'display': 'flex','justify-content': 'center','align-items': 'center'}" [imageStyle]="{'width': '150px','height': '150px','border-radius': '60%','object-fit': 'cover','border': '1px solid var(--tertiary-color)','filter': 'brightness(70%)'}" [requiredSource]="'http://localhost:8080/api/v1/userImages/public/user/' + authHandler.getCurrentUserID(true) + '/image'"></app-better-image>
                 <input (change)="updateCurrentFile($event)" class = "d-block mt-1" type="file">
             </div>
             <div>

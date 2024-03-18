@@ -49,7 +49,6 @@ import { DiscussionPageComponent } from './DiscussionPage/discussion-page/discus
 import { PollPageComponent } from './PollPage/poll-page/poll-page.component';
 import { DiscussionDetailsComponent } from './DiscussionPage/discussion-details/discussion-details.component';
 import { DiscussionOptionsComponent } from './DiscussionPage/discussion-options/discussion-options.component';
-import { DiscussionCommentComponent } from './DiscussionPage/discussion-comment/discussion-comment.component';
 import { PollDetailsComponent } from './PollPage/poll-details/poll-details.component';
 import { PollOptionsComponent } from './PollPage/poll-options/poll-options.component';
 import { PollOptionComponent } from './PollPage/poll-option/poll-option.component';
@@ -141,7 +140,6 @@ import { TaskFileComponent } from './ManageBoard/task-file/task-file.component';
     PollPageComponent,
     DiscussionDetailsComponent,
     DiscussionOptionsComponent,
-    DiscussionCommentComponent,
     PollDetailsComponent,
     PollOptionsComponent,
     PollOptionComponent,

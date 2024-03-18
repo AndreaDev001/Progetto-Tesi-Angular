@@ -72,7 +72,6 @@ export class ModifyUserComponent implements OnInit {
       })
     }
     if(this.currentFile != undefined) {
-      console.log(this.currentFile);
       let updateUserImage: UpdateUserImage = {file: this.currentFile};
       this.userImageService.updateUserImage(updateUserImage).subscribe((value: any) => this.successEvent.emit(value),(err: any) => this.failedEvent.emit(err));
     }

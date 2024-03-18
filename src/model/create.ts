@@ -81,3 +81,9 @@ export interface CreateTaskFile
     taskID: string,
     multipartFile: any
 }
+export interface CreateDiscussion
+{
+  title: string,
+  topic: string,
+  text: string
+}

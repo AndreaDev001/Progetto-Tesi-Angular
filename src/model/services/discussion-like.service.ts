@@ -14,9 +14,26 @@ export class DiscussionLikeService {
 
   }
 
+  public getLikeBetween(discussionID: string,userID: string): any {
+    const desiredURL: string = this.url + "/private" + "/discussion" + "/" + discussionID + "/user" + "/" + userID;
+    let queryParams: HttpParams = new HttpParams();
+    return this.httpClient.get(desiredURL,{params: queryParams});
+  }
+
   public getDiscussionLikesByUser(userID: any,page: PaginationRequest): any {
     const desiredURL: string = this.url + "/private" + "/user" + "/" + userID;
     let queryParams: HttpParams = this.HttpUtils.generatePaginationParams(page);
     return this.httpClient.get(desiredURL,{params: queryParams});
+  }
+
+  public createDiscussionLike(discussionID: string): any {
+      const desiredURL: string = this.url + "/private" + "/discussion" + "/" + discussionID;
+      let queryParams: HttpParams = new HttpParams();
+      return this.httpClient.post(desiredURL,{params: queryParams});
+  }
+  public deleteDiscussionLike(discussionLikeID: string): any {
+    const desiredURL: string = this.url + "/private" + "/" + discussionLikeID;
+    let queryParams: HttpParams = new HttpParams();
+    return this.httpClient.delete(desiredURL,{params: queryParams});
   }
 }

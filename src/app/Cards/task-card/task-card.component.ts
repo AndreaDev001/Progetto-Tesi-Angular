@@ -19,7 +19,7 @@ export class TaskCardComponent implements OnInit {
 
   public ngOnInit(): void {
     if(this.taskRef != undefined) {
-      this.task = {id: this.taskRef.id,subtitle: this.taskRef.subtitle,createdDate: this.taskRef.createdDate,expirationDate: this.taskRef.expirationDate,publisher: this.taskRef.publisher,title: this.taskRef.title,description: this.taskRef.description,amountOfReceivedLikes: this.taskRef.amountOfLikes,amountOfAssignments: this.taskRef.amountOfAssignedMembers,amountOfCheckLists: 0,amountOfImages: 0,amountOfReceivedComments: 0};
+      this.task = {id: this.taskRef.id,subtitle: this.taskRef.subtitle,createdDate: this.taskRef.createdDate,expirationDate: this.taskRef.expirationDate,publisher: this.taskRef.publisher,title: this.taskRef.title,description: this.taskRef.description,amountOfReceivedLikes: this.taskRef.amountOfLikes,amountOfAssignments: this.taskRef.amountOfAssignedMembers,amountOfCheckLists: 0,amountOfImages: 0,amountOfReceivedComments: 0,amountOfFiles: 0,amountOfURLs: 0};
     }
   }
 }

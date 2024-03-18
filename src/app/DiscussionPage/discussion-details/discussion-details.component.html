@@ -1,19 +1,41 @@
 <div *ngIf="discussion != undefined">
-        <h3 class = "d-inline-block">{{discussion.title}}</h3>
-        <p>{{discussion.topic}}</p>
-        <app-user-holder [userRef]="discussion.publisher"></app-user-holder>
-        <div class = "position-absolute" style="top: 0;right:0">
-        <div class = "d-inline-block">
-            <fa-icon class = "d-inline-block" [icon]="calendarIcon"></fa-icon>
-            <p class = "mx-1 d-inline-block">{{discussion.createdDate}}</p>
+    <div class = "position-relative w-100">
+        <div class = "position-absolute" style="top: 0;right: 0;">
+            <div class = "mx-1 d-inline-block" *ngFor="let current of descriptionItems">
+                <ng-container *ngTemplateOutlet="descriptionTemplate;context: {item: current}"></ng-container>
+            </div>
         </div>
-        <div class = "d-inline-block mx-2">
-            <fa-icon [icon]="heartIcon"></fa-icon>
-            <p class = "mx-1 d-inline-block">{{discussion.amountOfLikes}}</p>
+        <div>
+            <h3 class = "p-0 m-0">{{discussion.title}}</h3>
+            <p class = "p-0 m-0">{{discussion.topic}}</p>
         </div>
-    </div>
-    <div class = "py-2">
-        <button class = "add-like-button">Add Like</button>
-        <button class = "report-button">Report</button>
+        <div class = "py-1">
+            <p>{{discussion.text}}</p>
+            <div class = "py-1">
+                <div class = "row">
+                    <div class = "col-12 col-md-6">
+                        <app-user-holder [userRef]="discussion.publisher"></app-user-holder>
+                    </div>
+                    <div class = "mt-2 mt-md-0 col-12 col-md-6 text-end">
+                        <button (click)="modifyDiscussion()" class = "default-button mx-1" *ngIf="isOwner">Modify</button>
+                        <button class = "default-button mx-1" (click)="updateLike()">{{currentLike != undefined ? 'Remove Like' : 'Add Like'}}</button>
+                        <button class = "default-button mx-1" *ngIf="isOwner">Delete</button>
+                        <button (click)="addReport()" class = "default-button mx-1" *ngIf="!isOwner && currentReport == undefined">Report</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
+<ng-template #descriptionTemplate let-item="item">
+    <div class = "d-inline-block" style="font-size: 20px;">
+        <fa-icon [icon]="item.icon"></fa-icon>
+        <span class = "mx-1">{{item.amount}}</span>
+    </div>
+</ng-template>
+<ng-template #createReportTemplate>
+    <app-create-report (successEvent)="this.currentReport = $event;this.alertHandlerService.close()" (failedEvent)="this.alertHandlerService.close()" [discussionID]="discussion?.id"></app-create-report>
+</ng-template>
+<ng-template #createDiscussionTemplate>
+    <app-create-discussion [update]="true" [discussionID]="discussion?.id" (successEvent)="this.discussion = $event;this.alertHandlerService.close()" (failedEvent)="this.alertHandlerService.close()"></app-create-discussion>
+</ng-template>
