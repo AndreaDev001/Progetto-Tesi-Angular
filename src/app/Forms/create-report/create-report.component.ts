@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faWarning } from '@fortawesome/free-solid-svg-icons';
-import { DropdownOption } from 'src/app/Utility/dropdown/dropdown.component';
+import { DropdownOption } from 'src/app/Utility/components/dropdown/dropdown.component';
 import { CollectionModel, TaskReport } from 'src/model/interfaces';
 import { CommentReportService } from 'src/model/services/comment-report.service';
 import { DiscussionReportService } from 'src/model/services/discussion-report.service';

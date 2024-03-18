@@ -3,7 +3,7 @@ import { Filter } from '../ban-filter/ban-filter.component';
 import { Subscription } from 'rxjs';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faBan, faFilter } from '@fortawesome/free-solid-svg-icons';
-import { OffCanvasHandlerService } from 'src/app/services/off-canvas-handler.service';
+import { OffCanvasHandlerService } from 'src/app/Utility/services/off-canvas-handler.service';
 import { BanService } from 'src/model/services/ban.service';
 import { Ban, PagedModel } from 'src/model/interfaces';
 

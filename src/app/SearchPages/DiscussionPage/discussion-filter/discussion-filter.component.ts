@@ -1,7 +1,7 @@
 import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { DropdownOption } from 'src/app/Utility/dropdown/dropdown.component';
+import { DropdownOption } from 'src/app/Utility/components/dropdown/dropdown.component';
 import { CollectionModel } from 'src/model/interfaces';
 import { UserService } from 'src/model/services/user.service';
 

@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { HttpUtilsService } from 'src/model/services/http-utils.service';
-import { PaginationComponent } from '../../app/Utility/pagination/pagination.component';
+import { PaginationComponent } from '../../app/Utility/components/pagination/pagination.component';
 import { PaginationRequest } from '../interfaces';
 import { Filter } from 'src/app/SearchPages/PollPage/poll-filter/poll-filter.component';
 import { CreatePoll } from 'src/app/Forms/create-poll/create-poll.component';

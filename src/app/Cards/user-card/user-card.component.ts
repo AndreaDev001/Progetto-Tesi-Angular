@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { AuthHandlerService } from 'src/model/auth/auth-handler.service';
-import { AlertHandlerService } from 'src/app/services/alert-handler.service';
+import { AlertHandlerService } from 'src/app/Utility/services/alert-handler.service';
 import { User } from 'src/model/interfaces';
 
 @Component({

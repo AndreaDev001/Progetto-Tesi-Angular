@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input,Output } from '@angular/core';
-import { TaskURLService } from 'src/app/task-url.service';
+import { TaskURLService } from 'src/model/services/task-url.service';
 import { Task, TaskURL } from 'src/model/interfaces';
 
 @Component({

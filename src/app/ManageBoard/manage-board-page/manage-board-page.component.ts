@@ -11,7 +11,7 @@ import { TaskAssignmentService } from 'src/model/services/task-assignment.servic
 import { TaskService } from 'src/model/services/task.service';
 import { UpdateTask, UpdateTaskGroup } from 'src/model/update';
 import {CreateTaskGroup}from 'src/model/create';
-import { AlertHandlerService } from 'src/app/services/alert-handler.service';
+import { AlertHandlerService } from 'src/app/Utility/services/alert-handler.service';
 import { group } from '@angular/animations';
 import { AuthHandlerService } from 'src/model/auth/auth-handler.service';
 

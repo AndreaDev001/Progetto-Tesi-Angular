@@ -4,7 +4,7 @@ import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
 import { Validators } from 'ngx-editor';
 import { Subscription } from 'rxjs';
-import { UserImageService } from 'src/app/user-image.service';
+import { UserImageService } from 'src/model/services/user-image.service';
 import { AuthHandlerService } from 'src/model/auth/auth-handler.service';
 import { CollectionModel } from 'src/model/interfaces';
 import { UserService } from 'src/model/services/user.service';

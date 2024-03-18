@@ -2,7 +2,7 @@ import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faDiscourse } from '@fortawesome/free-brands-svg-icons';
 import { Subscription } from 'rxjs';
-import { OffCanvasHandlerService } from 'src/app/services/off-canvas-handler.service';
+import { OffCanvasHandlerService } from 'src/app/Utility/services/off-canvas-handler.service';
 import { Discussion, PagedModel } from 'src/model/interfaces';
 import { DiscussionService } from 'src/model/services/discussion.service';
 import { Filter } from '../discussion-filter/discussion-filter.component';

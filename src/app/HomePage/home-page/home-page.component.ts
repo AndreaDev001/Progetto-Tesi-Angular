@@ -12,7 +12,7 @@ import { BoardMemberService } from 'src/model/services/board-member.service';
 import { DiscussionService } from 'src/model/services/discussion.service';
 import { PollService } from 'src/model/services/poll.service';
 import { BoardInviteService } from 'src/model/services/board-invite.service';
-import { TextOverflowItem } from 'src/app/Utility/text-overflow/text-overflow.component';
+import { TextOverflowItem } from 'src/app/Utility/components/text-overflow/text-overflow.component';
 import { AuthHandlerService } from 'src/model/auth/auth-handler.service';
 
 interface OptionTemplate

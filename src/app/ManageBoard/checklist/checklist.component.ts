@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faCheckCircle, faClose } from '@fortawesome/free-solid-svg-icons';
-import { AlertHandlerService } from 'src/app/services/alert-handler.service';
+import { AlertHandlerService } from 'src/app/Utility/services/alert-handler.service';
 import { CheckList, CheckListOption, CollectionModel } from 'src/model/interfaces';
 import { CheckListOptionService } from 'src/model/services/check-list-option.service';
 import { CheckListService } from 'src/model/services/check-list.service';

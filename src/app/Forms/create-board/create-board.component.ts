@@ -3,7 +3,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { Validators } from '@angular/forms';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faTable } from '@fortawesome/free-solid-svg-icons';
-import { DropdownOption } from 'src/app/Utility/dropdown/dropdown.component';
+import { DropdownOption } from 'src/app/Utility/components/dropdown/dropdown.component';
 import { BoardImageService } from 'src/model/services/board-image.service';
 import { CreateBoardImage } from 'src/model/create';
 import { Board, CollectionModel } from 'src/model/interfaces';

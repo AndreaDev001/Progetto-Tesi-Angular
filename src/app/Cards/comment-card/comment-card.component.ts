@@ -3,7 +3,7 @@ import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faCalendar, faCalendarDay, faGear, faHeart } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
 import { AuthHandlerService } from 'src/model/auth/auth-handler.service';
-import { AlertHandlerService } from 'src/app/services/alert-handler.service';
+import { AlertHandlerService } from 'src/app/Utility/services/alert-handler.service';
 import { Comment, DiscussionComment, PollComment, TaskComment } from 'src/model/interfaces';
 import { CommentRef } from 'src/model/refs';
 import { CommentLikeService } from 'src/model/services/comment-like.service';

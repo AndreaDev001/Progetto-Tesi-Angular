@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Subject } from 'rxjs';
-import { AlertComponentComponent } from '../Utility/alert-component/alert-component.component';
+import { AlertComponentComponent } from '../components/alert-component/alert-component.component';
 
 
 export interface AlertOption

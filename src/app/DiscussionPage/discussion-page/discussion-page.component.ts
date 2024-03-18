@@ -6,8 +6,8 @@ import { Subscription } from 'rxjs';
 import { CommentService } from 'src/model/services/comment.service';
 import { CollectionModel, Comment, Discussion, DiscussionComment, PagedModel, PaginationRequest } from 'src/model/interfaces';
 import { DiscussionService } from 'src/model/services/discussion.service';
-import { TextOverflowItem } from 'src/app/Utility/text-overflow/text-overflow.component';
-import { AlertHandlerService } from 'src/app/services/alert-handler.service';
+import { TextOverflowItem } from 'src/app/Utility/components/text-overflow/text-overflow.component';
+import { AlertHandlerService } from 'src/app/Utility/services/alert-handler.service';
 import { DiscussionCommentService } from 'src/model/services/discussion-comment.service';
 
 @Component({

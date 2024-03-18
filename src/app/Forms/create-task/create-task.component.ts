@@ -2,7 +2,7 @@ import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output } from '@
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faTasks } from '@fortawesome/free-solid-svg-icons';
-import { DropdownOption } from 'src/app/Utility/dropdown/dropdown.component';
+import { DropdownOption } from 'src/app/Utility/components/dropdown/dropdown.component';
 import { CreateTask } from 'src/model/create';
 import { CollectionModel } from 'src/model/interfaces';
 import { BoardService } from 'src/model/services/board.service';

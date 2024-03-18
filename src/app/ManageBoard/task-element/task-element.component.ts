@@ -4,12 +4,12 @@ import { faCheck, faCheckCircle, faClockFour, faComment, faComments, faEllipsis,
 import { TagService } from 'src/model/services/tag.service';
 import { Board, CollectionModel, Tag, TagAssignment, Task, TaskAssignment } from 'src/model/interfaces';
 import { TaskAssignmentService } from 'src/model/services/task-assignment.service';
-import { AlertHandlerService } from 'src/app/services/alert-handler.service';
+import { AlertHandlerService } from 'src/app/Utility/services/alert-handler.service';
 import { CanvasHandlerService } from 'src/app/canvas-handler.service';
 import { TagAssignmentService } from 'src/model/services/tag-assignment.service';
 import { TaskImageService } from 'src/model/services/task-image.service';
 import { TaskService } from 'src/model/services/task.service';
-import { BetterImageComponent } from 'src/app/Utility/better-image/better-image.component';
+import { BetterImageComponent } from 'src/app/Utility/components/better-image/better-image.component';
 
 
 interface DescriptionItem

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
-import { DropdownOption } from '../../../Utility/dropdown/dropdown.component';
+import { DropdownOption } from '../../../Utility/components/dropdown/dropdown.component';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { TaskService } from 'src/model/services/task.service';

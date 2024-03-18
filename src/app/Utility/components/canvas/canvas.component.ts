@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { CanvasHandlerService } from '../../canvas-handler.service';
+import { CanvasHandlerService } from '../../../canvas-handler.service';
 
 @Component({
   selector: 'app-canvas',

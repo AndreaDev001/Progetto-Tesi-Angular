@@ -1,12 +1,12 @@
 import { Component, EventEmitter, Input, OnInit,ViewChild,Output } from '@angular/core';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faClose, faEllipsis, faGear, faHeart, faMessage, faPlus, faUser, faUserGroup, faUsers } from '@fortawesome/free-solid-svg-icons';
-import { AlertHandlerService } from 'src/app/services/alert-handler.service';
+import { AlertHandlerService } from 'src/app/Utility/services/alert-handler.service';
 import { TeamService } from 'src/model/services/team.service';
 import { Board, BoardMember, CollectionModel, Task, TaskAssignment, Team, TeamMember, User } from 'src/model/interfaces';
 import { BoardMemberService } from 'src/model/services/board-member.service';
 import { CreateBoardInvite } from 'src/model/services/board-invite.service';
-import { TextOverflowItem } from 'src/app/Utility/text-overflow/text-overflow.component';
+import { TextOverflowItem } from 'src/app/Utility/components/text-overflow/text-overflow.component';
 import { BoardInviteService } from 'src/model/services/board-invite.service';
 import { RoleOwnerService } from 'src/model/services/role-owner.service';
 import { CreateRoleOwner, CreateTeamMember } from 'src/model/create';

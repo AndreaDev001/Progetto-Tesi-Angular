@@ -1,9 +1,9 @@
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { TabPaneOption } from '../../../Utility/tab-pane/tab-pane.component';
+import { TabPaneOption } from '../../../Utility/components/tab-pane/tab-pane.component';
 import { IconDefinition, faComment, faHeart, faPoll, faTasks, faTextSlash } from '@fortawesome/free-solid-svg-icons';
 import { faDiscourse } from '@fortawesome/free-brands-svg-icons';
 import { Comment, CommentLike, Discussion, DiscussionLike, PagedModel, PaginationRequest, Poll, PollLike, Task, TaskLike } from 'src/model/interfaces';
-import { TextOverflowItem } from '../../../Utility/text-overflow/text-overflow.component';
+import { TextOverflowItem } from '../../../Utility/components/text-overflow/text-overflow.component';
 import { ActivatedRoute } from '@angular/router';
 import { DiscussionService } from 'src/model/services/discussion.service';
 import { PollService } from 'src/model/services/poll.service';

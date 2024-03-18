@@ -3,7 +3,7 @@ import { PagedModel, User } from 'src/model/interfaces';
 import { Filter } from '../user-filter/user-filter.component';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
-import { OffCanvasHandlerService } from 'src/app/services/off-canvas-handler.service';
+import { OffCanvasHandlerService } from 'src/app/Utility/services/off-canvas-handler.service';
 import { UserService } from 'src/model/services/user.service';
 import { Subscription } from 'rxjs';
 

@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faCheck, faMessage, faPoll, faTable, faTasks, faUser, faUserCircle } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
-import { TextOverflowItem } from 'src/app/Utility/text-overflow/text-overflow.component';
+import { TextOverflowItem } from 'src/app/Utility/components/text-overflow/text-overflow.component';
 import { TaskAssignmentService } from 'src/model/services/task-assignment.service';
 import { Board, BoardMember, Discussion, PagedModel, PaginationRequest, Poll, PollVote, TaskAssignment, User } from 'src/model/interfaces';
 import { BoardMemberService } from 'src/model/services/board-member.service';

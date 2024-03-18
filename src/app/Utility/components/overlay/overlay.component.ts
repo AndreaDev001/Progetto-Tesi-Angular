@@ -2,7 +2,7 @@ import { AfterViewInit, Component, OnChanges, OnDestroy, OnInit, SimpleChanges, 
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faClose } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
-import { OverlayService } from 'src/app/services/overlay.service';
+import { OverlayService } from 'src/app/Utility/services/overlay.service';
 
 @Component({
   selector: 'app-overlay',

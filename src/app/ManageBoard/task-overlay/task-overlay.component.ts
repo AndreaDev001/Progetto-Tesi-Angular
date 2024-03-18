@@ -8,19 +8,19 @@ import { CheckListService } from 'src/model/services/check-list.service';
 import { CheckListOptionService } from 'src/model/services/check-list-option.service';
 import { TaskService } from 'src/model/services/task.service';
 import { UpdateTask } from 'src/model/update';
-import { AlertHandlerService } from 'src/app/services/alert-handler.service';
+import { AlertHandlerService } from 'src/app/Utility/services/alert-handler.service';
 import { CreateTagAssignment, createTaskAssignment } from 'src/model/create';
 import { TagAssignmentService } from 'src/model/services/tag-assignment.service';
 import { BoardMemberService } from 'src/model/services/board-member.service';
 import { TaskImageService } from 'src/model/services/task-image.service';
-import { TextOverflowItem } from 'src/app/Utility/text-overflow/text-overflow.component';
+import { TextOverflowItem } from 'src/app/Utility/components/text-overflow/text-overflow.component';
 import { TaskReportService } from 'src/model/services/task-report.service';
 import { AuthHandlerService } from 'src/model/auth/auth-handler.service';
 import { TaskLikeService } from 'src/model/services/task-like.service';
 import { TeamService } from 'src/model/services/team.service';
 import { TaskCommentService } from 'src/model/services/task-comment.service';
 import { Subscription } from 'rxjs';
-import { TaskURLService } from 'src/app/task-url.service';
+import { TaskURLService } from 'src/model/services/task-url.service';
 import { TaskFileService } from 'src/model/services/task-file.service';
 
 interface ButtonOption

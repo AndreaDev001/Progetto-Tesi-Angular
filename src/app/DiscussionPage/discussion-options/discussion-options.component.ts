@@ -1,7 +1,7 @@
 import { Component, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faMessage, faUser } from '@fortawesome/free-solid-svg-icons';
-import { TextOverflowItem } from 'src/app/Utility/text-overflow/text-overflow.component';
+import { TextOverflowItem } from 'src/app/Utility/components/text-overflow/text-overflow.component';
 import { Discussion, PagedModel, PaginationRequest } from 'src/model/interfaces';
 import { DiscussionService } from 'src/model/services/discussion.service';
 

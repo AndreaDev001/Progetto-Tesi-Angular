@@ -2,7 +2,7 @@ import { Component,Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faCalendar, faCalendarPlus, faComment, faHeart, faMessage } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
-import { AlertHandlerService } from 'src/app/services/alert-handler.service';
+import { AlertHandlerService } from 'src/app/Utility/services/alert-handler.service';
 import { AuthHandlerService } from 'src/model/auth/auth-handler.service';
 import { Discussion, DiscussionLike, DiscussionReport } from 'src/model/interfaces';
 import { DiscussionLikeService } from 'src/model/services/discussion-like.service';

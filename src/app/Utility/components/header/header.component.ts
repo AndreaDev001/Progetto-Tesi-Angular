@@ -4,7 +4,7 @@ import { Icon, IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faDiscourse } from '@fortawesome/free-brands-svg-icons';
 import { faBan, faBars, faExclamationCircle, faFilter, faGear, faHamburger, faHeart, faHome, faHouse, faInfoCircle, faMessage, faPlusCircle, faPoll, faQuestionCircle, faSearch, faTable, faTasks, faUser, faUserCircle, faWarning } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
-import { AlertHandlerService } from 'src/app/services/alert-handler.service';
+import { AlertHandlerService } from 'src/app/Utility/services/alert-handler.service';
 
 
 interface HeaderOption

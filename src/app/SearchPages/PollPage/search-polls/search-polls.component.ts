@@ -4,7 +4,7 @@ import { PagedModel, Poll } from 'src/model/interfaces';
 import { Filter } from '../poll-filter/poll-filter.component';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faPoll } from '@fortawesome/free-solid-svg-icons';
-import { OffCanvasHandlerService } from 'src/app/services/off-canvas-handler.service';
+import { OffCanvasHandlerService } from 'src/app/Utility/services/off-canvas-handler.service';
 import { PollService } from 'src/model/services/poll.service';
 
 @Component({

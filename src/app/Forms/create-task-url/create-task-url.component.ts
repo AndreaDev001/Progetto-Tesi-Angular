@@ -3,7 +3,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faFile, faPaperclip } from '@fortawesome/free-solid-svg-icons';
 import { Validators } from 'ngx-editor';
-import { TaskURLService } from 'src/app/task-url.service';
+import { TaskURLService } from 'src/model/services/task-url.service';
 import { CreateTaskURL } from 'src/model/create';
 
 @Component({

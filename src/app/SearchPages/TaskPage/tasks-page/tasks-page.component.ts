@@ -4,7 +4,7 @@ import { PagedModel, Task, TaskAssignment } from 'src/model/interfaces';
 import { Filter } from '../task-filter/task-filter.component';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faFilter, faTasks } from '@fortawesome/free-solid-svg-icons';
-import { OffCanvasHandlerService } from 'src/app/services/off-canvas-handler.service';
+import { OffCanvasHandlerService } from 'src/app/Utility/services/off-canvas-handler.service';
 import { TaskService } from 'src/model/services/task.service';
 
 @Component({

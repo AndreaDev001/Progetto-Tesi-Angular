@@ -14,7 +14,7 @@ import { LikePagesComponent } from './UserPages/LikePages/like-pages/like-pages.
 import { UsersPageComponent } from './SearchPages/UserPage/users-page/users-page.component';
 import { SearchDiscussionsComponent } from './SearchPages/DiscussionPage/search-discussions/search-discussions.component';
 import { SearchPollsComponent } from './SearchPages/PollPage/search-polls/search-polls.component';
-import { UnAuthorizedPageComponent } from './un-authorized-page/un-authorized-page.component';
+import { UnAuthorizedPageComponent } from './Utility/components/un-authorized-page/un-authorized-page.component';
 import { AuthGuard } from '../model/auth/auth.guard';
 import { ManageBoardPageComponent } from './ManageBoard/manage-board-page/manage-board-page.component';
 import { CreatePollComponent } from './Forms/create-poll/create-poll.component';
@@ -39,7 +39,7 @@ const routes: Routes = [
   {path: 'discussions/:id',component: DiscussionsPageComponent,title: 'Discussions',canActivate: [AuthGuard]},
   {path: 'polls/:id',component: PollsPageComponent,title: 'Polls',canActivate: [AuthGuard]},
   {path: "board/:id",component: ManageBoardPageComponent,title: "Manage Board"},
-  {path: 'unauthorized',component: UnAuthorizedPageComponent,title: "UnAuthorized"},
+  {path: 'unauthorized',component: UnAuthorizedPageComponent,title: "UnAuthorized"}
 ];
 
 @NgModule({

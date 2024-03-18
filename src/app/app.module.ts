@@ -4,12 +4,12 @@ import { BrowserModule } from '@angular/platform-browser';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http'
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HeaderComponent } from './Utility/header/header.component';
+import { HeaderComponent } from './Utility/components/header/header.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { BoardPageComponent } from './SearchPages/BoardPage/board-page/board-page.component';
 import { TasksPageComponent } from './SearchPages/TaskPage/tasks-page/tasks-page.component';
-import { DropdownComponent } from './Utility/dropdown/dropdown.component';
-import { SearchBarComponent } from './Utility/search-bar/search-bar.component';
+import { DropdownComponent } from './Utility/components/dropdown/dropdown.component';
+import { SearchBarComponent } from './Utility/components/search-bar/search-bar.component';
 import { BoardFilterComponent } from './SearchPages/BoardPage/board-filter/board-filter.component';
 import { TaskFilterComponent } from './SearchPages/TaskPage/task-filter/task-filter.component';
 import { ReportFilterComponent } from './SearchPages/ReportPage/report-filter/report-filter.component';
@@ -29,12 +29,12 @@ import { CreateDiscussionComponent } from './Forms/create-discussion/create-disc
 import { CreatePollComponent } from './Forms/create-poll/create-poll.component';
 import { CreateReportComponent } from './Forms/create-report/create-report.component';
 import { CreateBanComponent } from './Forms/create-ban/create-ban.component';
-import { AlertComponentComponent } from './Utility/alert-component/alert-component.component';
-import { NoItemsComponent } from './Utility/no-items/no-items.component';
-import { LoaderComponent } from './Utility/loader/loader.component';
-import { OffCanvasComponent } from './Utility/off-canvas/off-canvas.component';
+import { AlertComponentComponent } from './Utility/components/alert-component/alert-component.component';
+import { NoItemsComponent } from './Utility/components/no-items/no-items.component';
+import { LoaderComponent } from './Utility/components/loader/loader.component';
+import { OffCanvasComponent } from './Utility/components/off-canvas/off-canvas.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { PaginationComponent } from './Utility/pagination/pagination.component';
+import { PaginationComponent } from './Utility/components/pagination/pagination.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { BoardCardComponent } from './Cards/board-card/board-card.component';
 import { TaskCardComponent } from './Cards/task-card/task-card.component';
@@ -52,9 +52,9 @@ import { DiscussionOptionsComponent } from './DiscussionPage/discussion-options/
 import { PollDetailsComponent } from './PollPage/poll-details/poll-details.component';
 import { PollOptionsComponent } from './PollPage/poll-options/poll-options.component';
 import { PollOptionComponent } from './PollPage/poll-option/poll-option.component';
-import { TextOverflowComponent } from './Utility/text-overflow/text-overflow.component';
+import { TextOverflowComponent } from './Utility/components/text-overflow/text-overflow.component';
 import { LikePagesComponent } from './UserPages/LikePages/like-pages/like-pages.component';
-import { TabPaneComponent } from './Utility/tab-pane/tab-pane.component';
+import { TabPaneComponent } from './Utility/components/tab-pane/tab-pane.component';
 import { CommentCardComponent } from './Cards/comment-card/comment-card.component';
 import { DiscussionsPageComponent } from './UserPages/DiscussionsPage/discussions-page/discussions-page.component';
 import { PollsPageComponent } from './UserPages/PollsPage/polls-page/polls-page.component';
@@ -67,7 +67,7 @@ import { UserCardComponent } from './Cards/user-card/user-card.component';
 import { PollFilterComponent } from './SearchPages/PollPage/poll-filter/poll-filter.component';
 import { DiscussionFilterComponent } from './SearchPages/DiscussionPage/discussion-filter/discussion-filter.component';
 import { HomePageComponent } from './HomePage/home-page/home-page.component';
-import { UnAuthorizedPageComponent } from './un-authorized-page/un-authorized-page.component';
+import { UnAuthorizedPageComponent } from './Utility/components/un-authorized-page/un-authorized-page.component';
 import { RefreshInterceptor } from '../model/auth/RefreshInterceptor';
 import { ManageBoardPageComponent } from './ManageBoard/manage-board-page/manage-board-page.component';
 import { TaskGroupComponent } from './ManageBoard/task-group/task-group.component';
@@ -75,14 +75,14 @@ import { TaskElementComponent } from './ManageBoard/task-element/task-element.co
 import { TaskTagComponent } from './ManageBoard/task-tag/task-tag.component';
 import { BoardHeaderComponent } from './ManageBoard/board-header/board-header.component';
 import {DragDropModule} from '@angular/cdk/drag-drop';
-import { OverlayComponent } from './Utility/overlay/overlay.component';
+import { OverlayComponent } from './Utility/components/overlay/overlay.component';
 import { TaskOverlayComponent } from './ManageBoard/task-overlay/task-overlay.component'
 import {MatSelectModule} from '@angular/material/select';
-import { UserHolderComponent } from './Utility/user-holder/user-holder.component';
-import { AddUserComponent } from './Utility/add-user/add-user.component';
+import { UserHolderComponent } from './Utility/components/user-holder/user-holder.component';
+import { AddUserComponent } from './Utility/components/add-user/add-user.component';
 import { CreateInviteComponent } from './Forms/create-invite/create-invite.component';
-import { CanvasComponent } from './Utility/canvas/canvas.component';
-import { MultiSelectionComponent } from './Utility/multi-selection/multi-selection.component';
+import { CanvasComponent } from './Utility/components/canvas/canvas.component';
+import { MultiSelectionComponent } from './Utility/components/multi-selection/multi-selection.component';
 import { CreateTagComponent } from './Forms/create-tag/create-tag.component';
 import { NgxColorsModule } from 'ngx-colors';
 import { CreateCheckListComponent } from './Forms/create-check-list/create-check-list.component';
@@ -91,8 +91,8 @@ import { CreateCheckListOptionComponent } from './Forms/create-check-list-option
 import { CreateTaskImageComponent } from './Forms/create-task-image/create-task-image.component';
 import { NgxEditorModule } from 'ngx-editor';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-import { BetterImageComponent } from './Utility/better-image/better-image.component';
-import { SearchSelectionComponent } from './Utility/search-selection/search-selection.component';
+import { BetterImageComponent } from './Utility/components/better-image/better-image.component';
+import { SearchSelectionComponent } from './Utility/components/search-selection/search-selection.component';
 import { ModifyUserComponent } from './Forms/modify-user/modify-user.component';
 import { CreateTaskURLComponent } from './Forms/create-task-url/create-task-url.component';
 import { TaskURLComponent } from './ManageBoard/task-url/task-url.component';
@@ -180,7 +180,7 @@ import { TaskFileComponent } from './ManageBoard/task-file/task-file.component';
     CreateTaskURLComponent,
     TaskURLComponent,
     CreateTaskFileComponent,
-    TaskFileComponent,
+    TaskFileComponent
   ],
   imports: [
     BrowserModule,
