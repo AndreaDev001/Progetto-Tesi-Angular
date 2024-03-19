@@ -87,3 +87,9 @@ export interface CreateDiscussion
   topic: string,
   text: string
 }
+export interface CreatePollOption
+{
+    pollID: string,
+    name: string,
+    description: string
+}

@@ -19,4 +19,10 @@ export class PollReportService {
     let queryParams: HttpParams = new HttpParams();
     return this.httpClient.post(desiredURL,createReport,{params: queryParams});
   }
+
+  public getReportBetween(pollID: string,reporterID: string): any {
+    const desiredURL: string = this.url + "/private" + "/poll" + "/" + pollID + "/reporter" + "/" + reporterID;
+    let queryParams: HttpParams = new HttpParams();
+    return this.httpClient.get(desiredURL,{params: queryParams});
+  }
 }

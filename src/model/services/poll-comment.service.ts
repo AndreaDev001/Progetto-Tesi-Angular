@@ -8,7 +8,7 @@ import { CreateComment } from '../create';
 })
 export class PollCommentService {
 
-  private url: string = "http://localhost:8080/api/v1/pollComments";
+  private url: string = "http://localhost:8080/api/v1/commentPolls";
 
   constructor(private httpClient: HttpClient,private httpUtilsService: HttpUtilsService) {
 

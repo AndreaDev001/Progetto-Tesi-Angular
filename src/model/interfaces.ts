@@ -233,7 +233,7 @@ export interface User
 }
 export interface PollVote
 {
-    pollOption: PollOptionRef,
+    option: PollOptionRef,
     user: UserRef
 }
 export interface TaskAssignment {
@@ -244,6 +244,8 @@ export interface TaskAssignment {
 }
 export interface PollOption
 {
+    id: string,
+    createdDate: string,
     poll: PollRef,
     name: string,
     description: string,
@@ -290,6 +292,8 @@ export interface DiscussionReport
 }
 export interface PollReport
 {
+    id: string,
+    createdDate: string,
     title: string,
     description: string,
     reason: string,
@@ -307,6 +311,8 @@ export interface DiscussionLike
 }
 export interface PollLike 
 {
+    id: string,
+    createdDate: string,
     user: UserRef,
     poll: PollRef
 }

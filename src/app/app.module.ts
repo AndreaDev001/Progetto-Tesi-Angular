@@ -50,7 +50,6 @@ import { PollPageComponent } from './PollPage/poll-page/poll-page.component';
 import { DiscussionDetailsComponent } from './DiscussionPage/discussion-details/discussion-details.component';
 import { DiscussionOptionsComponent } from './DiscussionPage/discussion-options/discussion-options.component';
 import { PollDetailsComponent } from './PollPage/poll-details/poll-details.component';
-import { PollOptionsComponent } from './PollPage/poll-options/poll-options.component';
 import { PollOptionComponent } from './PollPage/poll-option/poll-option.component';
 import { TextOverflowComponent } from './Utility/components/text-overflow/text-overflow.component';
 import { LikePagesComponent } from './UserPages/LikePages/like-pages/like-pages.component';
@@ -98,6 +97,8 @@ import { CreateTaskURLComponent } from './Forms/create-task-url/create-task-url.
 import { TaskURLComponent } from './ManageBoard/task-url/task-url.component';
 import { CreateTaskFileComponent } from './Forms/create-task-file/create-task-file.component';
 import { TaskFileComponent } from './ManageBoard/task-file/task-file.component';
+import { PollOptionsComponent } from './PollPage/poll-options/poll-options.component';
+import { CreatePollOptionComponent } from './Forms/create-poll-option/create-poll-option.component';
 
 @NgModule({
   declarations: [
@@ -133,6 +134,7 @@ import { TaskFileComponent } from './ManageBoard/task-file/task-file.component';
     PollCardComponent,
     BoardInviteCardComponent,
     ReportCardComponent,
+    PollOptionsComponent,
     BanCardComponent,
     UserPageComponent,
     UserDetailsComponent,
@@ -141,7 +143,6 @@ import { TaskFileComponent } from './ManageBoard/task-file/task-file.component';
     DiscussionDetailsComponent,
     DiscussionOptionsComponent,
     PollDetailsComponent,
-    PollOptionsComponent,
     PollOptionComponent,
     TextOverflowComponent,
     LikePagesComponent,
@@ -180,7 +181,8 @@ import { TaskFileComponent } from './ManageBoard/task-file/task-file.component';
     CreateTaskURLComponent,
     TaskURLComponent,
     CreateTaskFileComponent,
-    TaskFileComponent
+    TaskFileComponent,
+    CreatePollOptionComponent
   ],
   imports: [
     BrowserModule,

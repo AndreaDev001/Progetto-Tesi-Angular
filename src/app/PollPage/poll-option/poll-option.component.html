@@ -1,12 +1,16 @@
-<button class = "option-wrapper" *ngIf="pollOption != undefined">
-    <div class = "position-relative">
-        <p class = "option-text">{{pollOption.name}}</p>
-        <p class = "option-subtitle">{{pollOption.description}}</p>
-        <div class = "position-absolute" style="top: 0;right: 0;">
-            <div class = "d-inline-block" style="font-size: 17px;">
-                <fa-icon [icon]="optionIcon"></fa-icon>
-                <span class="mx-1">{{pollOption.amountOfVotes}}</span>
-            </div>
+<div [ngClass]="isVoted ? 'option-voted' : 'option-wrapper'" *ngIf="pollOption != undefined">
+    <div class = "row">
+        <div class = "col-12 col-md-8">
+            <p class = "option-text">{{pollOption.name}}</p>
+            <p class = "option-description">{{pollOption.description}}</p>
+        </div>
+        <div class = "col-12 col-md-4 text-end">
+            <button class = "default-button mx-1" *ngIf="isOwner" (click)="modifyOption()">Modify</button>
+            <button class = "default-button mx-1" *ngIf="isOwner" (click)="deleteOption()">Delete</button>
+            <button class = "default-button mx-1" (click)="voteOption()" *ngIf="!isVoted">Vote</button>
         </div>
     </div>
-</button>
+</div>
+<ng-template #modifyOptionTemplate>
+    <app-create-poll-option [update]="true" [optionID]="this.pollOption!!.id" (successEvent)="this.pollOption = $event;this.alertHandlerService.close()" (failedEvent)="this.alertHandlerService.close()"></app-create-poll-option>
+</ng-template>

@@ -12,16 +12,34 @@
                 <div class = "left-side">
                     <app-poll-details [poll]="currentPoll"></app-poll-details>
                 </div>
-                <div class = "mt-2 options-wrapper py-3">
+                <div class = "mt-2 py-1 options-wrapper">
                     <div class = "mx-1">
-                        <div style="font-size: 17px;">
+                        <div style="font-size: 20px;">
                             <h4 class = "d-inline-block">Options</h4>
                             <fa-icon class = "d-inline-block mx-1" [icon]="optionIcon"></fa-icon>
                         </div>
                         <p class = "p-0 m-0">Please choose one of the following options</p>
                     </div>
-                    <div class = "mt-2" *ngFor="let current of pollOptions">
-                        <app-poll-option [pollOption]="current"></app-poll-option>
+                    <div class = "py-1">
+                        <app-loader [requiredTemplate]="optionsTemplate" [isSearching]="searchingPollOptions" [diameter]="60" [strokeWidth]="8"></app-loader>
+                        <div class = "mt-1 text-end">
+                            <button class = "default-button" *ngIf="isOwner" (click)="createOption()">Add an option</button>
+                        </div>
+                    </div>
+                </div>
+                <div class = "mt-1 py-1 comments-wrapper">
+                    <div class = "mx-1">
+                        <div style="font-size: 20px;">
+                            <h4 class = "d-inline-block">Comments</h4>
+                            <fa-icon class = "d-inline-block mx-1" [icon]="commentsIcon"></fa-icon>
+                        </div>
+                        <p class = "p-0 m-0">Create or modify comments</p>
+                    </div>
+                    <div class = "py-1">
+                        <app-loader [requiredTemplate]="commentsTemplate" [isSearching]="searchingComments" [diameter]="60" [strokeWidth]="8"></app-loader>
+                        <div class = "mt-1 text-end">
+                            <button class = "default-button" (click)="createComment()">Add a comment</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -31,3 +49,25 @@
         </div>
     </div>
 </div>
+<ng-template #optionsTemplate>
+    <div class = "mt-1 py-1">
+        <app-text-overflow [templates]="currentPollOptionsItems" [horizontal]="false"></app-text-overflow>
+    </div>
+</ng-template>
+<ng-template #optionTemplate let-i>
+    <app-poll-option (votedEvent)="updateCurrentVote(i)" [isVoted]="currentVotedOption != undefined ? currentVotedOption.option.id == i.id : false" (deletedEvent)="deleteOption(i)" [isOwner]="isOwner" [pollOption]="i"></app-poll-option>
+</ng-template>
+<ng-template #commentsTemplate>
+    <div class = "mt-1 py-1">
+        <app-text-overflow [templates]="currentCommentsItems" [horizontal]="false"></app-text-overflow>
+    </div>
+</ng-template>
+<ng-template #commentTemplate let-i>
+    <app-comment-card [pollComment]="i" (deletedEvent)="deleteComment(i)"></app-comment-card>
+</ng-template>
+<ng-template #createOptionTemplate>
+    <app-create-poll-option [pollID]="this.pollID" (successEvent)="this.currentPollOptions.push($event);this.currentPollOptionsItems.push({template: optionTemplate,context: $event});this.alertHandlerService.close()" (failedEvent)="this.alertHandlerService.close()"></app-create-poll-option>
+</ng-template>
+<ng-template #createCommentTemplate>
+    <app-create-comment [pollID]="this.pollID" (successEvent)="this.currentComments.push($event);this.currentCommentsItems.push({template: this.commentTemplate,context: $event});this.alertHandlerService.close()" (failedEvent)="this.alertHandlerService.close()"></app-create-comment>
+</ng-template>

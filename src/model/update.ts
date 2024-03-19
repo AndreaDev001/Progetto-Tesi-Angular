@@ -59,3 +59,17 @@ export interface UpdateUserImage
 {
     file: any
 }
+export interface UpdatePoll
+{
+    pollID: string,
+    title?: string,
+    description?: string,
+    maximumVotes?: number,
+    minimumVotes?: number,
+}
+export interface UpdatePollOption
+{
+    optionID: string,
+    name?: string,
+    description?: string
+}

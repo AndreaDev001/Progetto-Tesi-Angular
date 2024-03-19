@@ -1,39 +1,25 @@
 <div class = "details-wrapper" *ngIf="poll != undefined">
-    <div class = "position-relative">
-        <div>
-            <h4>{{poll.title}}</h4>
-            <p class = "p-0 m-0" style="font-size: 17px">{{poll.description}}</p>
-        </div>
-        <div class = "position-absolute" style="top:0;right: 0;">
-            <p class = "poll-status">Open</p>
-        </div>
+    <div>
+        <h4>{{poll.title}}</h4>
+        <p class = "p-0 m-0">{{poll.description}}</p>
     </div>
-    <div class = "position-relative">
-        <div class = "d-flex mt-2">
-            <div class = "image-wrapper">
-                <img class = "publisher-image" src="https://i0.wp.com/picjumbo.com/wp-content/uploads/beautiful-nature-mountain-scenery-with-flowers-free-photo.jpg?w=600&quality=80">
+    <div class = "mt-1 py-2">
+        <div class = "row">
+            <div class = "col-12 col-md-6">
+                <app-user-holder [userRef]="poll.publisher"></app-user-holder>
             </div>
-            <div class = "mx-2">
-                <p class = "publisher-username">{{poll.publisher.username}}</p>
-                <div>
-                    <span class = "publisher-name">{{poll.publisher.name}}</span>
-                    <span class = "publisher-surname">{{poll.publisher.surname}}</span>
-                </div>
+            <div class = "col-12 col-md-6 text-end">
+                <button (click)="updateLike()" class = "default-button mx-1" *ngIf="!isOwner">{{currentLike != undefined ? 'Remove Like' : 'Add Like'}}</button>
+                <button class = "default-button mx-1" *ngIf="isOwner" (click)="modifyPoll()">Modify</button>
+                <button class = "default-button mx-1" *ngIf="isOwner">Delete</button>
+                <button (click)="createReport()" class = "default-button mx-1" *ngIf="!isOwner && currentReport == undefined">Report</button>
             </div>
-        </div>
-        <div class = "position-absolute" style="top: 0;right: 0;">
-            <div class = "d-inline-block">
-                <fa-icon class = "d-inline-block" [icon]="calendarIcon" style="font-size: 17px;"></fa-icon>
-                <p class = "p-0 m-0 d-inline-block mx-1">{{poll.createdDate}}</p>
-            </div>
-            <div class = "mx-1 d-inline-block">
-                <fa-icon class = "d-inline-block" [icon]="likeIcon" style="font-size: 17px"></fa-icon>
-                <p class = "p-0 m-0 d-inline-block mx-1">{{poll.amountOfLikes}}</p>
-            </div>
-        </div>
-        <div class = "py-2">
-            <button class = "add-like-button">Add Like</button>
-            <button class = "report-button">Report</button>
         </div>
     </div>
 </div>
+<ng-template #createReportTemplate>
+    <app-create-report [pollID]="poll?.id" (failedEvent)="this.alertHandlerService.close()" (successEvent)="this.currentReport = $event;this.alertHandlerService.close()"></app-create-report>
+</ng-template>
+<ng-template #modifyPollTemplate>
+    <app-create-poll [update]="true" [pollID]="poll?.id" (successEvent)="this.poll = $event;this.alertHandlerService.close()" (failedEvent)="this.alertHandlerService.close()"></app-create-poll>
+</ng-template>
