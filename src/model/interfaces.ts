@@ -95,7 +95,7 @@ export interface Poll
     description: string,
     minimumVotes: number,
     maximumVotes: number,
-    amountOfLikes: number
+    amountOfReceivedLikes: number;
 }
 export interface TaskURL
 {

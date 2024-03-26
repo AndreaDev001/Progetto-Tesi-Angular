@@ -7,8 +7,8 @@
                         <div class = "d-flex">
                             <fa-icon style="font-size: 35px;" [icon]="taskIcon"></fa-icon>
                             <div class = "p-1 mx-2">
-                                <input (change)="updateTask($event,false)" class = "modify-task-input" [value]="this.currentTitle">
-                                <input (change)="updateTask($event,true)" class = "modify-task-input" [value]="this.currentName">
+                                <input [readOnly]="!isBoardAdmin && !isAdmin" (change)="updateTask($event,false)" class = "modify-task-input" [value]="this.currentTitle">
+                                <input [readOnly]="!isBoardAdmin && !isAdmin" (change)="updateTask($event,true)" class = "modify-task-input" [value]="this.currentName">
                             </div>
                         </div>
                     </div>
@@ -45,21 +45,11 @@
             </div>
             <div class = "d-inline-block mt-1">
                 <p class = "p-0 mx-1 my-0" style="font-size: 15px;">Members</p>
-                <div class = "d-inline-block mx-1" *ngFor="let current of currentMembers">
-                    <ng-container *ngTemplateOutlet="memberTemplate;context: {member: current}"></ng-container>
-                </div>
-                <div class = "d-inline-block mx-1">
-                    <button (click)="addMember()" class = "add-member-button">+</button>
-                </div>
+                <app-loader [isSearching]="searchingAssignments" [requiredTemplate]="assignedMembersTemplate" [showText]="false" [diameter]="40" [strokeWidth]="5"></app-loader>
             </div>
             <div class = "d-inline-block mx-1">
                 <p class = "p-0 m-0" style="font-size: 15px;">Tags</p>
-                <div class = "d-inline-block mx-1" *ngFor="let current of currentTagAssignments">
-                    <ng-container *ngTemplateOutlet="tagTemplate;context: {item: current}"></ng-container>
-                </div>
-                <div class = "d-inline-block">
-                    <button (click)="addTag()" class = "add-member-button">+</button>
-                </div>
+                <app-loader [isSearching]="searchingTagsAssignments" [requiredTemplate]="assignedTagsTemplate" [showText]="false" [diameter]="40" [strokeWidth]="5"></app-loader>
             </div>
         </div>
         <div class = "task-overlay-content">
@@ -75,7 +65,7 @@
                                         <p class = "overlay-section-subtitle">View and remove images that have been assigned to this task</p>
                                     </div>
                                     <div class = "text-end mt-2 py-1">
-                                        <button class = "default-button"  (click)="addNewImage()">Add</button>
+                                        <button *ngIf="isAssigned || isBoardAdmin" class = "default-button"  (click)="addNewImage()">Add</button>
                                     </div>
                                 </div>
                             </div>
@@ -94,14 +84,24 @@
                         </div>
                         <div class = "text-end" style="margin-top: 2px;">
                             <div class = "mt-1" style="display: flex;flex-direction: row-reverse;">
-                                <button *ngIf="!isChangingDescription" (click)="isChangingDescription = true" class = "default-button mx-1">Modify</button>
+                                <button  [disabled]="!isAssigned && !isBoardAdmin && !isAdmin" *ngIf="!isChangingDescription" (click)="isChangingDescription = true" class = "default-button mx-1">Modify</button>
                                 <button (click)="resetDescription()"  *ngIf="isChangingDescription" class = "default-button mx-1">Cancel</button>
                                 <button (click)="updateDescription()" *ngIf="isChangingDescription" class = "default-button mx-1">Confirm</button>
                             </div>
                         </div>
                     </div>
-                    <div>
+                    <div class = "py-1">
+                        <div class = "d-flex">
+                            <fa-icon [icon]="checkIcon" style="font-size: 25px;"></fa-icon>
+                            <div class = "mx-3">
+                                <p class = "overlay-section-title">CheckLists</p>
+                                <p class = "mt-1" style="font-size: 15px;">Add or remove a checklist</p>
+                            </div>
+                        </div>
                         <app-loader [diameter]="60" [strokeWidth]="8" [isSearching]="searchingChecklists" [requiredTemplate]="checkListSection"></app-loader>
+                        <div class = "mt-2 text-end">
+                            <button [disabled]="!isBoardAdmin && !isAdmin" (click)="createNewCheckList()" class = "default-button">Add a list</button>
+                        </div>
                     </div>
                     <div>
                         <div class = "d-flex">
@@ -111,9 +111,9 @@
                                 <p class = "mt-1" style="font-size: 15px;">Add or remove one of the attached URLS</p>
                             </div>
                         </div>
-                        <app-loader [requiredTemplate]="urlsTemplate" [diameter]="60" [strokeWidth]="8" [isSearching]="searchingURLS"></app-loader>
+                        <app-loader [requiredTemplate]="urlsTemplate" [diameter]="60" [strokeWidth]="8" [isSearching]="searchingURLS" ></app-loader>
                         <div class = "text-end mt-2">
-                            <button (click)="createURL()" class = "default-button">Add an URL</button>
+                            <button [disabled]="!isAssigned && !isBoardAdmin && !isAdmin" (click)="createURL()" class = "default-button">Add an URL</button>
                         </div>
                     </div>
                     <div>
@@ -126,7 +126,7 @@
                         </div>
                         <app-loader [requiredTemplate]="filesTemplate" [diameter]="60" [strokeWidth]="8" [isSearching]="searchingFiles"></app-loader>
                         <div class = "text-end mt-2">
-                            <button (click)="createFile()" class = "default-button">Add a file</button>
+                            <button [disabled]="!isAssigned && !isBoardAdmin && !isAdmin" (click)="createFile()" class = "default-button">Add a file</button>
                         </div>
                     </div>
                     <div>
@@ -139,7 +139,7 @@
                         </div>
                         <app-loader [requiredTemplate]="commentsTemplate" [isSearching]="searchingComments" [diameter]="60" [strokeWidth]="8"></app-loader>
                         <div class = "text-end mt-2">
-                            <button (click)="addComment()" class = "default-button">Comment</button>
+                            <button [disabled]="!isAssigned && !isBoardAdmin && !isAdmin" (click)="addComment()" class = "default-button">Comment</button>
                         </div>
                     </div>
                 </div>
@@ -159,7 +159,7 @@
                                         </button>
                                     </div>
                                 </button>
-                                <button class = "add-option-button" (click)="addMember()">Add a member</button>
+                                <button [disabled]="!isBoardAdmin" class = "add-option-button" (click)="addMember()">Add a member</button>
                             </div>
                         </div>
                         <div class = "mt-1" ngbDropdown>
@@ -171,7 +171,7 @@
                                 <button class = "mt-1 user-holder-wrapper" ngbDropdownItem *ngFor="let current of currentTagAssignments">
                                     <div>
                                         <div class = "text-start w-75 d-inline-block">
-                                            <app-task-tag [tagRef]="current.tag" [fontSize]="'10px'"></app-task-tag>
+                                            <app-task-tag [canModify]="isBoardAdmin || isAdmin || isAssigned" [tagRef]="current.tag" [fontSize]="'10px'"></app-task-tag>
                                         </div>
                                         <div class = "text-end w-25 d-inline-block">
                                             <button class = "remove-button" (click)="removeTagAssignment(current)">
@@ -181,8 +181,8 @@
                                     </div>
                                 </button>
                                 <div class = "mt-2">
-                                    <button class = "add-option-button mt-1" (click)="addTag()">Add a tag</button>
-                                    <button class = "add-option-button mt-1" (click)="createNewTag()">Create a tag</button>
+                                    <button [disabled]="!isAssigned && !isBoardAdmin && !isAdmin" class = "add-option-button mt-1" (click)="addTag()">Add a tag</button>
+                                    <button [disabled]="!isBoardAdmin && !isAdmin" class = "add-option-button mt-1" (click)="createNewTag()">Create a tag</button>
                                 </div>
                             </div>
                         </div>
@@ -203,7 +203,7 @@
                                     </div>
                                 </button>
                                 <div class = "mt-2">
-                                    <button class = "add-option-button" (click)="createNewCheckList()">Create a checklist</button>
+                                    <button [disabled]="!isAssigned && !isBoardAdmin && !isAdmin" class = "add-option-button" (click)="createNewCheckList()">Create a checklist</button>
                                 </div>
                             </div>
                         </div>
@@ -217,7 +217,7 @@
                                     <app-text-overflow [horizontal]="false" [templates]="currentImagesItems"></app-text-overflow>
                                 </button>
                                 <div class = "mt-2">
-                                    <button class = "add-option-button" (click)="addNewImage()">Add a new image</button>
+                                    <button [disabled]="!isAssigned && !isBoardAdmin && !isAdmin" class = "add-option-button" (click)="addNewImage()">Add a new image</button>
                                 </div>
                             </div>
                         </div>
@@ -228,7 +228,7 @@
                             </button>
                             <div class = "secondary-color w-100 p-2" ngbDropdownMenu>
                                 <app-loader [diameter]="60" [strokeWidth]="8" [requiredTemplate]="urlsTemplate" [isSearching]="searchingURLS"></app-loader>
-                                <button class = "add-option-button px-2" (click)="createURL()">Add a URL</button>
+                                <button [disabled]="!isAssigned && !isBoardAdmin && !isAdmin" class = "add-option-button px-2" (click)="createURL()">Add a URL</button>
                             </div>
                         </div>
                         <div class = "mt-1" ngbDropdown container="body">
@@ -238,7 +238,7 @@
                             </button>
                             <div class = "secondary-color w-100 p-2" ngbDropdownMenu>
                                 <app-loader [diameter]="60" [strokeWidth]="8" [requiredTemplate]="filesTemplate" [isSearching]="searchingFiles"></app-loader>
-                                <button class = "add-option-button px-2" (click)="createFile()">Add a file</button>
+                                <button [disabled]="!isAssigned && !isBoardAdmin && !isAdmin" class = "add-option-button px-2" (click)="createFile()">Add a file</button>
                             </div>
                         </div>
                     </ul>
@@ -259,7 +259,7 @@
             <img class = "assigned-image" [src]="'http://localhost:8080/api/v1/userImages/public/user/' + member.member.user.id + '/image'">
         </button>
         <div class = "primary-color" ngbDropdownMenu>
-            <button (click)="removeMember(member)" class = "member-option" ngbDropdownItem>Remove</button>
+            <button [disabled]="isBoardAdmin || isAdmin" (click)="removeMember(member)" class = "member-option" ngbDropdownItem>Remove</button>
         </div>
     </div>
 </ng-template>
@@ -277,8 +277,8 @@
 <ng-template #addTagTemplate>
     <div *ngIf="board != undefined">
         <app-multi-selection [requiredTemplate]="tagHolder" [requiredObservable]="this.tagService.getTagsByBoard(board.id)" (cancelEvent)="this.alertHandlerService.close()" (selectionChanged)="handleTagsChange($event)" (confirmEvent)="confirmTagsChange($event)"></app-multi-selection>
-        <div class = "p-3 mt-1">
-            <button class = "option-button" style="text-align: center;" (click)="createNewTag()">Create a new tag</button>
+        <div class = "px-3 py-2">
+            <button [disabled]="!isAdmin && !isBoardAdmin" class = "option-button" style="text-align: center;" (click)="createNewTag()">Create a new tag</button>
         </div>
     </div>
 </ng-template>
@@ -287,11 +287,11 @@
 </ng-template>
 <ng-template #tagHolder let-i>
     <div>
-        <app-task-tag [tag]="i" [padding]="'20px'"></app-task-tag>
+        <app-task-tag [tag]="i" [padding]="'10px'" [fontSize]="'20px'"></app-task-tag>
     </div>
 </ng-template>
 <ng-template #tagTemplate let-item="item">
-    <app-task-tag (removeEvent)="removeTagAssignment(item)" [canRemove]="true" [fontSize]="'10px'" [tag] = "item.tag"></app-task-tag>
+    <app-task-tag (removeEvent)="removeTagAssignment(item)" [canModify]="isBoardAdmin || isAdmin || isAssigned" [fontSize]="'10px'" [tag] = "item.tag"></app-task-tag>
 </ng-template>
 <ng-template #createTagTemplate>
     <div *ngIf="board != undefined">
@@ -330,9 +330,11 @@
     </div>
 </ng-template>
 <ng-template #checkListSection>
-    <div *ngIf="currentCheckLists.length > 0">
-        <div *ngFor="let current of currentCheckLists">
-            <app-checklist [checkList]="current"></app-checklist>
+    <div style="padding: 0% 2%;">
+        <div *ngIf="currentCheckLists.length > 0">
+            <div *ngFor="let current of currentCheckLists">
+                <app-checklist [canModify]="isAdmin || isBoardAdmin || isAssigned" [checkList]="current"></app-checklist>
+            </div>
         </div>
     </div>
 </ng-template>
@@ -361,7 +363,7 @@
     </div>
 </ng-template>
 <ng-template #urlTemplate let-i>
-    <app-task-url (deletedEvent)="deleteURL($event)" [taskURL]="i"></app-task-url>
+    <app-task-url [canModify]="isBoardAdmin || isAdmin || isAssigned" (deletedEvent)="deleteURL($event)" [taskURL]="i"></app-task-url>
 </ng-template>
 <ng-template #urlsTemplate>
     <div style="padding: 0px 2%">
@@ -372,10 +374,26 @@
     <app-create-task-file [taskID]="task?.id" (successEvent)="this.currentFiles.push($event);this.currentFileItems.push({template: this.fileTemplate,context: $event});this.alertHandlerService.close()" (failedEvent)="this.alertHandlerService.close()"></app-create-task-file>
 </ng-template>
 <ng-template #fileTemplate let-i>
-    <app-task-file (deletedEvent)="deleteFile($event)" [taskFile]="i"></app-task-file>
+    <app-task-file [canModify]="isBoardAdmin || isAdmin || isAssigned" (deletedEvent)="deleteFile($event)" [taskFile]="i"></app-task-file>
 </ng-template>
 <ng-template #filesTemplate>
     <div style="padding: 0px 2%">
         <app-text-overflow [horizontal]="false" [templates]="currentFileItems"></app-text-overflow>
+    </div>
+</ng-template>
+<ng-template #assignedMembersTemplate>
+    <div class = "d-inline-block mx-1" *ngFor="let current of currentMembers">
+        <ng-container *ngTemplateOutlet="memberTemplate;context: {member: current}"></ng-container>
+    </div>
+    <div class = "d-inline-block mx-1">
+        <button [disabled]="!isBoardAdmin && !isAdmin" (click)="addMember()" class = "add-member-button">+</button>
+    </div>
+</ng-template>
+<ng-template #assignedTagsTemplate>
+    <div class = "d-inline-block mx-1" *ngFor="let current of currentTagAssignments">
+        <ng-container *ngTemplateOutlet="tagTemplate;context: {item: current}"></ng-container>
+    </div>
+    <div class = "d-inline-block">
+        <button [disabled]="!isBoardAdmin && !isAdmin" (click)="addTag()" class = "add-member-button">+</button>
     </div>
 </ng-template>

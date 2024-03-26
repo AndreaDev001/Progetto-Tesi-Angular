@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { CreateDiscussion } from '../create';
-import { Filter } from 'src/app/SearchPages/DiscussionPage/discussion-filter/discussion-filter.component';
+import { Filter } from 'src/app/SearchPages/SearchDiscussions/discussion-filter/discussion-filter.component';
 import { PaginationRequest } from 'src/model/interfaces';
 import { HttpUtilsService } from 'src/model/services/http-utils.service';
 import { UpdateDiscussion } from '../update';
@@ -27,6 +27,12 @@ export class DiscussionService {
     const desiredURL: string = this.url + "/private";
     let queryParams: HttpParams = new HttpParams();
     return this.httpClient.put(desiredURL,updateDiscussion,{params: queryParams});
+  }
+
+  public deleteDiscussion(discussionID: string): any {
+    const desiredURL: string = this.url + "/private" + "/" + discussionID;
+    let queryParams: HttpParams = new HttpParams();
+    return this.httpClient.delete(desiredURL,{params: queryParams});
   }
 
   public getDiscussionsByPublisher(publisherID: any,page: PaginationRequest): any {

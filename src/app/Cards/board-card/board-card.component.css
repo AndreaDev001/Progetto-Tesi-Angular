@@ -20,7 +20,7 @@ p.board-subtitle
     padding: 0;
     margin: 0;
 }
-button.card-wrapper {
+div.card-wrapper {
     text-align: start;
     background-color: var(--secondary-color);
     border-radius: 10px;
@@ -28,8 +28,7 @@ button.card-wrapper {
     border-top-right-radius: 20px;
     color: whitesmoke;
     width: 100%;
-    border: 1px solid var(--tertiary-color);
-    transition: 0.2s ease-in-out all;
+    border: 1px solid var(--primary-color);
 }
 button.board-open-button {
     border: 0;
@@ -40,19 +39,8 @@ button.board-open-button {
     padding: 10px 10px;
     border-radius: 10px;
     width: 40%;
+    transition: 0.2s ease-in-out all;
 }
-button.board-leave-button {
-    border: 0;
-    font-size: 14px;
-    background-color: darkred;
-    border: 1px solid red;
-    color: whitesmoke;
-    padding: 10px 10px;
-    border-radius: 10px;
-    width: 40%;
-    margin-left: 5px;
-}
-button.card-wrapper:hover{
+button.board-open-button:hover {
     background-color: var(--tertiary-color);
-    color: black;
 }

@@ -12,13 +12,13 @@
                     <div class = "p-0 m-0" ngbDropdownItem *ngFor="let current of currentTeamOptions;let i = index">
                         <ng-container *ngTemplateOutlet="teamTemplate;context: {index: i,teamOption: current,team: this.currentTeams[i]}"></ng-container> 
                     </div>
-                    <button (click)="handleCreateTeam()" class = "create-team-button">
+                    <button [placement]="'right'" [ngbTooltip]="!isAdmin && !isBoardAdmin ? 'You must be an admin to perform this operation' : 'Create a team'" [disabled]="!isBoardAdmin && !isAdmin" (click)="handleCreateTeam()" class = "create-team-button">
                         <fa-icon [icon]="plusIcon"></fa-icon>
                         <span class = "mx-2">Create a team</span>
                     </button>
                 </div>
             </div>
-            <button class = "option-template" (click)="createInvite()">
+            <button [disabled]="!isBoardAdmin && !isAdmin" [placement]="'right'" [ngbTooltip]="!isAdmin && !isBoardAdmin ? 'You must be an admin to perform this operation ' : 'Invite a member'" class = "option-template" (click)="createInvite()">
                 <p class = "p-0 m-0 d-inline-block">Invite</p>
                 <fa-icon class = "d-inline-block mx-1" [icon]="inviteIcon"></fa-icon>
             </button>
@@ -30,7 +30,7 @@
         </div>
     </div>
     <div class = "w-50 text-end d-inline-block">
-        <button (click)="modifyOptions()" class = "option-template">
+        <button [disabled]="!isBoardAdmin && !isAdmin" [ngbTooltip]="!isAdmin && !isBoardAdmin ? 'You must be an admin to perform this operation' : 'Modify the board'" [placement]="'left'" (click)="modifyOptions()" class = "option-template">
             <fa-icon [icon]="optionIcon" class = "d-inline-block"></fa-icon>
             <p class = "m-0 p-0 d-inline-block mx-1">Modify board</p>
         </button>
@@ -43,7 +43,7 @@
             <fa-icon [icon]="teamOption.icon" class = "d-inline-block"></fa-icon>
             <span class = "mx-2">{{teamOption.name}}</span>
         </button>
-        <button class = "delete-team-button" (click)="removeTeam(team,index)">
+        <button [disabled]="!isBoardAdmin && !isAdmin" class = "delete-team-button" (click)="removeTeam(team,index)">
             <fa-icon [icon]="closeIcon"></fa-icon>
         </button>
     </div>
@@ -74,7 +74,7 @@
         <button (click)="updateAdmin(member)" class = "image-wrapper" ngbDropdownToggle>
             <img class = "member-image" style="top: 0;left: 0" [src]="'http://localhost:8080/api/v1/userImages/public/user/' + member.user.id + '/image'">
         </button>
-        <div class = "member-dropdown" ngbDropdownMenu>
+        <div class = "member-dropdown" ngbDropdownMenu *ngIf="isBoardAdmin">
             <app-loader [diameter]="60" [strokeWidth]="6" [isSearching]="searchingMember" [requiredTemplate]="memberDropdown"></app-loader>
         </div>
     </div>

@@ -1,24 +1,24 @@
 <div *ngIf="currentBoard" class = "manage-board-wrapper" [ngStyle]="{'background-image': 'url(' + backgroundURL + '),linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2))'}">
     <div>
-        <app-board-header (usersChanged)="this.updateItems()" (modifiedBoard)="reloadBoardInfo()" [board]="currentBoard"></app-board-header>
+        <app-board-header [isBoardAdmin]="isBoardAdmin" [isAdmin]="isAdmin" (usersChanged)="this.searchBoard()" (modifiedBoard)="reloadBoardInfo()" [board]="currentBoard"></app-board-header>
     </div>
     <div class = "horizontal-container py-2" style="height: 92%;">
         <div class = "d-flex"  cdkDropList cdkDropListOrientation="horizontal" (cdkDropListDropped)="dropList($event)">
-            <div (cdkDragStarted)="test($event)" cdkDrag class = "mx-1 draggable-box" *ngFor="let current of currentTaskGroups;let i = index">
+            <div cdkDrag class = "mx-1 draggable-box" *ngFor="let current of currentTaskGroups;let i = index">
                 <div class = "list-placeholder" [ngStyle]="{'height.px': this.currentHeight}" *cdkDragPlaceholder></div>
                 <div class = "task-group-wrapper">
                     <div class = "task-group-header">
                         <div class = "d-flex">
                             <div class = "w-50 text-start">
-                                <input (change)="nameChanged($event,current.id)" class = "default-input" [defaultValue]="current.name">
+                                <input [readonly]="!isBoardAdmin && !isAdmin" (change)="nameChanged($event,current.id)" class = "default-input" [defaultValue]="current.name">
                             </div>
                             <div class = "w-50 text-end">
                                 <div container="body" ngbDropdown class="d-inline-block">
                                     <button type="button" class = "option-button" ngbDropdownToggle>
                                     </button>
                                     <div class = "secondary-color" ngbDropdownMenu>
-                                        <button (click)="deleteGroup(current.id,i)" class = "task-option">Delete</button>
-                                        <button (click)="clearGroup(current.id,i)" class = "task-option">Clear</button>
+                                        <button [disabled]="!isBoardAdmin && !isAdmin" (click)="deleteGroup(current.id,i)" class = "task-option">Delete</button>
+                                        <button [disabled]="!isBoardAdmin && !isAdmin" (click)="clearGroup(current.id,i)" class = "task-option">Clear</button>
                                     </div>
                                 </div>
                             </div>
@@ -32,8 +32,8 @@
                             <div *ngIf="currentTasks[i].length > 0">
                                 <div (cdkDragStarted)="updateCurrentTask($event,value);" class = "task-element-draggable draggable-box" cdkDrag *ngFor="let value of currentTasks[i];let j = index">
                                     <div class= "item-placeholder" *cdkDragPlaceholder></div>
-                                    <div (click)="updateDraggedTask($event)"  class = "task-element-wrapper">
-                                        <app-task-element [board]="currentBoard" [task]="value"></app-task-element>
+                                    <div class = "task-element-wrapper">
+                                        <app-task-element [isBoardAdmin]="isBoardAdmin" [isAdmin]="isAdmin" [board]="currentBoard" [task]="value"></app-task-element>
                                     </div>
                                 </div>
                             </div>
@@ -62,13 +62,13 @@
             </div>
             <div>
                 <div class = "add-group-wrapper">
-                    <button [disabled]="currentNewGroupName == undefined || currentNewGroupName != undefined && currentNewGroupName.trim() == ''" (click)="createGroup()" class = "add-group-button">Create a new group</button>
+                    <button [disabled]="currentNewGroupName == undefined || currentNewGroupName != undefined && currentNewGroupName.trim() == '' || !isBoardAdmin && !isAdmin" (click)="createGroup()" class = "add-group-button">Create a new group</button>
                     <div class = "p-1">
                         <p class = "p-0 m-0" style="word-break: wrap;">You can create a new group for this board</p>
                         <p class = "p-0 m-0">Specify a name for this group</p>
                         <div class = "py-1">
                             <label for="groupName">Name:</label>
-                            <input [value]="currentNewGroupName != undefined ? currentNewGroupName : ''" (input)="updateNewGroupName($event)" [placeholder]="'Group name...'" class = "create-group-input" id="groupName" type="text">
+                            <input [readOnly]="!isBoardAdmin && !isAdmin" [value]="currentNewGroupName != undefined ? currentNewGroupName : ''" (input)="updateNewGroupName($event)" [placeholder]="'Group name...'" class = "create-group-input" id="groupName" type="text">
                             <span class = "d-block" style="font-size: 12px;">Write the name of the new group</span>
                         </div>
                     </div>
@@ -76,8 +76,8 @@
             </div>
         </div>
         <div class = "mt-3 w-25">
-            <button class = "close-button w-50">Close</button>
-            <button class = "delete-button mx-1 w-50">Delete</button>
+            <button class = "close-button w-50" *ngIf="isBoardAdmin">Close</button>
+            <button class = "delete-button mx-1 w-50" *ngIf="isBoardAdmin">Delete</button>
         </div>
     </div>
 </div>
@@ -141,10 +141,3 @@
         </div>
     </div>
     --->
-<ng-template #taskGroupContainer let-i>
-    <div *ngIf="currentTasks[i].length > 0">
-        <div (cdkDragStarted)="updateCurrentTask($event,value)" class = "task-element-wrapper draggable-box" cdkDrag *ngFor="let value of currentTasks[i];let j = index">
-            <app-task-element  [board]="currentBoard" [task]="value"></app-task-element>
-        </div>
-    </div>
-</ng-template>

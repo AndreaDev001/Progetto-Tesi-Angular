@@ -13,6 +13,7 @@ export class LoaderComponent implements OnInit
   @Input() context: any = undefined;
   @Input() diameter: any = '50';
   @Input() strokeWidth: any = '2';
+  @Input() showText: boolean = true;
   @Input() successTemplate: any = undefined;
   @Input() failedTemplate: any = undefined;
   @Input() loaderText: string = "Searching...";

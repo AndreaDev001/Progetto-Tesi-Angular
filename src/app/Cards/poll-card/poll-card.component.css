@@ -1,15 +1,13 @@
-button.card-wrapper
+div.card-wrapper
 {
     text-align: start;
     border: 0;
     border-top-right-radius: 5px;
     border-top-left-radius: 5px;
     border-radius: 10px;
-    background-color: var(--primary-color);
-    width: 265px;
+    background-color: var(--secondary-color);
+    border: 1px solid var(--primary-color);
     padding: 5px;
-    transition: 0.2s ease-in-out all;
-    border: 1px solid var(--tertiary-color);
 }
 p.poll-title
 {
@@ -17,15 +15,7 @@ p.poll-title
     margin: 0;
     font-size: 18px;
 }
-button.delete-poll-button {
-    border: 0;
-    padding: 10px;  
-    border: 1px solid red;
-    background-color: darkred;
-    border-radius: 5px;
-    margin: 0;
-    margin-bottom: 10px;
-}
+
 div.poll-card-footer {
     padding: 5px 5px;
 }
@@ -40,12 +30,9 @@ div.poll-card-body {
     padding-top: 10px;
     padding-bottom: 5px;
 }
-button.card-wrapper:hover {
-    background-color: var(--tertiary-color);
-}
 div.poll-card-header
 {
     padding: 5px;
-    background-color: var(--secondary-color);
+    background-color: var(--primary-color);
     border-radius: 5px;
 }

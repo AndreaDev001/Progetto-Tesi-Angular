@@ -173,7 +173,9 @@ export class HomePageComponent implements AfterViewInit, OnDestroy {
     this.isSearching = true;
     this.pollService.getPollsByPublisher(this.currentUserID,paginationRequest).subscribe((value: PagedModel) => {
       this.isSearching = false;
+      console.log(value._embedded.content);
       this.currentPolls = value._embedded != undefined && value._embedded.content == undefined ? value._embedded.content : [];
+      console.log(this.currentPolls);
       if(value.page != undefined) {
         this.currentPage = value.page.page;
         this.currentTotalPages = value.page.totalPages;

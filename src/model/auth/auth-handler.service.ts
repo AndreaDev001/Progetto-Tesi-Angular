@@ -62,6 +62,14 @@ export class AuthHandlerService {
     return Date.now() > expirationDate
   }
 
+  public isAdmin(): boolean {
+    if(this.currentAccessToken.value == undefined)
+        return false;
+    let decodedJWT: any = JSON.parse(window.atob(this.currentAccessToken.value.split('.')[1]));
+    console.log(decodedJWT.roles);
+    return true;
+  }
+
   public refreshToken(): void {
     if(this.oauthService.getRefreshToken() != undefined) {
       this.oauthService.refreshToken().then(() => {

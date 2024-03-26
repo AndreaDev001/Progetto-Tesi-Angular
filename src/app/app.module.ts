@@ -6,16 +6,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './Utility/components/header/header.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { BoardPageComponent } from './SearchPages/BoardPage/board-page/board-page.component';
-import { TasksPageComponent } from './SearchPages/TaskPage/tasks-page/tasks-page.component';
 import { DropdownComponent } from './Utility/components/dropdown/dropdown.component';
 import { SearchBarComponent } from './Utility/components/search-bar/search-bar.component';
-import { BoardFilterComponent } from './SearchPages/BoardPage/board-filter/board-filter.component';
-import { TaskFilterComponent } from './SearchPages/TaskPage/task-filter/task-filter.component';
-import { ReportFilterComponent } from './SearchPages/ReportPage/report-filter/report-filter.component';
-import { BanFilterComponent } from './SearchPages/BanPage/ban-filter/ban-filter.component';
-import { ReportPageComponent } from './SearchPages/ReportPage/report-page/report-page.component';
-import { BanPageComponent } from './SearchPages/BanPage/ban-page/ban-page.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CreateBoardComponent } from './Forms/create-board/create-board.component';
 import { CreateTaskComponent } from './Forms/create-task/create-task.component';
@@ -58,18 +50,17 @@ import { CommentCardComponent } from './Cards/comment-card/comment-card.componen
 import { DiscussionsPageComponent } from './UserPages/DiscussionsPage/discussions-page/discussions-page.component';
 import { PollsPageComponent } from './UserPages/PollsPage/polls-page/polls-page.component';
 import { OAuthModule, OAuthService } from 'angular-oauth2-oidc';
-import { UsersPageComponent } from './SearchPages/UserPage/users-page/users-page.component';
-import { SearchDiscussionsComponent } from './SearchPages/DiscussionPage/search-discussions/search-discussions.component';
-import { SearchPollsComponent } from './SearchPages/PollPage/search-polls/search-polls.component';
-import { UserFilterComponent } from './SearchPages/UserPage/user-filter/user-filter.component';
+import { SearchUsersPageComponent } from './SearchPages/SearchUsers/search-users-page/search-users-page.component';
+import { SearchDiscussionsPageComponent } from './SearchPages/SearchDiscussions/search-discussions/search-discussions-page.component';
+import { SearchPollsPageComponent } from './SearchPages/SearchPolls/search-polls-page/search-polls-page.component';
+import { UserFilterComponent } from './SearchPages/SearchUsers/user-filter/user-filter.component';
 import { UserCardComponent } from './Cards/user-card/user-card.component';
-import { PollFilterComponent } from './SearchPages/PollPage/poll-filter/poll-filter.component';
-import { DiscussionFilterComponent } from './SearchPages/DiscussionPage/discussion-filter/discussion-filter.component';
+import { PollFilterComponent } from './SearchPages/SearchPolls/poll-filter/poll-filter.component';
+import { DiscussionFilterComponent } from './SearchPages/SearchDiscussions/discussion-filter/discussion-filter.component';
 import { HomePageComponent } from './HomePage/home-page/home-page.component';
 import { UnAuthorizedPageComponent } from './Utility/components/un-authorized-page/un-authorized-page.component';
 import { RefreshInterceptor } from '../model/auth/RefreshInterceptor';
 import { ManageBoardPageComponent } from './ManageBoard/manage-board-page/manage-board-page.component';
-import { TaskGroupComponent } from './ManageBoard/task-group/task-group.component';
 import { TaskElementComponent } from './ManageBoard/task-element/task-element.component';
 import { TaskTagComponent } from './ManageBoard/task-tag/task-tag.component';
 import { BoardHeaderComponent } from './ManageBoard/board-header/board-header.component';
@@ -99,24 +90,41 @@ import { CreateTaskFileComponent } from './Forms/create-task-file/create-task-fi
 import { TaskFileComponent } from './ManageBoard/task-file/task-file.component';
 import { PollOptionsComponent } from './PollPage/poll-options/poll-options.component';
 import { CreatePollOptionComponent } from './Forms/create-poll-option/create-poll-option.component';
+import { BoardsPageComponent } from './UserPages/BoardsPage/boards-page/boards-page.component';
+import { BoardInvitesComponent } from './UserPages/BoardInvites/board-invites/board-invites.component';
+import { SearchTasksPageComponent } from './SearchPages/SearchTasks/search-tasks-page/search-tasks-page.component';
+import { SearchReportsPageComponent } from './SearchPages/SearchReports/search-reports-page/search-reports-page.component';
+import { SearchBanPageComponent } from './SearchPages/SearchBans/search-ban-page/search-ban-page.component';
+import { TaskFilterComponent } from './SearchPages/SearchTasks/task-filter/task-filter.component';
+import { ReportFilterComponent } from './SearchPages/SearchReports/report-filter/report-filter.component';
+import { BanFilterComponent } from './SearchPages/SearchBans/ban-filter/ban-filter.component';
+import { BoardFilterComponent } from './SearchPages/SearchBoards/board-filter/board-filter.component';
+import { SearchBoardPageComponent } from './SearchPages/SearchBoards/board-page/search-board-page.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-    BoardPageComponent,
-    TasksPageComponent,
     DropdownComponent,
     SearchBarComponent,
-    BoardFilterComponent,
-    TaskFilterComponent,
-    ReportFilterComponent,
-    BanFilterComponent,
-    ReportPageComponent,
     CreateBoardComponent,
     CreateTaskComponent,
     CreateTeamComponent,
-    BanPageComponent,
+    SearchBoardPageComponent,
+    SearchUsersPageComponent,
+    SearchTasksPageComponent,
+    SearchPollsPageComponent,
+    SearchDiscussionsPageComponent,
+    SearchReportsPageComponent,
+    SearchBanPageComponent,
+    BoardFilterComponent,
+    UserFilterComponent,
+    TaskFilterComponent,
+    PollFilterComponent,
+    DiscussionFilterComponent,
+    ReportFilterComponent,
+    DropdownComponent,
+    BanFilterComponent,
     CreateCommentComponent,
     CreateReportComponent,
     CreateDiscussionComponent,
@@ -150,16 +158,12 @@ import { CreatePollOptionComponent } from './Forms/create-poll-option/create-pol
     CommentCardComponent,
     DiscussionsPageComponent,
     PollsPageComponent,
-    UsersPageComponent,
-    SearchDiscussionsComponent,
-    SearchPollsComponent,
     UserFilterComponent,
     UserCardComponent,
     PollFilterComponent,
     DiscussionFilterComponent,
     UnAuthorizedPageComponent,
     ManageBoardPageComponent,
-    TaskGroupComponent,
     TaskElementComponent,
     TaskTagComponent,
     BoardHeaderComponent,
@@ -182,7 +186,9 @@ import { CreatePollOptionComponent } from './Forms/create-poll-option/create-pol
     TaskURLComponent,
     CreateTaskFileComponent,
     TaskFileComponent,
-    CreatePollOptionComponent
+    CreatePollOptionComponent,
+    BoardsPageComponent,
+    BoardInvitesComponent
   ],
   imports: [
     BrowserModule,

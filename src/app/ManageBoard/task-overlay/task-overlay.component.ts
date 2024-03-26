@@ -39,9 +39,12 @@ export class TaskOverlayComponent implements OnInit,OnDestroy
 {
   @Input() task: Task | undefined = undefined;
   @Input() board: Board | undefined = undefined;
+  @Input() isBoardAdmin: boolean = false;
+  @Input() isAdmin: boolean = false;
 
 
   public currentTags: Tag[] = [];
+  public isAssigned: boolean = false;
   public currentTagAssignments: TagAssignment[] = [];
   public currentComments: TaskComment[] = [];
   public currentCommentsItems: TextOverflowItem[] = [];
@@ -87,7 +90,9 @@ export class TaskOverlayComponent implements OnInit,OnDestroy
   private subscriptions: Subscription[] = [];
   public buttonOptions: ButtonOption[] = [];
 
-
+  public searchingAssignment: boolean = false;
+  public searchingReport: boolean = false;
+  public searchingLike: boolean = false;
   public searchingAssignments: boolean = false;
   public searchingTags: boolean = false;
   public searchingTagsAssignments: boolean = false;
@@ -128,20 +133,16 @@ export class TaskOverlayComponent implements OnInit,OnDestroy
         if(this.task != undefined)
             this.isOwner = this.task.publisher.id == value;
       }));
-      this.getCheckLists();
-      this.getImages();
-      this.getAssignments();
-      this.getTags();
-      this.getTagsAssignments();
-      this.getComments();
-      this.getURLS();
-      this.getFiles();
-      this.taskReportService.hasReported(this.authenticationHandler.getCurrentUserID(true),this.task.id).subscribe((value: any) => {
-        this.hasReported = true;
-      },(err: any) => this.hasReported = false);
-      this.taskLikeService.getTaskLikeBetween(this.task.id,this.authenticationHandler.getCurrentUserID(true)).subscribe((value: any) => {
-        this.currentLike = value;
-      },(err: any) => this.currentLike = undefined);
+      this.searchAssignment();
+      this.searchCheckLists();
+      this.searchImages();
+      this.searchTaskAssignments();
+      this.searchTagsAssignments();
+      this.searchComments();
+      this.searchURLS();
+      this.searchFiles();
+      this.searchReport();
+      this.searchLike();
     }
   }
 
@@ -149,7 +150,7 @@ export class TaskOverlayComponent implements OnInit,OnDestroy
       this.subscriptions.forEach((value: Subscription) => value.unsubscribe());  
   }
 
-  private getCheckLists(): void {
+  private searchCheckLists(): void {
     this.searchingChecklists = true;
     this.checkListService.getCheckListsByTask(this.task!!.id).subscribe((value: CollectionModel) => {
       this.searchingChecklists = false;
@@ -159,7 +160,7 @@ export class TaskOverlayComponent implements OnInit,OnDestroy
     },(err: any) => this.searchingChecklists = false)
   }
 
-  private getImages(): void {
+  private searchImages(): void {
     this.searchingImages = true;
     this.taskImageService.getImagesByTask(this.task!!.id).subscribe((value: CollectionModel) => {
       this.searchingImages = false;
@@ -171,7 +172,7 @@ export class TaskOverlayComponent implements OnInit,OnDestroy
     });
   }
 
-  private getComments(): void {
+  private searchComments(): void {
     this.searchingComments = true;
     this.taskCommentService.getCommentsByTask(this.task!!.id).subscribe((value: CollectionModel) => {
       if(value._embedded != undefined && value._embedded.content != undefined) {
@@ -185,7 +186,7 @@ export class TaskOverlayComponent implements OnInit,OnDestroy
     },(err: any) => this.searchingComments = false);
   }
 
-  private getAssignments(): void {
+  private searchTaskAssignments(): void {
     this.searchingAssignments = true;
     this.taskAssignmentsService.getTaskAssignmentsByTask(this.task!!.id).subscribe((value: CollectionModel) => {
       this.currentMembers = value._embedded != undefined && value._embedded.content != undefined ? value._embedded.content : [];
@@ -193,15 +194,7 @@ export class TaskOverlayComponent implements OnInit,OnDestroy
     },(err: any) => this.searchingAssignments = false);
   }
 
-  private getTags(): void {
-    this.searchingTags = true;
-    this.taskAssignmentsService.getTaskAssignmentsByTask(this.task!!.id).subscribe((value: CollectionModel) => {
-      this.currentMembers = value._embedded != undefined && value._embedded.content != undefined ? value._embedded.content : [];
-      this.searchingTags = false;
-    },(err: any) => this.searchingTags = false);
-  }
-
-  private getTagsAssignments(): void {
+  private searchTagsAssignments(): void {
     this.searchingTagsAssignments = true;
     this.tagAssignmentService.getTagAssignments(this.task!!.id).subscribe((value: CollectionModel) => {
       this.currentTagAssignments = value._embedded != undefined && value._embedded.content != undefined ? value._embedded.content : []
@@ -209,7 +202,7 @@ export class TaskOverlayComponent implements OnInit,OnDestroy
     },(err: any) => this.searchingTagsAssignments = false);
   }
 
-  private getURLS(): void {
+  private searchURLS(): void {
     this.searchingURLS = true;
     this.taskURLSService.getTaskURLSByTask(this.task!!.id).subscribe((value: CollectionModel) => {
       this.searchingURLS = false;
@@ -221,7 +214,7 @@ export class TaskOverlayComponent implements OnInit,OnDestroy
     },(err: any) => this.searchingURLS = false);
   }
 
-  private getFiles(): void {
+  private searchFiles(): void {
     this.searchingFiles = true;
     this.taskFileService.getTaskFilesByTask(this.task!!.id).subscribe((value: CollectionModel) => {
       this.searchingFiles = false;
@@ -231,6 +224,38 @@ export class TaskOverlayComponent implements OnInit,OnDestroy
         this.currentFileItems.push(overflowItem);
       })
     },(err: any) => this.searchingFiles = false);
+  }
+
+  private searchAssignment(): void {
+    this.searchingAssignment = true;
+    this.taskAssignmentsService.hasAssignment(this.authHandler.getCurrentUserID(false),this.task!!.id).subscribe((value: any) => {
+      this.searchingAssignment = false;
+      this.isAssigned = value != undefined;
+    },(err: any) => {
+      this.isAssigned = false;
+      this.searchingAssignment = false;
+    })
+  }
+
+  private searchReport(): void {
+    this.searchingReport = true;
+    this.taskReportService.hasReported(this.authenticationHandler.getCurrentUserID(true),this.task!!.id).subscribe((value: any) => {
+      this.searchingReport = false;
+      this.hasReported = true;
+    },(err: any) => {
+      this.searchingReport = false;
+      this.hasReported = false
+    });
+  }
+  private searchLike(): void {
+    this.searchingLike = true;
+    this.taskLikeService.getTaskLikeBetween(this.task!!.id,this.authenticationHandler.getCurrentUserID(true)).subscribe((value: any) => {
+      this.searchingLike = false;
+      this.currentLike = value;
+    },(err: any) => {
+      this.searchingLike = false;
+      this.currentLike = undefined
+    });
   }
 
   public deleteLike(): any {

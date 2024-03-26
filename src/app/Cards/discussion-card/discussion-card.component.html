@@ -1,4 +1,4 @@
-<button class = "card-wrapper"  *ngIf="discussion != undefined">
+<div class = "card-wrapper"  *ngIf="discussion != undefined">
     <div class = "discussion-card">
         <div class = "discussion-card-header">
             <div class = "position-absolute mt-1 mx-1" style="top:0;left:0;">
@@ -14,8 +14,8 @@
         </div>
         <div class = "discussion-card-footer">
             <div class = "text-center button-holder">
-                <button class = "add-like-button">Add Like</button>
-                <button class = "delete-discussion-button">Delete</button>
+                <button class = "default-button w-75" (click)="openDiscussion()">Go to discussion</button>
+                <button class = "default-button w-75 mt-2" (click)="deleteDiscussion()">Delete discussion</button>
             </div>
             <div class = "d-block">
                 <div class = "d-inline-block">
@@ -29,4 +29,4 @@
             </div>
         </div>
     </div>
-</button>
+</div>

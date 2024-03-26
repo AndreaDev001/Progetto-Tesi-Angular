@@ -27,6 +27,8 @@ interface TeamOption
 export class BoardHeaderComponent implements OnInit {
 
   @Input() board: Board | undefined = undefined;
+  @Input() isAdmin: boolean = false;
+  @Input() isBoardAdmin: boolean = false;
 
   public likeIcon: IconDefinition = faHeart;
   public teamsIcon: IconDefinition = faUserGroup;

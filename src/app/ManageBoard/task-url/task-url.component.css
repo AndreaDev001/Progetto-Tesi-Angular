@@ -8,3 +8,8 @@ div.url-wrapper
     text-overflow: ellipsis;
     flex-basis: 85%;
 }
+button:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    border: 1px solid var(--primary-color);
+}

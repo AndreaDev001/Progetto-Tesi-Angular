@@ -71,6 +71,11 @@ button.member-option:hover {
     background-color: var(--tertiary-color);
     padding: 10px 20px;
 }
+button:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    border: 1px solid var(--primary-color);
+}
 button.delete-team-button
 {
     padding: 0px 5px;

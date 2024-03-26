@@ -10,8 +10,8 @@
             </div>
         </div>
         <div class = "d-inline-block" style="flex-basis: 30%;">
-            <a (click)="downloadFile($event)" class = "download-button" [href]="'http://localhost:8080/api/v1/taskFiles/' + [taskFile.id] + '/file'" download>Download</a>
-            <button  (click)="deleteFile()" class = "default-button mx-1" style="background-color: var(--secondary-color);">Remove</button>
+            <a *ngIf="canModify" (click)="downloadFile($event)" class = "download-button" [href]="'http://localhost:8080/api/v1/taskFiles/' + [taskFile.id] + '/file'" download>Download</a>
+            <button *ngIf="canModify" (click)="deleteFile()" class = "download-button mx-1">Remove</button>
         </div>
     </div>
 </div>

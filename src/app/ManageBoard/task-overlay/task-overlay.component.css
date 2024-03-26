@@ -7,6 +7,11 @@ div.task-overlay-header {
     padding-left: 10px;
     padding-right: 10px;
 }
+button:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    border: 1px solid var(--primary-color);
+}
 div.task-overlay-content {
     padding: 10px;
 }

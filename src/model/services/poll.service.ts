@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { HttpUtilsService } from 'src/model/services/http-utils.service';
 import { PaginationComponent } from '../../app/Utility/components/pagination/pagination.component';
 import { PaginationRequest } from '../interfaces';
-import { Filter } from 'src/app/SearchPages/PollPage/poll-filter/poll-filter.component';
+import { Filter } from 'src/app/SearchPages/SearchPolls/poll-filter/poll-filter.component';
 import { CreatePoll } from 'src/app/Forms/create-poll/create-poll.component';
 import { UpdatePoll } from '../update';
 
@@ -28,6 +28,12 @@ export class PollService {
     const desiredURL: string = this.url + "/private";
     let queryParams: HttpParams = new HttpParams();
     return this.httpClient.put(desiredURL,updatePoll,{params: queryParams});
+  }
+
+  public deletePoll(pollID: string): any {
+    const desiredURL: string = this.url + "/private" + "/" + pollID;
+    let queryParams: HttpParams = new HttpParams();
+    return this.httpClient.delete(desiredURL,{params: queryParams});
   }
 
   public getPollsByPublisher(publisherID: any,page: PaginationRequest): any {

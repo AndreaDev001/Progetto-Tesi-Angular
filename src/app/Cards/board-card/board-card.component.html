@@ -1,4 +1,4 @@
-<button class = "card-wrapper" *ngIf="board != undefined">
+<div class = "card-wrapper" *ngIf="board != undefined">
     <div class = "board-card">
         <div class = "board-card-header">
             <div class = "position-relative text-center">
@@ -20,7 +20,6 @@
             <p class = "board-subtitle">{{board.description}}</p>
             <div class = "text-center mt-1">
                 <button class = "board-open-button" (click)="openBoard(board.id)">Open</button>
-                <button class = "board-leave-button">Leave</button>
             </div>
         </div>
         <div class = "board-card-footer">
@@ -29,4 +28,4 @@
             </div>
         </div>
     </div>
-</button>
+</div>

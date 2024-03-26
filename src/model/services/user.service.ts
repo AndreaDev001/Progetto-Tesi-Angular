@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { HttpUtilsService } from './http-utils.service';
-import { Filter } from 'src/app/SearchPages/UserPage/user-filter/user-filter.component';
+import { Filter } from 'src/app/SearchPages/SearchUsers/user-filter/user-filter.component';
 import { PaginationRequest } from '../interfaces';
 import { UpdateUser } from '../update';
 

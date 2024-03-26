@@ -2,10 +2,10 @@
     <div class = "d-flex">
         <img class = "user-image" [ngStyle]="{'width.px': imageWidth,'height.px': imageHeight}" [src]="'http://localhost:8080/api/v1/userImages/public/user/' + user.id + '/image'">
         <div class = "mx-2">
-            <span class = "user-username w-100">{{user.username}}</span>
-            <div class = "p-0" *ngIf="showNameInfo">
-                <span class = "user-name">{{user.name}}</span>
-                <span class = "user-surname">{{user.surname}}</span>
+            <span class = "user-username d-block">{{user.username}}</span>
+            <div>
+                <span style="font-size: 10px;" *ngIf="showNameInfo">{{user.name}}</span>
+                <span class = "mx-1" style="font-size: 10px;" *ngIf="showNameInfo">{{user.surname}}</span>
             </div>
         </div>
     </div>

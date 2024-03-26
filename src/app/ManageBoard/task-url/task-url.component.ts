@@ -9,6 +9,7 @@ import { Task, TaskURL } from 'src/model/interfaces';
 })
 export class TaskURLComponent {
   @Input() taskURL: TaskURL | undefined = undefined;
+  @Input() canModify: boolean = false;
   @Output() deletedEvent: EventEmitter<any> = new EventEmitter();
 
   constructor(private taskURLService: TaskURLService) {

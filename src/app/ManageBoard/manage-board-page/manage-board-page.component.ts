@@ -5,7 +5,7 @@ import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faEllipsis, faInfo, faInfoCircle, faMagnifyingGlassMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { Subscription, Timestamp } from 'rxjs';
 import { TaskGroupService } from 'src/model/services/task-group.service';
-import { Board, CollectionModel, Task, TaskGroup } from 'src/model/interfaces';
+import { Board, CollectionModel, RoleOwner, Task, TaskGroup } from 'src/model/interfaces';
 import { BoardService } from 'src/model/services/board.service';
 import { TaskAssignmentService } from 'src/model/services/task-assignment.service';
 import { TaskService } from 'src/model/services/task.service';
@@ -14,51 +14,74 @@ import {CreateTaskGroup}from 'src/model/create';
 import { AlertHandlerService } from 'src/app/Utility/services/alert-handler.service';
 import { group } from '@angular/animations';
 import { AuthHandlerService } from 'src/model/auth/auth-handler.service';
+import { RoleOwnerService } from 'src/model/services/role-owner.service';
+import { RoleRef } from 'src/model/refs';
 
 @Component({
   selector: 'app-manage-board-page',
   templateUrl: './manage-board-page.component.html',
   styleUrls: ['./manage-board-page.component.css']
 })
-export class ManageBoardPageComponent implements OnInit,OnDestroy,AfterViewInit {
+export class ManageBoardPageComponent implements OnInit,OnDestroy {
  
   private subscriptions: Subscription[] = [];
   public backgroundURL: string | undefined = undefined;
   public boardID: string | undefined = undefined;
+
   public currentBoard: Board | undefined = undefined;
   public currentTaskGroups: TaskGroup[] = [];
-  public searchingTasks: boolean[] = [];
   public currentTasks: Task[][] = [];
-  public optionIcon: IconDefinition = faEllipsis;
-  public addTaskIcon: IconDefinition = faPlus;
-  public infoIcon: IconDefinition = faInfoCircle;
   public currentSelectedTask: Task | undefined = undefined;
   public currentNewGroupName: string | undefined = undefined;
   public currentGroup: TaskGroup | undefined = undefined;
   public emptyIcon: IconDefinition = faMagnifyingGlassMinus;
-  public searchingBoard: boolean = false;
   public currentHeight: any = undefined;
+  public isBoardAdmin: boolean = false;
+  public isAdmin: boolean = false;
+
+
+  public optionIcon: IconDefinition = faEllipsis;
+  public addTaskIcon: IconDefinition = faPlus;
+  public infoIcon: IconDefinition = faInfoCircle;
+
+  public searchingTasks: boolean[] = [];
+  public searchingBoard: boolean = false;
+  public searchingGroups: boolean = false;
+
   @ViewChild("createTaskTemplate") createTaskTemplate: any;
   @ViewChild("taskElement") taskElement: any;
 
-  constructor(private activatedRoute: ActivatedRoute,private authHandler: AuthHandlerService,public alertHandler: AlertHandlerService,private taskService: TaskService,private boardService: BoardService,private taskGroupService: TaskGroupService) {
+  constructor(private activatedRoute: ActivatedRoute,private authHandler: AuthHandlerService,private roleOwnerService: RoleOwnerService,public alertHandler: AlertHandlerService,private taskService: TaskService,private boardService: BoardService,private taskGroupService: TaskGroupService) {
 
   }
 
   public ngOnInit(): void {
+    this.createSubscriptions();
+  }
 
-    
+  private createSubscriptions(): void {
     this.subscriptions.push(this.activatedRoute.params.subscribe((value: any) => {
       if(value.id != undefined) {
         this.boardID = value.id;
         let timeStamp = (new Date()).getTime();
         this.backgroundURL = "http://localhost:8080/api/v1/boardImages/public/image/" + value.id + "?" + 'time=' + timeStamp;
-        this.updateItems();
+        this.searchBoard();
       }
-    }))  
+    }))
+    this.subscriptions.push(this.authHandler.getCurrentUserID(false).subscribe((value: any) => {
+      if(value != undefined && this.boardID != undefined)
+          this.searchRoleOwned(value);
+    }))
+    this.subscriptions.push(this.authHandler.getCurrentAccessToken(false).subscribe((value: any) => {
+      this.isAdmin = value != undefined ? this.authHandler.isAdmin() : false;
+      this.isAdmin = false;
+    }))
   }
 
-  public ngAfterViewInit(): void {
+  private searchRoleOwned(userID: string): void {
+    this.roleOwnerService.hasRole('ADMIN',userID,this.boardID!!).subscribe((value: any) => {
+      this.isBoardAdmin = value != undefined;
+    },(err: any) => this.isBoardAdmin = false);
   }
 
   public reloadBoardInfo(): void {
@@ -71,32 +94,32 @@ export class ManageBoardPageComponent implements OnInit,OnDestroy,AfterViewInit 
   }
 
 
-  public test(event: any): void {
-    this.currentHeight = event.source.element.nativeElement.offsetHeight;
-  }
-
-  public updateDraggedTask(event: any): void {
-    console.log(event.target.nativeElement.offsetHeight);
-  }
-  public updateItems(): void {
+  public searchBoard(): void {
     if(this.boardID != undefined) {
       this.searchingBoard = true;
       this.boardService.getBoardById(this.boardID).subscribe((value: Board) => {
-        this.currentBoard = value;
         this.searchingBoard = false;
-        if(this.currentBoard != undefined) {
-          this.taskGroupService.getTaskGroupsByBoard(this.boardID).subscribe((value: CollectionModel) => {
-            this.currentTaskGroups = value._embedded != undefined && value._embedded.content != undefined ? value._embedded.content : [];
-            for(let i = 0;i < this.currentTaskGroups.length;i++) {
-              this.currentTasks.push([]);
-              this.searchingTasks.push(false);
-            }
-            for(let i = 0;i < this.currentTaskGroups.length;i++)
-                this.updateTasksForGroup(i);
-          })
-        }
-      });
+        this.currentBoard = value;
+        if(this.currentBoard != undefined)
+            this.searchGroups();
+      },(err: any) => this.searchingBoard = false);
     }
+  }
+
+  private searchGroups(): void {
+    this.searchingGroups = true;
+    this.taskGroupService.getTaskGroupsByBoard(this.boardID).subscribe((value: CollectionModel) => {
+      this.searchingGroups = false;
+      this.currentTaskGroups = value._embedded != undefined && value._embedded.content != undefined ? value._embedded.content : [];
+      for(let i = 0;i < this.currentTaskGroups.length;i++) {
+        this.currentTasks.push([]);
+        this.searchingTasks.push(false);
+      }
+      for(let i = 0;i < this.currentTaskGroups.length;i++)
+          this.updateTasksForGroup(i);
+    },(err: any) => {
+      this.searchingGroups = false
+    });
   }
 
 
@@ -201,7 +224,7 @@ export class ManageBoardPageComponent implements OnInit,OnDestroy,AfterViewInit 
       transferArrayItem(event.previousContainer.data,event.container.data,event.previousIndex,event.currentIndex);
     }
   }
-  
+
   public nameChanged(event: any,groupID: any): any {
     const requiredName = event.target.value;
     if(requiredName != undefined) {
@@ -210,6 +233,9 @@ export class ManageBoardPageComponent implements OnInit,OnDestroy,AfterViewInit 
     }
   }
 
+  public updateCurrentHeight(event: any): void {
+
+  }
   public updateCurrentTask(event: any,value: any): any {
     this.currentSelectedTask = value;
   }
@@ -218,16 +244,11 @@ export class ManageBoardPageComponent implements OnInit,OnDestroy,AfterViewInit 
     this.currentSelectedTask = undefined;
   }
 
-  public handleTaskChange(event: string): void {
-
-  }
-
   public ngOnDestroy(): void {
     this.subscriptions.forEach((value: Subscription) => value.unsubscribe());  
   }
 
   public updateTask(event: any,groupIndex: number,taskIndex: number): void {
-    console.log("called");
     this.taskService.getTaskByID(event).subscribe((value: any) => {
       this.currentTasks[groupIndex][taskIndex] = value;
     })

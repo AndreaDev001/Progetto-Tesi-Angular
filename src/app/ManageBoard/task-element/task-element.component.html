@@ -4,11 +4,7 @@
             <div>
                 <app-better-image #betterImage [requiredSource]="photoURL" [imageStyle]="{'width': '100%','height': 'auto','border-radius': '5px'}"></app-better-image>
             </div>
-            <div class = "d-flex mt-1">
-                <div class = "d-inline-block" [ngStyle]="{'margin-left': i > 0 ? '5px' : '0px'}"  *ngFor="let current of currentTagAssignments;let i = index">
-                    <app-task-tag [padding]="'2px'" [fontSize]="'10px'" [tagRef]="current.tag"></app-task-tag>
-                </div>
-            </div>
+            <app-loader [requiredTemplate]="tagAssignmentsTemplate" [isSearching]="searchingTagAssignments" [diameter]="30" [strokeWidth]="2" [showText]="false"></app-loader>
         </div>
         <div class = "position-relative">
             <div class = "position-absolute" style="top: 0;right: 0">
@@ -23,11 +19,7 @@
         <p class = "task-element-subtitle">{{task.name}}</p>
     </div>
     <div class = "task-element-footer">
-        <div class = "text-start">
-            <div class = "d-inline-block" [ngStyle]="{'margin-left': i > 0 ? '3px' : '0px'}"  *ngFor="let current of currentTaskAssignments;let i = index">
-                <ng-container *ngTemplateOutlet="assignedTemplate;context : {item: current}"></ng-container>
-            </div>
-        </div>
+        <app-loader [showText]="false" [requiredTemplate]="taskAssignmentsTemplate" [isSearching]="searchingTaskAssignments" [diameter]="30" [strokeWidth]="2"></app-loader>
     </div>
 </button>
 <ng-template #descriptionTemplate let-item="item">
@@ -45,12 +37,26 @@
 </ng-template>
 <ng-template #overlayTemplate>
     <div>
-        <app-task-overlay [board]="board" [task]="task" (taskChanged)="this.updateTask()"></app-task-overlay>
+        <app-task-overlay [isBoardAdmin]="isBoardAdmin" [isAdmin]="isAdmin" [board]="board" [task]="task" (taskChanged)="this.updateTask()"></app-task-overlay>
     </div>
 </ng-template>
 <ng-template #descriptionItem let-item="item">
     <div style="font-size: 12px;">
         <fa-icon [icon]="item.icon"></fa-icon>
         <span style="margin-left: 5px;">{{item.amount}}</span>
+    </div>
+</ng-template>
+<ng-template #tagAssignmentsTemplate>
+    <div class = "d-flex mt-1">
+        <div class = "d-inline-block" [ngStyle]="{'margin-left': i > 0 ? '5px' : '0px'}"  *ngFor="let current of currentTagAssignments;let i = index">
+            <app-task-tag [padding]="'2px'" [fontSize]="'10px'" [tagRef]="current.tag"></app-task-tag>
+        </div>
+    </div>
+</ng-template>
+<ng-template #taskAssignmentsTemplate>
+    <div class = "text-start">
+        <div class = "d-inline-block" [ngStyle]="{'margin-left': i > 0 ? '3px' : '0px'}"  *ngFor="let current of currentTaskAssignments;let i = index">
+            <ng-container *ngTemplateOutlet="assignedTemplate;context : {item: current}"></ng-container>
+        </div>
     </div>
 </ng-template>

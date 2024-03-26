@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faPoll } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
+import { AuthHandlerService } from 'src/model/auth/auth-handler.service';
 import { PagedModel, PaginationRequest, Poll } from 'src/model/interfaces';
 import { PollService } from 'src/model/services/poll.service';
 
@@ -14,51 +15,51 @@ import { PollService } from 'src/model/services/poll.service';
 export class PollsPageComponent implements OnInit,OnDestroy {
 
   private subscriptions: Subscription[] = [];
-
-  public publisherID: any = undefined;
   public currentPolls: Poll[] = [];
-  private currentPage: number = 0;
-  private currentTotalPages: number = 0;
-  public currentTotalElements: number = 0;
+  private currentUserID: any = undefined;
   public pollIcon: IconDefinition = faPoll;
   
-  constructor(private activatedRoute: ActivatedRoute,private pollsService: PollService) {
+
+  public isSearching: boolean = false;
+  private currentPage: number = 0;
+  private currentTotalPages: number = 0;
+
+  constructor(private authHandler: AuthHandlerService,private pollService: PollService) {
 
   }
 
   public ngOnInit(): void {
-    this.subscriptions.push(this.activatedRoute.params.subscribe((value: any) => {
-      if(value.id != undefined) {
-        this.updateCurrentPolls(this.currentPage,20);
-      }
+    this.subscriptions.push(this.authHandler.getCurrentUserID(false).subscribe((value: any) => {
+      this.currentUserID = value;
+      this.searchPolls(0,20);
     }))
   }
 
-  public ngOnDestroy(): void {
-    this.subscriptions.forEach((value :Subscription) => value.unsubscribe());  
-  }
-
-  public updateCurrentPolls(page: number,pageSize: number): void {
+  private searchPolls(page: number,pageSize: number): void {
+    this.isSearching = true;
     let paginationRequest: PaginationRequest = {page: page,pageSize: pageSize};
-    this.pollsService.getPollsByPublisher(this.publisherID,paginationRequest).subscribe((value: PagedModel) => {
+    this.pollService.getPollsByPublisher(this.currentUserID,paginationRequest).subscribe((value: PagedModel) => {
+      this.isSearching = false;
       this.currentPolls = value._embedded != undefined && value._embedded.content != undefined ? value._embedded.content : [];
       if(value.page != undefined) {
         this.currentPage = value.page.page;
         this.currentTotalPages = value.page.totalPages;
-        this.currentTotalElements = value.page.totalElements;
       }
-    }) 
+    },(err: any) => this.reset());
   }
 
-  public resetSearch(): void {
+  private reset(): void {
+    this.isSearching = false;
+    this.currentPolls = [];
     this.currentPage = 0;
-    this.updateCurrentPolls(this.currentPage,20);
+    this.currentTotalPages = 0;
   }
 
-  public handlePageChange(page: any): void {
-    if(page < this.currentTotalPages) {
-      this.currentPage = page;
-      this.updateCurrentPolls(this.currentPage,20);
-    }
+  public removePoll(poll: any): void {
+    this.currentPolls = this.currentPolls.filter((value: any) => value.id !== poll.id);
+  }
+
+  public ngOnDestroy(): void {
+    this.subscriptions.forEach((value: Subscription) => value.unsubscribe());
   }
 }

@@ -1,7 +1,7 @@
 <div *ngIf="isSearching">
     <div class = "p-1" style="display: flex;flex-direction: column;align-items: center;">
         <mat-progress-spinner [mode]="'indeterminate'" [diameter]="diameter" [strokeWidth]="strokeWidth"></mat-progress-spinner>
-        <div class = "py-2 text-center">
+        <div class = "py-2 text-center" *ngIf="showText">
             <span class = "d-block" [ngStyle]="{'font-size.px': fontSize}">{{loaderText}}</span>
             <span class = "d-block" [ngStyle]="{'font-size.px': fontSize}">{{loaderSubtitle}}</span>
         </div>

@@ -71,10 +71,11 @@ export class HeaderComponent implements OnInit,OnDestroy {
       this.alertHandler.setTextTemplate(this.createPollTemplate);
       this.alertHandler.open();
     }});
-    this.userOptions.push({name: "Boards",icon: faTable,callback: () => {}});
-    this.userOptions.push({name: "Tasks",icon: faTasks,callback: () => {}});
-    this.userOptions.push({name: "Invites",icon :faMessage,callback: () => {}});
-    this.userOptions.push({name: "Likes",icon: faHeart,callback: () => {}});
+    this.userOptions.push({name: "Discussions",icon: faDiscourse,callback: () => {this.router.navigate(["/discussions"])}});
+    this.userOptions.push({name: "Polls",icon: faPoll,callback: () => {this.router.navigate(["/polls"])}});
+    this.userOptions.push({name: "Boards",icon: faTable,callback: () => {this.router.navigate(["/boards"])}});
+    this.userOptions.push({name: "Tasks",icon: faTasks,callback: () => {this.router.navigate(["/tasks"])}});
+    this.userOptions.push({name: "Invites",icon: faMessage,callback: () => {this.router.navigate(["/invites"])}})
     this.userOptions.push({name: "Modify",icon: faGear,callback: () => {
       this.alertHandler.reset();
       this.alertHandler.setTextTemplate(this.updateUserTemplate);

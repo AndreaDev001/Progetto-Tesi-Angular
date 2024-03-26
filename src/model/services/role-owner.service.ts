@@ -20,6 +20,7 @@ export class RoleOwnerService {
     return this.httpClient.get(desiredURL,{params: queryParams}); 
   }
 
+
   public hasRole(name: string,ownerID: string,boardID: string): any {
     const desiredURL: string = this.url + "/private" + "/owner" + "/" + ownerID + "/board" + "/" + boardID  + "/name" + "/" + name;
     let queryParams: HttpParams = new HttpParams();

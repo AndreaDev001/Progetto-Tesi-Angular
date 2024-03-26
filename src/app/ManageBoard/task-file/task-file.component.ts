@@ -14,6 +14,7 @@ export class TaskFileComponent {
   @Output() deletedEvent: EventEmitter<any> = new EventEmitter();
   @Output() downloadEvent: EventEmitter<any> = new EventEmitter();
   @Output() failedEvent: EventEmitter<any> = new EventEmitter();
+  @Input() canModify: boolean = false;
   public fileIcon: IconDefinition = faFileDownload;
 
   constructor(private taskFileService: TaskFileService) {

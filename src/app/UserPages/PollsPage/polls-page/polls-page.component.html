@@ -1,20 +1,24 @@
 <div class = "container py-4">
     <div>
-        <h3 class = "d-inline-block">Polls</h3>
-        <fa-icon class = "d-inline-block mx-2" [icon]="pollIcon" style="font-size: 25px;"></fa-icon>
+        <div class = "d-flex" style="font-size: 30px;">
+            <p>Polls</p>
+            <fa-icon class = "mx-2" [icon]="pollIcon"></fa-icon>
+        </div>
+        <p>View all the polls you have published</p>
     </div>
-    <p class = "p-0 m-0">Here you can see all of the polls that you have created</p>
+    <div class = "py-2 text-center">
+        <app-loader [strokeWidth]="10" [diameter]="100" [fontSize]="20"  [loaderSubtitle]="'Searching discussions...'" [requiredTemplate]="pollsTemplate" [isSearching]="isSearching"></app-loader>
+    </div>
+</div>
+<ng-template #pollsTemplate>
     <div *ngIf="currentPolls.length > 0">
-        <div class = "row py-2">
+        <div class = "row">
             <div class = "col-12 col-md-3 mt-2" *ngFor="let current of currentPolls">
-                <app-poll-card [poll]="current"></app-poll-card>
-            </div>
-            <div class = "text-center py-2">
-                <app-pagination [pageSize]="20" [totalElements]="currentTotalElements"></app-pagination>
+                <app-poll-card (deletedEvent)="removePoll(current)" [poll]="current"></app-poll-card>
             </div>
         </div>
     </div>
-    <div class = "py-2" *ngIf="currentPolls.length == 0">
-        <app-no-items (buttonClicked)="resetSearch()"></app-no-items>
+    <div *ngIf="currentPolls.length == 0">
+        <app-no-items></app-no-items>
     </div>
-</div>
+</ng-template>

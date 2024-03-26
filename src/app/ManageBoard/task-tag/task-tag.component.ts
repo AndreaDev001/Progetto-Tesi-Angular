@@ -16,12 +16,12 @@ export class TaskTagComponent implements OnInit {
   @Input() tagRef: TagRef | undefined = undefined;
   @Input() fontSize: any | undefined = '12px';
   @Input() padding: any | undefined = '2px';
-  @Input() canRemove: boolean = false;
+  @Input() canModify: boolean = false;
   public removeIcon: IconDefinition = faRemove;
 
   @Output() removeEvent: EventEmitter<any> = new EventEmitter();
 
-  constructor(private tagAssignment: TagAssignmentService) {
+  constructor() {
 
   }
 

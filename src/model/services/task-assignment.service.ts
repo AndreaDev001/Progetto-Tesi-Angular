@@ -26,8 +26,15 @@ export class TaskAssignmentService {
     let queryParams: HttpParams = new HttpParams();
     return this.httpClient.get(desiredURL,{params: queryParams});
   }
+
   public getTaskAssignmentsByTask(taskID: any): any {
     const desiredURL: string = this.url + "/private" + "/task" + "/" + taskID;
+    let queryParams: HttpParams = new HttpParams();
+    return this.httpClient.get(desiredURL,{params: queryParams});
+  }
+
+  public hasAssignment(userID: any,taskID: any) {
+    const desiredURL: string = this.url + "/private" + "/user" + "/" + userID + "/task" + taskID;
     let queryParams: HttpParams = new HttpParams();
     return this.httpClient.get(desiredURL,{params: queryParams});
   }

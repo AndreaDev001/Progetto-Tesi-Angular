@@ -1,7 +1,7 @@
 <div class = "tag-wrapper" [ngStyle]="{'background-color': tag.color}" *ngIf="tag != undefined">
     <div class = "position-relative w-100">
         <span [ngStyle]="{'font-size': fontSize,'padding': padding}" class = "tag-text">{{tag.name}}</span>
-        <button (click)="removeTag()" *ngIf="canRemove" style="background-color: inherit;">
+        <button  (click)="removeTag()" *ngIf="canModify" style="background-color: inherit;">
             <fa-icon [icon]="removeIcon"></fa-icon>
         </button>
     </div>

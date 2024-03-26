@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { HttpUtilsService } from './http-utils.service';
-import { Filter } from '../../app/SearchPages/BanPage/ban-filter/ban-filter.component';
+import { Filter } from 'src/app/SearchPages/SearchBans/ban-filter/ban-filter.component';
 import { CreateBan } from 'src/app/Forms/create-ban/create-ban.component';
 
 @Injectable({

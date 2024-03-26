@@ -15,11 +15,13 @@ import { UpdateCheckList, UpdateCheckListOption } from 'src/model/update';
 export class ChecklistComponent implements OnInit
 {
   @Input() checkList: CheckList | undefined = undefined;
+  @Input() canModify: boolean = false;
   public currentOptions: CheckListOption[] = [];
   public checkIcon: IconDefinition = faCheckCircle;
   public currentName: string | undefined = undefined;
   public removeIcon: IconDefinition = faClose;
   public currentOptionName: string | undefined = undefined;
+  public searchingOptions: boolean = false;
 
   @ViewChild("createOptionTemplate") createOptionTemplate: any;
 
@@ -30,10 +32,19 @@ export class ChecklistComponent implements OnInit
   public ngOnInit(): void {
     if(this.checkList != undefined) {
       this.currentName = this.checkList.name;
-      this.checkListOptionService.getOptionsByCheckList(this.checkList.id).subscribe((value: CollectionModel) => {
-        this.currentOptions = value._embedded != undefined && value._embedded.content != undefined ? value._embedded.content : [];
-      })
+      this.searchOptions();
     }  
+  }
+
+  private searchOptions(): void {
+    this.searchingOptions = true;
+    this.checkListOptionService.getOptionsByCheckList(this.checkList!!.id).subscribe((value: CollectionModel) => {
+      this.searchingOptions = false;
+      this.currentOptions = value._embedded != undefined && value._embedded.content != undefined ? value._embedded.content : [];
+    },(err: any) => {
+      this.searchingOptions = false;
+      this.currentOptions = [];
+    })
   }
 
   public addOption(): void {

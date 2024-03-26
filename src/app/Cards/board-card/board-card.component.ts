@@ -29,7 +29,7 @@ export class BoardCardComponent implements OnInit {
   }
   public openBoard(value: any): void {
     if(this.board != undefined) {
-      this.router.navigate(['/board'],value);
+      this.router.navigateByUrl("/board/" + " " + this.board.id);
     }
   }
 }

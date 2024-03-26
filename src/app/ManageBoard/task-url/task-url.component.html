@@ -4,6 +4,6 @@
         <a target="_blank" class = "task-url" [href]="taskURL.url">{{taskURL.url}}</a>
     </div>
     <div style="flex-basis: 15%;text-align: center;">
-        <button (click)="deleteURL()" class = "default-button">Remove</button>
+        <button (click)="deleteURL()" [disabled]="!canModify" class = "default-button">Remove</button>
     </div>
 </div>
