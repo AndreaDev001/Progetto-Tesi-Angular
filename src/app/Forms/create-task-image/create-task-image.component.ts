@@ -19,6 +19,7 @@ export class CreateTaskImageComponent {
     image: new FormControl('',[Validators.required])
   })
   public removeIcon: IconDefinition = faRemove;
+  public isCreating: boolean = false;
   @Input() taskID: any = undefined;
   @Output() submitEvent: EventEmitter<any> = new EventEmitter();
   @Output() successEvent: EventEmitter<any> = new EventEmitter();
@@ -45,9 +46,15 @@ export class CreateTaskImageComponent {
     if(this.currentFiles.length > 0 && this.taskID != undefined) {
       let createTaskImage: CreateTaskImage = {taskID: this.taskID,files: this.currentFiles};
       this.submitEvent.emit(createTaskImage);
+      this.formGroup.reset();
+      this.isCreating = true;
       this.taskImageService.createImage(createTaskImage).subscribe((value: any) => {
+        this.isCreating = false;
         this.successEvent.emit(value);
-      },(err: any) => this.failedEvent.emit(err));
+      },(err: any) => {
+        this.isCreating = false;
+        this.failedEvent.emit(err)
+      });
     }
   }
 

@@ -20,6 +20,7 @@ export class CreateTeamComponent implements OnInit {
   public formGroup: FormGroup = new FormGroup({
     name: new FormControl('',[Validators.required,Validators.minLength(3),Validators.maxLength(10)])
   })
+  public isCreating: boolean = false;
   @Input() boardID: string | undefined = undefined;
   @Output() submitEvent: EventEmitter<any> = new EventEmitter();
   @Output() successEvent: EventEmitter<any> = new EventEmitter();
@@ -38,7 +39,15 @@ export class CreateTeamComponent implements OnInit {
     if(this.name != undefined && this.boardID != undefined && this.formGroup.valid) {
       let createTeam: CreateTeam = {name: this.name.value,boardID: this.boardID};
       this.submitEvent.emit(createTeam);
-      this.teamService.createTeam(createTeam).subscribe((value: Team) => this.successEvent.emit(value),(err: any) => this.failedEvent.emit(err));
+      this.reset();
+      this.isCreating = true;
+      this.teamService.createTeam(createTeam).subscribe((value: Team) => {
+        this.isCreating = false;
+        this.successEvent.emit(value)
+      },(err: any) => {
+        this.isCreating = false;
+        this.failedEvent.emit(err)
+      });
     }
   }
 

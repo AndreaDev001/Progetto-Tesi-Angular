@@ -20,6 +20,7 @@ export class CreateCheckListComponent {
   @Output() submitEvent: EventEmitter<any> = new EventEmitter();
   @Output() successEvent: EventEmitter<any> = new EventEmitter();
   @Output() failedEvent: EventEmitter<any> = new EventEmitter();
+  public isCreating: boolean = false;
 
 
   constructor(private checkListService: CheckListService) {
@@ -34,7 +35,14 @@ export class CreateCheckListComponent {
     if(this.name != undefined && this.formGroup.valid && this.taskID != undefined) {
       let createRequest: CreateCheckList = {name: this.name.value,taskID: this.taskID}
       this.submitEvent.emit(createRequest);
-      this.checkListService.createCheckList(createRequest).subscribe((value: any) => this.successEvent.emit(value),(err: any) => this.failedEvent.emit(err));
+      this.isCreating = true;
+      this.checkListService.createCheckList(createRequest).subscribe((value: any) => {
+        this.isCreating = false;
+        this.successEvent.emit(value)
+      },(err: any) =>  {
+        this.isCreating = false;
+        this.failedEvent.emit(err)
+      });
     }
   }
 

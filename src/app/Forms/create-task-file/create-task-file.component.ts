@@ -20,6 +20,7 @@ export class CreateTaskFileComponent {
   });
   public fileIcon: IconDefinition = faFileUpload;
   public currentFile: any = undefined;
+  public isCreating: boolean = false;
   @Output() submitEvent: EventEmitter<any> = new EventEmitter();
   @Output() successEvent: EventEmitter<any> = new EventEmitter();
   @Output() failedEvent: EventEmitter<any> = new EventEmitter();
@@ -32,9 +33,15 @@ export class CreateTaskFileComponent {
     if(this.name != undefined && this.file != undefined && this.formGroup.valid && this.currentFile != undefined) {
       let createTaskFile: CreateTaskFile = {name: this.name.value,multipartFile: this.currentFile,taskID: this.taskID};
       this.submitEvent.emit(createTaskFile);
+      this.reset();
+      this.isCreating = true;
       this.taskFileService.createTaskFile(createTaskFile).subscribe((value: any) => {
+        this.isCreating = false;
         this.successEvent.emit(value);
-      },(err: any) => this.failedEvent.emit(err));
+      },(err: any) => {
+        this.isCreating = false;
+        this.failedEvent.emit(err);
+      });
     } 
   }
 

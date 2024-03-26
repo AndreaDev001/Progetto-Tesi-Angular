@@ -30,6 +30,7 @@ export class CreateBanComponent implements OnInit {
   @Input() bannedID: string | undefined = undefined;
   public reasons: string[] = [];
   public banIcon: IconDefinition = faBan;
+  public isCreating: boolean = false;
   @Output() submitEvent: EventEmitter<any> = new EventEmitter();
   @Output() successEvent: EventEmitter<any> = new EventEmitter();
   @Output() failedEvent: EventEmitter<any> = new EventEmitter();

@@ -9,25 +9,31 @@
         </div>
         <div class = "py-2 px-1">
             <div>
-                <div>
-                    <span class = "d-block mx-2">Name</span>
-                    <mat-form-field class = "form-field" *ngIf="name != undefined">
-                        <mat-label class = "input-label">Name</mat-label>
-                        <input matInput placeholder="Name" formControlName="name">
-                        <mat-hint>Write a name...</mat-hint>
-                        <mat-error *ngIf="name.hasError('required') && (name.touched || name.dirty)">Name is required</mat-error>
-                        <mat-error *ngIf="name.hasError('minlength') && (name.touched || name.dirty)">Name is too short, must be longer than 3 characters</mat-error>
-                        <mat-error *ngIf="name.hasError('maxlength') && (name.touched || name.dirty)">Name is too long, must be shorter than 10 characters</mat-error>
-                    </mat-form-field>
+                <div *ngIf="!isCreating">
+                    <div>
+                        <span class = "d-block mx-2">Name</span>
+                        <mat-form-field class = "form-field" *ngIf="name != undefined">
+                            <mat-label class = "input-label">Name</mat-label>
+                            <input matInput placeholder="Name" formControlName="name">
+                            <mat-hint>Write a name...</mat-hint>
+                            <mat-error *ngIf="name.hasError('required') && (name.touched || name.dirty)">Name is required</mat-error>
+                            <mat-error *ngIf="name.hasError('minlength') && (name.touched || name.dirty)">Name is too short, must be longer than 3 characters</mat-error>
+                            <mat-error *ngIf="name.hasError('maxlength') && (name.touched || name.dirty)">Name is too long, must be shorter than 10 characters</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class = "mx-2">
+                        <span class = "d-block">File</span>
+                        <input formControlName="file" (change)="updateCurrentFile($event)" type="file" class="file-upload">
+                    </div>
+                    <div class = "mt-2 py-2 text-end">
+                        <button  type="submit" [disabled]="!formGroup.valid" class = "confirm-button">Confirm</button>
+                        <button class="stop-button" (click)="reset()">Clear</button>
+                    </div>
                 </div>
-                <div class = "mx-2">
-                    <span class = "d-block">File</span>
-                    <input formControlName="file" (change)="updateCurrentFile($event)" type="file" class="file-upload">
+                <div *ngIf="isCreating" style="display: flex;flex-direction: column;align-items: center;padding: 10px 0px">
+                    <mat-progress-spinner [diameter]="60" [strokeWidth]="5" [mode]="'indeterminate'"></mat-progress-spinner>
+                    <p>Uploading file, please wait...</p>
                 </div>
-            </div> 
-            <div class = "mt-2 text-end">
-                <button  type="submit" [disabled]="!formGroup.valid" class = "confirm-button">Confirm</button>
-                <button class="stop-button" (click)="reset()">Clear</button>
             </div>
         </div>
     </div>

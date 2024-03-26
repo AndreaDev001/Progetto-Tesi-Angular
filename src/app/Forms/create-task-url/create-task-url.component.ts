@@ -31,7 +31,7 @@ export class CreateTaskURLComponent {
     if(this.url != undefined && this.name != undefined && this.formGroup.valid && this.taskID != undefined) {
       let createTaskURL: CreateTaskURL = {url: this.url.value,taskID: this.taskID,name: this.name.value};
       this.submitEvent.emit(createTaskURL);
-      this.formGroup.reset();
+      this.reset();
       this.isCreating = true;
       this.taskURLService.createTaskURL(createTaskURL).subscribe((value: any) => {
         this.isCreating = false;

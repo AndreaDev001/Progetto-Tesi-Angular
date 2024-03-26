@@ -19,6 +19,7 @@ export class CreateTagComponent implements OnInit {
   })
   public tagIcon: IconDefinition = faTag;
   public currentColor: any = "00ff00";
+  public isCreating: boolean = false;
   @Input() boardID: any = undefined;
   @Output() submitEvent: EventEmitter<any> = new EventEmitter();
   @Output() successEvent: EventEmitter<any> = new EventEmitter();
@@ -37,7 +38,15 @@ export class CreateTagComponent implements OnInit {
     if(this.name != undefined && this.color != undefined && this.formGroup.valid) {
       let createTag: CreateTag = {name: this.name.value,color: this.color.value,boardID: this.boardID};
       this.submitEvent.emit(createTag);
-      this.tagService.createTag(createTag).subscribe((value: any) => this.successEvent.emit(value),(err: any) => this.failedEvent.emit(err));
+      this.reset();
+      this.isCreating = true;
+      this.tagService.createTag(createTag).subscribe((value: any) => {
+        this.isCreating = false;
+        this.successEvent.emit(value)
+      },(err: any) => {
+        this.isCreating = false;
+        this.failedEvent.emit(err)
+      });
     }
   }
 

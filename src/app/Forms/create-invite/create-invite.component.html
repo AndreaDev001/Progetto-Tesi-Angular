@@ -5,24 +5,30 @@
                 <h4 class = "d-inline-block">Create an invite</h4>
                 <fa-icon class = "d-inline-block mx-2" [icon]="inviteIcon" style="font-size: 25px;"></fa-icon>
             </div>
-            <p class = "p-0 m-0">Please specify a text and an expiration date</p>
+            <p class = "p-0 m-0">Please specify a text</p>
         </div>
         <div class = "py-2">
-            <app-user-holder [user]="user"></app-user-holder>
-            <div>
-                <span class = "d-block mx-2">Text</span>
-                <mat-form-field class = "form-field" *ngIf="text != undefined">
-                    <mat-label class = "input-label">Text</mat-label>
-                    <input class = "form-input" matInput placeholder="Title" formControlName="text">
-                    <mat-hint class = "mat-hint">Write a text...</mat-hint>
-                    <mat-error *ngIf="text.hasError('required') && (text.touched || text.dirty)">Text is required</mat-error>
-                    <mat-error *ngIf="text.hasError('minlength') && (text.touched || text.dirty)">Text is too short, must be longer than 3 characters</mat-error>
-                    <mat-error *ngIf="text.hasError('maxlength') && (text.touched || text.dirty)">Text is too long, must be shorter than 10 characters</mat-error>
-                </mat-form-field>
+            <div *ngIf="!isCreating">
+                <app-user-holder [user]="user"></app-user-holder>
+                <div>
+                    <span class = "d-block mx-2">Text</span>
+                    <mat-form-field class = "form-field" *ngIf="text != undefined">
+                        <mat-label class = "input-label">Text</mat-label>
+                        <input class = "form-input" matInput placeholder="Title" formControlName="text">
+                        <mat-hint class = "mat-hint">Write a text...</mat-hint>
+                        <mat-error *ngIf="text.hasError('required') && (text.touched || text.dirty)">Text is required</mat-error>
+                        <mat-error *ngIf="text.hasError('minlength') && (text.touched || text.dirty)">Text is too short, must be longer than 3 characters</mat-error>
+                        <mat-error *ngIf="text.hasError('maxlength') && (text.touched || text.dirty)">Text is too long, must be shorter than 10 characters</mat-error>
+                    </mat-form-field>
+                </div>
+                <div class = "mt-2 text-end mx-1">
+                    <button class = "confirm-button" [disabled]="!formGroup.valid">Confirm</button>
+                    <button (click)="reset()"  class = "stop-button">Reset</button>
+                </div>
             </div>
-            <div class = "mt-2 text-end mx-1">
-                <button class = "confirm-button" [disabled]="!formGroup.valid">Confirm</button>
-                <button (click)="reset()"  class = "stop-button">Reset</button>
+            <div *ngIf="isCreating" style="display: flex;flex-direction: column;align-items: center;padding: 10px 0px">
+                <mat-progress-spinner [diameter]="60" [strokeWidth]="5" [mode]="'indeterminate'"></mat-progress-spinner>
+                <p>Creating invite, please wait...</p>
             </div>
         </div>
     </div>

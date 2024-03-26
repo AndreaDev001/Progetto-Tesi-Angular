@@ -32,6 +32,7 @@ export class CreatePollComponent implements OnInit {
     minimumVotes: new FormControl<Number>(0,[Validators.required,Validators.min(0),Validators.max(20)]),
     maximumVotes: new FormControl<Number>(0,[Validators.required,Validators.min(20),Validators.max(40)])
   })
+  public isCreating: boolean = false;
   @Output() submitEvent: EventEmitter<any> = new EventEmitter();
   @Output() successEvent: EventEmitter<any> = new EventEmitter();
   @Output() failedEvent: EventEmitter<any> = new EventEmitter();
@@ -53,9 +54,14 @@ export class CreatePollComponent implements OnInit {
         let createPoll: CreatePoll = {expirationDate: "2024-05-13",title: this.title.value,description: this.description.value,minimumVotes: this.minimumVotes.value,maximumVotes: this.maximumVotes.value};
         this.submitEvent.emit(createPoll);
         this.formGroup.reset();
+        this.isCreating = true;
         this.pollService.createPoll(createPoll).subscribe((value: Poll) => {
+          this.isCreating = false;
           this.successEvent.emit(value);
-        },(err: any) => this.failedEvent.emit(err));
+        },(err: any) => {
+          this.isCreating = false;
+          this.failedEvent.emit(err)
+        });
       }
       else
       {

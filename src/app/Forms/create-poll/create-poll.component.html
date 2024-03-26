@@ -8,52 +8,58 @@
             <p class = "p-0 m-0">Please specify a title, a description, a minimum amount of votes and a maximum amount</p>
         </div>
         <div class = "py-2 vertical-container">
-            <div>
-                <span class = "d-block mx-2">Title</span>
-                <mat-form-field class = "form-field" *ngIf="title != undefined">
-                    <mat-label class = "input-label">Title</mat-label>
-                    <input class = "form-input" matInput placeholder="Title" formControlName="title">
-                    <mat-hint class = "mat-hint">Write a title...</mat-hint>
-                    <mat-error *ngIf="title.hasError('required') && (title.touched || title.dirty)">Title is required</mat-error>
-                    <mat-error *ngIf="title.hasError('minlength') && (title.touched || title.dirty)">Title is too short, must be longer than 3 characters</mat-error>
-                    <mat-error *ngIf="title.hasError('maxlength') && (title.touched || title.dirty)">Title is too long, must be shorter than 10 characters</mat-error>
-                </mat-form-field>
+            <div *ngIf="!isCreating">
+                <div>
+                    <span class = "d-block mx-2">Title</span>
+                    <mat-form-field class = "form-field" *ngIf="title != undefined">
+                        <mat-label class = "input-label">Title</mat-label>
+                        <input class = "form-input" matInput placeholder="Title" formControlName="title">
+                        <mat-hint class = "mat-hint">Write a title...</mat-hint>
+                        <mat-error *ngIf="title.hasError('required') && (title.touched || title.dirty)">Title is required</mat-error>
+                        <mat-error *ngIf="title.hasError('minlength') && (title.touched || title.dirty)">Title is too short, must be longer than 3 characters</mat-error>
+                        <mat-error *ngIf="title.hasError('maxlength') && (title.touched || title.dirty)">Title is too long, must be shorter than 10 characters</mat-error>
+                    </mat-form-field>
+                </div>
+                <div>
+                    <span class = "d-block mx-2">Description</span>
+                    <mat-form-field class = "form-field" *ngIf="description != undefined">
+                        <mat-label class = "input-label">Description</mat-label>
+                        <textarea class = "form-input" matInput placeholder="Description" formControlName="description"></textarea>
+                        <mat-hint class = "mat-hint">Write a description...</mat-hint>
+                        <mat-error *ngIf="description.hasError('required') && (description.touched || description.dirty)">Description is required</mat-error>
+                    </mat-form-field>
+                </div>
+                <div>
+                    <span class = "d-block mx-2">Minimum amount of votes</span>
+                    <mat-form-field class = "form-field" *ngIf="minimumVotes != undefined">
+                        <mat-label class = "input-label">Minimum Votes</mat-label>
+                        <input class = "form-input" matInput placeholder="Minimum Votes" formControlName="minimumVotes">
+                        <mat-hint class = "mat-hint">Write a minimum amount of votes...</mat-hint>
+                        <mat-error *ngIf="minimumVotes.hasError('required') && (minimumVotes.touched || minimumVotes.dirty)">You must specificy a minimum amount of votes</mat-error>
+                        <mat-error *ngIf="minimumVotes.hasError('min') && (minimumVotes.touched || minimumVotes.dirty)">Minimum amount of votes must be greater than 0</mat-error>
+                        <mat-error *ngIf="maximumVotes.hasError('max') && (maximumVotes.touched || maximumVotes.dirty)">Minimum amount of votes must be smaller than 20</mat-error>
+                    </mat-form-field>   
+                </div> 
+                <div>
+                    <span class = "d-block mx-2">Maximum amount of votes</span>
+                    <mat-form-field class = "form-field">
+                        <mat-label class = "input-label">Maximum votes</mat-label>
+                        <input class = "form-input" matInput placeholder="Maximum Votes" formControlName="maximumVotes">
+                        <mat-hint class = "mat-hint">Write a maximum amount of votes</mat-hint>
+                        <mat-error *ngIf="maximumVotes.hasError('required') && (maximumVotes.touched || maximumVotes.dirty)">You must specificy a maximum amount of votes</mat-error>
+                        <mat-error *ngIf="maximumVotes.hasError('required') && (maximumVotes.touched || maximumVotes.dirty)">Maximum amount of votes must be greater than 20</mat-error>
+                        <mat-error *ngIf="maximumVotes.hasError('max') && (maximumVotes.touched || maximumVotes.dirty)">Maximum amount of votes must be smaller than 40</mat-error>
+                    </mat-form-field>
+                </div>
+                <div class = "mt-2 py-2 text-end mx-1">
+                    <button type="submit" class = "confirm-button" [disabled]="!formGroup.valid">Confirm</button>
+                    <button (click)="this.reset()" class = "stop-button">Clear</button>
+                </div>
             </div>
-            <div>
-                <span class = "d-block mx-2">Description</span>
-                <mat-form-field class = "form-field" *ngIf="description != undefined">
-                    <mat-label class = "input-label">Description</mat-label>
-                    <textarea class = "form-input" matInput placeholder="Description" formControlName="description"></textarea>
-                    <mat-hint class = "mat-hint">Write a description...</mat-hint>
-                    <mat-error *ngIf="description.hasError('required') && (description.touched || description.dirty)">Description is required</mat-error>
-                </mat-form-field>
+            <div *ngIf="isCreating" style="display: flex;flex-direction: column;align-items: center;padding: 10px 0px">
+                <mat-progress-spinner [diameter]="60" [strokeWidth]="5" [mode]="'indeterminate'"></mat-progress-spinner>
+                <p>Creating poll, please wait...</p>
             </div>
-            <div>
-                <span class = "d-block mx-2">Minimum amount of votes</span>
-                <mat-form-field class = "form-field" *ngIf="minimumVotes != undefined">
-                    <mat-label class = "input-label">Minimum Votes</mat-label>
-                    <input class = "form-input" matInput placeholder="Minimum Votes" formControlName="minimumVotes">
-                    <mat-hint class = "mat-hint">Write a minimum amount of votes...</mat-hint>
-                    <mat-error *ngIf="minimumVotes.hasError('required') && (minimumVotes.touched || minimumVotes.dirty)">You must specificy a minimum amount of votes</mat-error>
-                    <mat-error *ngIf="minimumVotes.hasError('min') && (minimumVotes.touched || minimumVotes.dirty)">Minimum amount of votes must be greater than 0</mat-error>
-                    <mat-error *ngIf="maximumVotes.hasError('max') && (maximumVotes.touched || maximumVotes.dirty)">Minimum amount of votes must be smaller than 20</mat-error>
-                </mat-form-field>   
-            </div> 
-            <div>
-                <span class = "d-block mx-2">Maximum amount of votes</span>
-                <mat-form-field class = "form-field">
-                    <mat-label class = "input-label">Maximum votes</mat-label>
-                    <input class = "form-input" matInput placeholder="Maximum Votes" formControlName="maximumVotes">
-                    <mat-hint class = "mat-hint">Write a maximum amount of votes</mat-hint>
-                    <mat-error *ngIf="maximumVotes.hasError('required') && (maximumVotes.touched || maximumVotes.dirty)">You must specificy a maximum amount of votes</mat-error>
-                    <mat-error *ngIf="maximumVotes.hasError('required') && (maximumVotes.touched || maximumVotes.dirty)">Maximum amount of votes must be greater than 20</mat-error>
-                    <mat-error *ngIf="maximumVotes.hasError('max') && (maximumVotes.touched || maximumVotes.dirty)">Maximum amount of votes must be smaller than 40</mat-error>
-                </mat-form-field>
-            </div>
-        </div>
-        <div class = "mt-2 py-2 text-end mx-1">
-            <button type="submit" class = "confirm-button" [disabled]="!formGroup.valid">Confirm</button>
-            <button (click)="this.reset()" class = "stop-button">Clear</button>
         </div>
     </div>
 </form>

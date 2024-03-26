@@ -24,7 +24,7 @@ export class CreatePollOptionComponent implements OnInit {
     name: new FormControl('',[Validators.required(),Validators.minLength(3),Validators.maxLength(10)]),
     description: new FormControl('',[Validators.required(),Validators.minLength(3),Validators.maxLength(15)])
   })
-
+  public isCreating: boolean = false;
   @Output() submitEvent: EventEmitter<any> = new EventEmitter();
   @Output() successEvent: EventEmitter<any> = new EventEmitter();
   @Output() failedEvent: EventEmitter<any> = new EventEmitter();
@@ -53,14 +53,28 @@ export class CreatePollOptionComponent implements OnInit {
         let createOption: CreatePollOption = {pollID: this.pollID,name: this.name.value,description: this.description.value};
         this.submitEvent.emit(createOption);
         this.reset();
-        this.pollOptionService.createPollOption(createOption).subscribe((value: any) => this.successEvent.emit(value),(err: any) => this.failedEvent.emit(err));
+        this.isCreating = true;
+        this.pollOptionService.createPollOption(createOption).subscribe((value: any) => {
+          this.isCreating = false;
+          this.successEvent.emit(value)
+        },(err: any) => {
+          this.isCreating = false;
+          this.failedEvent.emit(err)
+        });
       }
       else
       {
         let updateOption: UpdatePollOption = {optionID: this.optionID,name: this.name.value,description: this.description.value};
         this.submitEvent.emit(updateOption);
         this.reset();
-        this.pollOptionService.updatePollOption(updateOption).subscribe((value: any) => this.successEvent.emit(value),(err: any) => this.failedEvent.emit(err));
+        this.isCreating = true;
+        this.pollOptionService.updatePollOption(updateOption).subscribe((value: any) => {
+          this.isCreating = false;
+          this.successEvent.emit(value)
+        },(err: any) => {
+          this.isCreating = false;
+          this.failedEvent.emit(err)
+        });
       }
     }
   }

@@ -15,6 +15,7 @@ export class CreateCheckListOptionComponent {
     name: new FormControl('',[Validators.required,Validators.minLength(3),Validators.maxLength(10)]),
   })
   public checkIcon: IconDefinition = faCheck;
+  public isCreating: boolean = false;
   @Input() checkListID: any = undefined;
   @Output() submitEvent: EventEmitter<any> = new EventEmitter();
   @Output() successEvent: EventEmitter<any> = new EventEmitter();
@@ -33,9 +34,14 @@ export class CreateCheckListOptionComponent {
     if(this.name != undefined && this.formGroup.valid && this.checkListID != undefined) {
       let createCheckListOption: CreateCheckListOption = {name: this.name.value,checkListID: this.checkListID};
       this.submitEvent.emit(createCheckListOption);
+      this.isCreating = false;
       this.checkListOptionService.createOption(createCheckListOption).subscribe((value: any) => {
+        this.isCreating = false;
         this.successEvent.emit(value);
-      },(err: any) => this.failedEvent.emit(err));
+      },(err: any) => {
+        this.isCreating = false;
+        this.failedEvent.emit(err)
+      });
     }
   }
 

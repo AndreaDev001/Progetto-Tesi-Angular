@@ -37,6 +37,7 @@ export class CreateReportComponent implements OnInit {
     description: new FormControl<String>('',[Validators.required,Validators.minLength(10),Validators.maxLength(60)]),
     reason: new FormControl<String>('',Validators.required)
   })
+  public isCreating: boolean = false;
   public reasons: string[] = [];
   public reportIcon: IconDefinition = faWarning;
 
@@ -56,38 +57,24 @@ export class CreateReportComponent implements OnInit {
        let createReport: CreateReport = {title: this.title.value,description: this.description.value,reason: this.reason.value};
        this.sumbitEvent.emit(createReport);
        this.formGroup.reset();
-       if(this.reportedID != undefined) {
-        this.reportService.createReport(createReport,this.reportedID).subscribe((value: any) => {
-          this.successEvent.emit(value);
-        },(err: any) => this.failedEvent.emit(err));
-        return;
-       }
-       if(this.taskID != undefined) {
-        this.taskReportService.createTaskReport(createReport,this.taskID).subscribe((value: any) => {
-          this.successEvent.emit(value);
-        },(err: any) => {
-          this.failedEvent.emit(err)
-        });
-        return;
-       }
-       if(this.pollID != undefined) {
-        this.pollReportService.createPollReport(createReport,this.pollID).subscribe((value: any) => {
-          this.successEvent.emit(value);
-        },(err: any) => this.failedEvent.emit(err));
-        return;
-       }
-       if(this.commentID != undefined) {
-        this.commentReportService.createCommentReport(createReport,this.commentID).subscribe((value: any) => {
-          this.successEvent.emit(value);
-        },(err: any) => this.failedEvent.emit(err));
-        return;
-       }
-       if(this.discussionID != undefined) {
-        this.discussionReportService.createDiscussionReport(createReport,this.discussionID).subscribe((value: any) => {
-          this.successEvent.emit(value);
-        },(err: any) => this.failedEvent.emit(err));
-        return;
-       }
+       let requiredObservable: any = undefined;
+       if(this.reportedID != undefined)
+            requiredObservable = this.reportService.createReport(createReport,this.reportedID);
+       if(this.taskID != undefined)
+            requiredObservable = this.taskReportService.createTaskReport(createReport,this.taskID);
+       if(this.pollID != undefined)
+            requiredObservable = this.pollReportService.createPollReport(createReport,this.pollID);
+        if(this.commentID != undefined)
+            requiredObservable = this.commentReportService.createCommentReport(createReport,this.commentID);
+        if(this.discussionID != undefined)
+            requiredObservable = this.discussionReportService.createDiscussionReport(createReport,this.discussionID);
+       requiredObservable.subscribe((value: any) => {
+        this.isCreating = false;
+        this.successEvent.emit(value);
+       },(err: any) => {
+        this.isCreating = false;
+        this.failedEvent.emit(err);
+       })
     }
   }
 

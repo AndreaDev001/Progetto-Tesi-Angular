@@ -45,12 +45,15 @@ export class CreateTaskComponent implements AfterViewInit {
       if(this.formGroup.valid && this.title != undefined && this.name != undefined && this.description != undefined && this.priority != undefined) {
         let createTask: CreateTask = {groupID: this.groupID,title: this.title.value,name: this.name.value,description: this.description.value,priority: this.priority.value};
         this.submitEvent.emit(createTask);
-        this.formGroup.reset();
+        this.reset();
         this.isCreating = true;
         this.taskService.createTask(createTask).subscribe((value: any) => {
           this.isCreating = false;
           this.successEvent.emit(value);
-        },(err: any) => this.failedEvent.emit(err));
+        },(err: any) => {
+          this.isCreating = false;
+          this.failedEvent.emit(err)
+        });
       }
     }
   }

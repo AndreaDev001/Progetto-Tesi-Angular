@@ -15,6 +15,7 @@ export class CreateInviteComponent {
   public formGroup: FormGroup = new FormGroup({
     text: new FormControl('',[Validators.required,Validators.minLength(3),Validators.maxLength(10)]),
   })
+  public isCreating: boolean = false;
   @Input() boardID: any = undefined;
   @Input() user: User | undefined = undefined;
   @Output() submitEvent: EventEmitter<any> = new EventEmitter();
@@ -35,9 +36,14 @@ export class CreateInviteComponent {
         let createInvite: CreateBoardInvite = {userID: this.user.id,text: this.text.value,boardID: this.boardID,expirationDate: "2030-12-05"};
         this.submitEvent.emit(createInvite);
         this.formGroup.reset();
+        this.isCreating = true;
         this.boardInviteService.createBoardInvite(createInvite).subscribe((value: BoardInvite) => {
+          this.isCreating = false;
           this.successEvent.emit(value);
-        },(err: any) => this.failedEvent.emit(err));
+        },(err: any) => {
+          this.isCreating = false;
+          this.failedEvent.emit(err)
+        });
       }
     }
   }

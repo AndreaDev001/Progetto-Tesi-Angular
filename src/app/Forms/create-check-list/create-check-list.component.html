@@ -6,7 +6,7 @@
                 <fa-icon class = "mx-2" style="font-size: 25px;" [icon]="checkIcon"></fa-icon>
                 <p>Please specificy a name</p>
             </div>
-            <div>
+            <div *ngIf="!isCreating">
                 <div>
                     <span class = "d-block mx-2">Name</span>
                     <mat-form-field class = "form-field" *ngIf="name != undefined">
@@ -18,11 +18,15 @@
                         <mat-error *ngIf="name.hasError('maxlength') && (name.touched || name.dirty)">Name is too long, must be shorter than 10 characters</mat-error>
                     </mat-form-field>
                 </div>
+                <div class = "mt-1 py-2 text-end mx-1">
+                    <button type="submit" class = "confirm-button" [disabled]="!formGroup.valid">Confirm</button>
+                    <button (click)="reset()" class = "stop-button">Clear</button>
+                </div>
             </div> 
+            <div *ngIf="isCreating" style="display: flex;flex-direction: column;align-items: center;padding: 10px 0px">
+                <mat-progress-spinner [diameter]="60" [strokeWidth]="5" [mode]="'indeterminate'"></mat-progress-spinner>
+                <p>Creating checklist, please wait...</p>
+            </div>
         </div> 
-        <div class = "mt-2 text-end mx-1">
-            <button type="submit" class = "confirm-button" [disabled]="!formGroup.valid">Confirm</button>
-            <button (click)="reset()" class = "stop-button">Clear</button>
-        </div>
     </div>
 </form>

@@ -25,6 +25,7 @@ export class CreateDiscussionComponent implements OnInit {
   })
   public discussionIcon: IconDefinition = faDiscourse;
   public searchingDiscussion: boolean = false;
+  public isCreating: boolean = false;
   @Output() submitEvent: EventEmitter<any> = new EventEmitter();
   @Output() successEvent: EventEmitter<any> = new EventEmitter();
   @Output() failedEvent: EventEmitter<any> = new EventEmitter();
@@ -53,16 +54,28 @@ export class CreateDiscussionComponent implements OnInit {
         let createDiscussion: CreateDiscussion = {title: this.title.value,topic: this.topic.value,text: this.text.value};
         this.submitEvent.emit(createDiscussion);
         this.formGroup.reset();
+        this.isCreating = true;
         this.discussionService.createDiscussion(createDiscussion).subscribe((value: Discussion) => {
+          this.isCreating = false;
           this.successEvent.emit(value);
-        },(err: any) => this.failedEvent.emit(err));
+        },(err: any) => {
+          this.isCreating = false;
+          this.failedEvent.emit(err)
+        });
       }
       else
       {
         let updateDiscussion: UpdateDiscussion = {discussionID: this.discussionID!!,title: this.title.value,topic: this.topic.value,text: this.text.value};
         this.submitEvent.emit(updateDiscussion);
         this.formGroup.reset();
-        this.discussionService.updateDiscussion(updateDiscussion).subscribe((value: Discussion) => this.successEvent.emit(value),(err: any) => this.failedEvent.emit(err));
+        this.isCreating = true;
+        this.discussionService.updateDiscussion(updateDiscussion).subscribe((value: Discussion) => {
+          this.isCreating = false;
+          this.successEvent.emit(value)
+        },(err: any) => {
+          this.isCreating = false;
+          this.failedEvent.emit(err)
+        });
       }
     }
 

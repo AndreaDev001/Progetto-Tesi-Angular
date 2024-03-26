@@ -30,6 +30,7 @@ export class CreateCommentComponent implements OnInit {
   public commentIcon: IconDefinition = faMessage;
   public searchingComment: boolean = false;
   public currentComment: Comment | undefined = undefined;
+  public isCreating: boolean = false;
   @Output() submitEvent: EventEmitter<any> = new EventEmitter();
   @Output() successEvent: EventEmitter<any> = new EventEmitter();
   @Output() failedEvent: EventEmitter<any> = new EventEmitter();
@@ -63,15 +64,27 @@ export class CreateCommentComponent implements OnInit {
             requiredObservable = this.discussionCommentService.createComment(createComment,this.discussionID);
         if(this.pollID != undefined)
             requiredObservable = this.pollCommentService.createComment(createComment,this.pollID);
-        requiredObservable.subscribe((value: any) => this.successEvent.emit(value),(err: any) => this.failedEvent.emit(err));
+        this.isCreating = true;
+        requiredObservable.subscribe((value: any) => {
+          this.isCreating = false;
+          this.successEvent.emit(value)
+        },(err: any) => {
+          this.isCreating = false;
+          this.failedEvent.emit(err)
+        });
       }
       else
       {
         let updateComment: UpdateComment = {commentID: this.commentID,title: this.title.value,text: this.text.value};
         this.submitEvent.emit(updateComment);
+        this.isCreating = true;
         this.commentService.updateComment(updateComment).subscribe((value: any) => {
+          this.isCreating = false;
           this.successEvent.emit(value);
-        },(err: any) => this.failedEvent.emit(err));
+        },(err: any) => {
+          this.isCreating = false;
+          this.failedEvent.emit(err)
+        });
 
       }
     }

@@ -7,43 +7,49 @@
                 <p>Please specificy a title and and topic name</p>
             </div>
             <div class = "vertical-container py-2">
-                <div>
-                    <span class = "d-block mx-2">Title</span>
-                    <mat-form-field class = "form-field" *ngIf="title != undefined">
-                        <mat-label class = "input-label">Title</mat-label>
-                        <input matInput placeholder="Title" formControlName="title">
-                        <mat-hint>Write a title...</mat-hint>
-                        <mat-error *ngIf="title.hasError('required') && (title.touched || title.dirty)">Title is required</mat-error>
-                        <mat-error *ngIf="title.hasError('minlength') && (title.touched || title.dirty)">Title is too short, must be longer than 3 characters</mat-error>
-                        <mat-error *ngIf="title.hasError('maxlength') && (title.touched || title.dirty)">Title is too long, must be shorter than 10 characters</mat-error>
-                    </mat-form-field>
+                <div *ngIf="!isCreating">
+                    <div>
+                        <span class = "d-block mx-2">Title</span>
+                        <mat-form-field class = "form-field" *ngIf="title != undefined">
+                            <mat-label class = "input-label">Title</mat-label>
+                            <input matInput placeholder="Title" formControlName="title">
+                            <mat-hint>Write a title...</mat-hint>
+                            <mat-error *ngIf="title.hasError('required') && (title.touched || title.dirty)">Title is required</mat-error>
+                            <mat-error *ngIf="title.hasError('minlength') && (title.touched || title.dirty)">Title is too short, must be longer than 3 characters</mat-error>
+                            <mat-error *ngIf="title.hasError('maxlength') && (title.touched || title.dirty)">Title is too long, must be shorter than 10 characters</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div>
+                        <span class = "d-block mx-2">Topic</span>
+                        <mat-form-field class = "form-field" *ngIf="topic != undefined">
+                            <mat-label class = "input-label">Topic</mat-label>
+                            <input matInput placeholder="Topic" formControlName="topic">
+                            <mat-hint>Write a new topic name...</mat-hint>
+                            <mat-error *ngIf="topic.hasError('required') && (topic.touched || topic.dirty)">Topic is required</mat-error>
+                            <mat-error *ngIf="topic.hasError('minlength') && (topic.touched || topic.dirty)">Topic is too short, must be longer than 3 characters</mat-error>
+                            <mat-error *ngIf="topic.hasError('maxlength') && (topic.touched || topic.dirty)">Topic is too long, must be longer than 10 characters</mat-error>
+                        </mat-form-field> 
+                    </div>
+                    <div>
+                        <span class = "d-block mx-2">Text</span>
+                        <mat-form-field class = "form-field" *ngIf="text != undefined">
+                            <mat-label class = "input-label">Text</mat-label>
+                            <textarea matInput placeholder="Text" formControlName="text"></textarea>
+                            <mat-hint>Write the text of the discussion...</mat-hint>
+                            <mat-error *ngIf="text.hasError('required') && (text.touched || text.dirty)">Text is required</mat-error>
+                            <mat-error *ngIf="topic.hasError('minlength') && (topic.touched || topic.dirty)">Text is too short, must be longer than 3 characters</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class = "mt-2 text-end mx-1 py-2">
+                        <button type="submit" class = "confirm-button" [disabled]="!formGroup.valid">Confirm</button>
+                        <button (click)="reset()" class = "stop-button">Clear</button>
+                    </div>
                 </div>
-                <div>
-                    <span class = "d-block mx-2">Topic</span>
-                    <mat-form-field class = "form-field" *ngIf="topic != undefined">
-                        <mat-label class = "input-label">Topic</mat-label>
-                        <input matInput placeholder="Topic" formControlName="topic">
-                        <mat-hint>Write a new topic name...</mat-hint>
-                        <mat-error *ngIf="topic.hasError('required') && (topic.touched || topic.dirty)">Topic is required</mat-error>
-                        <mat-error *ngIf="topic.hasError('minlength') && (topic.touched || topic.dirty)">Topic is too short, must be longer than 3 characters</mat-error>
-                        <mat-error *ngIf="topic.hasError('maxlength') && (topic.touched || topic.dirty)">Topic is too long, must be longer than 10 characters</mat-error>
-                    </mat-form-field> 
-                </div>
-                <div>
-                    <span class = "d-block mx-2">Text</span>
-                    <mat-form-field class = "form-field" *ngIf="text != undefined">
-                        <mat-label class = "input-label">Text</mat-label>
-                        <textarea matInput placeholder="Text" formControlName="text"></textarea>
-                        <mat-hint>Write the text of the discussion...</mat-hint>
-                        <mat-error *ngIf="text.hasError('required') && (text.touched || text.dirty)">Text is required</mat-error>
-                        <mat-error *ngIf="topic.hasError('minlength') && (topic.touched || topic.dirty)">Text is too short, must be longer than 3 characters</mat-error>
-                    </mat-form-field>
-                </div>
-            </div> 
+            </div>
+            <div *ngIf="isCreating" style="display: flex;flex-direction: column;align-items: center;padding: 10px 0px">
+                <mat-progress-spinner [diameter]="60" [strokeWidth]="5" [mode]="'indeterminate'"></mat-progress-spinner>
+                <p>Creating discussion, please wait...</p>
+            </div>
         </div> 
-        <div class = "mt-2 text-end mx-1 py-2">
-            <button type="submit" class = "confirm-button" [disabled]="!formGroup.valid">Confirm</button>
-            <button (click)="reset()" class = "stop-button">Clear</button>
-        </div>
     </div>
 </form>

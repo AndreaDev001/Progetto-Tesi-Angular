@@ -15,7 +15,7 @@
         <div class = "discussion-card-footer">
             <div class = "text-center button-holder">
                 <button class = "default-button w-75" (click)="openDiscussion()">Go to discussion</button>
-                <button class = "default-button w-75 mt-2" (click)="deleteDiscussion()">Delete discussion</button>
+                <button *ngIf="isOwner" class = "default-button w-75 mt-2" (click)="deleteDiscussion()">Delete discussion</button>
             </div>
             <div class = "d-block">
                 <div class = "d-inline-block">
