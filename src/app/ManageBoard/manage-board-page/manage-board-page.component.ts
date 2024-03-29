@@ -74,7 +74,6 @@ export class ManageBoardPageComponent implements OnInit,OnDestroy {
     }))
     this.subscriptions.push(this.authHandler.getCurrentAccessToken(false).subscribe((value: any) => {
       this.isAdmin = value != undefined ? this.authHandler.isAdmin() : false;
-      this.isAdmin = false;
     }))
   }
 

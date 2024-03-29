@@ -21,6 +21,12 @@ export interface UpdateCheckList
     checkListID: string
     name?: string
 }
+export interface UpdateBoardInvite
+{
+    inviteID: any,
+    text?: string,
+    status: string,
+}
 export interface UpdateCheckListOption
 {
     optionID: string,

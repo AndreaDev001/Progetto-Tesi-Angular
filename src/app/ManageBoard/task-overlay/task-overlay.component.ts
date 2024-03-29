@@ -207,7 +207,7 @@ export class TaskOverlayComponent implements OnInit,OnDestroy
     this.taskURLSService.getTaskURLSByTask(this.task!!.id).subscribe((value: CollectionModel) => {
       this.searchingURLS = false;
       this.currentURLS = value._embedded != undefined && value._embedded.content != undefined ? value._embedded.content : [];
-      value._embedded.content.forEach((current: any) => {
+      this.currentURLS.forEach((current: any) => {
         let overflowItem: TextOverflowItem = {template: this.urlTemplate,context: current};
         this.currentURLSItems.push(overflowItem);
       })
@@ -219,7 +219,7 @@ export class TaskOverlayComponent implements OnInit,OnDestroy
     this.taskFileService.getTaskFilesByTask(this.task!!.id).subscribe((value: CollectionModel) => {
       this.searchingFiles = false;
       this.currentFiles = value._embedded != undefined && value._embedded.content != undefined ? value._embedded.content : [];
-      value._embedded.content.forEach((current: any) => {
+      this.currentFiles.forEach((current: any) => {
         let overflowItem: TextOverflowItem = {template: this.fileTemplate,context: current};
         this.currentFileItems.push(overflowItem);
       })
@@ -228,7 +228,7 @@ export class TaskOverlayComponent implements OnInit,OnDestroy
 
   private searchAssignment(): void {
     this.searchingAssignment = true;
-    this.taskAssignmentsService.hasAssignment(this.authHandler.getCurrentUserID(false),this.task!!.id).subscribe((value: any) => {
+    this.taskAssignmentsService.hasAssignment(this.authHandler.getCurrentUserID(true),this.task!!.id).subscribe((value: any) => {
       this.searchingAssignment = false;
       this.isAssigned = value != undefined;
     },(err: any) => {

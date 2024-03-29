@@ -12,7 +12,7 @@
                         <span class = "mx-1" style="font-size: 20px;color: whitesmoke">{{board.amountOfGroups}}</span>
                     </div>
                 </div>
-                <app-better-image [imageStyle]="{'width': '100%','height': 'auto','border-top-left-radius': '20px','border-top-right-radius': '20px','filter': 'brightness(70%)'}" [requiredSource]="'http://localhost:8080/api/v1/boardImages/public/image/' + board.id" [alternativeImage]="'https://react.semantic-ui.com/images/wireframe/image.png'"></app-better-image>
+                <app-better-image [imageStyle]="{'width': '100%','height': '200px','border-top-left-radius': '20px','border-top-right-radius': '20px','filter': 'brightness(70%)','object-fit': 'cover'}" [requiredSource]="'http://localhost:8080/api/v1/boardImages/public/image/' + board.id" [alternativeImage]="'https://react.semantic-ui.com/images/wireframe/image.png'"></app-better-image>
             </div>
         </div>
         <div class = "board-card-body">

@@ -7,7 +7,7 @@
                 <p>Please specificy a name and a color</p>
             </div>
             <div>
-                <div *ngIf="isCreating">
+                <div *ngIf="!isCreating">
                     <div>
                         <span class = "d-block mx-2">Name</span>
                         <mat-form-field class = "form-field" *ngIf="name != undefined">
@@ -30,7 +30,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class = "mt-2 text-end mx-1">
+                    <div class = "mt-2 py-2 text-end mx-1">
                         <button type="submit" class = "confirm-button" [disabled]="!formGroup.valid">Confirm</button>
                         <button (click)="reset()" class = "stop-button">Clear</button>
                     </div>

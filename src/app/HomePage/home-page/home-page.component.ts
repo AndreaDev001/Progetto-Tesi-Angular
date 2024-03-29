@@ -80,17 +80,12 @@ export class HomePageComponent implements AfterViewInit, OnDestroy {
 
   public ngAfterViewInit(): void 
   {
-    this.descriptionItems.push({name: "Boards",subtitle: "Here you can see all of the boards you partecipate in",icon: this.boardIcon})
-    this.descriptionItems.push({name: "Tasks",subtitle: "Here you can see all of the tasks that have been assigned to you",icon: this.taskIcon})
-    this.descriptionItems.push({name: "Discussions",subtitle: "Here you can see all of the discussions that have been assingned to you",icon: this.discussionIcon})
-    this.descriptionItems.push({name: "Invites",subtitle: "Here you can see all of the invites that you have received",icon: this.invitesIcon})
-    this.descriptionItems.push({name: "Polls",subtitle: "Here you can see all of the polls that you have created",icon: this.pollIcon});
-    this.optionsTemplate.push({name: "Boards",icon: faTable,requiredTemplate: this.boardTemplate,path: "boards"});
-    this.optionsTemplate.push({name: "Tasks",icon: faTasks,requiredTemplate: this.taskTemplate,path: "tasks"});
-    this.optionsTemplate.push({name: "Invites",icon: faMessage,requiredTemplate: this.boardInvitesTemplate,path: "invites"});
-    this.optionsTemplate.push({name: "Discussions",icon: faDiscourse,requiredTemplate: this.discussionTemplate,path: "discussions"});
-    this.optionsTemplate.push({name: "Polls",icon: faPoll,requiredTemplate: this.pollTemplate,path: "polls"});
+    this.createSubscriptions();
+    this.createDescriptions();
+    this.createOptions();
+  }
 
+  private createSubscriptions(): void {
     this.subscriptions.push(this.activatedRoute.queryParams.subscribe((value: any) => {
       let view: string = value.view;
       if(view == null) 
@@ -103,12 +98,28 @@ export class HomePageComponent implements AfterViewInit, OnDestroy {
         this.updateItems(view);
       }
     }))
-    this.authHandler.getCurrentUserID(false).subscribe((value: any) => {
+    this.subscriptions.push(this.authHandler.getCurrentUserID(false).subscribe((value: any) => {
       this.currentUserID = value;
       if(this.currentUserID != undefined) {
         this.updateItems(this.currentViewPath);
       }
-    });
+    }));
+  }
+
+  private createDescriptions(): void {
+    this.descriptionItems.push({name: "Boards",subtitle: "Here you can see all of the boards you partecipate in",icon: this.boardIcon})
+    this.descriptionItems.push({name: "Tasks",subtitle: "Here you can see all of the tasks that have been assigned to you",icon: this.taskIcon})
+    this.descriptionItems.push({name: "Discussions",subtitle: "Here you can see all of the discussions that have been assingned to you",icon: this.discussionIcon})
+    this.descriptionItems.push({name: "Invites",subtitle: "Here you can see all of the invites that you have received",icon: this.invitesIcon})
+    this.descriptionItems.push({name: "Polls",subtitle: "Here you can see all of the polls that you have created",icon: this.pollIcon});
+  }
+
+  private createOptions(): void {
+    this.optionsTemplate.push({name: "Boards",icon: faTable,requiredTemplate: this.boardTemplate,path: "boards"});
+    this.optionsTemplate.push({name: "Tasks",icon: faTasks,requiredTemplate: this.taskTemplate,path: "tasks"});
+    this.optionsTemplate.push({name: "Invites",icon: faMessage,requiredTemplate: this.boardInvitesTemplate,path: "invites"});
+    this.optionsTemplate.push({name: "Discussions",icon: faDiscourse,requiredTemplate: this.discussionTemplate,path: "discussions"});
+    this.optionsTemplate.push({name: "Polls",icon: faPoll,requiredTemplate: this.pollTemplate,path: "polls"});
   }
 
 
@@ -137,7 +148,7 @@ export class HomePageComponent implements AfterViewInit, OnDestroy {
         this.currentTotalPages = value.page.totalPages;
         this.currentTotalElements = value.page.totalElements;
       }
-    })
+    },(err: any) => this.isSearching = false);
   }
 
   public updateInvites(page: number,pageSize: number): void {
@@ -151,7 +162,7 @@ export class HomePageComponent implements AfterViewInit, OnDestroy {
         this.currentTotalPages = value.page.totalPages;
         this.currentTotalElements = value.page.totalElements;
       }
-    });
+    },(err: any) => this.isSearching = false);
   }
 
   public updateDiscussions(page: number,pageSize: number): void {
@@ -165,7 +176,7 @@ export class HomePageComponent implements AfterViewInit, OnDestroy {
         this.currentTotalPages = value.page.totalPages;
         this.currentTotalElements = value.page.totalElements;
       }
-    })
+    },(err: any) => this.isSearching = false);
   }
 
   public updatePolls(page: number,pageSize: number): void {
@@ -173,15 +184,13 @@ export class HomePageComponent implements AfterViewInit, OnDestroy {
     this.isSearching = true;
     this.pollService.getPollsByPublisher(this.currentUserID,paginationRequest).subscribe((value: PagedModel) => {
       this.isSearching = false;
-      console.log(value._embedded.content);
       this.currentPolls = value._embedded != undefined && value._embedded.content == undefined ? value._embedded.content : [];
-      console.log(this.currentPolls);
       if(value.page != undefined) {
         this.currentPage = value.page.page;
         this.currentTotalPages = value.page.totalPages;
         this.currentTotalElements = value.page.totalElements;
       }
-    })
+    },(err: any) => this.isSearching = false);
   }
 
   public resetPage(): void {

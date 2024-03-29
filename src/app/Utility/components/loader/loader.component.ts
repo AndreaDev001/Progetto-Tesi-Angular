@@ -19,6 +19,7 @@ export class LoaderComponent implements OnInit
   @Input() loaderText: string = "Searching...";
   @Input() fontSize: number = 15;
   @Input() loaderSubtitle: string = "Searching for information, please wait";
+  @Input() wrapperStyle: any = {'display': 'flex','flex-direction': 'column','align-items': 'center'};
 
   public ngOnInit(): void {
     

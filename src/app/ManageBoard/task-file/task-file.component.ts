@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input,Output } from '@angular/core';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
-import { faFile, faFileDownload } from '@fortawesome/free-solid-svg-icons';
+import { faDownload, faFile, faFileDownload } from '@fortawesome/free-solid-svg-icons';
 import { TaskFile } from 'src/model/interfaces';
 import { TaskFileService } from 'src/model/services/task-file.service';
 
@@ -15,7 +15,7 @@ export class TaskFileComponent {
   @Output() downloadEvent: EventEmitter<any> = new EventEmitter();
   @Output() failedEvent: EventEmitter<any> = new EventEmitter();
   @Input() canModify: boolean = false;
-  public fileIcon: IconDefinition = faFileDownload;
+  public fileIcon: IconDefinition = faDownload;
 
   constructor(private taskFileService: TaskFileService) {
 
@@ -27,10 +27,18 @@ export class TaskFileComponent {
   }
 
 
-  public downloadFile(event: any): void {
-    event.preventDefault();
+  public downloadFile(): void {
     this.taskFileService.getTaskFilesAsBytes(this.taskFile!!.id).subscribe((response: any) => {
-      console.log(response.headers.get('content-disposition'));
+        let dataType = response.type;
+        let binaryData = [];
+        binaryData.push(response);
+        let newLink = document.createElement('a');
+        newLink.href = window.URL.createObjectURL(new Blob(binaryData,{type: dataType}));
+        if(this.taskFile != undefined) {
+          newLink.setAttribute('download',this.taskFile.name);
+          document.body.append(newLink);
+          newLink.click();
+        }
     })
   }
 }

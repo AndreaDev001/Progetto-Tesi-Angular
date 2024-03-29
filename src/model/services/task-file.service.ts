@@ -21,10 +21,8 @@ export class TaskFileService {
 
   public getTaskFilesAsBytes(taskFileID: string): any {
     const desiredURL: string = this.url + "/private" + "/" + taskFileID + "/file";
-    let headers: HttpHeaders = new HttpHeaders();
-    headers = headers.append("responseType",'blob');
     let queryParams: HttpParams = new HttpParams();
-    return this.httpClient.get(desiredURL,{headers: headers,params: queryParams});
+    return this.httpClient.get(desiredURL,{responseType: 'blob'});
   }
 
   public createTaskFile(createTaskFile: CreateTaskFile) {
@@ -34,7 +32,7 @@ export class TaskFileService {
     formData.append("name",createTaskFile.name);
     formData.append("taskID",createTaskFile.taskID);
     formData.append("multipartFile",createTaskFile.multipartFile);
-    return this.httpClient.post(desiredURL,formData,{responseType: 'blob',params: queryParams});
+    return this.httpClient.post(desiredURL,formData,{params: queryParams});
   }
 
   public deleteTaskFile(taskID: string): any {

@@ -1,9 +1,9 @@
-<button class = "card-wrapper" *ngIf="boardInvite != undefined">
+<div class = "card-wrapper" *ngIf="boardInvite != undefined">
     <div class = "task-invite-card-header">
         <div class = "position-relative">
-            <app-better-image [imageStyle]="{'width': '100%','height': 'auto','border-top-left-radius': '10px','border-top-right-radius': '10px','filter': 'brightness(70%)'}" [requiredSource]="'http://localhost:8080/api/v1/boardImages/public/board/' + boardInvite.board.id + '/image'"></app-better-image>
+            <app-better-image [imageStyle]="{'width': '100%','height': 'auto','border-top-left-radius': '10px','border-top-right-radius': '10px','filter': 'brightness(70%)'}" [requiredSource]="'http://localhost:8080/api/v1/boardImages/public/board/' + boardInvite.board.id + '/image'" [alternativeImage]="'https://react.semantic-ui.com/images/wireframe/image.png'"></app-better-image>
             <div class = "position-absolute p-2" style="top: 0;left: 0">
-                <app-user-holder [userRef]="boardInvite.publisher"></app-user-holder>
+                <app-user-holder [userRef]="boardInvite.publisher" [imageWidth]="40" [imageHeight]="40"></app-user-holder>
             </div>
             <div class = "position-absolute p-2" style="top: 0;right: 0;font-size: 20px;">
                 <fa-icon [icon]="inviteIcon"></fa-icon>
@@ -26,8 +26,16 @@
     </div>
     <div class = "task-invite-card-footer">
         <div class = "text-center">
-            <button class = "task-invite-accept-button">Accept</button>
-            <button class = "task-invite-reject-button">Reject</button>
+            <div *ngIf="boardInvite.status == 'ACTIVE'">
+                <button class = "default-button" (click)="acceptInvite()">Accept</button>
+                <button class = "default-button mx-1" (click)="rejectInvite()">Reject</button>
+            </div>
+            <div *ngIf="boardInvite.status == 'ACCEPTED'">
+                <button class = "default-button" (click)="openBoard()">Go to board</button>
+            </div>
+            <div *ngIf="boardInvite.status == 'REJECTED'">
+                <p class = "p-0 m-0">The invite has been previously rejected</p>
+            </div>
         </div>
     </div>
-</button>
+</div>

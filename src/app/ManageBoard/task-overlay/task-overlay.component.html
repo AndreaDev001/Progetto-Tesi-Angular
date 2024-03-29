@@ -295,12 +295,12 @@
 </ng-template>
 <ng-template #createTagTemplate>
     <div *ngIf="board != undefined">
-        <app-create-tag (submitEvent)="this.alertHandlerService.close()" [boardID]="board.id" ></app-create-tag>
+        <app-create-tag (successEvent)="this.alertHandlerService.close();this.taskChanged.emit()" (failedEvent)="this.alertHandlerService.close()" [boardID]="board.id" ></app-create-tag>
     </div>
 </ng-template>
 <ng-template #createCheckListTemplate>
     <div *ngIf="task != undefined">
-        <app-create-check-list (submitEvent)="this.alertHandlerService.close()" (successEvent)="this.currentCheckLists.push($event);this.taskChanged.emit()"  [taskID]="task.id"></app-create-check-list>
+        <app-create-check-list (successEvent)="this.currentCheckLists.push($event);this.taskChanged.emit();this.alertHandlerService.close()"  (failedEvent)="this.alertHandlerService.close()" [taskID]="task.id"></app-create-check-list>
     </div>
 </ng-template>
 <ng-template #addImageTemplate>
@@ -317,7 +317,7 @@
     </div>
 </ng-template>
 <ng-template #createReportTemplate>
-    <app-create-report [taskID]="task?.id" (successEvent)="this.hasReported = true" (failedEvent)="this.hasReported = false" (sumbitEvent)="this.alertHandlerService.close()"></app-create-report>
+    <app-create-report [taskID]="task?.id" (successEvent)="this.hasReported = true;this.alertHandlerService.close()" (failedEvent)="this.hasReported = false;this.alertHandlerService.close()"></app-create-report>
 </ng-template>
 <ng-template #createURLTemplate>
     <app-create-task-url [taskID]="task?.id" (successEvent)="this.currentURLS.push($event);this.currentURLSItems.push({template: this.urlTemplate,context: $event});this.alertHandlerService.close()" (failedEvent)="this.alertHandlerService.close()"></app-create-task-url>

@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpUtilsService } from './http-utils.service';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { PaginationRequest } from '../interfaces';
+import { UpdateBoardInvite } from '../update';
+import { query } from 'express';
 
 export interface CreateBoardInvite
 {
@@ -30,6 +32,12 @@ export class BoardInviteService {
     const desiredURL: string = this.url + "/public/" + "statues";
     let queryParams: HttpParams = new HttpParams();
     return this.httpClient.get(desiredURL,{params: queryParams});
+  }
+
+  public updateInvite(updateInvite: UpdateBoardInvite): any {
+    const desiredURL: string = this.url + "/private";
+    let queryParams: HttpParams = new HttpParams();
+    return this.httpClient.put(desiredURL,updateInvite,{params: queryParams})
   }
 
   public getInvitesByUser(userID: any,page: PaginationRequest): any {

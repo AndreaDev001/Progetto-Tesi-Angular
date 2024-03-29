@@ -37,6 +37,7 @@ export class CreateTaskFileComponent {
       this.isCreating = true;
       this.taskFileService.createTaskFile(createTaskFile).subscribe((value: any) => {
         this.isCreating = false;
+        console.log(value);
         this.successEvent.emit(value);
       },(err: any) => {
         this.isCreating = false;
