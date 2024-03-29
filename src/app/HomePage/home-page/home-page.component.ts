@@ -80,6 +80,7 @@ export class HomePageComponent implements AfterViewInit, OnDestroy {
 
   public ngAfterViewInit(): void 
   {
+    this.isSearching = true;
     this.createSubscriptions();
     this.createDescriptions();
     this.createOptions();

@@ -7,6 +7,7 @@ import { Component,Input, OnInit } from '@angular/core';
 })
 export class BetterImageComponent implements OnInit {
   @Input() requiredSource: any = undefined;
+  @Input() loaderStyle: any = {'display': 'flex','justify-content': 'center','align-items': 'center'};
   @Input() wrapperStyle: any = undefined;
   @Input() imageStyle: any = undefined;
   @Input() alternativeImage: any = undefined;

@@ -30,6 +30,7 @@ export class SearchTasksPageComponent implements AfterViewInit,OnDestroy{
   }
 
   public ngAfterViewInit(): void {
+    this.isSearching = true;
     this.offCanvasHandler.setContentTemplate(this.taskFilters);
   }
 
@@ -63,14 +64,13 @@ export class SearchTasksPageComponent implements AfterViewInit,OnDestroy{
       this.isSearching = true;
       this.taskService.getTasksBySpec(this.currentFilter).subscribe((value: PagedModel) => {
         this.isSearching = false;
-        if(value._embedded != undefined && value._embedded.content != undefined)
-            this.currentItems = value._embedded.content;
+        this.currentItems = value._embedded != undefined && value._embedded.content != undefined ? value._embedded.content : [];
         if(value.page != undefined) {
           this.currentPage = value.page.page;
           this.currentTotalPages = value.page.totalPages;
           this.currentTotalElements = value.page.totalElements;
         }
-      })
+      },(err: any) => this.isSearching = false);
     }
   }
 

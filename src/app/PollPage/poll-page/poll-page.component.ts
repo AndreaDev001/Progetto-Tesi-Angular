@@ -55,14 +55,14 @@ export class PollPageComponent implements OnInit,OnDestroy {
   public ngOnInit(): void {
     this.subscriptions.push(this.activatedRoute.params.subscribe((value: any) => {
       this.pollID = value.id;
-      this.getPoll();
-      this.getPollOptions();
-      this.getPollComments();
-      this.getCurrentVotedOption();
+      this.searchPoll();
+      this.searchPollOptions();
+      this.searchPollComments();
+      this.searchCurrentVotedOption();
     }));
   }
 
-  private getPoll(): void {
+  private searchPoll(): void {
     if(this.pollID != undefined) {
       this.searchingPoll = true;
       let callback: (searchValue: boolean,pollValue: Poll | undefined,pollID: string | undefined) => void =  (searchValue: boolean,pollValue: Poll | undefined,pollID: string | undefined) => {
@@ -77,7 +77,7 @@ export class PollPageComponent implements OnInit,OnDestroy {
     }
   }
 
-  private getCurrentVotedOption(): void {
+  private searchCurrentVotedOption(): void {
     if(this.pollID != undefined) {
       this.searchingCurrentVotedOption = true;
       let callback: (first: boolean,value: any) => void = (searching: boolean,value: any) => {
@@ -88,7 +88,7 @@ export class PollPageComponent implements OnInit,OnDestroy {
     }
   }
 
-  private getPollOptions(): void {
+  private searchPollOptions(): void {
     if(this.pollID != undefined) {
       this.searchingPollOptions = true;
       this.pollOptionService.getPollOptionsByPoll(this.pollID).subscribe((value: CollectionModel) => {
@@ -106,7 +106,7 @@ export class PollPageComponent implements OnInit,OnDestroy {
     }
   }
 
-  private getPollComments(): void {
+  private searchPollComments(): void {
     if(this.pollID != undefined) {
       this.searchingComments = true;
       this.pollCommentService.getCommentsByPoll(this.pollID).subscribe((value: CollectionModel) => {

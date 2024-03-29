@@ -24,7 +24,7 @@ interface HeaderDropdown
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent implements OnInit,OnDestroy {
+export class HeaderComponent implements OnInit {
 
   public leftDropdowns: HeaderDropdown[] = [];
   public rightDropdowns: HeaderDropdown[] = [];
@@ -45,10 +45,24 @@ export class HeaderComponent implements OnInit,OnDestroy {
   }
 
   public ngOnInit(): void {
+    this.createHeaderOptions();
+  }
+
+  private createHeaderOptions(): void {
+    this.defaultOptions.push({name: "Home",icon: faHouse,callback: () => {this.router.navigate([''])}});
+    this.createDropdowns();
+    this.createSearchOptions();
+    this.createCreateOptions();
+    this.createUserOptions();
+  }
+
+  private createDropdowns(): void {
     this.leftDropdowns.push({name: "Search",icon: faSearch,options: this.searchOptions});
     this.leftDropdowns.push({name: "Create",icon: faPlusCircle,options: this.createOptions});
     this.rightDropdowns.push({icon: faUserCircle,options: this.userOptions});
-    this.defaultOptions.push({name: "Home",icon: faHouse,callback: () => {this.router.navigate([''])}});
+  }
+
+  private createSearchOptions(): void {
     this.searchOptions.push({name: "Boards",icon: faTable,callback: () => {this.router.navigate(['/search/boards'])}});
     this.searchOptions.push({name: "Tasks",icon: faTasks,callback: () => {this.router.navigate(['/search/tasks'])}});
     this.searchOptions.push({name: "Discussions",icon: faDiscourse,callback: () => {this.router.navigate(['/search/discussions'])}});
@@ -56,6 +70,9 @@ export class HeaderComponent implements OnInit,OnDestroy {
       this.router.navigate(['/search/polls']);
     }});
     this.searchOptions.push({name: "Users",icon: faUser,callback: () => this.router.navigate(['/search/users'])})
+  }
+
+  private createCreateOptions(): void {
     this.createOptions.push({name: "Board",icon: faTable,callback: () => {
       this.alertHandler.reset();
       this.alertHandler.setTextTemplate(this.createBoardTemplate);
@@ -71,6 +88,9 @@ export class HeaderComponent implements OnInit,OnDestroy {
       this.alertHandler.setTextTemplate(this.createPollTemplate);
       this.alertHandler.open();
     }});
+  }
+
+  private createUserOptions(): void {
     this.userOptions.push({name: "Discussions",icon: faDiscourse,callback: () => {this.router.navigate(["/discussions"])}});
     this.userOptions.push({name: "Polls",icon: faPoll,callback: () => {this.router.navigate(["/polls"])}});
     this.userOptions.push({name: "Boards",icon: faTable,callback: () => {this.router.navigate(["/boards"])}});
@@ -81,10 +101,6 @@ export class HeaderComponent implements OnInit,OnDestroy {
       this.alertHandler.setTextTemplate(this.updateUserTemplate);
       this.alertHandler.open();
     }});
-  }
-
-  public ngOnDestroy(): void {
-    
   }
 
   public navigateTo(basePath: string,event: any): void {

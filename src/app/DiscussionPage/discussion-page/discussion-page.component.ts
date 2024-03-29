@@ -3,7 +3,6 @@ import { ActivatedRoute } from '@angular/router';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faComment, faMessage } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
-import { CommentService } from 'src/model/services/comment.service';
 import { CollectionModel, Comment, Discussion, DiscussionComment, PagedModel, PaginationRequest } from 'src/model/interfaces';
 import { DiscussionService } from 'src/model/services/discussion.service';
 import { TextOverflowItem } from 'src/app/Utility/components/text-overflow/text-overflow.component';
@@ -40,6 +39,10 @@ export class DiscussionPageComponent implements OnInit, OnDestroy {
   }
 
   public ngOnInit(): void {
+    this.createSubscriptions();
+  }
+
+  private createSubscriptions(): void {
     this.subscriptions.push(this.activatedRoute.params.subscribe((value: any) => {
       if(value.id != undefined) {
         this.discussionID = value.id;
