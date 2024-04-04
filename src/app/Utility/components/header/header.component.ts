@@ -13,6 +13,7 @@ interface HeaderOption
   name: string,
   icon: IconDefinition,
   callback: () => void;
+  admin?: boolean,
 }
 interface HeaderDropdown
 {
@@ -82,8 +83,8 @@ export class HeaderComponent implements OnInit,OnDestroy {
       this.router.navigate(['/search/polls']);
     }});
     this.searchOptions.push({name: "Users",icon: faUser,callback: () => this.router.navigate(['/search/users'])})
-    this.searchOptions.push({name: "Reports",icon: faWarning,callback: () => this.router.navigate(['/search/reports'])});
-    this.searchOptions.push({name: "Bans",icon: faBan,callback: () => this.router.navigate(['/search/bans'])});
+    this.searchOptions.push({name: "Reports",icon: faWarning,callback: () => this.router.navigate(['/search/reports']),admin: true});
+    this.searchOptions.push({name: "Bans",icon: faBan,callback: () => this.router.navigate(['/search/bans']),admin: true});
   }
 
   private createCreateOptions(): void {

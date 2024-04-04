@@ -25,7 +25,7 @@
             <span class = "mx-1">{{dropdown.name}}</span>
         </button>
         <div class = "header-menu-wrapper" ngbDropdownMenu>
-            <button class = "header-button-option" *ngFor="let current of dropdown.options" (click)="current.callback()">
+            <button [disabled]="current.admin != undefined" class = "header-button-option" *ngFor="let current of dropdown.options" (click)="current.callback()">
                 <ng-container *ngTemplateOutlet="optionTemplate;context: {option: current}"></ng-container>
             </button>
         </div>

@@ -34,15 +34,10 @@ export class PaginationComponent implements OnChanges,AfterViewInit {
 
   public ngAfterViewInit(): void {
     this.currentAmountOfPages = this.totalElements / this.pageSize;
-    this.pageTemplate = this.pageTemplate != undefined ? this.pageTemplate : this.defaultPageTemplate;
-    this.previousPageTemplate = this.previousPageTemplate != undefined ? this.previousPageTemplate : this.defaultPreviousPageTemplate;
-    this.nextPageTemplate = this.nextPageTemplate != undefined ? this.nextPageTemplate : this.defaultNextPageTemplate; 
-    this.firstPageTemplate = this.firstPageTemplate != undefined ? this.firstPageTemplate : this.defaultFirstPageTemplate;
-    this.lastPageTemplate = this.lastPageTemplate != undefined ? this.lastPageTemplate : this.defaultLastPageTemplate;
+    this.assignTemplates();
   }
 
-
-    public ngOnChanges(changes: SimpleChanges): void {
+  public ngOnChanges(changes: SimpleChanges): void {
     if(changes['totalElements'] != null || changes['pageSize'] != null)
         this.currentAmountOfPages = this.totalElements / this.pageSize;
     if(changes['pageTemplate'] != undefined)
@@ -55,6 +50,14 @@ export class PaginationComponent implements OnChanges,AfterViewInit {
         this.firstPageTemplate = this.firstPageTemplate != undefined ? this.firstPageTemplate : this.defaultFirstPageTemplate;
     if(changes['lastPageTemplate'] != undefined)
         this.lastPageTemplate = this.lastPageTemplate != undefined ? this.lastPageTemplate: this.defaultLastPageTemplate;
+  }
+
+  private assignTemplates(): void {
+    this.pageTemplate = this.pageTemplate != undefined ? this.pageTemplate : this.defaultPageTemplate;
+    this.previousPageTemplate = this.previousPageTemplate != undefined ? this.previousPageTemplate : this.defaultPreviousPageTemplate;
+    this.nextPageTemplate = this.nextPageTemplate != undefined ? this.nextPageTemplate : this.defaultNextPageTemplate; 
+    this.firstPageTemplate = this.firstPageTemplate != undefined ? this.firstPageTemplate : this.defaultFirstPageTemplate;
+    this.lastPageTemplate = this.lastPageTemplate != undefined ? this.lastPageTemplate : this.defaultLastPageTemplate;
   }
 
   public handleClick(index: number): void {

@@ -9,6 +9,10 @@ button.header-button
 button.header-button:hover {
     background-color: var(--tertiary-color);
 }
+button.header-button-option:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
 div.header-wrapper {
      background-color: var(--primary-color);
      position: sticky;

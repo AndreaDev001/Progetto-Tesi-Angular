@@ -5,7 +5,7 @@ import { faDiscourse } from '@fortawesome/free-brands-svg-icons';
 import { faHandsWash, faHandshake, faMessage, faPoll, faTable, faTasks } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
 import { TaskAssignmentService } from 'src/model/services/task-assignment.service';
-import { Board, BoardInvite, BoardMember, Discussion, PagedModel, PaginationRequest, Poll, Task, TaskAssignment } from 'src/model/interfaces';
+import { Board, BoardInvite, BoardMember, Discussion, Page, PagedModel, PaginationRequest, Poll, Task, TaskAssignment } from 'src/model/interfaces';
 import { BoardService } from 'src/model/services/board.service';
 import { TaskService } from 'src/model/services/task.service';
 import { BoardMemberService } from 'src/model/services/board-member.service';
@@ -20,13 +20,25 @@ interface OptionTemplate
   name: string,
   icon: IconDefinition,
   path: string,
-  requiredTemplate: any;
 }
 interface DescriptionItem
 {
   name: string,
   icon: IconDefinition,
   subtitle: string
+}
+interface ViewItem
+{
+   requiredPath: string,
+   requiredIndex: number,
+   requiredTemplate: any,
+   requiredObservable: any;
+}
+interface ViewItemDescription
+{
+  requiredTitle: string,
+  requiredIcon: IconDefinition,
+  requiredSubtitle: string
 }
 @Component({
   selector: 'app-home-page',
@@ -36,8 +48,8 @@ interface DescriptionItem
 export class HomePageComponent implements AfterViewInit, OnDestroy {
 
   @ViewChild("boardTemplate") boardTemplate: any;
-  @ViewChild("boardInvitesTemplate") boardInvitesTemplate: any;
-  @ViewChild("tasksTemplate") taskTemplate: any;
+  @ViewChild("boardInviteTemplate") boardInviteTemplate: any;
+  @ViewChild("taskTemplate") taskTemplate: any;
   @ViewChild("discussionTemplate") discussionTemplate: any;
   @ViewChild("pollTemplate") pollTemplate: any;
 
@@ -47,15 +59,10 @@ export class HomePageComponent implements AfterViewInit, OnDestroy {
   public currentTemplate: TemplateRef<any> | undefined = undefined;
   public currentViewPath: string = "boards";
 
-  public currentBoards: BoardMember[] = [];
-  public currentBoardInvites: BoardInvite[] = [];
-  public currentTasks: TaskAssignment[] = [];
-  public currentDiscussions: Discussion[] = [];
-  public currentPolls: Poll[] = [];
 
-  public currentPage: number = 0;
-  public currentTotalPages: number = 0;
-  public currentTotalElements: number = 0;
+  public currentItems: any[] = [];
+  public isSearching: boolean = false;
+  public currentPage: Page = {page: 0,size: 20,totalPages: 0,totalElements: 0}
   public currentSelectedIndex: number = 0;
 
   public optionsTemplate: OptionTemplate[] = [];
@@ -66,13 +73,13 @@ export class HomePageComponent implements AfterViewInit, OnDestroy {
   public discussionIcon: IconDefinition = faDiscourse;
   public invitesIcon: IconDefinition = faMessage;
   public pollIcon: IconDefinition = faPoll;
-  public isSearching: boolean = false;
 
-  private currentUserID: any = undefined;
-  public currentUser: any = undefined;
+  public currentObservable: any = undefined;
+  public currentUserID: any = undefined;
+  private viewItemsMap : Map<string,ViewItem> = new Map();
 
   public descriptionItems: DescriptionItem[] = [];
-  public items: TextOverflowItem[] = [];
+  public viewDescriptions: ViewItemDescription[] = [];
 
   constructor(private authHandler: AuthHandlerService,private boardInvitesService: BoardInviteService,private boardMemberService: BoardMemberService,private taskAssignmentService: TaskAssignmentService,private discussionService: DiscussionService,private pollService: PollService,private router: Router,private activatedRoute: ActivatedRoute) {
 
@@ -80,10 +87,30 @@ export class HomePageComponent implements AfterViewInit, OnDestroy {
 
   public ngAfterViewInit(): void 
   {
-    this.isSearching = true;
     this.createSubscriptions();
     this.createDescriptions();
     this.createOptions();
+  }
+
+  public ngOnDestroy(): void {
+    this.subscriptions.forEach((value: Subscription) => value.unsubscribe());  
+  }
+
+  private createViewDescriptions(): void {
+    this.viewDescriptions.push({requiredTitle: 'Boards',requiredIcon: faTable,requiredSubtitle: 'View all the boards you are a member of'});
+    this.viewDescriptions.push({requiredTitle: 'Tasks',requiredIcon: faTasks,requiredSubtitle: 'View all the tasks you have been assigned to'});
+    this.viewDescriptions.push({requiredTitle: 'Invites',requiredIcon: faMessage,requiredSubtitle: 'View all of the invites you have received'});
+    this.viewDescriptions.push({requiredTitle: 'Discussions',requiredIcon: faDiscourse,requiredSubtitle: 'View all of the discussions you have published'});
+    this.viewDescriptions.push({requiredTitle: 'Polls',requiredIcon: faPoll,requiredSubtitle: 'View all of the polls you have published'});
+  }
+
+  private createMapValues(): void {
+    let paginationRequest: PaginationRequest = {page: 0,pageSize: 20};
+    this.viewItemsMap.set('boards',{requiredPath: 'boards',requiredIndex: 0,requiredTemplate: this.boardTemplate,requiredObservable: this.boardMemberService.getBoardMembersByMember(this.currentUserID,paginationRequest)});
+    this.viewItemsMap.set('tasks',{requiredPath: 'tasks',requiredIndex: 1,requiredTemplate: this.taskTemplate,requiredObservable: this.taskAssignmentService.getTaskAssignmentsByUser(this.currentUserID,paginationRequest)});
+    this.viewItemsMap.set('invites',{requiredPath: 'invites',requiredIndex: 2,requiredTemplate: this.boardInviteTemplate,requiredObservable: this.boardInvitesService.getInvitesByUser(this.currentUserID,paginationRequest)});
+    this.viewItemsMap.set('discussions',{requiredPath: 'discussions',requiredIndex: 3,requiredTemplate: this.discussionTemplate,requiredObservable: this.discussionService.getDiscussionsByPublisher(this.currentUserID,paginationRequest)});
+    this.viewItemsMap.set('polls',{requiredPath: 'polls',requiredIndex: 4,requiredTemplate: this.pollTemplate,requiredObservable: this.pollService.getPollsByPublisher(this.currentUserID,paginationRequest)});
   }
 
   private createSubscriptions(): void {
@@ -95,14 +122,19 @@ export class HomePageComponent implements AfterViewInit, OnDestroy {
         this.currentViewPath = "boards";
         this.updateRouter(this.currentViewPath);
       }
-      else if(this.currentUserID != undefined) {
-        this.updateItems(view);
+      else
+      {
+        this.currentViewPath = view;
+        this.updateItems(this.currentViewPath);
       }
     }))
     this.subscriptions.push(this.authHandler.getCurrentUserID(false).subscribe((value: any) => {
-      this.currentUserID = value;
-      if(this.currentUserID != undefined) {
-        this.updateItems(this.currentViewPath);
+      if(this.currentUserID == undefined && value != undefined) {
+        this.currentUserID = value;
+        this.createMapValues();
+        this.createViewDescriptions();
+        if(this.currentViewPath != undefined)
+            this.updateItems(this.currentViewPath);
       }
     }));
   }
@@ -116,98 +148,35 @@ export class HomePageComponent implements AfterViewInit, OnDestroy {
   }
 
   private createOptions(): void {
-    this.optionsTemplate.push({name: "Boards",icon: faTable,requiredTemplate: this.boardTemplate,path: "boards"});
-    this.optionsTemplate.push({name: "Tasks",icon: faTasks,requiredTemplate: this.taskTemplate,path: "tasks"});
-    this.optionsTemplate.push({name: "Invites",icon: faMessage,requiredTemplate: this.boardInvitesTemplate,path: "invites"});
-    this.optionsTemplate.push({name: "Discussions",icon: faDiscourse,requiredTemplate: this.discussionTemplate,path: "discussions"});
-    this.optionsTemplate.push({name: "Polls",icon: faPoll,requiredTemplate: this.pollTemplate,path: "polls"});
+    this.optionsTemplate.push({name: "Boards",icon: faTable,path: "boards"});
+    this.optionsTemplate.push({name: "Tasks",icon: faTasks,path: "tasks"});
+    this.optionsTemplate.push({name: "Invites",icon: faMessage,path: "invites"});
+    this.optionsTemplate.push({name: "Discussions",icon: faDiscourse,path: "discussions"});
+    this.optionsTemplate.push({name: "Polls",icon: faPoll,path: "polls"});
   }
 
-
-  public updateJoinedBoards(page: number,pageSize: number): void {
-    let paginationRequest: PaginationRequest = {page: page,pageSize: pageSize};
-    this.boardMemberService.getBoardMembersByMember(this.currentUserID,paginationRequest).subscribe((value: PagedModel) => {
+  public searchItems(): void {
+    if(this.currentObservable != undefined) {
       this.isSearching = true;
-      this.currentBoards = value._embedded != undefined && value._embedded.content != undefined ? value._embedded.content : [];
-      if(value.page != undefined) {
+      this.currentObservable.subscribe((value: PagedModel) => {
         this.isSearching = false;
-        this.currentPage = value.page.page;
-        this.currentTotalPages = value.page.totalPages;
-        this.currentTotalElements = value.page.totalElements;
-      }
-    })
-  }
-
-  public updateTasks(page: number,pageSize: number): void {
-    let paginationRequest: PaginationRequest = {page: page,pageSize: pageSize};
-    this.isSearching = true;
-    this.taskAssignmentService.getTaskAssignmentsByUser(this.currentUserID,paginationRequest).subscribe((value: PagedModel) => {
-      this.isSearching = false;
-      this.currentTasks = value._embedded != undefined && value._embedded.content != undefined ? value._embedded.content : [];
-      if(value.page != undefined) {
-        this.currentPage = value.page.page;
-        this.currentTotalPages = value.page.totalPages;
-        this.currentTotalElements = value.page.totalElements;
-      }
-    },(err: any) => this.isSearching = false);
-  }
-
-  public updateInvites(page: number,pageSize: number): void {
-    let paginationRequest: PaginationRequest = {page: page,pageSize: pageSize};
-    this.isSearching = true;
-    this.boardInvitesService.getInvitesByUser(this.currentUserID,paginationRequest).subscribe((value: PagedModel) => {
-      this.isSearching = false;
-      this.currentBoardInvites = value._embedded != undefined && value._embedded.content != undefined ? value._embedded.content : [];
-      if(value.page != undefined) {
-        this.currentPage = value.page.page;
-        this.currentTotalPages = value.page.totalPages;
-        this.currentTotalElements = value.page.totalElements;
-      }
-    },(err: any) => this.isSearching = false);
-  }
-
-  public updateDiscussions(page: number,pageSize: number): void {
-    let paginationRequest: PaginationRequest = {page: page,pageSize: pageSize};
-    this.isSearching = true;
-    this.discussionService.getDiscussionsByPublisher(this.currentUserID,paginationRequest).subscribe((value: PagedModel) => {
-      this.isSearching = false;
-      this.currentDiscussions = value._embedded != undefined && value._embedded.content != undefined ? value._embedded.content : [];
-      if(value.page != undefined) {
-        this.currentPage = value.page.page;
-        this.currentTotalPages = value.page.totalPages;
-        this.currentTotalElements = value.page.totalElements;
-      }
-    },(err: any) => this.isSearching = false);
-  }
-
-  public updatePolls(page: number,pageSize: number): void {
-    let paginationRequest: PaginationRequest = {page: page,pageSize: pageSize};
-    this.isSearching = true;
-    this.pollService.getPollsByPublisher(this.currentUserID,paginationRequest).subscribe((value: PagedModel) => {
-      this.isSearching = false;
-      this.currentPolls = value._embedded != undefined && value._embedded.content == undefined ? value._embedded.content : [];
-      if(value.page != undefined) {
-        this.currentPage = value.page.page;
-        this.currentTotalPages = value.page.totalPages;
-        this.currentTotalElements = value.page.totalElements;
-      }
-    },(err: any) => this.isSearching = false);
+        this.currentItems = value._embedded != undefined && value._embedded.content != undefined ? value._embedded.content : [];
+        this.currentPage = value.page != undefined ? value.page : this.currentPage;
+      },(err: any) => {
+        this.currentItems = [];
+        this.isSearching = false;
+      });
+    }
   }
 
   public resetPage(): void {
-    this.currentPage = 0;
-    this.currentTotalPages = 0;
-    this.currentTotalElements = 0;
+    this.currentPage = {page: 0,size: 20,totalPages: 0,totalElements: 0};
     this.updateItems(this.currentViewPath);
   }
 
   public handlePageChange(event: any): void {
     this.currentPage = event;
     this.updateItems(this.currentViewPath);
-  }
-
-  public ngOnDestroy(): void {
-    this.subscriptions.forEach((value: Subscription) => value.unsubscribe());  
   }
 
   private updateRouter(path: string): void {
@@ -220,50 +189,17 @@ export class HomePageComponent implements AfterViewInit, OnDestroy {
 
   private updateItems(view: string): void 
   {
-    switch(view) 
-    {
-      case "boards":
-        this.currentTemplate = this.boardTemplate;
-        this.currentViewPath = 'boards';
-        this.currentSelectedIndex = 0;
-        this.updateJoinedBoards(this.currentPage,20);
-        break;
-      case "tasks":
-        this.currentTemplate = this.taskTemplate;
-        this.currentViewPath = 'tasks';
-        this.currentSelectedIndex = 1;
-        this.updateTasks(this.currentPage,20);
-        break;
-      case "invites":
-        this.currentTemplate = this.boardInvitesTemplate;
-        this.currentViewPath = 'invites';
-        this.currentSelectedIndex = 2;
-        this.updateInvites(this.currentPage,20);
-        break;
-      case "discussions":
-        this.currentTemplate = this.discussionTemplate;
-        this.currentViewPath = 'discussions';
-        this.currentSelectedIndex = 3;
-        this.updateDiscussions(this.currentPage,20);
-        break;
-      case "polls":
-        this.currentTemplate = this.pollTemplate;
-        this.currentViewPath = 'polls';
-        this.currentSelectedIndex = 4;
-        this.updatePolls(this.currentPage,20);
-        break;
-      default:
-        this.currentTemplate = this.boardTemplate;
-        this.currentViewPath = 'boards';
-        this.currentSelectedIndex = 0;
-        this.updateJoinedBoards(this.currentPage,20);
-        break;
-    }
+    if(!this.viewItemsMap.has(view))
+        return;
+    let viewItem: ViewItem | undefined = this.viewItemsMap.get(view);
+    this.currentSelectedIndex = viewItem!!.requiredIndex;
+    this.currentTemplate = viewItem!!.requiredTemplate;
+    this.currentObservable = viewItem!!.requiredObservable;
+    this.searchItems();
   }
 
-  public updateTemplate(event: any,requiredTemplate: any,path: string): void {
+  public updateTemplate(path: string): void {
     this.resetPage();
-    this.currentTemplate = requiredTemplate;
     this.currentViewPath = path;
     this.updateRouter(path);
   }
