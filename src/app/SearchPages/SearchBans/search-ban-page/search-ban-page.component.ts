@@ -21,8 +21,10 @@ export class SearchBanPageComponent implements AfterViewInit,OnDestroy {
   public currentTotalElements: number = 0;
   public currentFilter: Filter | undefined = undefined;
   public isSearching: boolean = false;
+
   public banIcon: IconDefinition = faBan;
   public filterIcon: IconDefinition = faFilter;
+
   @ViewChild("banFilters") banFilters: any;
 
   constructor(private offCanvasHandlerService: OffCanvasHandlerService,private banService: BanService) {
@@ -76,5 +78,9 @@ export class SearchBanPageComponent implements AfterViewInit,OnDestroy {
         }
       })
     }
+  }
+
+  public deleteBan(ban: Ban): void {
+    this.currentItems = this.currentItems.filter((current: any) => current.id !== ban.id);
   }
 }

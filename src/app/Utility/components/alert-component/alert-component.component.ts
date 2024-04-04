@@ -36,6 +36,11 @@ export class AlertComponentComponent implements OnDestroy,AfterViewInit{
 
   public ngAfterViewInit(): void {
     this.alertHandler.setCurrentAlertComponent(this);
+    this.createSubscriptions();
+
+  }
+
+  private createSubscriptions(): void {
     this.subscriptions.push(this.alertHandler.getCurrentAlertTitle(false).subscribe((value: string) => this.currentAlertTitle = value));
     this.subscriptions.push(this.alertHandler.getCurrentAlertText(false).subscribe((value: string) => this.currentAlertText = value));
     this.subscriptions.push(this.alertHandler.getCurrentAlertOptions(false).subscribe((value: any) => {

@@ -1,41 +1,22 @@
-button.card-wrapper {
+div.card-wrapper {
     border: 0;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
     border-radius: 10px;
     padding: 5px;
-    background-color: var(--primary-color);
+    background-color: var(--secondary-color);
     transition: 0.2s ease-in-out all;
-    width: 265px;
+    width: 100%;
     text-align: start;
-}
-button.card-wrapper:hover {
-    background-color: var(--tertiary-color);
+    border: 1px solid var(--primary-color);
 }
 div.report-card-header {
     padding: 5px;
     text-align: center;
-    background-color: var(--secondary-color);
+    background-color: var(--primary-color);
 }
 div.report-card-footer {
     padding: 5px 10px;
-}
-button.create-ban-button{
-    border: 0;
-    border: 1px solid red;
-    background-color: darkred;
-    width: 40%;
-    padding: 10px;
-    border-radius: 10px;
-}
-button.delete-button {
-    border: 0;
-    border: 1px solid red;
-    background-color: darkred;
-    width: 40%;
-    padding: 10px;
-    border-radius: 10px;
-    margin-left: 5px;
 }
 div.report-card-body {
     padding-left: 10px;

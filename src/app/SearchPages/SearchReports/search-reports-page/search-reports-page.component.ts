@@ -72,4 +72,8 @@ export class SearchReportsPageComponent implements AfterViewInit,OnDestroy {
       },(err: any) => this.isSearching = false);
     }
   }
+
+  public deleteReport(value: Report): void {
+    this.currentItems = this.currentItems.filter((current: any) => current.id !== value.id);
+  }
 }

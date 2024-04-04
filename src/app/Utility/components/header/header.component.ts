@@ -5,6 +5,7 @@ import { faDiscourse } from '@fortawesome/free-brands-svg-icons';
 import { faBan, faBars, faExclamationCircle, faFilter, faGear, faHamburger, faHeart, faHome, faHouse, faInfoCircle, faMessage, faPlusCircle, faPoll, faQuestionCircle, faSearch, faTable, faTasks, faUser, faUserCircle, faWarning } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
 import { AlertHandlerService } from 'src/app/Utility/services/alert-handler.service';
+import { AuthHandlerService } from 'src/model/auth/auth-handler.service';
 
 
 interface HeaderOption
@@ -24,7 +25,7 @@ interface HeaderDropdown
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit,OnDestroy {
 
   public leftDropdowns: HeaderDropdown[] = [];
   public rightDropdowns: HeaderDropdown[] = [];
@@ -32,20 +33,31 @@ export class HeaderComponent implements OnInit {
   public searchOptions: HeaderOption[] = [];
   public createOptions: HeaderOption[] = [];
   public userOptions: HeaderOption[] = [];
+  public isAdmin: boolean = false;
+
   public homeIcon: IconDefinition = faHouse;
   public aboutIcon: IconDefinition = faInfoCircle;
+
+  private subscriptions: Subscription[] = [];
 
   @ViewChild("createBoardTemplate") createBoardTemplate: any;
   @ViewChild("createDiscussionTemplate") createDiscussionTemplate: any;
   @ViewChild("createPollTemplate") createPollTemplate: any;
   @ViewChild("updateUserTemplate") updateUserTemplate: any;
 
-  constructor(public router: Router,public alertHandler: AlertHandlerService) {
+  constructor(public router: Router,public alertHandler: AlertHandlerService,public authHandlerService: AuthHandlerService) {
 
   }
 
   public ngOnInit(): void {
     this.createHeaderOptions();
+    this.subscriptions.push(this.authHandlerService.getCurrentUserID(false).subscribe((value: any) => {
+      this.isAdmin = this.authHandlerService.isAdmin();
+    }));
+  }
+
+  public ngOnDestroy(): void {
+    this.subscriptions.forEach((value: Subscription) => value.unsubscribe());  
   }
 
   private createHeaderOptions(): void {
@@ -70,6 +82,8 @@ export class HeaderComponent implements OnInit {
       this.router.navigate(['/search/polls']);
     }});
     this.searchOptions.push({name: "Users",icon: faUser,callback: () => this.router.navigate(['/search/users'])})
+    this.searchOptions.push({name: "Reports",icon: faWarning,callback: () => this.router.navigate(['/search/reports'])});
+    this.searchOptions.push({name: "Bans",icon: faBan,callback: () => this.router.navigate(['/search/bans'])});
   }
 
   private createCreateOptions(): void {

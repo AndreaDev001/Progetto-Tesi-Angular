@@ -1,16 +1,18 @@
-<button class = "card-wrapper" *ngIf="report != undefined">
+<div class = "card-wrapper" *ngIf="report != undefined">
     <div class = "report-card-header">
         <fa-icon [icon]="warningIcon" style="font-size: 25px;"></fa-icon>
         <p class = "report-title">Report</p>
     </div>
     <div class = "report-card-body">
-        <div class = "w-100">
-            <p class = "p-0 m-0">Reporter:</p>
-            <app-user-holder [userRef]="report.reporter" [showNameInfo]="false"></app-user-holder>
-        </div>
-        <div class = "w-100 mt-2">
-            <p class = "p-0 m-0">Reported:</p>
-            <app-user-holder [userRef]="report.reported" [showNameInfo]="false"></app-user-holder>
+        <div class = "row">
+            <div  class = "col-6">
+                <p class = "text-center p-0 m-0">Reporter</p>
+                <app-user-holder [userRef]="report.reporter" [showNameInfo]="true"></app-user-holder>
+            </div>
+            <div class = "col-6">
+                <p class = "text-center p-0 m-0">Reported</p>
+                <app-user-holder [userRef]="report.reported" [showNameInfo]="true"></app-user-holder>
+            </div>
         </div>
         <div class = "mt-1">
             <p class = "p-0 m-0 d-inline-block">Reason:</p>
@@ -22,11 +24,10 @@
         </div>
     </div>
     <div class = "report-card-footer text-center">
-        <div class = "text-start" style="font-size: 15px;">
-            <fa-icon class = "d-inline-block" [icon]="calendarIcon"></fa-icon>
-            <p class = "p-0 mx-1 d-inline-block">{{report.createdDate}}</p>
-        </div>
-        <button class = "create-ban-button">Ban</button>
-        <button class = "delete-button">Delete</button>
+        <button class = "default-button w-75" (click)="createBan()">Ban</button>
+        <button class = "default-button w-75 mt-1" (click)="deleteReport()">Delete</button>
     </div>
-</button>
+</div>
+<ng-template #createBanTemplate>
+    <app-create-ban [bannedID]="report?.reported?.id" (successEvent)="this.banEvent.emit();this.alertHandlerService.close()" (failedEvent)="this.alertHandlerService.close()"></app-create-ban>
+</ng-template>

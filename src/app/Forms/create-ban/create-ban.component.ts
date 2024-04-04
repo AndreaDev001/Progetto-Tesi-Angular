@@ -6,15 +6,10 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faBan } from '@fortawesome/free-solid-svg-icons';
 import { BanService } from 'src/model/services/ban.service';
+import { CreateBan } from 'src/model/create';
 
 
-export interface CreateBan
-{
-  title: string,
-  description: string,
-  reason: string,
-  expirationDate: string,
-}
+
 @Component({
   selector: 'app-create-ban',
   templateUrl: './create-ban.component.html',
@@ -47,10 +42,10 @@ export class CreateBanComponent implements OnInit {
 
   public handleSubmit(event: any): void {
     if(this.bannedID != undefined && this.title != undefined && this.description != undefined && this.reason != undefined && this.formGroup.valid) {
-      let createBan: CreateBan = {title: this.title.value,description: this.description.value,reason: this.reason.value,expirationDate: "2024-05-15"};
+      let createBan: CreateBan = {bannedID: this.bannedID!!,title: this.title.value,description: this.description.value,reason: this.reason.value,expirationDate: "2024-05-15"};
       this.formGroup.reset();
       this.submitEvent.emit(createBan);
-      this.banService.createBan(createBan,this.bannedID).subscribe((value: any) => this.successEvent.emit(value),(err: any) => this.failedEvent.emit(err));
+      this.banService.createBan(createBan).subscribe((value: any) => this.successEvent.emit(value),(err: any) => this.failedEvent.emit(err));
     }
   }
 

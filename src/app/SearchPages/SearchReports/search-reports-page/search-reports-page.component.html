@@ -15,10 +15,10 @@
                 <h5 class = "p-0 m-0">Use the filters to find the desired reports</h5>
                 <p class = "p-0 m-0">Try to be the most precise as possible</p>
         </div>
-        <div *ngIf="currentTotalElements > 0 || isSearching">
-            <app-loader [diameter]="100" [strokeWidth]="8" [requiredTemplate]="reportElements" [isSearching]="isSearching"></app-loader>
+        <div *ngIf="currentItems.length > 0 || isSearching">
+            <app-loader [diameter]="80" [strokeWidth]="8" [requiredTemplate]="reportElements" [isSearching]="isSearching"></app-loader>
         </div>
-        <div *ngIf="currentTotalElements == 0 && !isSearching">
+        <div *ngIf="currentItems.length == 0 && !isSearching">
             <app-no-items (buttonClicked)="resetSearch()"></app-no-items>
         </div>
     </div>
@@ -33,8 +33,8 @@
 </ng-template>
 <ng-template #reportElements>
     <div class = "row py-1">
-        <div class = "col-md-3 mt-1" *ngFor="let current of currentItems">
-            <app-report-card [report]="current"></app-report-card>
+        <div class = "col-6 col-md-3 mt-1" *ngFor="let current of currentItems">
+            <app-report-card (deleteEvent)="deleteReport(current)" [report]="current"></app-report-card>
         </div>
     </div>
 </ng-template>

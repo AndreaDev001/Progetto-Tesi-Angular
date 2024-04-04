@@ -37,4 +37,10 @@ export class ReportService {
     let queryParams = this.httpUtils.generateParams(filter);
     return this.httpClient.get(desiredURL,{params: queryParams});
   }
+
+  public deleteReport(reportID: any): any {
+    const desiredURL: string = this.url + "/private/" + reportID;
+    let queryParams: HttpParams = new HttpParams();
+    return this.httpClient.delete(desiredURL,{params: queryParams});
+  }
 }

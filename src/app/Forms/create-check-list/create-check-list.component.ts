@@ -13,7 +13,7 @@ import { CheckListService } from 'src/model/services/check-list.service';
 export class CreateCheckListComponent {
     
   public formGroup: FormGroup = new FormGroup({
-    name: new FormControl('',[Validators.required,Validators.minLength(3),Validators.maxLength(10)]),
+    name: new FormControl('',[Validators.required]),
   })
   public checkIcon: IconDefinition = faCheckCircle;
   @Input() taskID: any = undefined;

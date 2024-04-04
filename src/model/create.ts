@@ -93,3 +93,11 @@ export interface CreatePollOption
     name: string,
     description: string
 }
+export interface CreateBan
+{
+  bannedID: string,
+  title: string,
+  description: string,
+  reason: string,
+  expirationDate: string,
+}

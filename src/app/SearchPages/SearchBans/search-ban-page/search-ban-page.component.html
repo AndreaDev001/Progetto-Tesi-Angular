@@ -20,11 +20,11 @@
             </div>
             <div class = "row mt-3">
                 <div class = "col-md-3 mt-1" *ngFor="let current of currentItems">
-                    <app-ban-card [ban]="current"></app-ban-card>
+                    <app-ban-card (deleteBanEvent)="deleteBan(current)" [ban]="current"></app-ban-card>
                 </div>
             </div>
         </div>
-        <div *ngIf="currentTotalElements == 0">
+        <div *ngIf="currentItems.length == 0">
             <app-no-items (buttonClicked)="resetSearch()"></app-no-items>
         </div>
     </div>
@@ -34,6 +34,6 @@
 </div>
 <ng-template #banFitlers>
     <div class = "px-2 w-100">
-        <app-ban-filter (filterChanged)="handleFilterChange($event)"></app-ban-filter>
+        <app-ban-filter  (filterChanged)="handleFilterChange($event)"></app-ban-filter>
     </div>
 </ng-template>
