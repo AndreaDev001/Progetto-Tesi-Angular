@@ -20,6 +20,7 @@ export class BoardMemberService {
     return this.httpClient.get(desiredURL,{params: queryParams});
   }
   
+  
   public getPossibleTaskMembers(boardID: string,taskID: string): any {
     const desiredURL: string = this.url + "/private" + "/possible/task" + "/board" + "/" + boardID + "/task" + "/" + taskID;
     let queryParams: HttpParams = new HttpParams();
@@ -32,10 +33,11 @@ export class BoardMemberService {
     return this.httpClient.get(desiredURL,{params: queryParams});
   }
 
-  public getBoardMembersByMember(memberID: any,page: PaginationRequest): any{
-    const desiredURL: string = this.url + "/private" + "/user" + "/" + memberID;
-    let queryParams: HttpParams = this.httpUtils.generatePaginationParams(page);
-    return this.httpClient.get(desiredURL,{params: queryParams});
+  public getBoardMembersByMember(memberID: any,page: PaginationRequest,context: any = undefined): any{
+    context = context != undefined ? context : this;
+    const desiredURL: string = context.url + "/private" + "/user" + "/" + memberID;
+    let queryParams: HttpParams = context.httpUtils.generatePaginationParams(page);
+    return context.httpClient.get(desiredURL,{params: queryParams});
   }
 
   public deleteMember(memberID: string): any {

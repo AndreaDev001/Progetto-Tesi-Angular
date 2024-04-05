@@ -1,26 +1,26 @@
 <div>
     <div class = "py-2">
-        <div class = "d-inline-block mx-1">
-            <app-search-bar (searchChanged)="updateFilter(this.currentFilter,'title',$event)" [currentLabel]="'Title'" [currentSupportingText]="'Write the title of the poll...'" [currentLabel]="'Title...'"></app-search-bar>
+        <div [ngClass]="rowDisplay ? 'd-block mt-1' : 'd-inline-block mx-1'">
+            <app-search-bar (searchChanged)="updateFilter(this.currentFilter,'title',$event)" [currentLabel]="'Title'" [currentSupportingText]="'Write the title of the poll...'" [currentLabel]="'Title...'" [currentPlaceholder]="'Title'"></app-search-bar>
         </div>
-        <div class = "d-inline-block mx-1">
+        <div [ngClass]="rowDisplay ? 'd-block mt-1' : 'd-inline-block mx-1'">
             <app-search-bar (searchChanged)="updateFilter(this.currentFilter,'description',$event)" [currentLabel]="'Description'" [currentSupportingText]="'Write the description of the poll...'" [currentPlaceholder]="'Description...'"></app-search-bar>
         </div>
-        <div class = "d-inline-block mx-1">
+        <div [ngClass]="rowDisplay ? 'd-block mt-1' : 'd-inline-block mx-1'">
             <app-search-bar (searchChanged)="updateFilter(this.currentFilter,'publisherName',$event)" [currentLabel]="'Publisher Name'" [currentSupportingText]="'Write the name of the publisher of the poll...'" [currentPlaceholder]="'Publisher Name...'"></app-search-bar>     
         </div>
-        <div class = "d-inline-block mx-1">
+        <div [ngClass]="rowDisplay ? 'd-block mt-1' : 'd-inline-block mx-1'">
             <app-search-bar (searchChanged)="updateFilter(this.currentFilter,'publisherSurname',$event)" [currentLabel]="'Publisher Surname'" [currentSupportingText]="'Write the surname of the publisher of the poll...'" [currentPlaceholder]="'Publisher Surname...'"></app-search-bar>     
         </div>
-        <div class = "d-inline-block mx-1">
+        <div [ngClass]="rowDisplay ? 'd-block mt-1' : 'd-inline-block mx-1'">
             <app-search-bar (searchChanged)="updateFilter(this.currentFilter,'publisherUsername',$event)" [currentLabel]="'Publisher Username'" [currentSupportingText]="'Write the username of the publisher of the poll...'" [currentPlaceholder]="'Publisher Username...'"></app-search-bar>     
         </div>    
     </div>
     <div class = "py-2">
-        <div class = "d-inline-block mx-1">
+        <div [ngClass]="rowDisplay ? 'd-block mt-1' : 'd-inline-block mx-1'">
             <app-dropdown [currentLabel]="'Gender'" [currentSupportingText]="'Choose one of the avaliable options'" [currentOptions]="currentGenders"></app-dropdown>
         </div>
-        <div class = "d-inline-block mx-1">
+        <div [ngClass]="rowDisplay ? 'd-block mt-1' : 'd-inline-block mx-1'">
             <app-dropdown [currentLabel]="'Status'" [currentSupportingText]="'Choose one of the avaliable options'" [currentOptions]="currentStatues"></app-dropdown>
         </div>
     </div>

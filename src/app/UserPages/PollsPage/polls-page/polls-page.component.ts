@@ -4,7 +4,7 @@ import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faPoll } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
 import { AuthHandlerService } from 'src/model/auth/auth-handler.service';
-import { PagedModel, PaginationRequest, Poll } from 'src/model/interfaces';
+import { Page, PagedModel, PaginationRequest, Poll } from 'src/model/interfaces';
 import { PollService } from 'src/model/services/poll.service';
 
 @Component({
@@ -21,8 +21,7 @@ export class PollsPageComponent implements OnInit,OnDestroy {
   
 
   public isSearching: boolean = false;
-  private currentPage: number = 0;
-  private currentTotalPages: number = 0;
+  public currentPage: Page = {number: 0,size: 20,totalElements: 0,totalPages: 0};
 
   constructor(private authHandler: AuthHandlerService,private pollService: PollService) {
 
@@ -31,7 +30,8 @@ export class PollsPageComponent implements OnInit,OnDestroy {
   public ngOnInit(): void {
     this.subscriptions.push(this.authHandler.getCurrentUserID(false).subscribe((value: any) => {
       this.currentUserID = value;
-      this.searchPolls(0,20);
+      if(this.currentUserID != undefined)
+          this.searchPolls(this.currentPage.number,this.currentPage.size);
     }))
   }
 
@@ -41,18 +41,19 @@ export class PollsPageComponent implements OnInit,OnDestroy {
     this.pollService.getPollsByPublisher(this.currentUserID,paginationRequest).subscribe((value: PagedModel) => {
       this.isSearching = false;
       this.currentPolls = value._embedded != undefined && value._embedded.content != undefined ? value._embedded.content : [];
-      if(value.page != undefined) {
-        this.currentPage = value.page.page;
-        this.currentTotalPages = value.page.totalPages;
-      }
+      this.currentPage = value.page != undefined ? value.page : this.currentPage;
     },(err: any) => this.reset());
   }
 
   private reset(): void {
     this.isSearching = false;
     this.currentPolls = [];
-    this.currentPage = 0;
-    this.currentTotalPages = 0;
+    this.currentPage = {number: 0,size: 20,totalElements: 0,totalPages: 0};
+  }
+
+  public handlePageChange(event: any): void {
+    this.currentPage.number = event - 1;
+    this.searchPolls(this.currentPage.number,this.currentPage.size);
   }
 
   public removePoll(poll: any): void {

@@ -36,10 +36,11 @@ export class PollService {
     return this.httpClient.delete(desiredURL,{params: queryParams});
   }
 
-  public getPollsByPublisher(publisherID: any,page: PaginationRequest): any {
-    const desiredURL: string = this.url + "/private" + "/publisher" + "/" + publisherID;
-    let queryParams: HttpParams = this.httpUtilsService.generatePaginationParams(page);
-    return this.httpClient.get(desiredURL,{params: queryParams});
+  public getPollsByPublisher(publisherID: any,page: PaginationRequest,context: any = undefined): any {
+    context = context != undefined ? context : this;
+    const desiredURL: string = context.url + "/private" + "/publisher" + "/" + publisherID;
+    let queryParams: HttpParams = context.httpUtilsService.generatePaginationParams(page);
+    return context.httpClient.get(desiredURL,{params: queryParams});
   }
 
   public getPollsBySpec(filter: Filter): any {

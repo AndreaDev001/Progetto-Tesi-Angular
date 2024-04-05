@@ -8,17 +8,20 @@
     </div>
     <div class = "py-2 text-center">
         <app-loader [strokeWidth]="10" [diameter]="100" [fontSize]="20"  [loaderSubtitle]="'Searching invites...'" [requiredTemplate]="boardInvites" [isSearching]="isSearching"></app-loader>
+        <div *ngIf="currentInvites.length == 0 && !isSearching">
+            <app-no-items></app-no-items>
+        </div>
+        <div *ngIf="currentPage.totalElements > 0 && !isSearching">
+            <app-pagination [totalElements]="currentPage.totalElements" [pageSize]="currentPage.size"></app-pagination>
+        </div>
     </div>
 </div>
 <ng-template #boardInvites>
     <div *ngIf="currentInvites.length > 0">
         <div class = "row">
-            <div class = "col-12 col-md-3 mt-2" *ngFor="let current of currentInvites">
+            <div class = "col-12 col-md-2 mt-2" *ngFor="let current of currentInvites">
                 <app-board-invite-card [boardInvite]="current"></app-board-invite-card>
             </div>
         </div>
-    </div>
-    <div *ngIf="currentInvites.length == 0">
-        <app-no-items></app-no-items>
     </div>
 </ng-template>

@@ -18,6 +18,7 @@ export class OffCanvasComponent implements AfterViewInit,OnDestroy
   private dismissSubscription: Subscription | undefined = undefined;
 
   public currentTitle: string | undefined = undefined;
+  public currentSubtitle: string | undefined = undefined;
   public currentHeaderTemplate: any = undefined;
   public currentContentTemplate: any = undefined;
   public currentCloseCallback: () => void = () => {};
@@ -40,6 +41,7 @@ export class OffCanvasComponent implements AfterViewInit,OnDestroy
     this.subscriptions.push(this.offCanvasHandler.getCurrentHeaderTitle(false).subscribe((value: string) => this.currentTitle = value));
     this.subscriptions.push(this.offCanvasHandler.getCurrentCloseCallback(false).subscribe((value: () => void) => this.currentCloseCallback = value));
     this.subscriptions.push(this.offCanvasHandler.getCurrentDismissCallback(false).subscribe((value: () => void) => this.currentDismissCallback = value));
+    this.subscriptions.push(this.offCanvasHandler.getCurrentHeaderSubtitle(false).subscribe((value: any) => this.currentSubtitle = value));
   }
 
   public open(): void {

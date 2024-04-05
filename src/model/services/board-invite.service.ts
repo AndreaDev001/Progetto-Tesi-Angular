@@ -40,9 +40,10 @@ export class BoardInviteService {
     return this.httpClient.put(desiredURL,updateInvite,{params: queryParams})
   }
 
-  public getInvitesByUser(userID: any,page: PaginationRequest): any {
-    const desiredURL: string = this.url + "/private" + "/receiver" + "/" + userID;
-    let queryParams: HttpParams = this.httpUtils.generatePaginationParams(page);
-    return this.httpClient.get(desiredURL,{params: queryParams});
+  public getInvitesByUser(userID: any,page: PaginationRequest,context: any = undefined): any {
+    context = context != undefined ? context : this;
+    const desiredURL: string = context.url + "/private" + "/receiver" + "/" + userID;
+    let queryParams: HttpParams = context.httpUtils.generatePaginationParams(page);
+    return context.httpClient.get(desiredURL,{params: queryParams});
   }
 }

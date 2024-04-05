@@ -23,9 +23,9 @@ p.board-subtitle
 div.card-wrapper {
     text-align: start;
     background-color: var(--secondary-color);
-    border-radius: 10px;
-    border-top-left-radius: 20px;
-    border-top-right-radius: 20px;
+    border-radius: 2px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
     color: whitesmoke;
     width: 100%;
     border: 1px solid var(--primary-color);

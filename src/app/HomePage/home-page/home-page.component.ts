@@ -33,6 +33,7 @@ interface ViewItem
    requiredIndex: number,
    requiredTemplate: any,
    requiredObservable: any;
+   requiredService: any;
 }
 interface ViewItemDescription
 {
@@ -62,7 +63,7 @@ export class HomePageComponent implements AfterViewInit, OnDestroy {
 
   public currentItems: any[] = [];
   public isSearching: boolean = false;
-  public currentPage: Page = {page: 0,size: 20,totalPages: 0,totalElements: 0}
+  public currentPage: Page = {number: 0,size: 20,totalPages: 0,totalElements: 0}
   public currentSelectedIndex: number = 0;
 
   public optionsTemplate: OptionTemplate[] = [];
@@ -75,6 +76,7 @@ export class HomePageComponent implements AfterViewInit, OnDestroy {
   public pollIcon: IconDefinition = faPoll;
 
   public currentObservable: any = undefined;
+  public currentService: any = undefined;
   public currentUserID: any = undefined;
   private viewItemsMap : Map<string,ViewItem> = new Map();
 
@@ -105,12 +107,11 @@ export class HomePageComponent implements AfterViewInit, OnDestroy {
   }
 
   private createMapValues(): void {
-    let paginationRequest: PaginationRequest = {page: 0,pageSize: 20};
-    this.viewItemsMap.set('boards',{requiredPath: 'boards',requiredIndex: 0,requiredTemplate: this.boardTemplate,requiredObservable: this.boardMemberService.getBoardMembersByMember(this.currentUserID,paginationRequest)});
-    this.viewItemsMap.set('tasks',{requiredPath: 'tasks',requiredIndex: 1,requiredTemplate: this.taskTemplate,requiredObservable: this.taskAssignmentService.getTaskAssignmentsByUser(this.currentUserID,paginationRequest)});
-    this.viewItemsMap.set('invites',{requiredPath: 'invites',requiredIndex: 2,requiredTemplate: this.boardInviteTemplate,requiredObservable: this.boardInvitesService.getInvitesByUser(this.currentUserID,paginationRequest)});
-    this.viewItemsMap.set('discussions',{requiredPath: 'discussions',requiredIndex: 3,requiredTemplate: this.discussionTemplate,requiredObservable: this.discussionService.getDiscussionsByPublisher(this.currentUserID,paginationRequest)});
-    this.viewItemsMap.set('polls',{requiredPath: 'polls',requiredIndex: 4,requiredTemplate: this.pollTemplate,requiredObservable: this.pollService.getPollsByPublisher(this.currentUserID,paginationRequest)});
+    this.viewItemsMap.set('boards',{requiredPath: 'boards',requiredIndex: 0,requiredTemplate: this.boardTemplate,requiredObservable: this.boardMemberService.getBoardMembersByMember,requiredService: this.boardMemberService});
+    this.viewItemsMap.set('tasks',{requiredPath: 'tasks',requiredIndex: 1,requiredTemplate: this.taskTemplate,requiredObservable: this.taskAssignmentService.getTaskAssignmentsByUser,requiredService: this.taskAssignmentService});
+    this.viewItemsMap.set('invites',{requiredPath: 'invites',requiredIndex: 2,requiredTemplate: this.boardInviteTemplate,requiredObservable: this.boardInvitesService.getInvitesByUser,requiredService: this.boardInvitesService});
+    this.viewItemsMap.set('discussions',{requiredPath: 'discussions',requiredIndex: 3,requiredTemplate: this.discussionTemplate,requiredObservable: this.discussionService.getDiscussionsByPublisher,requiredService: this.discussionService});
+    this.viewItemsMap.set('polls',{requiredPath: 'polls',requiredIndex: 4,requiredTemplate: this.pollTemplate,requiredObservable: this.pollService.getPollsByPublisher,requiredService: this.pollService});
   }
 
   private createSubscriptions(): void {
@@ -156,9 +157,10 @@ export class HomePageComponent implements AfterViewInit, OnDestroy {
   }
 
   public searchItems(): void {
-    if(this.currentObservable != undefined) {
+    if(this.currentObservable != undefined && this.currentService != undefined && this.currentUserID != undefined) {
       this.isSearching = true;
-      this.currentObservable.subscribe((value: PagedModel) => {
+      let paginationRequest: PaginationRequest = {page: this.currentPage.number,pageSize: this.currentPage.size};
+      this.currentObservable(this.currentUserID,paginationRequest,this.currentService).subscribe((value: PagedModel) => {
         this.isSearching = false;
         this.currentItems = value._embedded != undefined && value._embedded.content != undefined ? value._embedded.content : [];
         this.currentPage = value.page != undefined ? value.page : this.currentPage;
@@ -170,12 +172,12 @@ export class HomePageComponent implements AfterViewInit, OnDestroy {
   }
 
   public resetPage(): void {
-    this.currentPage = {page: 0,size: 20,totalPages: 0,totalElements: 0};
+    this.currentPage = {number: 0,size: 20,totalPages: 0,totalElements: 0};
     this.updateItems(this.currentViewPath);
   }
 
   public handlePageChange(event: any): void {
-    this.currentPage = event;
+    this.currentPage.number = event - 1;
     this.updateItems(this.currentViewPath);
   }
 
@@ -195,7 +197,9 @@ export class HomePageComponent implements AfterViewInit, OnDestroy {
     this.currentSelectedIndex = viewItem!!.requiredIndex;
     this.currentTemplate = viewItem!!.requiredTemplate;
     this.currentObservable = viewItem!!.requiredObservable;
+    this.currentService = viewItem!!.requiredService;
     this.searchItems();
+
   }
 
   public updateTemplate(path: string): void {

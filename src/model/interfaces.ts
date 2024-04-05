@@ -362,7 +362,7 @@ export interface EmbeddedPagedModel
 }
 export interface Page
 {
-    page: number,
+    number: number,
     size: number,
     totalPages: number,
     totalElements: number

@@ -3,7 +3,7 @@ import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faTasks } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
 import { AuthHandlerService } from 'src/model/auth/auth-handler.service';
-import { PagedModel, PaginationRequest, TaskAssignment } from 'src/model/interfaces';
+import { Page, PagedModel, PaginationRequest, TaskAssignment } from 'src/model/interfaces';
 import { TaskAssignmentService } from 'src/model/services/task-assignment.service';
 
 @Component({
@@ -19,8 +19,7 @@ export class TasksPageComponent implements OnInit,OnDestroy
 
   public isSearching: boolean = false;
   public currentTaskAssignments: TaskAssignment[] = [];
-  private currentPage: number = 0;
-  private currentTotalPages: number = 0;
+  public currentPage: Page = {number: 0,size: 20,totalElements: 0,totalPages: 0};
 
   constructor(private taskAssignmentService: TaskAssignmentService,private authHandler: AuthHandlerService) {
 
@@ -29,7 +28,8 @@ export class TasksPageComponent implements OnInit,OnDestroy
   public ngOnInit(): void {
     this.subscriptions.push(this.authHandler.getCurrentUserID(false).subcribe((value: any) => {
       this.currentUserID = value;
-      this.searchTaskAssignments(0,20);
+      if(this.currentUserID != undefined)
+          this.searchTaskAssignments(this.currentPage.number,this.currentPage.size);
     }))
   }
 
@@ -39,18 +39,14 @@ export class TasksPageComponent implements OnInit,OnDestroy
     this.taskAssignmentService.getTaskAssignmentsByUser(this.currentUserID,paginationRequest).subcribe((value: PagedModel) => {
       this.isSearching = false;
       this.currentTaskAssignments = value._embedded != undefined && value._embedded.content != undefined ? value._embedded.content : [];
-      if(value.page != undefined) {
-        this.currentPage = value.page.page;
-        this.currentTotalPages = value.page.totalPages;
-      }
+      this.currentPage = value.page != undefined ? value.page : this.currentPage;
     },(err: any) => this.reset());
   }
 
   private reset(): void {
     this.isSearching = false;
     this.currentTaskAssignments = [];
-    this.currentPage = 0;
-    this.currentTotalPages = 0;
+    this.currentPage = {number: 0,size: 20,totalElements: 0,totalPages: 0};
   }
 
   public ngOnDestroy(): void {

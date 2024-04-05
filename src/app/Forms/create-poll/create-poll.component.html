@@ -52,8 +52,8 @@
                     </mat-form-field>
                 </div>
                 <div class = "mt-2 py-2 text-end mx-1">
-                    <button type="submit" class = "confirm-button" [disabled]="!formGroup.valid">Confirm</button>
-                    <button (click)="this.reset()" class = "stop-button">Clear</button>
+                    <button type="submit" class = "default-button" [disabled]="!formGroup.valid">Confirm</button>
+                    <button (click)="this.reset()" class = "default-button">Clear</button>
                 </div>
             </div>
             <div *ngIf="isCreating" style="display: flex;flex-direction: column;align-items: center;padding: 10px 0px">

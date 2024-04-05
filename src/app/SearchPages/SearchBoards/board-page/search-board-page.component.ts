@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { UserService } from 'src/model/services/user.service';
-import { Board, CollectionModel, PagedModel } from 'src/model/interfaces';
+import { Board, CollectionModel, Page, PagedModel } from 'src/model/interfaces';
 import { Filter } from '../board-filter/board-filter.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertHandlerService } from 'src/app/Utility/services/alert-handler.service';
@@ -19,9 +19,7 @@ export class SearchBoardPageComponent implements OnDestroy,AfterViewInit{
 
   private subscriptions: Subscription[] = [];
   public currentItems: Board[] = [];
-  public currentPage: number = 0;
-  public currentTotalPages: number = 0;
-  public currentTotalElements: number = 0;
+  public currentPage: Page = {number: 0,size: 20,totalElements: 0,totalPages: 0};
   public currentFilter: Filter | undefined = undefined;
   public isSearching: boolean = false;
   public boardIcon: IconDefinition = faTable;
@@ -47,7 +45,8 @@ export class SearchBoardPageComponent implements OnDestroy,AfterViewInit{
 
   public handlePageChange(page: any): void {
     if(this.currentFilter != undefined) {
-      this.currentFilter.page = page;
+      this.currentPage.number = page - 1;
+      this.currentFilter.page = this.currentPage.number;
       this.searchBoards();
     }
   }
@@ -58,7 +57,7 @@ export class SearchBoardPageComponent implements OnDestroy,AfterViewInit{
   }
 
   public resetSearch(): void {
-    this.currentPage = 0;
+    this.currentPage = {number: 0,size: 20,totalElements: 0,totalPages: 0};
     this.currentFilter = {page: 0,pageSize: 20};
     this.searchBoards();
   }
@@ -69,11 +68,7 @@ export class SearchBoardPageComponent implements OnDestroy,AfterViewInit{
       this.boardService.getBoardsBySpec(this.currentFilter).subscribe((value: PagedModel) => {
         this.isSearching = false;
         this.currentItems = value._embedded != undefined && value._embedded.content != undefined ? value._embedded.content : [];
-        if(value.page != undefined) {
-          this.currentPage = value.page.page;
-          this.currentTotalPages = value.page.totalPages;
-          this.currentTotalElements = value.page.totalElements;
-        }
+        this.currentPage = value.page != undefined ? value.page : this.currentPage;
       },(err: any) => this.isSearching = false)
     }
   }

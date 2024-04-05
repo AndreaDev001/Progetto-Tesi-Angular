@@ -1,23 +1,23 @@
 <div>
     <div class = "py-2">
-        <div class = "d-inline-block mx-1">
+        <div [ngClass]="rowDisplay ? 'd-block mt-1' : 'd-inline-block mx-1'">
             <app-search-bar [currentLabel]="'Title'" [currentSupportingText]="'Please write a title...'" [currentPlaceholder]="'Title'" (searchChanged)="updateFilter(this.currentFilter,'title',$event)"></app-search-bar>
         </div>
-        <div class = "d-inline-block mx-1">
+        <div [ngClass]="rowDisplay ? 'd-block mt-1' : 'd-inline-block mx-1'">
             <app-search-bar   [currentLabel]="'Topic'" [currentSupportingText]="'Plase write a topic...'" [currentPlaceholder]="'Topic'" (searchChanged)="updateFilter(this.currentFilter,'topic',$event)"></app-search-bar>
         </div>
-        <div class = "d-inline-block mx-1">
+        <div [ngClass]="rowDisplay ? 'd-block mt-1' : 'd-inline-block mx-1'">
             <app-search-bar [currentLabel]="'Publisher Name'" [currentSupportingText]="'Write the name of the publisher...'" [currentPlaceholder]="'Publisher Name...'" (searchChanged)="updateFilter(this.currentFilter,'publisherName',$event)"></app-search-bar>
         </div>
-        <div class = "d-inline-block mx-1">
+        <div [ngClass]="rowDisplay ? 'd-block mt-1' : 'd-inline-block mx-1'">
             <app-search-bar [currentLabel]="'Publisher Surname'" [currentSupportingText]="'Write the surname of the publisher...'" [currentPlaceholder]="'Publisher Surname...'" (searchChanged)="updateFilter(this.currentFilter,'publisherName',$event)"></app-search-bar>
         </div>
-        <div class = "d-inline-block mx-1">
+        <div [ngClass]="rowDisplay ? 'd-block mt-1' : 'd-inline-block mx-1'">
             <app-search-bar [currentLabel]="'Publisher Username'" [currentSupportingText]="'Write the username of the publisher...'" [currentPlaceholder]="'Publisher Username...'" (searchChanged)="updateFilter(this.currentFilter,'publisherName',$event)"></app-search-bar>
         </div>
     </div>
     <div class = "py-2">
-        <div class = "d-inline-block mx-1">
+        <div [ngClass]="rowDisplay ? 'd-block mt-1' : 'd-inline-block mx-1'">
             <app-dropdown [currentLabel]="'Gender'" [currentSupportingText]="'Choose one of the avaliable options...'" [currentOptions]="currentGenders"></app-dropdown>
         </div>
     </div>

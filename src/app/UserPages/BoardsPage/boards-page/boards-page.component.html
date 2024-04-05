@@ -8,6 +8,12 @@
     </div>
     <div class = "py-2 text-center">
         <app-loader [strokeWidth]="10" [diameter]="100" [fontSize]="20" [loaderSubtitle]="'Searching boards'" [requiredTemplate]="boardsTemplate" [isSearching]="isSearching"></app-loader>
+        <div *ngIf="currentBoardMembers.length == 0 && !isSearching">
+            <app-no-items></app-no-items>
+        </div>
+        <div *ngIf="currentPage.totalElements > 0 && !isSearching">
+            <app-pagination [pageSize]="currentPage.size" [totalElements]="currentPage.totalElements" (pageChanged)="handlePageChange($event)"></app-pagination>
+        </div>
     </div>
 </div>
 <ng-template #boardsTemplate>
@@ -17,8 +23,5 @@
                 <app-board-card [boardRef]="current.board"></app-board-card>
             </div>
         </div>
-    </div>
-    <div *ngIf="currentBoardMembers.length == 0">
-        <app-no-items></app-no-items>
     </div>
 </ng-template>

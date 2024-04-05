@@ -10,31 +10,31 @@
         <button class = "filter-button" (click)="openCanvas()">Filters</button>
     </div>
     <div class = "container-fluid">
-        <div *ngIf="currentItems.length > 0">
+        <div>
             <div class = "py-2">
                 <div class = "py-2">
                     <h5 class = "p-0 m-0">Use the filters to find the desired polls</h5>
                     <p class = "p-0 m-0">Try to be the most precise as possible</p>
                 </div>
-                <app-loader [diameter]="100" [strokeWidth]="8" [isSearching]="isSearching" [requiredTemplate]="pollElements"></app-loader>
+                <app-loader [diameter]="80" [showText]="true" [strokeWidth]="8" [fontSize]="20" [isSearching]="isSearching" [requiredTemplate]="pollElements"></app-loader>
             </div>
         </div>
         <div *ngIf="currentItems.length == 0 && !isSearching">
             <app-no-items (buttonClicked)="resetSearch()"></app-no-items>
         </div>
     </div>
-    <div class = "w-100 text-center mt-4">
-        <app-pagination [pageSize]="20" [totalElements]="currentTotalElements" (pageChanged)="handlePageChange($event)"></app-pagination>
+    <div class = "w-100 text-center mt-1 py-2" *ngIf="currentPage.totalElements > 0 && !isSearching">
+        <app-pagination [pageSize]="currentPage.size" [totalElements]="currentPage.totalElements" (pageChanged)="handlePageChange($event)"></app-pagination>
     </div>
 </div>
 <ng-template #pollFilters>
     <div class = "px-2 w-100">
-        <app-poll-filter (filterChanged)="handleFilterChange($event)"></app-poll-filter>
+        <app-poll-filter [rowDisplay]="true" (filterChanged)="handleFilterChange($event)"></app-poll-filter>
     </div>
 </ng-template>
 <ng-template #pollElements>
     <div class = "row py-1">
-        <div class = "col-12 col-md-3 mt-1" *ngFor="let current of currentItems">
+        <div class = "col-6 col-md-2 mt-1" *ngFor="let current of currentItems">
             <app-poll-card [poll]="current"></app-poll-card>
         </div>
     </div>

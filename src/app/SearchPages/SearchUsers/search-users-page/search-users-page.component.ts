@@ -1,8 +1,8 @@
 import { AfterViewChecked, AfterViewInit, Component, OnDestroy, ViewChild } from '@angular/core';
-import { PagedModel, User } from 'src/model/interfaces';
+import { Page, PagedModel, User } from 'src/model/interfaces';
 import { Filter } from '../user-filter/user-filter.component';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
-import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
+import { faUserCircle, faUsers } from '@fortawesome/free-solid-svg-icons';
 import { OffCanvasHandlerService } from 'src/app/Utility/services/off-canvas-handler.service';
 import { UserService } from 'src/model/services/user.service';
 import { Subscription } from 'rxjs';
@@ -17,12 +17,10 @@ export class SearchUsersPageComponent implements AfterViewInit,OnDestroy
 {
   private subscriptions: Subscription[] = [];
   public currentItems: User[] = [];
-  public currentPage: number = 0;
-  public currentTotalPages: number = 0;
-  public currentTotalElements: number = 0;
+  public currentPage: Page = {number: 0,size: 20,totalElements: 0,totalPages: 0};
   public currentFilter: Filter = {page: 0,pageSize: 20};
   public isSearching: boolean = false;
-  public userIcon: IconDefinition = faUserCircle;
+  public userIcon: IconDefinition = faUsers;
   @ViewChild("userFilters") userFilters: any;
 
   constructor(private offCanvasHandlerService: OffCanvasHandlerService,private userService: UserService) {
@@ -38,12 +36,14 @@ export class SearchUsersPageComponent implements AfterViewInit,OnDestroy
   }
 
   public openCanvas(): void {
+    this.offCanvasHandlerService.setTexts("Filters","Use the avaliable filters to find the desired users");
     this.offCanvasHandlerService.open();
   }
 
   public handlePageChange(page: any): void {
     if(this.currentFilter != undefined) {
-      this.currentFilter.page = page;
+      this.currentPage.number = page - 1;
+      this.currentFilter.page = this.currentPage.number;
       this.searchUsers();
     }
   }
@@ -54,7 +54,7 @@ export class SearchUsersPageComponent implements AfterViewInit,OnDestroy
   }
 
   public resetSearch(): void {
-    this.currentPage = 0;
+    this.currentPage = {number: 0,size: 20,totalElements: 0,totalPages: 0};
     this.currentFilter = {page: 0,pageSize: 20};
     this.searchUsers();
   }
@@ -65,11 +65,7 @@ export class SearchUsersPageComponent implements AfterViewInit,OnDestroy
       this.userService.getUsersBySpec(this.currentFilter).subscribe((value: PagedModel) => {
         this.isSearching = false;
         this.currentItems = value._embedded != undefined && value._embedded.content != undefined ? value._embedded.content : [];
-        if(value.page != undefined) {
-          this.currentPage = value.page.page;
-          this.currentTotalPages = value.page.totalPages;
-          this.currentTotalElements = value.page.totalElements;
-        }
+        this.currentPage = value.page != undefined ? value.page : this.currentPage;
       },(err: any) => this.isSearching = false);
     }
   }

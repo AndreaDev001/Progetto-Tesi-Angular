@@ -10,7 +10,7 @@
         <button class = "filter-button" (click)="openCanvas()">Filters</button>
     </div>
     <div class = "container-fluid">
-        <div *ngIf="currentItems.length > 0">
+        <div>
             <div class = "py-2">
                 <div class = "py-2">
                     <h5 class = "p-0 m-0">Use the filters to find the desired discussions</h5>
@@ -18,23 +18,23 @@
                 </div>
             </div>
         </div>
-        <app-loader [diameter]="100" [strokeWidth]="8" [isSearching]="isSearching" [requiredTemplate]="discussionElements"></app-loader>
+        <app-loader [diameter]="80" [showText]="true" [strokeWidth]="8" [fontSize]="20" [isSearching]="isSearching" [requiredTemplate]="discussionElements"></app-loader>
         <div *ngIf="currentItems.length == 0 && !isSearching">
             <app-no-items (buttonClicked)="resetSearch()"></app-no-items>
         </div>
     </div>
-    <div class = "w-100 mt-4 text-center">
-        <app-pagination [pageSize]="20" [totalElements]="currentTotalElements"  (pageChanged)="handlePageChange($event)"></app-pagination>
+    <div class = "w-100 mt-1 py-2 text-center" *ngIf="currentPage.totalElements > 0 && !isSearching">
+        <app-pagination [pageSize]="20" [totalElements]="currentPage.totalElements"  (pageChanged)="handlePageChange($event)"></app-pagination>
     </div>
 </div>
 <ng-template #discussionFilters>
     <div class = "px-2 w-100">
-        <app-discussion-filter (filterChanged)="handleFilterChange($event)"></app-discussion-filter>
+        <app-discussion-filter [rowDisplay]="true" (filterChanged)="handleFilterChange($event)"></app-discussion-filter>
     </div>
 </ng-template>
 <ng-template #discussionElements>
     <div class = "row py-1">
-        <div class = "col-12 col-md-3 mt-1" *ngFor="let current of currentItems">
+        <div class = "col-6 col-md-2 mt-3" *ngFor="let current of currentItems">
             <app-discussion-card [discussion]="current"></app-discussion-card>
         </div>
     </div>

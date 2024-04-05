@@ -92,7 +92,7 @@ export class LikePagesComponent implements AfterViewInit,OnDestroy{
     this.discussionLikeService.getDiscussionLikesByUser(this.currentUserID,paginationRequest).subscribe((value: PagedModel) => {
       this.currentLikedDiscussions = value._embedded != undefined  && value._embedded.content != undefined ? value._embedded.content : [];
       if(value.page != undefined) {
-        this.currentLikedDiscussionsPage = value.page.page;
+        this.currentLikedDiscussionsPage = value.page.number;
         this.currentLikedDiscussionsTotalPages = value.page.totalPages;
         this.currentLikedDiscussionsTotalElements = value.page.totalElements;
       }
@@ -104,7 +104,7 @@ export class LikePagesComponent implements AfterViewInit,OnDestroy{
     this.pollLikeService.getPollLikesByUser(this.currentUserID,paginationRequest).subscribe((value: PagedModel) => {
       this.currentLikedPolls = value._embedded != undefined && value._embedded.content != undefined ? value._embedded.content : [];
       if(value.page != undefined) {
-        this.currentLikedPollsPage = value.page.page;
+        this.currentLikedPollsPage = value.page.number;
         this.currentLikedPollsTotalPages = value.page.totalPages;
         this.currentLikedPollsTotalElements = value.page.totalElements;
       }
@@ -116,7 +116,7 @@ export class LikePagesComponent implements AfterViewInit,OnDestroy{
     this.taskLikeService.getTaskLikesByUser(this.currentUserID,paginationRequest).subscribe((value: PagedModel) => {
       this.currentLikedTasks = value._embedded != undefined && value._embedded.content != undefined ? value._embedded.content : [];
       if(value.page != undefined)  {
-        this.currentLikedTasksPage = value.page.page;
+        this.currentLikedTasksPage = value.page.number;
         this.currentLikedTasksTotalPages = value.page.totalPages;
         this.currentLikedTasksTotalElements = value.page.totalElements;
       }
@@ -128,7 +128,7 @@ export class LikePagesComponent implements AfterViewInit,OnDestroy{
     this.commentLikeService.getCommentLikesByUser(this.currentUserID,paginationRequest).subscribe((value: PagedModel) => {
       this.currentLikedComments = value._embedded != undefined && value._embedded.content != undefined ? value._embedded.content : [];
       if(value.page != undefined) {
-         this.currentLikedCommentsPage = value.page.page;
+         this.currentLikedCommentsPage = value.page.number;
          this.currentLikedCommentsTotalPages = value.page.totalPages;
          this.currentLikedCommentsTotalElements = value.page.totalElements;
       }

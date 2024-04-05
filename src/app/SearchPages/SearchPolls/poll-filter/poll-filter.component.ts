@@ -1,4 +1,4 @@
-import { Component, EventEmitter,Output, OnDestroy, OnInit } from '@angular/core';
+import { Component, EventEmitter,Output, OnDestroy, OnInit, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { DropdownOption } from 'src/app/Utility/components/dropdown/dropdown.component';
@@ -29,6 +29,7 @@ export class PollFilterComponent implements OnInit,OnDestroy {
   public currentFilter: Filter = {page: 0,pageSize: 20};
   public currentGenders: DropdownOption[] = [];
   public currentStatues: DropdownOption[] = [];
+  @Input() rowDisplay: boolean = false;
   @Output() filterChanged: EventEmitter<Filter> = new EventEmitter();
 
   constructor(private activatedRoute: ActivatedRoute,private router: Router,private userService: UserService,private pollService: PollService) {

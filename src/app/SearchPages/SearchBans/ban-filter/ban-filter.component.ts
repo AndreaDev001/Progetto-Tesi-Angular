@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { DropdownOption } from '../../../Utility/components/dropdown/dropdown.component';
 import { BanService } from 'src/model/services/ban.service';
 import { CollectionModel } from 'src/model/interfaces';
@@ -32,6 +32,7 @@ export class BanFilterComponent implements OnInit,OnDestroy
   public currentFilter: Filter = {page: 0,pageSize: 20};
   public currentReasons: DropdownOption[] = [];
   public currentTypes: DropdownOption[] = [];
+  @Input() rowDisplay: boolean = false;
   @Output() filterChanged: EventEmitter<Filter> = new EventEmitter();
 
   constructor(private banService: BanService,private reportService: ReportService,private router: Router,private activatedRoute: ActivatedRoute) {

@@ -15,20 +15,18 @@
                 <h5 class = "p-0 m-0">Use the filters to find the desired reports</h5>
                 <p class = "p-0 m-0">Try to be the most precise as possible</p>
         </div>
-        <div *ngIf="currentItems.length > 0 || isSearching">
-            <app-loader [diameter]="80" [strokeWidth]="8" [requiredTemplate]="reportElements" [isSearching]="isSearching"></app-loader>
-        </div>
+        <app-loader [diameter]="80" [strokeWidth]="8" [showText]="true" [requiredTemplate]="reportElements" [fontSize]="20" [isSearching]="isSearching"></app-loader>
         <div *ngIf="currentItems.length == 0 && !isSearching">
             <app-no-items (buttonClicked)="resetSearch()"></app-no-items>
         </div>
     </div>
-    <div class = "w-100 mt-4 text-center" *ngIf="currentTotalElements > 0 && !isSearching">
-        <app-pagination [pageSize]="20" [totalElements]="currentTotalElements"  (pageChanged)="handlePageChange($event)"></app-pagination>
+    <div class = "w-100 mt-1 py-2 text-center" *ngIf="currentPage.totalElements > 0 && !isSearching">
+        <app-pagination [pageSize]="20" [totalElements]="currentPage.totalElements"  (pageChanged)="handlePageChange($event)"></app-pagination>
     </div>
 </div>
 <ng-template #reportFilters>
     <div class = "px-2 w-100">
-        <app-report-filter (filterChanged)="handleFilterChange($event)"></app-report-filter>
+        <app-report-filter [rowDisplay]="true" (filterChanged)="handleFilterChange($event)"></app-report-filter>
     </div>
 </ng-template>
 <ng-template #reportElements>

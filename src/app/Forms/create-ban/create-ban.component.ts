@@ -45,7 +45,14 @@ export class CreateBanComponent implements OnInit {
       let createBan: CreateBan = {bannedID: this.bannedID!!,title: this.title.value,description: this.description.value,reason: this.reason.value,expirationDate: "2024-05-15"};
       this.formGroup.reset();
       this.submitEvent.emit(createBan);
-      this.banService.createBan(createBan).subscribe((value: any) => this.successEvent.emit(value),(err: any) => this.failedEvent.emit(err));
+      this.isCreating = true;
+      this.banService.createBan(createBan).subscribe((value: any) => {
+        this.isCreating = false;
+        this.successEvent.emit(value)
+      },(err: any) => {
+        this.isCreating = false;
+        this.failedEvent.emit(err)
+    });
     }
   }
 

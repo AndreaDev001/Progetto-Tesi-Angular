@@ -8,6 +8,12 @@
     </div>
     <div class = "py-2 text-center">
         <app-loader [strokeWidth]="10" [diameter]="100" [fontSize]="20"  [loaderSubtitle]="'Searching discussions...'" [requiredTemplate]="pollsTemplate" [isSearching]="isSearching"></app-loader>
+        <div *ngIf="currentPolls.length == 0 && !isSearching">
+            <app-no-items></app-no-items>
+        </div>
+        <div *ngIf="currentPage.totalElements > 0 && !isSearching">
+            <app-pagination [totalElements]="currentPage.totalElements" [pageSize]="currentPage.size" (pageChanged)="this.handlePageChange($event)"></app-pagination>
+        </div>
     </div>
 </div>
 <ng-template #pollsTemplate>
@@ -17,8 +23,5 @@
                 <app-poll-card (deletedEvent)="removePoll(current)" [poll]="current"></app-poll-card>
             </div>
         </div>
-    </div>
-    <div *ngIf="currentPolls.length == 0">
-        <app-no-items></app-no-items>
     </div>
 </ng-template>

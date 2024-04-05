@@ -1,35 +1,35 @@
 <div>
     <div class = "py-1">
-        <div class = "d-inline-block mx-1">
+        <div [ngClass]="rowDisplay ? 'd-block mt-1' : 'd-inline-block mx-1'">
             <app-search-bar [currentPlaceholder]="'Title...'" (searchChanged)="updateFilter(currentFilter,'title',$event)" [currentLabel]="'Title'" [currentSupportingText]="'Write a title...'"></app-search-bar>
         </div>
-        <div class = "d-inline-block mx-1">
+        <div [ngClass]="rowDisplay ? 'd-block mt-1' : 'd-inline-block mx-1'">
             <app-search-bar [currentPlaceholder]="'Description..'" (searchChanged)="updateFilter(currentFilter,'description',$event)" [currentLabel]="'Description'" [currentSupportingText]="'Write a description...'"></app-search-bar>
         </div>
-        <div class = "d-inline-block mx-1">
+        <div [ngClass]="rowDisplay ? 'd-block mt-1' : 'd-inline-block mx-1'">
             <app-search-bar  [currentPlaceholder]="'Banner Name...'" (searchChanged)="updateFilter(currentFilter,'bannerName',$event)" [currentLabel]="'Name'" [currentSupportingText]="'Write a name...'"></app-search-bar>
         </div>
-        <div class = "d-inline-block mx-1">
+        <div [ngClass]="rowDisplay ? 'd-block mt-1' : 'd-inline-block mx-1'">
             <app-search-bar [currentPlaceholder]="'Banner Surname...'" (searchChanged)="updateFilter(currentFilter,'bannerSurname',$event)" [currentLabel]="'Surname'" [currentSupportingText]="'Write a surname...'"></app-search-bar>
         </div>
-        <div class = "d-inline-block mx-1">
+        <div [ngClass]="rowDisplay ? 'd-block mt-1' : 'd-inline-block mx-1'">
             <app-search-bar [currentPlaceholder]="'Banner Username...'" (searchChanged)="updateFilter(currentFilter,'bannerUsername',$event)" [currentLabel]="'Banner Username'" [currentSupportingText]="'Write an email'"></app-search-bar>
         </div>
-        <div class = "d-inline-block mx-1">
+        <div [ngClass]="rowDisplay ? 'd-block mt-1' : 'd-inline-block mx-1'">
             <app-search-bar [currentPlaceholder]="'Banned Name...'"  (searchChanged)="updateFilter(currentFilter,'bannedName',$event)" [currentLabel]="'Banned Name'" [currentSupportingText]="'Write a name...'"></app-search-bar>
         </div>
-        <div class = "d-inline-block mx-1">
+        <div [ngClass]="rowDisplay ? 'd-block mt-1' : 'd-inline-block mx-1'">
             <app-search-bar [currentPlaceholder]="'Banned surname...'" (searchChanged)="updateFilter(currentFilter,'bannedSurname',$event)" [currentLabel]="'Banned Surname'" [currentSupportingText]="'Write a surname...'"></app-search-bar>
         </div>
-        <div class = "d-inline-block mx-1">
+        <div [ngClass]="rowDisplay ? 'd-block mt-1' : 'd-inline-block mx-1'">
             <app-search-bar  [currentPlaceholder]="'Banned Username...'" (searchChanged)="updateFilter(currentFilter,'bannedUsername',$event)" [currentLabel]="'Banned Username'" [currentSupportingText]="'Write an username...'"></app-search-bar>
         </div>
     </div>
     <div  class = "py-1">
-        <div class = "d-inline-block">
+        <div [ngClass]="rowDisplay ? 'd-block mt-1' : 'd-inline-block mx-1'">
             <app-dropdown [currentOptions]="currentReasons" [currentLabel]="'Reasons'" [currentSupportingText]="'Please choose one of the avaliable options'"></app-dropdown>
         </div>
-        <div class = "d-inline-block mx-1">
+        <div [ngClass]="rowDisplay ? 'd-block mt-1' : 'd-inline-block mx-1'">
             <app-dropdown [currentOptions]="currentTypes" [currentLabel]="'Types'" [currentSupportingText]="'Please choose one of the avaliable options'"></app-dropdown>
         </div>
     </div>

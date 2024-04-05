@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { DropdownOption } from 'src/app/Utility/components/dropdown/dropdown.component';
@@ -25,6 +25,7 @@ export class DiscussionFilterComponent implements OnInit,OnDestroy {
   private subscriptions: Subscription[] = [];
   public currentFilter: Filter = {page: 0,pageSize: 20};
   public currentGenders: DropdownOption[] = [];
+  @Input() rowDisplay: boolean = false;
   @Output() filterChanged: EventEmitter<Filter> = new EventEmitter();
 
   constructor(private userService: UserService,private router: Router,private activatedRoute: ActivatedRoute) {

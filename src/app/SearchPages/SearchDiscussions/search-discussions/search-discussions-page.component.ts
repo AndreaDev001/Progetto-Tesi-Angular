@@ -3,7 +3,7 @@ import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faDiscourse } from '@fortawesome/free-brands-svg-icons';
 import { Subscription } from 'rxjs';
 import { OffCanvasHandlerService } from 'src/app/Utility/services/off-canvas-handler.service';
-import { Discussion, PagedModel } from 'src/model/interfaces';
+import { Discussion, Page, PagedModel } from 'src/model/interfaces';
 import { DiscussionService } from 'src/model/services/discussion.service';
 import { Filter } from '../discussion-filter/discussion-filter.component';
 
@@ -13,12 +13,11 @@ import { Filter } from '../discussion-filter/discussion-filter.component';
   styleUrls: ['./search-discussions-page.component.css']
 })
 export class SearchDiscussionsPageComponent implements AfterViewInit,OnDestroy{
+
   private subscriptions: Subscription[] = [];
   public currentItems: Discussion[] = [];
   public currentFilter: Filter | undefined = undefined;
-  public currentPage: number = 0;
-  public currentTotalPages: number = 0;
-  public currentTotalElements: number = 0;
+  public currentPage: Page = {number: 0,size: 20,totalElements: 0,totalPages: 0};
   public isSearching: boolean = false;
   public discussionIcon: IconDefinition = faDiscourse;
   @ViewChild("discussionFilters") discussionFilters: any;
@@ -36,18 +35,20 @@ export class SearchDiscussionsPageComponent implements AfterViewInit,OnDestroy{
   }
 
   public openCanvas(): void {
+    this.offCanvasHandlerService.setTexts("Filters","Use the avaliable filters to find the desired discussions");
     this.offCanvasHandlerService.open();
   }
 
   public handlePageChange(page: any): void {
     if(this.currentFilter != undefined) {
-      this.currentFilter.page = page;
+      this.currentPage.number = page - 1;
+      this.currentFilter.page = this.currentPage.number;
       this.searchDiscussions();
     }
   }
 
   public resetSearch(): void {
-    this.currentPage = 0;
+    this.currentPage = {number: 0,size: 20,totalElements: 0,totalPages: 0};
     this.currentFilter = {page: 0,pageSize: 20};
     this.searchDiscussions();
   }
@@ -61,12 +62,9 @@ export class SearchDiscussionsPageComponent implements AfterViewInit,OnDestroy{
     if(this.currentFilter != undefined) {
       this.isSearching = true;
       this.discussionService.getDiscussionsBySpec(this.currentFilter).subscribe((value: PagedModel) => {
+        this.isSearching = false;
         this.currentItems = value._embedded != undefined && value._embedded.content != undefined ? value._embedded.content : [];
-        if(value.page != undefined) {
-          this.currentPage = value.page.page;
-          this.currentTotalPages = value.page.totalPages;
-          this.currentTotalElements = value.page.totalElements;
-        }
+        this.currentPage = value.page != undefined ? value.page : this.currentPage;
       },(err: any) => this.isSearching = false)
     }
   }

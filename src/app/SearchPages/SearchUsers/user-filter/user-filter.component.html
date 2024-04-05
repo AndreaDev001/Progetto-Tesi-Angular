@@ -1,15 +1,15 @@
 <div>
     <div class = "py-2">
-        <div class = "d-inline-block mx-1">
+        <div [ngClass]="rowDisplay ? 'd-block mt-1' : 'd-inline-block mx-1'">
             <app-search-bar [defaultValue]="this.currentFilter.name" [currentPlaceholder]="'Name'"  [defaultValue]="this.currentFilter.name" (searchChanged)="updateFilter(this.currentFilter,'name',$event)" [currentLabel]="'Name'" [currentSupportingText]="'Please write the name for the user...'"></app-search-bar>
         </div>
-        <div class = "d-inline-block mx-1">
+        <div [ngClass]="rowDisplay ? 'd-block mt-1' : 'd-inline-block mx-1'">
             <app-search-bar [defaultValue]="this.currentFilter.surname" [currentPlaceholder]="'Surname'" (searchChanged)="updateFilter(this.currentFilter,'surname',$event)" [currentLabel]="'Surname'" [currentSupportingText]="'Please write the surname for the user...'"></app-search-bar>
         </div>
-        <div class = "d-inline-block mx-1">
+        <div [ngClass]="rowDisplay ? 'd-block mt-1' : 'd-inline-block mx-1'">
             <app-search-bar [defaultValue]="this.currentFilter.username"  [currentPlaceholder]="'Username'" (searchChanged)="updateFilter(this.currentFilter,'username',$event)" [currentLabel]="'Username'" [currentSupportingText]="'Please write the username for the user...'"></app-search-bar>
         </div>
-        <div class = "d-inline-block mx-1">
+        <div [ngClass]="rowDisplay ? 'd-block mt-1' : 'd-inline-block mx-1'">
             <app-dropdown [currentOptions]="currentGenders"  [defaultValue]="'MALE'" [currentLabel]="'Genders'" [currentSupportingText]="'Please choose a gender...'" [defaultValue]="'MALE'"></app-dropdown>
         </div>
     </div>

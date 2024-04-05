@@ -61,8 +61,8 @@
         </div> 
     </div> 
     <div class = "mt-2 text-end mx-1">
-        <button type="submit" class = "confirm-button" [disabled]="!formGroup.valid && currentImage == null">Confirm</button>
-        <button (click)="reset()" class = "stop-button">Clear</button>
+        <button type="submit" class = "default-button" [disabled]="!formGroup.valid && currentImage == null">Confirm</button>
+        <button (click)="reset()" class = "default-button mx-1">Clear</button>
     </div>
 </div>
 </form>

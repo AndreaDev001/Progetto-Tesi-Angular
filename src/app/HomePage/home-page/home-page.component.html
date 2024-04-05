@@ -8,13 +8,13 @@
         <div class = "col-12 col-md-2">
             <ul class = "option-list mt-2">
                 <li [id]="current.name" *ngFor="let current of optionsTemplate;let i = index">
-                    <ng-container *ngTemplateOutlet="optionTemplate;context: {item: current,index: i}"></ng-container>
+                    <ng-container *ngTemplateOutlet="optionTemplate;context: {item: current,index: i,first: i == 0}"></ng-container>
                 </li>
             </ul>
         </div>
         <div class = "col-12 col-md-10 mt-2">
             <div class = "h-100 position-relative w-100" *ngIf="currentTemplate != undefined">
-                <app-loader [showText]="false" [wrapperStyle]="{'position': 'absolute','top': '25%','left': '40%'}" [diameter]="80" [strokeWidth]="10" [requiredTemplate]="itemsTemplate" [isSearching]="isSearching" [fontSize]="18" ></app-loader>
+                <app-loader [showText]="false" [wrapperStyle]="{'position': 'absolute','top': '25%','left': '40%'}" [diameter]="80" [strokeWidth]="6" [requiredTemplate]="itemsTemplate" [isSearching]="isSearching" [fontSize]="18" ></app-loader>
             </div>
         </div>
     </div>
@@ -42,13 +42,16 @@
         <div class = "mt-1 col-6 col-md-3" *ngFor="let current of currentItems">
             <ng-container *ngTemplateOutlet="currentTemplate;context: {$implicit: current}"></ng-container>
         </div>
+        <div style="display: flex;justify-content: center;align-items: center;" class = "mt-1 py-2">
+            <app-pagination [totalElements]="currentPage.totalElements" [pageSize]="this.currentPage.size" (pageChanged)="handlePageChange($event)"></app-pagination>
+        </div>
     </div>
     <div *ngIf="currentItems.length == 0">
         <app-no-items (buttonClicked)="resetPage()"></app-no-items>
     </div>
 </ng-template>
-<ng-template #optionTemplate let-item="item" let-index="index">
-    <button  style="margin-top: 5px;" [ngClass]="currentSelectedIndex == index ? 'option-holder-selected' : 'option-holder'" (click)="updateTemplate(item.path)">
+<ng-template #optionTemplate let-item="item" let-index="index" let-first="first">
+    <button  style="margin-top: 5px;" [ngClass]="currentSelectedIndex == index ? 'option-holder-selected' : 'option-holder'" [ngStyle]="first ? {'margin-top': '0px'} : {'margin-top': '5px'}" (click)="updateTemplate(item.path)">
         <fa-icon class = "option-icon" [icon]="item.icon"></fa-icon>
         <p class = "option-name">{{item.name}}</p>
     </button>

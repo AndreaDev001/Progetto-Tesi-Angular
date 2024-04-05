@@ -7,7 +7,13 @@
         <p>View all the discussions you have published</p>
     </div>
     <div class = "py-2 text-center">
-        <app-loader [strokeWidth]="10" [diameter]="100" [fontSize]="20"  [loaderSubtitle]="'Searching discussions...'" [requiredTemplate]="discussionsTemplate" [isSearching]="isSearching"></app-loader>
+        <app-loader [strokeWidth]="8" [diameter]="80" [fontSize]="20"  [loaderSubtitle]="'Searching discussions...'" [requiredTemplate]="discussionsTemplate" [isSearching]="isSearching"></app-loader>
+        <div *ngIf="!isSearching && currentDiscussions.length == 0">
+            <app-no-items></app-no-items>
+        </div>
+        <div *ngIf="currentPage.totalElements > 0 && !isSearching">
+            <app-pagination (pageChanged)="handlePageChange($event)" [pageSize]="currentPage.size" [totalElements]="currentPage.totalElements"></app-pagination>
+        </div>
     </div>
 </div>
 <ng-template #discussionsTemplate>
@@ -17,8 +23,5 @@
                 <app-discussion-card (deletedEvent)="this.removeDiscussion(current)" [discussion]="current"></app-discussion-card>
             </div>
         </div>
-    </div>
-    <div *ngIf="currentDiscussions.length == 0">
-        <app-no-items></app-no-items>
     </div>
 </ng-template>

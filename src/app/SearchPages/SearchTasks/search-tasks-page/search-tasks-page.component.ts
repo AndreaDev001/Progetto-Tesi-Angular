@@ -1,6 +1,6 @@
 import { Component, OnDestroy,AfterViewInit, OnInit, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { PagedModel, Task, TaskAssignment } from 'src/model/interfaces';
+import { Page, PagedModel, Task, TaskAssignment } from 'src/model/interfaces';
 import { Filter } from '../task-filter/task-filter.component';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faFilter, faTasks } from '@fortawesome/free-solid-svg-icons';
@@ -16,9 +16,7 @@ export class SearchTasksPageComponent implements AfterViewInit,OnDestroy{
   
   private subscriptions: Subscription[] = [];
   public currentItems: Task[] = [];
-  public currentPage: number = 0;
-  public currentTotalPages: number = 0;
-  public currentTotalElements: number = 0;
+  public currentPage: Page = {number: 0,size: 20,totalElements: 0,totalPages: 0};
   public currentFilter: Filter | undefined = undefined;
   public taskIcon: IconDefinition = faTasks;
   public fitlerIcon: IconDefinition = faFilter;
@@ -30,7 +28,6 @@ export class SearchTasksPageComponent implements AfterViewInit,OnDestroy{
   }
 
   public ngAfterViewInit(): void {
-    this.isSearching = true;
     this.offCanvasHandler.setContentTemplate(this.taskFilters);
   }
 
@@ -42,7 +39,8 @@ export class SearchTasksPageComponent implements AfterViewInit,OnDestroy{
 
   public handlePageChange(page: any): void {
     if(this.currentFilter != undefined) {
-      this.currentPage = page;
+      this.currentPage.number = page - 1;
+      this.currentFilter.page = this.currentPage.number;
       this.searchTasks();
     }
   }
@@ -54,7 +52,7 @@ export class SearchTasksPageComponent implements AfterViewInit,OnDestroy{
 
   
   public resetSearch(): void {
-    this.currentPage = 0;
+    this.currentPage = {number: 0,size: 20,totalPages: 0,totalElements: 0};
     this.currentFilter = {page: 0,pageSize: 20};
     this.searchTasks();
   }
@@ -65,11 +63,7 @@ export class SearchTasksPageComponent implements AfterViewInit,OnDestroy{
       this.taskService.getTasksBySpec(this.currentFilter).subscribe((value: PagedModel) => {
         this.isSearching = false;
         this.currentItems = value._embedded != undefined && value._embedded.content != undefined ? value._embedded.content : [];
-        if(value.page != undefined) {
-          this.currentPage = value.page.page;
-          this.currentTotalPages = value.page.totalPages;
-          this.currentTotalElements = value.page.totalElements;
-        }
+        this.currentPage = value.page != undefined ? value.page : this.currentPage;
       },(err: any) => this.isSearching = false);
     }
   }

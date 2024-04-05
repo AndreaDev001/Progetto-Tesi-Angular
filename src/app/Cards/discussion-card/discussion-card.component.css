@@ -2,8 +2,8 @@ div.card-wrapper {
     text-align: start;
     border: 0;
     padding: 5px;
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
     border-radius: 10px;
     background-color: var(--secondary-color);
     border: 1px solid var(--primary-color);

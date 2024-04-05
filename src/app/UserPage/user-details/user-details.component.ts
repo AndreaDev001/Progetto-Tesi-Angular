@@ -71,7 +71,7 @@ export class UserDetailsComponent implements AfterViewInit, OnDestroy{
         value._embedded.content.forEach((current: any) => this.discussionItems.push({template: this.discussionTemplate,context: current}));
       }
       if(value.page != undefined) {
-        this.currentDiscussionsPage = value.page.page;
+        this.currentDiscussionsPage = value.page.number;
         this.currentDiscussionsTotalPages = value.page.totalPages;
       }
     })
@@ -86,7 +86,7 @@ export class UserDetailsComponent implements AfterViewInit, OnDestroy{
         value._embedded.content.forEach((current: any) => this.assignedTasksItems.push({template: this.taskAssignedTemplate,context: current.task}));
       }
       if(value.page != undefined) {
-        this.currentAssignedTasksPage = value.page.page;
+        this.currentAssignedTasksPage = value.page.number;
         this.currentAssignedTasksTotalPages = value.page.totalPages;
       }
     })
@@ -100,7 +100,7 @@ export class UserDetailsComponent implements AfterViewInit, OnDestroy{
         value._embedded.content.forEach((current: any) => this.pollsItem.push({template: this.pollTemplate,context: current}));
       }
       if(value.page != undefined) {
-        this.currentPollPage = value.page.page;
+        this.currentPollPage = value.page.number;
         this.currentPollTotalPages = value.page.totalPages;
       }
     })
@@ -116,7 +116,7 @@ export class UserDetailsComponent implements AfterViewInit, OnDestroy{
         });
       }
       if(value.page != undefined) {
-        this.currentJoinedBoardsPage = value.page.page;
+        this.currentJoinedBoardsPage = value.page.number;
         this.currentJoinedBoardsTotalPages = value.page.totalPages;
       }
     })

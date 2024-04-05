@@ -58,7 +58,7 @@ export class DiscussionOptionsComponent implements OnChanges {
         }
       }
       if(value.page != undefined) {
-        this.currentPublisherPage = value.page.page;
+        this.currentPublisherPage = value.page.number;
         this.currentPublisherTotalPages = value.page.totalPages;
       }
     },(err: any) => this.searchingPublisherDiscussions = false)
@@ -76,7 +76,7 @@ export class DiscussionOptionsComponent implements OnChanges {
         }
       }
       if(value.page != undefined) {
-        this.currentSimilarPage = value.page.page;
+        this.currentSimilarPage = value.page.number;
         this.currentTotalSimilarPages = value.page.totalPages;
       }
     },(err: any) => this.searchingSimilarDiscussions = false)

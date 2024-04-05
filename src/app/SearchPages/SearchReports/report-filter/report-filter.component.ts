@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { DropdownOption } from '../../../Utility/components/dropdown/dropdown.component';
 import { UserService } from 'src/model/services/user.service';
 import { ReportService } from 'src/model/services/report.service';
@@ -33,6 +33,7 @@ export class ReportFilterComponent implements OnInit,OnDestroy {
   public currentGenders: DropdownOption[] = [];
   public currentReasons: DropdownOption[] = [];
   public currentTypes: DropdownOption[] = [];
+  @Input() rowDisplay: boolean = false;
   @Output() filterChanged: EventEmitter<Filter> = new EventEmitter();
 
   constructor(private reportService: ReportService,private router: Router,private activatedRoute: ActivatedRoute) {

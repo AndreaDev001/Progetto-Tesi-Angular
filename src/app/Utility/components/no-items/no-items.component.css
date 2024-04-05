@@ -3,20 +3,3 @@ p.missing-text
     font-size: 15px;
     padding: 2px;
 }
-button.missing-button
-{
-    font-size: 15px;
-    border: 0;
-    padding: 10px 40px;
-    background-color: var(--tertiary-color);
-    color: whitesmoke;
-    border-radius: 2px;
-    transition: 0.2s ease-in-out all;
-    box-sizing: border-box;
-    border: 1px solid var(--primary-color);
-    border-radius: 10px;
-}
-button.missing-button:hover {
-    background-color: var(--primary-color);
-    color: whitesmoke;
-}

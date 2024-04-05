@@ -23,7 +23,7 @@
                 </div>
                 <input formControlName="image" (change)="updateCurrentFiles($event)" type="file" class="file-upload" onchange="console.log(event.target.files)">
                 <div class = "mt-2 text-end">
-                    <button  type="submit" [disabled]="currentFiles.length == 0" class = "confirm-button">Confirm</button>
+                    <button  type="submit" [disabled]="currentFiles.length == 0" class = "default-button">Confirm</button>
                 </div>
             </div>
             <div *ngIf="isCreating" style="display: flex;flex-direction: column;align-items: center;padding: 10px 0px">

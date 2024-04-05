@@ -16,7 +16,6 @@ button.option-holder
 {
     padding: 5px 20px;
     background-color: var(--secondary-color);
-    border-radius: 2px;
     border: 0;
     width: 100%;
     text-align: start;
@@ -27,7 +26,6 @@ button.option-holder-selected
 {
     background-color: var(--tertiary-color);
     padding: 5px 20px;
-    border-radius: 2px;
     color: whitesmoke;
     border: 0;
     width: 100%;
@@ -56,8 +54,7 @@ p.option-name
 ul.option-list
 {
     list-style-type: none;
-    padding: 10px 10px;
-    border-radius: 2px;
+    padding: 5px;
     background-color: var(--primary-color );
 }
 h4.description-item-name

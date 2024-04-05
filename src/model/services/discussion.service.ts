@@ -35,10 +35,11 @@ export class DiscussionService {
     return this.httpClient.delete(desiredURL,{params: queryParams});
   }
 
-  public getDiscussionsByPublisher(publisherID: any,page: PaginationRequest): any {
-    const desiredURL: string = this.url +"/private" + "/publisher" + "/" + publisherID;
-    let queryParams: HttpParams = this.httpUtils.generatePaginationParams(page);
-    return this.httpClient.get(desiredURL,{params: queryParams});
+  public getDiscussionsByPublisher(publisherID: any,page: PaginationRequest,context: any = undefined): any {
+    context = context != undefined ? context : this;
+    const desiredURL: string = context.url +"/private" + "/publisher" + "/" + publisherID;
+    let queryParams: HttpParams = context.httpUtils.generatePaginationParams(page);
+    return context.httpClient.get(desiredURL,{params: queryParams});
   }
 
   public getDiscussionsBySpec(filter: Filter): any {

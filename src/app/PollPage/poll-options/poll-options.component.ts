@@ -57,7 +57,7 @@ export class PollOptionsComponent implements OnChanges {
         }
       }
       if(value.page != undefined) {
-        this.currentPublisherPage = value.page.page;
+        this.currentPublisherPage = value.page.number;
         this.currentPublisherTotalPages = value.page.totalPages;
       }
     })
@@ -72,7 +72,7 @@ export class PollOptionsComponent implements OnChanges {
         }
       }
       if(value.page != undefined) {
-        this.currentSimilarPage = value.page.page;
+        this.currentSimilarPage = value.page.number;
         this.currentSimilarTotalPages = value.page.totalPages;
       }
     })

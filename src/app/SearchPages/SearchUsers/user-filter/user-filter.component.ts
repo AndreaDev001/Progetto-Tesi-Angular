@@ -1,7 +1,7 @@
 import { Component, EventEmitter, OnInit,OnDestroy} from '@angular/core';
 import { Subscription } from 'rxjs';
 import { DropdownOption } from 'src/app/Utility/components/dropdown/dropdown.component';
-import { Output } from '@angular/core';
+import { Output,Input } from '@angular/core';
 import { UserService } from 'src/model/services/user.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CollectionModel } from 'src/model/interfaces';
@@ -25,6 +25,7 @@ export class UserFilterComponent implements OnInit,OnDestroy {
   private subscriptions: Subscription[] = [];
   public currentFilter: Filter = {page: 0,pageSize: 20};
   public currentGenders: DropdownOption[] = [];
+  @Input() rowDisplay: boolean = false;
   @Output() filterChanged: EventEmitter<Filter> = new EventEmitter();
 
   constructor(private userService: UserService,private router: Router,private activatedRoute: ActivatedRoute) {

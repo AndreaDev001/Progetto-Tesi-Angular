@@ -4,7 +4,7 @@ import { faTable } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
 import { TextOverflowItem } from 'src/app/Utility/components/text-overflow/text-overflow.component';
 import { AuthHandlerService } from 'src/model/auth/auth-handler.service';
-import { Board, BoardMember, PagedModel, PaginationRequest } from 'src/model/interfaces';
+import { Board, BoardMember, Page, PagedModel, PaginationRequest } from 'src/model/interfaces';
 import { BoardMemberService } from 'src/model/services/board-member.service';
 
 @Component({
@@ -20,8 +20,7 @@ export class BoardsPageComponent implements OnInit,OnDestroy
 
     public currentBoardMembers: BoardMember[] = [];
     public isSearching: boolean = false;
-    private currentPage: number = 0;
-    private currentTotalPages: number = 0;
+    public currentPage: Page = {number: 0,size: 20,totalElements: 0,totalPages: 0};
     
     constructor(private boardMemberService: BoardMemberService,private authHandler: AuthHandlerService) {
 
@@ -30,7 +29,8 @@ export class BoardsPageComponent implements OnInit,OnDestroy
     public ngOnInit(): void {
       this.subscriptions.push(this.authHandler.getCurrentUserID(false).subscribe((value: any) => {
         this.currentUserID = value;
-        this.searchBoardMembers(0,20);
+        if(this.currentUserID != undefined)
+            this.searchBoardMembers(this.currentPage.number,this.currentPage.size);
       }))
     }
 
@@ -40,18 +40,19 @@ export class BoardsPageComponent implements OnInit,OnDestroy
       this.boardMemberService.getBoardMembersByMember(this.currentUserID,paginationRequest).subscribe((value: PagedModel) => {
         this.isSearching = false;
         this.currentBoardMembers = value._embedded != undefined && value._embedded.content != undefined ? value._embedded.content : [];
-        if(value.page != undefined) {
-          this.currentPage = value.page.page;
-          this.currentTotalPages = value.page.totalPages;
-        }
+        this.currentPage = value.page != undefined ? value.page : this.currentPage;
       },(err: any) => this.reset());
+    }
+
+    public handlePageChange(event: any): void {
+      this.currentPage.number = event - 1;
+      this.searchBoardMembers(this.currentPage.number,this.currentPage.size);
     }
 
     private reset(): void {
       this.isSearching = false;
       this.currentBoardMembers = [];
-      this.currentPage = 0;
-      this.currentTotalPages = 0;
+      this.currentPage = {number: 0,size: 20,totalElements: 20,totalPages: 20};
     }
 
     public ngOnDestroy(): void {
