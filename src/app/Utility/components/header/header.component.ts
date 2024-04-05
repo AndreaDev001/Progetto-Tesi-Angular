@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Icon, IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faDiscourse } from '@fortawesome/free-brands-svg-icons';
-import { faBan, faBars, faExclamationCircle, faFilter, faGear, faHamburger, faHeart, faHome, faHouse, faInfoCircle, faMessage, faPlusCircle, faPoll, faQuestionCircle, faSearch, faTable, faTasks, faUser, faUserCircle, faWarning } from '@fortawesome/free-solid-svg-icons';
+import { faBan, faBars, faEllipsis, faEllipsisH, faExclamationCircle, faFilter, faGear, faHamburger, faHeart, faHome, faHouse, faInfoCircle, faMessage, faPlusCircle, faPoll, faQuestionCircle, faSearch, faTable, faTasks, faUser, faUserCircle, faWarning } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
 import { AlertHandlerService } from 'src/app/Utility/services/alert-handler.service';
 import { AuthHandlerService } from 'src/model/auth/auth-handler.service';
@@ -35,9 +35,11 @@ export class HeaderComponent implements OnInit,OnDestroy {
   public createOptions: HeaderOption[] = [];
   public userOptions: HeaderOption[] = [];
   public isAdmin: boolean = false;
+  public headerVisible: boolean = false;
 
   public homeIcon: IconDefinition = faHouse;
   public aboutIcon: IconDefinition = faInfoCircle;
+  public headerIcon: IconDefinition = faEllipsisH;
 
   private subscriptions: Subscription[] = [];
 

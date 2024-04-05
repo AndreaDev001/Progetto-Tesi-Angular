@@ -1,7 +1,10 @@
 <div class = "container-fluid p-3">
     <section id = "info-section">
-        <h3>Polls</h3>
-        <p class = "mt-1">Here you can see all of the polls, use the filters to navigate</p>
+        <div>
+            <h3 class = "d-inline-block">Polls</h3>
+            <fa-icon class = "d-inline-block mx-2" style="font-size: 20px;"  [icon]="pollIcon"></fa-icon>
+        </div>
+        <p class = "mt-1">Here you can see of all the polls, use the filters to navigate</p>
     </section>
     <div class = "d-none d-md-block">
         <app-poll-filter (filterChanged)="handleFilterChange($event)"></app-poll-filter>

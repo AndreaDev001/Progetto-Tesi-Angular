@@ -55,7 +55,13 @@ export class TaskFilterComponent implements OnInit, OnDestroy {
   }
 
   public ngOnInit(): void {
-   this.subscriptions.push(this.activatedRoute.queryParams.subscribe((value: any) => {
+    this.createSubscriptions();
+    this.searchPriorities();
+    this.searchGenders();
+  }
+
+  private createSubscriptions(): void {
+    this.subscriptions.push(this.activatedRoute.queryParams.subscribe((value: any) => {
       let name: string = value.name;
       let description: string = value.description;
       let publisherEmail = value.publisherEmail;
@@ -67,6 +73,9 @@ export class TaskFilterComponent implements OnInit, OnDestroy {
       this.currentFilter = {name: name,description: description,publisherEmail: publisherEmail,publisherName: publisherName,publisherSurname: publisherSurname,publisherUsername: publisherUsername,page: page,pageSize: pageSize};
       this.filterChanged.emit(this.currentFilter);
     }));
+  }
+
+  private searchPriorities(): void {
     this.searchingPriorities = true;
     this.taskService.getPriorities().subscribe((value: CollectionModel) => {
       this.searchingPriorities = false;
@@ -77,6 +86,9 @@ export class TaskFilterComponent implements OnInit, OnDestroy {
         })
       }
     },(err: any) => this.searchingPriorities = false)
+  }
+
+  private searchGenders(): void {
     this.searchingGenders = true;
     this.userService.getGenders().subscribe((value: CollectionModel) => {
       this.searchingGenders = false;
@@ -87,7 +99,6 @@ export class TaskFilterComponent implements OnInit, OnDestroy {
         })
       }
     },(err: any) => this.searchingGenders = false)
-    
   }
 
   public ngOnDestroy(): void {

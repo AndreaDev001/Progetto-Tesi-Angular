@@ -41,6 +41,12 @@ export class ReportFilterComponent implements OnInit,OnDestroy {
   }
 
   public ngOnInit(): void {
+    this.createSubscriptions();
+    this.searchReasons();
+    this.searchTypes();
+  }
+
+  private createSubscriptions(): void {
     this.subscriptions.push(this.activatedRoute.params.subscribe((value: any) => {
       let title: string = value.title;
       let description: string = value.description;
@@ -55,7 +61,10 @@ export class ReportFilterComponent implements OnInit,OnDestroy {
       let pageSize: number = value.pageSize != undefined ? value.pageSize : 20;
       this.currentFilter = {title: title,description: description,reporterName: reporterName,reportedName: reportedName,reportedSurname: reportedSurname,type: type,page: page,pageSize: pageSize,reporterSurname: reporterSurname,reporterUsername: reporterUsername,reportedUsername: reportedUsername}
       this.filterChanged.emit(this.currentFilter);
-    }));
+    })); 
+  }
+
+  private searchReasons(): void {
     this.reportService.getReasons().subscribe((value: CollectionModel) => {
       if(value._embedded != null) {
         value._embedded.content.forEach((current: string) => {
@@ -63,7 +72,10 @@ export class ReportFilterComponent implements OnInit,OnDestroy {
           this.currentReasons.push(reasonOption);
         })
       }
-    })  
+    }) 
+  }
+
+  private searchTypes(): void {
     this.reportService.getTypes().subscribe((value: CollectionModel) => {
       if(value._embedded != null) {
         value._embedded.content.forEach((current: string) => {

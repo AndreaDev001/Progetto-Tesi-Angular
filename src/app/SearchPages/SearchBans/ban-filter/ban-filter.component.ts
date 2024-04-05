@@ -40,6 +40,12 @@ export class BanFilterComponent implements OnInit,OnDestroy
   }
 
   public ngOnInit(): void {
+    this.createSubscriptions();
+    this.searchTypes();
+    this.searchReasons();
+  }
+
+  private createSubscriptions(): void {
     this.subscriptions.push(this.activatedRoute.queryParams.subscribe((value: any) => {
       let title: string = value.title;
       let description: string = value.description;
@@ -56,6 +62,9 @@ export class BanFilterComponent implements OnInit,OnDestroy
       this.currentFilter = {title: title,description: description,type: type,reason: reason,bannerName: bannerName,bannedName: bannedName,bannerSurname: bannerSurname,bannedSurname: bannedSurname, bannerUsername: bannerUsername,bannedUsername: bannedUsername,page: page,pageSize: pageSize};
       this.filterChanged.emit(this.currentFilter);
     }));
+  }
+
+  private searchTypes(): void {
     this.banService.getTypes().subscribe((value: CollectionModel) => {
       if(value._embedded != null) {
         value._embedded.content.forEach((current: string) => {
@@ -64,6 +73,9 @@ export class BanFilterComponent implements OnInit,OnDestroy
         })
       }
     });
+  }
+
+  private searchReasons(): void {
     this.reportService.getReasons().subscribe((value: CollectionModel) => {
       if(value._embedded != null) {
         value._embedded.content.forEach((current: string) => {
@@ -72,7 +84,7 @@ export class BanFilterComponent implements OnInit,OnDestroy
         })
       }
     })
-  } 
+  }
 
   public updateFilter<Filter, K extends keyof Filter>(obj: Filter, key: K, value: Filter[K]) {
     obj[key] = value;

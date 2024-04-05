@@ -37,6 +37,12 @@ export class PollFilterComponent implements OnInit,OnDestroy {
   }
   
   public ngOnInit(): void {
+    this.createSubscriptions();
+    this.searchGenders();
+    this.searchStatues();
+  }
+
+  private createSubscriptions(): void {
     this.subscriptions.push(this.activatedRoute.params.subscribe((value: any) => {
       let title: string = value.title;
       let description: string = value.description;
@@ -50,6 +56,9 @@ export class PollFilterComponent implements OnInit,OnDestroy {
       this.currentFilter = {title: title,description: description,publisherName: publisherName,publisherSurname: publisherSurname,publisherUsername: publisherUsername,publisherGender: publisherGender,status: status,page: page,pageSize: pageSize};
       this.filterChanged.emit(this.currentFilter);
     }))
+  }
+
+  private searchGenders(): void {
     this.userService.getGenders().subscribe((value: CollectionModel) => {
       if(value._embedded != undefined && value._embedded.content != undefined)
       {
@@ -59,6 +68,9 @@ export class PollFilterComponent implements OnInit,OnDestroy {
         })
       }
     })
+  }
+
+  private searchStatues(): void {
     this.pollService.getStatues().subscribe((value: CollectionModel) => {
       if(value._embedded != undefined && value._embedded.content != undefined) {
         value._embedded.content.forEach((current: string) => {

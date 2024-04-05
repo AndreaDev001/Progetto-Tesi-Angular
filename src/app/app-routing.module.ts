@@ -23,7 +23,7 @@ import { SearchDiscussionsPageComponent } from './SearchPages/SearchDiscussions/
 import { SearchPollsPageComponent } from './SearchPages/SearchPolls/search-polls-page/search-polls-page.component';
 
 const routes: Routes = [
-  {path: 'home',component: HomePageComponent,title: 'Home'},
+  {path: 'home',component: HomePageComponent,title: 'Home',canActivate: [AuthGuard]},
   {path: 'search/boards',component: SearchBoardPageComponent,title: "Search Boards",canActivate: [AuthGuard]},
   {path: 'search/tasks',component: SearchTasksPageComponent,title: "Search Tasks",canActivate: [AuthGuard]},
   {path: 'search/reports',component: SearchReportsPageComponent,title: "Search Reports",canActivate: [AuthGuard]},
@@ -40,7 +40,7 @@ const routes: Routes = [
   {path: 'invites',component: BoardInvitesComponent,title: 'Invites',canActivate: [AuthGuard]},
   {path: 'boards',component: BoardsPageComponent,title: 'Boards',canActivate: [AuthGuard]},
   {path: 'tasks',component: TasksPageComponent,title: 'Tasks',canActivate: [AuthGuard]},
-  {path: "board/:id",component: ManageBoardPageComponent,title: "Manage Board"},
+  {path: "board/:id",component: ManageBoardPageComponent,title: "Manage Board",canActivate: [AuthGuard]},
   {path: 'unauthorized',component: UnAuthorizedPageComponent,title: "UnAuthorized"}
 ];
 

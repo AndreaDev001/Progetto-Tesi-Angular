@@ -26,17 +26,23 @@ export class TasksPageComponent implements OnInit,OnDestroy
   }
 
   public ngOnInit(): void {
-    this.subscriptions.push(this.authHandler.getCurrentUserID(false).subcribe((value: any) => {
+    this.subscriptions.push(this.authHandler.getCurrentUserID(false).subscribe((value: any) => {
       this.currentUserID = value;
-      if(this.currentUserID != undefined)
-          this.searchTaskAssignments(this.currentPage.number,this.currentPage.size);
+      if(this.currentUserID != undefined) {
+        this.searchTaskAssignments(this.currentPage.number,this.currentPage.size);
+      }
     }))
+  }
+
+  public handlePageChange(event: any): void {
+    this.currentPage.number = event - 1;
+    this.searchTaskAssignments(this.currentPage.number,this.currentPage.size);
   }
 
   private searchTaskAssignments(page: number,pageSize: number): void {
     this.isSearching = true;
     let paginationRequest: PaginationRequest = {page: page,pageSize: pageSize};
-    this.taskAssignmentService.getTaskAssignmentsByUser(this.currentUserID,paginationRequest).subcribe((value: PagedModel) => {
+    this.taskAssignmentService.getTaskAssignmentsByUser(this.currentUserID,paginationRequest).subscribe((value: PagedModel) => {
       this.isSearching = false;
       this.currentTaskAssignments = value._embedded != undefined && value._embedded.content != undefined ? value._embedded.content : [];
       this.currentPage = value.page != undefined ? value.page : this.currentPage;

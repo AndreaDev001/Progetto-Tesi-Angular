@@ -100,6 +100,7 @@ import { ReportFilterComponent } from './SearchPages/SearchReports/report-filter
 import { BanFilterComponent } from './SearchPages/SearchBans/ban-filter/ban-filter.component';
 import { BoardFilterComponent } from './SearchPages/SearchBoards/board-filter/board-filter.component';
 import { SearchBoardPageComponent } from './SearchPages/SearchBoards/board-page/search-board-page.component';
+import { TasksPageComponent } from './UserPages/TasksPage/tasks-page/tasks-page.component';
 
 @NgModule({
   declarations: [
@@ -188,7 +189,8 @@ import { SearchBoardPageComponent } from './SearchPages/SearchBoards/board-page/
     TaskFileComponent,
     CreatePollOptionComponent,
     BoardsPageComponent,
-    BoardInvitesComponent
+    BoardInvitesComponent,
+    TasksPageComponent
   ],
   imports: [
     BrowserModule,

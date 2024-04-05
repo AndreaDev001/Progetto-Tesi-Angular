@@ -54,3 +54,47 @@ body
 }
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+.hint-text
+{
+    font-size: 14px;
+    font-weight: thin;
+}
+.form-field
+{
+    display: block;
+    width: 100%;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-bottom: 5px;
+}
+.input-label
+{
+    color: black;
+}
+
+button.remove-button
+{
+    border: 0;
+    padding: 5px;
+    border-radius: 5px;
+    background-color: var(--primary-color);
+}
+section#info-section {
+    padding: 10px 5px;
+}
+button.filter-button
+{
+    width: 75%;
+    background-color: var(--secondary-color);
+    color: whitesmoke;
+    border-radius: 5px;
+    border: 0px;
+    margin: 0px;
+    font-size: 20px;
+    padding: 10px 0px;
+    transition: 0.2s ease-in-out all;
+}
+button.filter-button:hover
+{
+    background-color: var(--tertiary-color);
+}

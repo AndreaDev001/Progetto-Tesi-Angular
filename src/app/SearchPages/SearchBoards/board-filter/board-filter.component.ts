@@ -1,6 +1,7 @@
 import { HttpParams } from '@angular/common/http';
-import { Component, EventEmitter, OnInit, Output,Input} from '@angular/core';
+import { Component, EventEmitter, OnInit, Output,Input, OnDestroy} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { DropdownOption } from 'src/app/Utility/components/dropdown/dropdown.component';
 import { CollectionModel } from 'src/model/interfaces';
 import { BoardService } from 'src/model/services/board.service';
@@ -25,9 +26,10 @@ export interface Filter
   templateUrl: './board-filter.component.html',
   styleUrls: ['./board-filter.component.css']
 })
-export class BoardFilterComponent implements OnInit
+export class BoardFilterComponent implements OnInit,OnDestroy
 {
   @Input() rowDisplay: boolean = false;
+  private subscriptions: Subscription[] = [];
   public currentFilter: Filter = {page: 0,pageSize: 20};
   public currentVisibilities: DropdownOption[] = [];
   public currentGenders: DropdownOption[] = [];
@@ -38,7 +40,17 @@ export class BoardFilterComponent implements OnInit
   }
 
   public ngOnInit(): void {
-    this.activatedRoute.queryParams.subscribe((value: any) => {
+    this.createSubscriptions();
+    this.searchGenders();
+    this.searchVisibilities();
+  }
+
+  public ngOnDestroy(): void {
+    this.subscriptions.forEach((value: Subscription) => value.unsubscribe());  
+  }
+
+  private createSubscriptions(): void {
+    this.subscriptions.push(this.activatedRoute.queryParams.subscribe((value: any) => {
       let title: String = value.title;
       let description: String = value.description;
       let publisherEmail: String = value.publisherEmail;
@@ -51,7 +63,10 @@ export class BoardFilterComponent implements OnInit
       let pageSize: number = value.pageSize != undefined ? value.pageSize : 20;
       this.currentFilter = {title: title,description: description,publisherEmail: publisherEmail,publisherName: publisherName,publisherSurname: publisherSurname,publisherUsername: publisherUsername,publisherGender: publisherGender,visibility: visibility,page: page,pageSize: pageSize};
       this.filterChanged.emit(this.currentFilter);
-    })
+    }));
+  }
+
+  private searchVisibilities(): void {
     this.boardService.getVisibilities().subscribe((value: CollectionModel) => {
       if(value._embedded != null) {
         value._embedded.content.forEach((current: string) => {
@@ -60,6 +75,9 @@ export class BoardFilterComponent implements OnInit
         });
       }
     })
+  }
+
+  private searchGenders(): void {
     this.userService.getGenders().subscribe((value: CollectionModel) => {
       if(value._embedded != null) {
         value._embedded.content.forEach((current: string) => {

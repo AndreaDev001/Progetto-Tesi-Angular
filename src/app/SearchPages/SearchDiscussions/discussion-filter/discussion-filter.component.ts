@@ -33,6 +33,11 @@ export class DiscussionFilterComponent implements OnInit,OnDestroy {
   }
 
   public ngOnInit(): void {
+    this.createSubscriptions();
+    this.searchGenders();
+  }
+
+  private createSubscriptions(): void {
     this.subscriptions.push(this.activatedRoute.params.subscribe((value: any) => {
       let title: string = value.title;
       let topic: string = value.topic;
@@ -45,10 +50,12 @@ export class DiscussionFilterComponent implements OnInit,OnDestroy {
       this.currentFilter = {title: title,topic: topic,publisherName: publisherName,publisherSurname: publisherSurname,publisherUsername: publisherUsername,publisherGender: publisherGender,page: page,pageSize: pageSize}
       this.filterChanged.emit(this.currentFilter);
     }))
+  }
+
+  private searchGenders(): void {
     this.userService.getGenders().subscribe((value: CollectionModel) => {
       if(value._embedded != undefined && value._embedded.content != undefined)
       {
-        console.log(value);
         value._embedded.content.forEach((current: string) => {
           let genderOption: DropdownOption = {name: current,callback: () => this.updateFilter(this.currentFilter,'publisherGender',current)};
           this.currentGenders.push(genderOption);

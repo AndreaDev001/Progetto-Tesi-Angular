@@ -33,6 +33,11 @@ export class UserFilterComponent implements OnInit,OnDestroy {
   }
 
   public ngOnInit(): void {
+    this.createSubscriptions();
+    this.searchGenders();
+  }
+
+  private createSubscriptions(): void {
     this.subscriptions.push(this.activatedRoute.params.subscribe((value: any) => {
       let name: string = value.name;
       let surname: string = value.surname;
@@ -43,6 +48,9 @@ export class UserFilterComponent implements OnInit,OnDestroy {
       this.currentFilter = {name: name,surname: surname,username: username,gender: gender,page: page,pageSize: pageSize};
       this.filterChanged.emit(this.currentFilter);
     }))
+  }
+
+  private searchGenders(): void {
     this.userService.getGenders().subscribe((value: CollectionModel) => {
       if(value._embedded != undefined && value._embedded.content != undefined)
       {
