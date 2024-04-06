@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Icon, IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faDiscourse } from '@fortawesome/free-brands-svg-icons';
-import { faBan, faBars, faEllipsis, faEllipsisH, faExclamationCircle, faFilter, faGear, faHamburger, faHeart, faHome, faHouse, faInfoCircle, faMessage, faPlusCircle, faPoll, faQuestionCircle, faSearch, faTable, faTasks, faUser, faUserCircle, faWarning } from '@fortawesome/free-solid-svg-icons';
+import { faArrowDown, faArrowUp, faBan, faBars, faCaretDown, faCaretUp, faEllipsis, faEllipsisH, faExclamationCircle, faFilter, faGear, faHamburger, faHeart, faHome, faHouse, faInfoCircle, faMessage, faPlusCircle, faPoll, faQuestionCircle, faSearch, faTable, faTasks, faUser, faUserCircle, faWarning } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
 import { AlertHandlerService } from 'src/app/Utility/services/alert-handler.service';
 import { AuthHandlerService } from 'src/model/auth/auth-handler.service';
@@ -19,6 +19,7 @@ interface HeaderDropdown
 {
   name?: string,
   icon: IconDefinition,
+  key: string
   options: HeaderOption[];
 }
 @Component({
@@ -40,6 +41,13 @@ export class HeaderComponent implements OnInit,OnDestroy {
   public homeIcon: IconDefinition = faHouse;
   public aboutIcon: IconDefinition = faInfoCircle;
   public headerIcon: IconDefinition = faEllipsisH;
+  public openCollapsedIcon: IconDefinition = faCaretUp;
+  public closeCollapsedIcon: IconDefinition = faCaretDown;
+  public optionsIcon: IconDefinition = faBars;
+
+  public optionsCollapsed: boolean = true;
+  public isCollapsed: boolean[] = [];
+  public optionsMap: Map<string,any[]> = new Map();
 
   private subscriptions: Subscription[] = [];
 
@@ -54,6 +62,7 @@ export class HeaderComponent implements OnInit,OnDestroy {
 
   public ngOnInit(): void {
     this.createHeaderOptions();
+    this.createMapValues();
     this.subscriptions.push(this.authHandlerService.getCurrentUserID(false).subscribe((value: any) => {
       this.isAdmin = this.authHandlerService.isAdmin();
     }));
@@ -71,10 +80,19 @@ export class HeaderComponent implements OnInit,OnDestroy {
     this.createUserOptions();
   }
 
+  private createMapValues(): void {
+    this.optionsMap.set('search',this.searchOptions);
+    this.optionsMap.set('create',this.createOptions);
+    this.optionsMap.set('user',this.userOptions);
+  }
+
   private createDropdowns(): void {
-    this.leftDropdowns.push({name: "Search",icon: faSearch,options: this.searchOptions});
-    this.leftDropdowns.push({name: "Create",icon: faPlusCircle,options: this.createOptions});
-    this.rightDropdowns.push({icon: faUserCircle,options: this.userOptions});
+    this.leftDropdowns.push({name: "Search",icon: faSearch,options: this.searchOptions,key: 'search'});
+    this.leftDropdowns.push({name: "Create",icon: faPlusCircle,options: this.createOptions,key: 'create'});
+    this.rightDropdowns.push({name: "User",icon: faUserCircle,options: this.userOptions,key: 'user'});
+    for(let i = 0;i < 4;i++) {
+      this.isCollapsed[i] = true;
+    }
   }
 
   private createSearchOptions(): void {
@@ -118,6 +136,18 @@ export class HeaderComponent implements OnInit,OnDestroy {
       this.alertHandler.setTextTemplate(this.updateUserTemplate);
       this.alertHandler.open();
     }});
+  }
+
+  public resetCollapsed(): void {
+    for(let i = 0;i < this.leftDropdowns.length + this.rightDropdowns.length;i++) {
+      this.isCollapsed[i] = true;
+    }
+  }
+
+  public updateCollapsed(): void {
+    this.optionsCollapsed = !this.optionsCollapsed;
+    if(this.optionsCollapsed)
+        this.resetCollapsed();
   }
 
   public navigateTo(basePath: string,event: any): void {

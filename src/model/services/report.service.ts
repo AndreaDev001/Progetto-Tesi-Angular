@@ -20,6 +20,13 @@ export class ReportService {
     let queryParams: HttpParams = new HttpParams();
     return this.httpClient.post(desiredURL,createReport,{params: queryParams});
   }
+
+  public getReportBetween(reporterID: string,reportedID: string): any {
+    const desiredURL: string = this.url + "/private" + "/reporter" + "/" + reporterID + "/reported" + "/" + reportedID;
+    let queryParams: HttpParams = new HttpParams();
+    return this.httpClient.get(desiredURL,{params: queryParams});
+  }
+
   public getReasons(): any {
     const desiredURL: string = this.url + "/public" + "/reasons";
     let queryParams = new HttpParams();
