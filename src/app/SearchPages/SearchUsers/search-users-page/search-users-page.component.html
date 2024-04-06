@@ -27,7 +27,7 @@
         </div>
     </div>
     <div class = "w-100 mt-1 py-2 text-center" *ngIf="currentPage.totalElements > 0 && !isSearching">
-        <app-pagination [pageSize]="20" [totalElements]="currentPage.totalElements" (pageChanged)="handlePageChange($event)"></app-pagination>
+        <app-pagination [pageSize]="currentPage.size" [totalElements]="currentPage.totalElements" (pageChanged)="handlePageChange($event)"></app-pagination>
     </div>
 </div>
 <ng-template #userFilters>

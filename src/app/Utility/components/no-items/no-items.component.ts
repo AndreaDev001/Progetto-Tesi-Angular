@@ -12,6 +12,7 @@ export class NoItemsComponent implements OnChanges {
   @Input() missingButtonText?: string = "Retry";
   @Input() missingTitle?: string = "Empty";
   @Input() missingText?: string = "No items founds, set is empty";
+  @Input() missingButtonStyle?: any = undefined;
   @Output() buttonClicked: EventEmitter<any> = new EventEmitter<any>();
   @Input() searchIcon: IconDefinition = faSearch;
 

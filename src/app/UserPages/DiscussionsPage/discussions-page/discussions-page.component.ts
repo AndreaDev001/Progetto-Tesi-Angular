@@ -20,7 +20,7 @@ export class DiscussionsPageComponent implements OnInit, OnDestroy {
 
   public currentDiscussions: Discussion[] = [];
   public isSearching: boolean = false;
-  public currentPage: Page = {number: 0,size: 1,totalElements: 0,totalPages: 0};
+  public currentPage: Page = {number: 0,size: 20,totalElements: 0,totalPages: 0};
 
 
   constructor(private discussionService: DiscussionService,private authHandler: AuthHandlerService) {

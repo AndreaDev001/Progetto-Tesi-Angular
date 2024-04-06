@@ -7,13 +7,11 @@
                 <p class = "p-0 m-0">In this page you can see information about {{user.username}}</p>
             </div>
         </div>
-        <div class = "row">
+        <div class = "row mt-2">
             <div class = "col-12 col-md-3">
-                    <div class = "primary-color text-center" style="padding: 20px;border-radius: 10px;">
-                        <div class = "image-wrapper">
-                            <app-better-image [imageStyle]="{'width': '240px','height': '240px','border-radius': '60%','border': '1px solid var(--tertiary-color)','filter': 'brightness(80%)'}" [requiredSource]="'http://localhost:8080/api/v1/userImages/public/user/' + user.id + '/image'"></app-better-image>
-                        </div>
-                        <div class = "mt-1">
+                    <div class = "primary-color text-center" style="padding: 20px;border-radius: 2px;">
+                        <app-better-image [wrapperStyle]="{'display': 'flex','justify-content': 'center','align-items': 'center'}" [imageStyle]="{'width': '180px','height': '180px','border-radius': '60%','filter': 'brightness(70%)'}" [requiredSource]="'http://localhost:8080/api/v1/userImages/public/user/' + user.id + '/image'"></app-better-image>
+                        <div>
                             <h3 class = "p-0 m-0">{{user.username}}</h3>
                             <div>
                                 <span>{{user.name}}</span>
@@ -27,13 +25,15 @@
                             </div>
                         </div>
                     </div>
+                    <div class = "mt-2 py-1 text-center">
+                        <button *ngIf="!isAuthenticatedUser && !hasReported && !searchingReport" (click)="createReport()" class = "default-button w-100">Report</button>
+                    </div>
                 </div>
             <div class = "col-12 col-md-9">
                 <div class = "px-2">
-                    <ng-container *ngTemplateOutlet="boardTemplate"></ng-container>
-                    <ng-container *ngTemplateOutlet="taskTemplate"></ng-container>
-                    <ng-container *ngTemplateOutlet="discussionTemplate"></ng-container>
-                    <ng-container *ngTemplateOutlet="pollTemplate"></ng-container>
+                    <div [ngStyle]="current.key != 'boards' ? {'margin-top': '15px'} : {'margin-top': '0px'}" *ngFor="let current of searchRequestsMap | keyvalue">
+                        <ng-container *ngTemplateOutlet="searchTemplate;context: {searchRequest: searchRequestsMap.get(current.key),name: current.key}"></ng-container>
+                    </div>
                 </div>
             </div>
         </div>
@@ -45,91 +45,39 @@
         <span class = "mx-1">{{item.amount}}</span>
     </div>
 </ng-template>
-<ng-template #boardTemplate>
-    <div class = "mt-2 py-2 px-4 primary-color" style="border-radius: 10px;">
-        <div class = "py-2">
-            <div>
-                <h3 class = "d-inline-block">Boards</h3>
-                <fa-icon class = "mx-1" [icon]="boardIcon" style="font-size: 20px;"></fa-icon>
-            </div>
-            <p class = "p-0 m-0">Boards that this user partecipates in</p>
-        </div>
-        <div class = "py-1" class = "horizontal-container">
-            <div *ngIf="currentJoinedBoards.length > 0">
-                <app-text-overflow [horizontal]="true" [templates]="joinedBoardsItems"></app-text-overflow>
-            </div>
-            <div *ngIf="currentJoinedBoards.length == 0">
-                <app-no-items></app-no-items>
-            </div>
-        </div>
+<ng-template #boardCardTemplate let-i>
+    <div style="width: 220px;">
+        <app-board-card [boardRef]="i.board"></app-board-card>
     </div>
-</ng-template>
-<ng-template #taskTemplate>
-    <div class = "mt-2 py-2 px-4 primary-color" style="border-radius: 10px;">
-        <div class = "py-2">
-            <div>
-                <h3 class = "d-inline-block">Tasks</h3>
-                <fa-icon class = "mx-1" [icon]="taskIcon" style="font-size: 20px;"></fa-icon>
-            </div>
-            <p class = "p-0 m-0">Tasks that have been assigned to this user</p>
-        </div>
-        <div class = "py-1" class = "horizontal-container">
-            <div *ngIf="currentAssignedTasks.length > 0">
-                <app-text-overflow [horizontal]="true" [templates]="assignedTasksItems"></app-text-overflow>
-            </div>
-            <div *ngIf="currentAssignedTasks.length == 0">
-                <app-no-items></app-no-items>
-            </div>
-        </div>
-    </div>
-</ng-template>
-<ng-template #discussionTemplate>
-    <div class = "mt-1 py-2 px-4 primary-color" style="border-radius: 10px;">
-        <div class = "py-2">
-            <div>
-                <h3 class = "d-inline-block">Discussions</h3>
-                <fa-icon class = "d-inline-block mx-1" style="font-size: 20px;" [icon]="discussionIcon"></fa-icon>
-            </div>
-            <p class = "p-0 m-0">Discussions that have been created by this user</p>
-        </div>
-        <div class = "py-1" class = "horizontal-container">
-            <div *ngIf="currentDiscussions.length > 0">
-                <app-text-overflow [horizontal]="true " [templates]="discussionItems"></app-text-overflow>
-            </div>
-            <div *ngIf="currentDiscussions.length == 0">
-                <app-no-items></app-no-items>
-            </div>
-        </div>
-    </div>
-</ng-template>
-<ng-template #pollTemplate>
-    <div class = "mt-1 py-2 px-4 primary-color" style="border-radius: 10px;">
-        <div class = "py-2">
-            <div>
-                <h3 class = "d-inline-block">Polls</h3>
-                <fa-icon class = "d-inline-block mx-1" style="font-size: 20px;" [icon]="pollIcon"></fa-icon>
-            </div>
-            <p class = "p-0 m-0">Polls that have been created by this user</p>
-        </div>
-        <div class = "py-1" class = "horizontal-container">
-            <div *ngIf="currentPolls.length > 0">
-                <app-text-overflow [horizontal]="true" [templates]="pollsItem"></app-text-overflow>
-            </div>
-            <div *ngIf="currentPolls.length == 0">
-                <app-no-items></app-no-items>
-            </div>
-        </div>
-    </div>
-</ng-template>
-<ng-template #joinedBoardCardTemplate let-i>
-    <app-board-card [boardRef]="i"></app-board-card>
 </ng-template>
 <ng-template #discussionCardTemplate let-i>
-    <app-discussion-card [discussion]="i"></app-discussion-card>
+    <div style="width: 220px;">
+        <app-discussion-card [discussion]="i"></app-discussion-card>
+    </div>
 </ng-template>
 <ng-template #pollCardTemplate let-i>
-    <app-poll-card [poll]="i"></app-poll-card>
+    <div style="width: 220px;">
+        <app-poll-card [poll]="i"></app-poll-card>
+    </div>
 </ng-template>
-<ng-template #taskAssignedCardTemplate let-i>
-    <app-task-card [taskRef]="i"></app-task-card>
+<ng-template #searchTemplate let-searchRequest="searchRequest" let-name="name">
+    <div class = "container-wrapper">
+        <ng-container *ngTemplateOutlet="containerDescription;context: {containerDescription: this.containerDescriptionsMap.get(name)}"></ng-container>
+        <div class = "py-2">
+            <app-text-overflow  [horizontal]="true" (scrollEndReached)="updateCurrentPage(name)" [templates]="searchRequest.requiredOverflowItems"></app-text-overflow>
+            <div *ngIf="searchRequest.requiredItems.length == 0">
+                <app-no-items [missingButtonStyle]="{'background-color': 'var(--secondary-color)','width': '25%','padding': '15px 0px','border-radius': '5px'}" (buttonClicked)="reset(name,true)"></app-no-items>
+            </div>
+        </div>
+    </div>
+</ng-template>
+<ng-template #containerDescription let-containerDescription="containerDescription">
+    <div class = "d-flex">
+        <h4>{{containerDescription.name}}</h4>
+        <fa-icon class = "mx-1" style="font-size: 20px;" [icon]="containerDescription.icon"></fa-icon>
+    </div>
+    <p class = "p-0 m-0">{{containerDescription.subtitle}}</p>
+</ng-template>
+<ng-template #createReportTemplate>
+    <app-create-report (successEvent)="this.alertHandlerService.close();this.hasReported = true" (failedEvent)="this.alertHandlerService.close()" [reportedID]="currentUserID"></app-create-report>
 </ng-template>

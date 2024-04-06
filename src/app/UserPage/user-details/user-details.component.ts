@@ -5,16 +5,35 @@ import { faCheck, faMessage, faPoll, faTable, faTasks, faUser, faUserCircle } fr
 import { Subscription } from 'rxjs';
 import { TextOverflowItem } from 'src/app/Utility/components/text-overflow/text-overflow.component';
 import { TaskAssignmentService } from 'src/model/services/task-assignment.service';
-import { Board, BoardMember, Discussion, PagedModel, PaginationRequest, Poll, PollVote, TaskAssignment, User } from 'src/model/interfaces';
+import { Board, BoardMember, Discussion, Page, PagedModel, PaginationRequest, Poll, PollVote, TaskAssignment, User } from 'src/model/interfaces';
 import { BoardMemberService } from 'src/model/services/board-member.service';
 import { DiscussionService } from 'src/model/services/discussion.service';
 import { PollService } from 'src/model/services/poll.service';
+import { AlertHandlerService } from 'src/app/Utility/services/alert-handler.service';
+import { AuthHandlerService } from 'src/model/auth/auth-handler.service';
+import { ReportService } from 'src/model/services/report.service';
 
 interface DescriptionItem
 {
   icon: IconDefinition
   amount: number
   tooltip?: string
+}
+interface SearchRequest
+{
+  requiredItems: any[];
+  requiredOverflowItems: TextOverflowItem[],
+  requiredTemplate: any,
+  requiredObservable: any,
+  requiredService: any,
+  requiredPage: Page,
+  searching: boolean,
+}
+interface ContainerDescription
+{
+   name: string,
+   icon: IconDefinition
+   subtitle: string,
 }
 @Component({
   selector: 'app-user-details',
@@ -27,152 +46,129 @@ export class UserDetailsComponent implements AfterViewInit, OnDestroy{
 
   public descriptionItems: DescriptionItem[] = [];
   public personIcon: IconDefinition = faUserCircle;
-  public boardIcon: IconDefinition = faTable;
-  public taskIcon: IconDefinition = faTasks;
-  public discussionIcon: IconDefinition = faMessage;
-  public pollIcon: IconDefinition = faPoll;
-
-  public currentJoinedBoards: BoardMember[] = [];
-  public currentAssignedTasks: TaskAssignment[] = [];
-  public currentDiscussions: Discussion[] = [];
-  public currentPolls: Poll[] = [];
-
-  public currentJoinedBoardsPage: number = 0;
-  public currentJoinedBoardsTotalPages: number = 0;
-  public currentAssignedTasksPage: number = 0;
-  public currentAssignedTasksTotalPages: number = 0;
-  public currentDiscussionsPage: number = 0;
-  public currentDiscussionsTotalPages: number = 0;
-  public currentPollPage: number = 0;
-  public currentPollTotalPages: number = 0;
-
-  public joinedBoardsItems: TextOverflowItem[] = [];
-  public assignedTasksItems: TextOverflowItem[] = [];
-  public discussionItems: TextOverflowItem[] = [];
-  public pollsItem: TextOverflowItem[] = [];
-
-  @ViewChild("taskAssignedCardTemplate") taskAssignedTemplate: any;
-  @ViewChild("joinedBoardCardTemplate") joinedBoardTemplate: any;
+  public searchRequestsMap: Map<string,SearchRequest> = new Map();
+  public containerDescriptionsMap: Map<string,ContainerDescription> = new Map();
+  
+  @ViewChild("createReportTemplate") createReportTemplate: any;
+  @ViewChild("boardCardTemplate") boardCardTemplate: any;
   @ViewChild("discussionCardTemplate") discussionTemplate: any;
   @ViewChild("pollCardTemplate") pollTemplate: any;
 
-  private currentUserID: string | undefined = undefined;
+  public currentUserID: string | undefined = undefined;
+  public isAuthenticatedUser: boolean = false;
+  public searchingReport: boolean = false;
+  public hasReported: boolean = false;
   private subscriptions: Subscription[] = [];
   
-  constructor(private discussionService: DiscussionService,private taskAssignmentService: TaskAssignmentService,private pollService: PollService,private boardMemberService: BoardMemberService) {
+  constructor(public alertHandlerService: AlertHandlerService,private reportService: ReportService,private authHandlerService: AuthHandlerService,private discussionService: DiscussionService,private pollService: PollService,private boardMemberService: BoardMemberService) {
 
-  }
-
-  public updateDiscussions(currentPage: number,currentPageSize: number): void {
-    let paginationRequest: PaginationRequest = {page: currentPage,pageSize: currentPageSize};
-    this.discussionService.getDiscussionsByPublisher(this.currentUserID,paginationRequest).subscribe((value: PagedModel) => {
-      if(value._embedded != undefined && value._embedded.content != undefined) {
-        this.currentDiscussions.push.apply(this.currentDiscussions,value._embedded.content);
-        value._embedded.content.forEach((current: any) => this.discussionItems.push({template: this.discussionTemplate,context: current}));
-      }
-      if(value.page != undefined) {
-        this.currentDiscussionsPage = value.page.number;
-        this.currentDiscussionsTotalPages = value.page.totalPages;
-      }
-    })
-  }
-
-  public updateAssignments(currentPage: number,currentPageSize: number): void {
-    let paginationRequest: PaginationRequest = {page: currentPage,pageSize: currentPageSize};
-    this.taskAssignmentService.getTaskAssignmentsByUser(this.currentUserID,paginationRequest).subscribe((value: PagedModel) => {
-      if(value._embedded != undefined && value._embedded.content != undefined) {
-        this.currentAssignedTasks.push.apply(this.currentAssignedTasks,value._embedded.content);
-        console.log(this.currentAssignedTasks);
-        value._embedded.content.forEach((current: any) => this.assignedTasksItems.push({template: this.taskAssignedTemplate,context: current.task}));
-      }
-      if(value.page != undefined) {
-        this.currentAssignedTasksPage = value.page.number;
-        this.currentAssignedTasksTotalPages = value.page.totalPages;
-      }
-    })
-  }
-
-  public updatePolls(currentPage: number,currentPageSize: number): void {
-    let paginationRequest: PaginationRequest = {page: currentPage,pageSize: currentPageSize};
-    this.pollService.getPollsByPublisher(this.currentUserID,paginationRequest).subscribe((value: PagedModel) => {
-      if(value._embedded != undefined && value._embedded.content != undefined) {
-        this.currentPolls.push.apply(this.currentPolls,value._embedded.content);
-        value._embedded.content.forEach((current: any) => this.pollsItem.push({template: this.pollTemplate,context: current}));
-      }
-      if(value.page != undefined) {
-        this.currentPollPage = value.page.number;
-        this.currentPollTotalPages = value.page.totalPages;
-      }
-    })
-  }
-
-  public updateJoinedBoards(currentPage: number,currentPageSize: number): void {
-    let paginationRequest: PaginationRequest = {page: currentPage,pageSize: currentPageSize};
-    this.boardMemberService.getBoardMembersByMember(this.currentUserID,paginationRequest).subscribe((value: PagedModel) => {
-      if(value._embedded != undefined && value._embedded.content != undefined) {
-        this.currentJoinedBoards.push.apply(this.currentJoinedBoards,value._embedded.content);
-        value._embedded.content.forEach((current: any) => {
-          this.joinedBoardsItems.push({template: this.joinedBoardTemplate,context: current.board});
-        });
-      }
-      if(value.page != undefined) {
-        this.currentJoinedBoardsPage = value.page.number;
-        this.currentJoinedBoardsTotalPages = value.page.totalPages;
-      }
-    })
-  }
-
-  public updateJoinedBoardsMaxPage(): void {
-    if(this.currentJoinedBoardsPage + 1 < this.currentJoinedBoardsTotalPages) {
-      this.currentJoinedBoardsPage++;
-      this.updateJoinedBoards(this.currentJoinedBoardsPage,20);
-    }
-  }
-
-  public updateTaskAssignmentsMaxPage(): void {
-    if(this.currentAssignedTasksPage + 1 < this.currentAssignedTasksTotalPages) {
-      this.currentAssignedTasksPage++;
-      this.updateAssignments(this.currentAssignedTasksPage,20);
-    }
-  }
-
-  public updateDiscussionsMaxPage(): void {
-    if(this.currentDiscussionsPage + 1 < this.currentDiscussionsTotalPages) {
-      this.currentDiscussionsPage++;
-      this.updateDiscussions(this.currentDiscussionsPage,20);
-    }
-  }
-
-  public updatePollMaxPages(): void {
-    if(this.currentPollPage + 1 < this.currentPollTotalPages) {
-      this.currentPollPage++;
-      this.updatePolls(this.currentPollPage,20);
-    }
   }
 
   public ngAfterViewInit(): void {
     if(this.user != undefined) 
-    {
-      this.currentUserID = this.user.id;
-      this.descriptionItems = [];
-      this.descriptionItems.push({amount: this.user.amountOfJoinedBoards,icon: faTable });
-      this.descriptionItems.push({amount: this.user.amountOfAssignedTasks,icon: faTasks});
-      this.descriptionItems.push({amount: this.user.amountOfCreatedDiscussions,icon: faMessage});
-      this.descriptionItems.push({amount: this.user.amountOfCreatedPolls,icon: faPoll});
-      this.descriptionItems.push({amount: this.user.amountOfCreatedVotes,icon: faCheck})
-      this.currentDiscussionsPage = 0;
-      this.currentJoinedBoardsPage = 0;
-      this.currentAssignedTasksPage = 0;
-      this.currentPollPage = 0;
-      this.updateJoinedBoards(this.currentJoinedBoardsPage,20);
-      this.updateAssignments(this.currentAssignedTasksPage,20);
-      this.updateDiscussions(this.currentDiscussionsPage,20);
-      this.updatePolls(this.currentPollPage,20);
+        this.createSubscriptions();
+  }
+  
+  public ngOnDestroy(): void {
+    this.subscriptions.forEach((value: Subscription) => value.unsubscribe());
+  }
 
+  private searchReport(): void {
+    this.searchingReport = true;
+    this.reportService.getReportBetween(this.authHandlerService.getCurrentUserID(true),this.user!!.id).subscribe((value: any) => {
+      this.searchingReport = false;
+      this.hasReported = value != undefined;
+    },(err: any) => {
+      this.searchingReport = false;
+      this.hasReported = false;
+    })
+  }
+
+  private createSubscriptions() {
+    this.subscriptions.push(this.authHandlerService.getCurrentUserID(false).subscribe((value: any) => {
+      if(value != undefined) {
+        this.currentUserID = this.user!!.id;
+        this.isAuthenticatedUser = this.currentUserID == value;
+        this.searchReport();
+        this.createDescriptions();
+        this.createMapValues();
+        this.updateItems('boards');
+        this.updateItems('discussions');
+        this.updateItems('polls');
+      }
+    }))
+  }
+
+  private createDescriptions(): void {
+    this.descriptionItems = [];
+    this.descriptionItems.push({amount: this.user!!.amountOfJoinedBoards,icon: faTable });
+    this.descriptionItems.push({amount: this.user!!.amountOfAssignedTasks,icon: faTasks});
+    this.descriptionItems.push({amount: this.user!!.amountOfCreatedDiscussions,icon: faMessage});
+    this.descriptionItems.push({amount: this.user!!.amountOfCreatedPolls,icon: faPoll});
+    this.descriptionItems.push({amount: this.user!!.amountOfCreatedVotes,icon: faCheck})
+  }
+
+  private createMapValues(): void {
+    this.searchRequestsMap.set('boards',{requiredItems: [],requiredOverflowItems: [],requiredObservable: this.boardMemberService.getBoardMembersByMember,requiredService: this.boardMemberService,requiredPage: {number: 0,size: 20,totalElements: 0,totalPages: 0},searching: false,requiredTemplate: this.boardCardTemplate});
+    this.searchRequestsMap.set('discussions',{requiredItems: [],requiredOverflowItems: [],requiredObservable: this.discussionService.getDiscussionsByPublisher,requiredService: this.discussionService,requiredPage: {number: 0,size: 5,totalElements: 0,totalPages: 0},searching: false,requiredTemplate: this.discussionTemplate});
+    this.searchRequestsMap.set('polls',{requiredItems: [],requiredOverflowItems: [],requiredObservable: this.pollService.getPollsByPublisher,requiredService: this.pollService,requiredPage: {number: 0,size: 20,totalElements: 0,totalPages: 0},searching: false,requiredTemplate: this.pollTemplate});
+
+    this.containerDescriptionsMap.set('boards',{name: 'Boards',subtitle: 'View all of the board this user partecipates in',icon: faTable});
+    this.containerDescriptionsMap.set('discussions',{name: 'Discussions',subtitle: 'View all of the discussions this user has published',icon: faMessage});
+    this.containerDescriptionsMap.set('polls',{name: 'Polls',subtitle: 'View all the polls this user has published',icon: faPoll});
+  }
+
+  public updateItems(key: string): void {
+    let searchRequest: SearchRequest | undefined = this.searchRequestsMap.get(key);
+    if(searchRequest != undefined) {
+        let paginationRequest: PaginationRequest = {page: searchRequest.requiredPage.number,pageSize: searchRequest.requiredPage.size};
+        searchRequest.searching = true;
+        searchRequest.requiredObservable(this.currentUserID,paginationRequest,searchRequest.requiredService).subscribe((value: PagedModel) => {
+          searchRequest!!.searching = false;
+          if(value._embedded && value._embedded.content != undefined) {
+            searchRequest!!.requiredItems = value._embedded.content;
+            value._embedded.content.forEach((current: any) => {
+              searchRequest!!.requiredOverflowItems.push({template: searchRequest!!.requiredTemplate,context: current})
+          });
+          }
+          else
+          {
+            searchRequest!!.requiredItems = [];
+            searchRequest!!.requiredOverflowItems = [];
+          }
+          searchRequest!!.requiredPage = value.page != undefined ? value.page : searchRequest!!.requiredPage;
+        },(err: any) => {
+          this.reset(key);
+        })
     }
   }
 
-  public ngOnDestroy(): void {
-    this.subscriptions.forEach((value: Subscription) => value.unsubscribe());
+  public reset(key: string,update: boolean = false): void {
+    if(this.searchRequestsMap.has(key)) {
+      let searchRequest: SearchRequest | undefined = this.searchRequestsMap.get(key);
+      searchRequest!!.searching = false;
+      searchRequest!!.requiredItems = [];
+      searchRequest!!.requiredOverflowItems = [];
+      searchRequest!!.requiredPage = {number: 0,size: 20,totalElements: 0,totalPages: 0};
+      if(update)
+          this.updateItems(key);
+    }
+  }
+
+  public updateCurrentPage(key: string): void {
+    if(this.searchRequestsMap.has(key)) {
+      let searchRequest: SearchRequest | undefined = this.searchRequestsMap.get(key);
+      console.log(searchRequest);
+      if(searchRequest!!.requiredPage.number + 1 < searchRequest!!.requiredPage.totalPages) {
+        searchRequest!!.requiredPage.number = searchRequest!!.requiredPage .number + 1;
+        this.updateItems(key);
+      }
+    }
+  }
+
+  public createReport(): void {
+    this.alertHandlerService.reset();
+    this.alertHandlerService.setTextTemplate(this.createReportTemplate);
+    this.alertHandlerService.open();
   }
 }

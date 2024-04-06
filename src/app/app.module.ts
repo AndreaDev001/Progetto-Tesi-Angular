@@ -99,7 +99,7 @@ import { TaskFilterComponent } from './SearchPages/SearchTasks/task-filter/task-
 import { ReportFilterComponent } from './SearchPages/SearchReports/report-filter/report-filter.component';
 import { BanFilterComponent } from './SearchPages/SearchBans/ban-filter/ban-filter.component';
 import { BoardFilterComponent } from './SearchPages/SearchBoards/board-filter/board-filter.component';
-import { SearchBoardPageComponent } from './SearchPages/SearchBoards/board-page/search-board-page.component';
+import { SearchBoardPageComponent } from './SearchPages/SearchBoards/search-board-page/search-board-page.component';
 import { TasksPageComponent } from './UserPages/TasksPage/tasks-page/tasks-page.component';
 
 @NgModule({

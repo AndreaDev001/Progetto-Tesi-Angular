@@ -2,30 +2,10 @@ div.details-holder
 {
     padding: 5px;
 }
-button.follow-button
+div.container-wrapper
 {
-    display: block;
     padding: 10px;
-    width: 100%;
-    border-radius: 10px;
-    background-color: var(--tertiary-color);
+    background-color: var(--primary-color);
+    border-radius: 2px;
     border: 1px solid var(--secondary-color);
-}
-button.delete-button
-{
-    display: block;
-    padding: 10px;
-    width: 100%;
-    border-radius: 10px;
-    background-color: darkred;
-    border: 1px solid red;
-    margin-top: 5px;
-}
-div.horizontal-container
-{
-    white-space: nowrap;
-    overflow-x: auto;
-    width: 100%;
-    padding-top: 10px;
-    padding-bottom: 30px;
 }

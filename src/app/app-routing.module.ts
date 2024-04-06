@@ -14,7 +14,7 @@ import { ManageBoardPageComponent } from './ManageBoard/manage-board-page/manage
 import { BoardInvitesComponent } from './UserPages/BoardInvites/board-invites/board-invites.component';
 import { BoardsPageComponent } from './UserPages/BoardsPage/boards-page/boards-page.component';
 import { TasksPageComponent } from './UserPages/TasksPage/tasks-page/tasks-page.component';
-import { SearchBoardPageComponent } from './SearchPages/SearchBoards/board-page/search-board-page.component';
+import { SearchBoardPageComponent } from './SearchPages/SearchBoards/search-board-page/search-board-page.component';
 import { SearchTasksPageComponent } from './SearchPages/SearchTasks/search-tasks-page/search-tasks-page.component';
 import { SearchReportsPageComponent } from './SearchPages/SearchReports/search-reports-page/search-reports-page.component';
 import { SearchBanPageComponent } from './SearchPages/SearchBans/search-ban-page/search-ban-page.component';

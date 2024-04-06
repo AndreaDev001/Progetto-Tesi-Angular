@@ -39,7 +39,7 @@
         <ng-container *ngTemplateOutlet="viewDescriptionTemplate;context: {description: this.viewDescriptions[currentSelectedIndex]}"></ng-container>
     </div>
     <div class = "row mt-1 py-1" *ngIf="currentTemplate != undefined && currentItems.length > 0">
-        <div class = "mt-1 col-6 col-md-3" *ngFor="let current of currentItems">
+        <div class = "mt-3 col-6 col-md-3" *ngFor="let current of currentItems">
             <ng-container *ngTemplateOutlet="currentTemplate;context: {$implicit: current}"></ng-container>
         </div>
         <div style="display: flex;justify-content: center;align-items: center;" class = "mt-1 py-2">
