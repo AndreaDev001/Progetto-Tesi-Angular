@@ -1,0 +1,17 @@
+<div *ngIf="taskFile != undefined">
+    <div class = "task-file-wrapper">
+        <div class = "d-inline-block" style="flex-basis: 70%;overflow: hidden;text-overflow: ellipsis;">
+            <div class = "d-flex">
+                <fa-icon [icon]="fileIcon" style="font-size: 20px;"></fa-icon>
+                <div class = "px-1 mx-1">
+                    <p class = "p-0 m-0">{{taskFile.name}}</p>
+                    <p class = "p-0 m-0">{{taskFile.type}}</p>
+                </div>
+            </div>
+        </div>
+        <div class = "d-inline-block" style="flex-basis: 30%;">
+            <button *ngIf="canModify" (click)="downloadFile()" class = "download-button">Download</button>
+            <button *ngIf="canModify" (click)="deleteFile()" class = "download-button mx-1">Remove</button>
+        </div>
+    </div>
+</div>

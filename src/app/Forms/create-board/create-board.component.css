@@ -1,0 +1,13 @@
+div.vertical-container
+{
+    padding: 10px;
+    white-space: nowrap;
+    overflow-y: auto;
+    max-height: 400px;
+}
+img.board-image
+{
+    width: 100%;
+    height: auto;
+    border-radius: 5%;
+}

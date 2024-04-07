@@ -1,0 +1,29 @@
+<div  [ngClass] = "isVisible ? 'canvas-wrapper-visible' : 'canvas-wrapper-not-visible'">
+    <div class = "canvas-content">
+        <ng-container *ngTemplateOutlet="requiredTemplate"></ng-container>
+    </div>
+</div>
+<ng-template #defaultHeaderTemplate>
+    <div class = "canvas-header">
+        <div class = "d-flex justify-content-between">
+            <div>
+                <p class = "canvas-title">{{currentTitle}}</p>
+                <p class = "canvas-subtitle">{{currentSubtitle}}</p>
+            </div>
+            <div>
+                <button (click)="close()" class = "btn btn-close btn-close-white"></button>
+            </div>
+        </div>
+    </div>
+</ng-template>
+<ng-template #defaultFooterTemplate>
+    <div class = "text-end mt-1">
+        <button (click)="close()" class = "close-button">Close</button>
+    </div>
+</ng-template>
+
+<ng-template #requiredTemplate>
+    <ng-container *ngTemplateOutlet="currentHeaderTemplate"></ng-container>
+    <ng-container *ngTemplateOutlet="currentContentTemplate"></ng-container>
+    <ng-container *ngTemplateOutlet="currentFooterTemplate"></ng-container>
+</ng-template>

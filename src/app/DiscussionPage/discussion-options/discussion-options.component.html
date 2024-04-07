@@ -1,0 +1,40 @@
+<div class = "publisher-discussions">
+    <div>
+        <p class = "publisher-discussions d-inline-block">Publisher Discussions</p>
+        <fa-icon class = "d-inline-block mx-2" [icon]="userIcon" style="font-size: 20px;"></fa-icon>
+    </div>
+    <p class = "p-0 m-0" style="font-size: 15px;">View other discussions created by the same user</p>
+    <div class = "vertical-container">
+        <app-loader [requiredTemplate]="publisherDiscussions" [isSearching]="searchingPublisherDiscussions" [strokeWidth]="7" [diameter]="60"></app-loader>
+        <div *ngIf="currentPublisherDiscussions.length == 0 && !searchingPublisherDiscussions">
+            <app-no-items></app-no-items>
+        </div>
+    </div>
+</div>
+<div class = "similar-discussions mt-2">
+    <div>
+        <p class = "similar-discussions d-inline-block">Similar Discussions</p>
+        <fa-icon class = "d-inline-block mx-2" [icon]="discussionIcon" style="font-size: 20px"></fa-icon>
+    </div>
+    <p class = "p-0 m-0" style="font-size: 15px;">View other similar discussions</p>
+    <div class = "vertical-container">
+        <app-loader [strokeWidth]="7" [diameter]="60" [requiredTemplate]="similarDiscussions" [isSearching]="searchingSimilarDiscussions"></app-loader>
+        <div *ngIf="currentSimilarDiscussions.length == 0 && !searchingSimilarDiscussions">
+            <app-no-items></app-no-items>
+        </div>
+    </div>
+</div>
+
+<ng-template #discussionTemplate let-i>
+    <app-discussion-card [discussion]="i"></app-discussion-card>
+</ng-template>
+<ng-template #similarDiscussions>
+    <div *ngIf="currentSimilarDiscussions.length > 0">
+        <app-text-overflow  (scrollEndReached)="updateSimilarMaxPage()"  [horizontal]="false" [templates]="similarItems"></app-text-overflow>
+    </div>
+</ng-template>
+<ng-template #publisherDiscussions>
+    <div *ngIf="currentPublisherDiscussions.length > 0">
+        <app-text-overflow (scrollEndReached)="updatePublisherMaxPage()" [horizontal]="false" [templates]="publisherItems"></app-text-overflow>
+    </div>
+</ng-template>

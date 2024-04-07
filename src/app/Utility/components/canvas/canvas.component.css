@@ -1,0 +1,40 @@
+p.canvas-title
+{
+    padding: 0;
+    margin: 0;
+    font-size: 25px;
+}
+p.canvas-subtitle {
+    padding: 0;
+    margin: 0;
+    font-size: 15px;
+}
+div.canvas-wrapper-visible
+{
+    height: 100%;
+    padding: 4% 15%;
+    display: block;
+}
+div.canvas-wrapper-not-visible
+{
+    padding: 5% 15%;
+    display: none;
+}
+div.canvas-content {
+    background-color: var(--primary-color);
+    z-index: 100;
+    padding: 10px;
+    border-radius: 5px;
+}
+button.close-button {
+    background-color: var(--secondary-color);
+    border: 0;
+    border: 1px solid var(--primary-color);
+    padding: 15px 40px;
+    border-radius: 5px;
+    font-size: 17px;
+    transition: 0.2s ease-in-out all;
+}
+button.close-button:hover {
+    background-color: var(--tertiary-color);
+}

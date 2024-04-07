@@ -1,0 +1,39 @@
+<div class = "card-wrapper" *ngIf="ban != undefined">
+    <div class = "ban-card-header" style="font-size: 25px;">
+        <fa-icon [icon]="banIcon"></fa-icon>
+        <p class = "p-0 m-0" style="font-size: 17px;">Ban</p>
+    </div>
+    <div class = "ban-card-body">
+        <div class = "row">
+            <div class = "col-6">
+                <p class = "p-0 m-0 text-center">Banner</p>
+                <app-user-holder [userRef]="ban.banner" [showNameInfo]="true"></app-user-holder>
+            </div>
+            <div class = "col-6">
+                <p class = "p-0 m-0 text-center">Banned</p>
+                <app-user-holder [userRef]="ban.banned" [showNameInfo]="true"></app-user-holder>
+            </div>
+        </div>
+        <div class = "mt-1">
+            <p class = "p-0 m-0 d-inline-block">Reason:</p>
+            <p class = "p-0 m-0 d-inline-block mx-1">{{ban.reason}}</p>
+        </div>
+        <div class = "mt-1">
+            <p class = "p-0 m-0 d-inline-block">Type:</p>
+            <p class = "p-0 m-0 d-inline-block mx-1">{{ban.type}}</p>
+        </div>
+    </div>
+    <div class = "ban-card-footer">
+        <div style="font-size: 17px;" class = "d-inline-block w-50" [ngbTooltip]="'Created Date'">
+            <fa-icon [icon]="clockIcon"></fa-icon>
+            <p class = "p-0 m-0 d-inline-block mx-1">{{ban.createdDate}}</p>
+        </div>
+        <div style="font-size: 17px;" class = "d-inline-block w-50" [ngbTooltip]="'Expiration Date'">
+            <fa-icon [icon]="calendarIcon"></fa-icon>
+            <p class = "p-0 mx-1 d-inline-block">{{ban.expirationDate}}</p>
+        </div>
+        <div class = "text-center">
+            <button class = "default-button w-75" (click)="deleteBan()">Delete</button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,68 @@
+<form [formGroup]="formGroup" (submit)="handleSubmit($event)">
+  <div class = "container py-4">
+    <div class = "mx-1">
+        <div class = "mx-1">
+            <h4 class = "d-inline-block">{{update ? "Update board" : "Create a board"}}</h4>
+            <fa-icon class = "mx-2" style="font-size: 25px;" [icon]="boardIcon"></fa-icon>
+            <p>Please specificy a title, a description, a maximum amount of members and a visibility</p>
+        </div>
+        <div class = "px-4 vertical-container">
+            <div>
+                <span class = "d-block mx-2">Title</span>
+                <mat-form-field class = "form-field" *ngIf="title != undefined">
+                    <mat-label class = "input-label">Title</mat-label>
+                    <input matInput placeholder="Title" formControlName="title">
+                    <mat-hint>Write a title...</mat-hint>
+                    <mat-error *ngIf="title.hasError('required') && (title.touched || title.dirty)">Title is required</mat-error>
+                    <mat-error *ngIf="title.hasError('minlength') && (title.touched || title.dirty)">Title is too short, must be longer than 3 characters</mat-error>
+                    <mat-error *ngIf="title.hasError('maxlength') && (title.touched || title.dirty)">Title is too long, must be shorter than 20 characters</mat-error>
+                </mat-form-field>
+            </div>
+            <div>
+                <span class = "d-block mx-2">Description</span>
+                <mat-form-field class = "form-field" *ngIf="description != undefined">
+                    <mat-label class = "input-label">Description</mat-label>
+                    <textarea matInput placeholder="Write a valid description" formControlName="description"></textarea>
+                    <mat-hint>Write a new description....</mat-hint>
+                    <mat-error *ngIf="description.hasError('required') && (description.touched || description.dirty)">Description is required</mat-error>
+                    <mat-error *ngIf="description.hasError('minlength') && (description.touched || description.dirty)">Description is too short, must be longer than 20 characters</mat-error>
+                    <mat-error *ngIf="description.hasError('maxlength') && (description.touched || description.dirty)">Description is too long, must be shorter than 200 characters</mat-error>
+                </mat-form-field> 
+            </div>
+            <div>
+              <span class = "d-block mx-2">Maximum amount of members</span>
+              <mat-form-field class = "form-field" *ngIf="maxMembers != undefined">
+                  <mat-label class = "input-label">Maximum amount of members</mat-label>
+                  <input type="number" matInput placeholder="Maximum amount of members" formControlName="maxMembers">
+                  <mat-hint>Write a a maximum amount of members</mat-hint>
+                  <mat-error *ngIf="description.hasError('required') && (maxMembers.touched || maxMembers.dirty)">Maximum amount is required</mat-error>
+                  <mat-error *ngIf="description.hasError('min') && (maxMembers.touched || maxMembers.dirty)">Maximum amount is too small, must be greater than 5</mat-error>
+                  <mat-error *ngIf="description.hasError('max') && (maxMembers.touched || maxMembers.dirty)">Maximum amount is too big, must be smaller than 20</mat-error>
+              </mat-form-field> 
+          </div>
+          <div>
+            <span class = "d-block mx-2">Visibility</span>
+            <mat-form-field class = "form-field" *ngIf="visibility != undefined">
+                <mat-label class = "input-label">Visibility</mat-label>
+                <mat-select formControlName="visibility">
+                    <mat-option *ngFor="let current of currentVisibilities" [value]="current">{{current}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class = "px-2" *ngIf="update">
+            <span class = "d-block">Background Image</span>
+            <p>Choose one image for the board</p>
+            <div class = "py-2" *ngIf="canDeleteImage">
+                <img [src]="backgroundURL" *ngIf="canDeleteImage" class = "board-image">
+                <button *ngIf="canDeleteImage" class = "default-button w-100 mt-2 d-block" (click)="deleteImage()">Remove image</button>
+            </div>
+            <input class = "mt-2" (change)="updateCurrentImage($event)"  type="file" class="file-upload" onchange="console.log(event.target.files)">
+        </div>
+        </div> 
+    </div> 
+    <div class = "mt-2 text-end mx-1">
+        <button type="submit" class = "default-button" [disabled]="!formGroup.valid && currentImage == null">Confirm</button>
+        <button (click)="reset()" class = "default-button mx-1">Clear</button>
+    </div>
+</div>
+</form>

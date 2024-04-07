@@ -1,0 +1,23 @@
+<div class = "card-wrapper" *ngIf="user != undefined">
+    <div class = "user-card-header">
+        <app-better-image [requiredSource]="'http://localhost:8080/api/v1/userImages/public/user/' + user.id + '/image'" [imageStyle]="{'border-radius': '60%','filter': 'brightness(70%)','width': '100px','height': '100px'}"></app-better-image>
+    </div>
+    <div class = "user-card-body">
+        <h4 class = "p-0 m-0">{{user.username}}</h4>
+        <div>
+            <span class = "p-0 m-0">{{user.name}}</span>
+            <span class = "p-0 mx-1">{{user.surname}}</span>
+        </div>
+        <div>
+            <span class = "p-0 m-0 d-block">{{user.gender}}</span>
+            <span class = "p-0 m-0 d-block">{{user.createdDate}}</span>
+        </div>
+    </div>
+    <div class = "mt-1 p-2">
+        <button (click)="visitProfile()" class = "user-button">Visit Profile</button>
+        <button *ngIf="canReport" (click)="createReport()" class = "user-button mt-1">Report</button>
+    </div>
+</div>
+<ng-template #addReportTemplate>
+    <app-create-report [reportedID]="user?.id" (failedEvent)="this.alertHandler.close()" (successEvent)="this.alertHandler.close()"></app-create-report>
+</ng-template>

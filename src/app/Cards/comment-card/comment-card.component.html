@@ -1,0 +1,40 @@
+<div class = "d-flex" style="background-color: var(--secondary-color);padding: 10px;border-radius: 2px;" *ngIf="currentComment != undefined">
+    <div class = "text-center">
+        <img class = "user-image" [src]="'http://localhost:8080/api/v1/userImages/public/user/' + currentComment.publisher.id + '/image'">
+        <p class = "user-username">{{currentComment.publisher.username}}</p>
+        <div>
+            <span style="font-size: 10px;">{{currentComment.publisher.name}}</span>
+            <span class = "mx-1" style="font-size: 10px;">{{currentComment.publisher.surname}}</span>
+        </div>
+    </div>
+    <div class = "mx-2 px-2 comment-wrapper">
+        <div class = "position-relative w-100">
+            <div class = "text-start">
+                <p class = "comment-title">{{currentComment.title}}</p>
+                <p class = "comment-text">{{currentComment.text}}</p>
+            </div>
+            <div class = "position-absolute" style="top: 0;right: 0">
+                <div class = "d-inline-block">
+                    <fa-icon [icon]="likeIcon"></fa-icon>
+                    <span class = "mx-1">0</span>
+                </div>
+                <div class = "d-inline-block mx-1">
+                    <fa-icon [icon]="calendarIcon"></fa-icon>
+                    <span class = "mx-1">{{currentComment.createdDate}}</span>
+                </div>
+            </div>
+        </div>
+        <div class = "text-end">
+            <button class = "option-button" *ngIf="isOwner" (click)="modifyComment()">Modify</button>
+            <button  class = "option-button mx-1" *ngIf="isOwner" (click)="deleteComment()">Delete</button>
+            <button class = "option-button mx-1" *ngIf="!isOwner" (click)="updateLike()">{{hasLiked ? 'Remove Like' : 'Add Like'}}</button>
+            <button class = "option-button mx-1" *ngIf="!isOwner && !hasReported" (click)="addReport()">Report</button>
+        </div>
+    </div>
+</div>
+<ng-template #addReportTemplate>
+    <app-create-report [commentID]="currentComment?.id" (successEvent)="this.hasReported = true;this.alertHandlerService.close()" (failedEvent)="this.alertHandlerService.close()"></app-create-report>
+</ng-template>
+<ng-template #modifyCommentTemplate>
+    <app-create-comment [update]="true" [commentID]="currentComment?.id" (successEvent)="this.modifiedEvent.emit(this.currentComment);this.currentComment = $event;alertHandlerService.close()" (failedEvent)="this.alertHandlerService.close()"></app-create-comment>
+</ng-template>

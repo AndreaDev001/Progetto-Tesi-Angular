@@ -1,0 +1,41 @@
+<div class = "container-fluid p-3">
+    <section id = "info-section">
+        <div>
+            <h3 class = "d-inline-block">Reports</h3>
+            <fa-icon class = "d-inline-block mx-2" style="font-size: 20px;"  [icon]="reportIcon"></fa-icon>
+        </div>
+        <p class = "mt-1">Here you can see all the reports, use the filters to navigate</p>
+    </section>
+    <div class = "d-none d-md-block">
+        <app-report-filter (filterChanged)="handleFilterChange($event)"></app-report-filter>
+    </div>
+    <div class = "d-block d-md-none text-center py-4">
+        <button class = "filter-button" (click)="openCanvas()">Filters</button>
+    </div>
+    <div class = "container-fluid">
+        <div class = "py-2">
+            <div class = "py-2">
+                <h5 class = "p-0 m-0">Use the filters to find the desired reports</h5>
+                <p class = "p-0 m-0">Try to be the most precise as possible</p>
+        </div>
+        <app-loader [diameter]="80" [strokeWidth]="8" [showText]="true" [requiredTemplate]="reportElements" [fontSize]="20" [isSearching]="isSearching"></app-loader>
+        <div *ngIf="currentItems.length == 0 && !isSearching">
+            <app-no-items (buttonClicked)="resetSearch()"></app-no-items>
+        </div>
+    </div>
+    <div class = "w-100 mt-1 py-2 text-center" *ngIf="currentPage.totalElements > 0 && !isSearching">
+        <app-pagination [pageSize]="currentPage.size" [totalElements]="currentPage.totalElements"  (pageChanged)="handlePageChange($event)"></app-pagination>
+    </div>
+</div>
+<ng-template #reportFilters>
+    <div class = "px-2 w-100">
+        <app-report-filter [rowDisplay]="true" (filterChanged)="handleFilterChange($event)"></app-report-filter>
+    </div>
+</ng-template>
+<ng-template #reportElements>
+    <div class = "row py-1">
+        <div class = "col-6 col-md-3 mt-1" *ngFor="let current of currentItems">
+            <app-report-card (deleteEvent)="deleteReport(current)" [report]="current"></app-report-card>
+        </div>
+    </div>
+</ng-template>

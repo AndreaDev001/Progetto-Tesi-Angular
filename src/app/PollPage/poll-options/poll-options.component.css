@@ -1,0 +1,43 @@
+div.publisher-polls
+{
+    padding: 20px;
+    background-color: var(--secondary-color);
+    border-radius: 20px;
+}
+div.similar-polls
+{
+    padding: 20px;
+    background-color: var(--secondary-color);
+    border-radius: 20px;
+}
+p.publisher-title
+{
+    font-size: 20px;
+    padding: 0;
+    margin: 0;
+}
+p.publisher-subtitle
+{
+    font-size: 15px;
+    padding: 0;
+    margin: 0;
+}
+p.similar-title
+{
+    font-size: 20px;
+    padding: 0;
+    margin: 0;
+}
+p.similar-subtitle {
+
+    font-size: 15px;
+    padding: 0;
+    margin: 0;
+}
+div.vertical-container
+{
+    padding-bottom: 15px;
+    padding-right: 5px;
+    padding-left: 5px;
+    padding-top: 15px;
+}

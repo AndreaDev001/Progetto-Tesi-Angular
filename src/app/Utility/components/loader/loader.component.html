@@ -1,0 +1,12 @@
+<div class = "h-100 w-100" *ngIf="isSearching">
+    <div [ngStyle]="wrapperStyle">
+        <mat-progress-spinner [mode]="'indeterminate'" [diameter]="diameter" [strokeWidth]="strokeWidth"></mat-progress-spinner>
+        <div class = "py-2 text-center" *ngIf="showText">
+            <span class = "d-block" [ngStyle]="{'font-size.px': fontSize}">{{loaderText}}</span>
+            <span class = "d-block" [ngStyle]="{'font-size.px': fontSize}">{{loaderSubtitle}}</span>
+        </div>
+    </div>
+</div>
+<div *ngIf="!isSearching">
+    <ng-container *ngTemplateOutlet="requiredTemplate;context: {$implicit: context}"></ng-container>
+</div>

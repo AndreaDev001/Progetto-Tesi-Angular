@@ -1,0 +1,11 @@
+div.details-holder
+{
+    padding: 5px;
+}
+div.container-wrapper
+{
+    padding: 10px;
+    background-color: var(--primary-color);
+    border-radius: 2px;
+    border: 1px solid var(--secondary-color);
+}

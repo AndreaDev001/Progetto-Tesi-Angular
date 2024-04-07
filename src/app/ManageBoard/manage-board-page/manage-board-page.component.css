@@ -1,0 +1,279 @@
+div.manage-board-wrapper
+{
+
+    background-color: var(--secondary-color);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    width: 100%;
+    height: 100%;
+    padding: 5px;
+}
+button:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    border: 1px solid var(--primary-color);
+}
+input.default-input
+{
+    background-color: var(--primary-color);
+    border: 0;
+}
+@keyframes rotate {
+    from
+    {
+        transform: rotate(0deg);
+    }
+    to
+    {
+        transform: rotate(8deg)
+    }
+}
+.cdk-drag-preview {
+    opacity: 0.8;
+}
+.cdk-drag-preview div.task-group-wrapper
+{
+    padding: 5px;
+    transition: 0.2s ease-in-out all;
+    animation-name: rotate;
+    cursor: move;
+    animation-duration: 100ms;
+    animation-iteration-count: 1;
+    animation-timing-function: linear;
+    animation-fill-mode: forwards;
+}
+.cdk-drag-preview div.task-group-body {
+    padding: 10px 5px;
+    min-height: 150px;
+}
+.cdk-drag-preview div.task-group-wrapper div.task-group-header
+{
+    background-color: inherit;
+    padding: 5px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+.cdk-drag-preview div.task-group-wrapper div.task-group-footer {
+    background-color: inherit;
+    padding: 5px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+div.list-placeholder {
+    min-width: 275px;
+    background-color: var(--primary-color);
+    border-radius: 10px;
+    border: 3px dotted var(--tertiary-color);
+    padding: 10px;
+    opacity: 0.5;
+}
+.item-placeholder
+{
+    width: 100%;
+    background-color: var(--primary-color);
+    border-radius: 10px;
+    border: 3px dotted var(--tertiary-color);
+    opacity: 0.5;
+    min-height: 200px;
+}
+div.content-wrapper 
+{
+    padding: 20px;
+}
+p.board-description {
+    padding: 0;
+    margin: 0;
+    font-size: 15px;
+}
+div.horizontal-container {
+    white-space: nowrap;
+    width: 100%;
+    overflow-x: auto;
+}
+button.close-button {
+    padding: 10px 20px;
+    border: 0;
+    border: 1px solid var(--primary-color);
+    background-color: var(--tertiary-color);
+    border-radius: 10px;
+}
+button.delete-button {
+    padding: 10px 20px;
+    border: 0;
+    border: 1px solid red;
+    background-color: darkred;
+    border-radius: 10px;
+}
+button.task-element-wrapper
+{
+    border: 0;
+    text-align: start;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: var(--primary-color);
+    transition: 0.2s ease-in-out all;
+    width: 100%;
+}
+button.option-button
+{
+    border: 0px;
+    background-color: inherit;
+    padding: 2px;
+}
+button.task-element-wrapper:hover
+{
+    background-color: var(--tertiary-color);
+}
+div.task-element-body
+{
+    padding: 5px 0px;
+}
+p.task-element-title
+{
+    padding: 0;
+    margin: 0;
+}
+p.task-element-subtitle
+{
+    padding: 0;
+    margin: 0;
+    font-size: 10px;
+}
+img.assigned-image
+{
+    border-radius: 60%;
+    width: 30px;
+    height: 30px;
+    filter: brightness(70%);
+    border: 1px solid var(--tertiary-color);
+}
+body {
+    width: 100%;
+    height: 100vh;
+    margin: 0px;
+  }
+button.assigned-member-wrapper
+{
+    display: inline-block;
+    margin-left: 3px;
+    border: 0;
+    padding: 0;
+    background-color: inherit;
+}
+div.add-group-wrapper {
+    padding: 5px;
+    background-color: var(--primary-color);
+}
+input.create-group-input
+{
+    display: block;
+    width: 100%;
+    padding: 5px;
+    color: whitesmoke;
+    border: 1px solid var(--tertiary-color);
+    border-radius: 5px;
+    background-color: var(--secondary-color);
+}
+button.add-group-button
+{
+    background-color: var(--secondary-color);
+    border: 1px solid var(--primary-color);
+    border: 0;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    width: 100%;
+    border-radius: 5px;
+    transition: 0.2s ease-in-out all;
+}
+button.add-group-button:disabled {
+    opacity: 0.7;
+}
+button.add-group-button:hover
+{
+    background-color: var(--tertiary-color);
+}
+div.task-group-wrapper {
+    background-color: var(--primary-color);
+    padding: 5px;
+    border-radius: 10px;
+    width: 275px;
+    opacity: 0.98;
+}
+div.task-group-header {
+    position: relative;
+    padding: 5px;
+}
+div.task-group-footer {
+    position: relative;
+    padding: 5px;
+}
+div.task-group-body {
+    padding: 10px 5px;
+    min-height: 150px;
+    background-color: var(--secondary-color);
+}
+button.task-option
+{
+    text-align: start;
+    border: 0;
+    background-color: var(--secondary-color);
+    padding: 10px;
+    width: 100%;
+    display: block;
+    transition: 0.2s ease-in-out all;
+}
+button.task-option:hover {
+    background-color: var(--tertiary-color);
+    padding-left: 20px;
+}
+p.group-title {
+    padding: 5px;
+    margin: 0;
+    font-size: 15px
+}
+button.option-button
+{
+    border: 0;
+    background-color: var(--primary-color);
+    padding: 5px;
+    transition: 0.2s ease-in-out all;
+}
+button.option-button:hover {
+    background-color: var(--tertiary-color);
+    border-radius: 100px;
+}
+button.create-group-button {
+    border: 0;
+    padding: 5px;
+    background-color: var(--secondary-color);
+    border-radius: 5px;
+}
+button.add-task-button
+{
+    border: 0;
+    font-size: 15px;
+    background-color: var(--primary-color);
+    padding: 5px;
+    transition: 0.2s ease-in-out all;
+}
+button.info-button {
+    border: 0;
+    font-size: 15px;
+    background-color: var(--primary-color);
+    padding: 5px;
+    transition: 0.2s ease-in-out;
+}
+button.add-task-button:hover {
+    background-color: var(--tertiary-color);
+    border-radius: 20px;
+}
+button.info-button:hover {
+    background-color: var(--tertiary-color);
+    border-radius: 20px;
+}
+div.task-element-wrapper {
+    margin-top: 5px;
+}

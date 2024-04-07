@@ -1,0 +1,32 @@
+div.search-selection-wrapper
+{
+    padding: 10px;
+    background-color: var(--secondary-color);
+}
+button.confirm-button {
+    background-color: var(--primary-color);
+    padding: 10px 20px;
+    width: 40%;
+    border: 0;
+    border-radius: 5px;
+    transition: 0.2s ease-in-out all;
+}
+button.confirm-button:disabled {
+    opacity: 0.70;
+}
+button.confirm-button:hover {
+    background-color: var(--tertiary-color);
+}
+button.selected-element
+{
+    background-color: var(--tertiary-color);
+    text-align: start;
+    width: 100%;
+    border-radius: 2px;
+}
+button.unselected-element {
+    background-color: var(--secondary-color);
+    text-align: start;
+    width: 100%;
+    border-radius: 5px;
+}

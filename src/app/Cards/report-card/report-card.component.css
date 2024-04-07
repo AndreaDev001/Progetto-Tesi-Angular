@@ -1,0 +1,32 @@
+div.card-wrapper {
+    border: 0;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-radius: 10px;
+    padding: 5px;
+    background-color: var(--secondary-color);
+    transition: 0.2s ease-in-out all;
+    width: 100%;
+    text-align: start;
+    border: 1px solid var(--primary-color);
+}
+div.report-card-header {
+    padding: 5px;
+    text-align: center;
+    background-color: var(--primary-color);
+}
+div.report-card-footer {
+    padding: 5px 10px;
+}
+div.report-card-body {
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 10px;
+    padding-bottom: 5px;
+}
+p.report-title
+{
+    padding: 0;
+    margin: 0;
+    font-size: 17px;
+}

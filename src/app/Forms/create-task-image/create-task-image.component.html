@@ -1,0 +1,35 @@
+<form [formGroup]="formGroup" (submit)="handleSubmit($event)">
+    <div class = "container">
+        <div class = "mx-1">
+            <div class= "mx-1">
+                <h4 class = "d-inline-block">Add an image</h4>
+                <fa-icon class = "mx-2" style="font-size: 25px;" [icon]="imageIcon"></fa-icon>
+                <p>Please specificy the new files to be added</p>
+            </div>
+        </div>
+        <div class = "py-2 px-1">
+            <div *ngIf="!isCreating">
+                <div>
+                    <div class = "position-relative" *ngFor="let current of currentFiles">
+                        <p class = "w-75 d-inline-block">
+                            {{current.name}}
+                        </p>
+                        <div class = "w-25 text-end d-inline-block">
+                            <button (click)="removeFile(current)" class = "remove-button">
+                                <fa-icon [icon]="removeIcon"></fa-icon>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <input formControlName="image" (change)="updateCurrentFiles($event)" type="file" class="file-upload" onchange="console.log(event.target.files)">
+                <div class = "mt-2 text-end">
+                    <button  type="submit" [disabled]="currentFiles.length == 0" class = "default-button">Confirm</button>
+                </div>
+            </div>
+            <div *ngIf="isCreating" style="display: flex;flex-direction: column;align-items: center;padding: 10px 0px">
+                <mat-progress-spinner [diameter]="60" [strokeWidth]="5" [mode]="'indeterminate'"></mat-progress-spinner>
+                <p>Uploading image, please wait...</p>
+            </div>
+        </div>
+    </div>
+</form>

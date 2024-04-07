@@ -1,0 +1,34 @@
+div.card-wrapper
+{
+    border: 0;
+    background-color: var(--secondary-color);
+    border-radius: 2px;
+    color: whitesmoke;
+    width: 100%;
+}
+div.user-card-header
+{
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 10px;
+}
+div.user-card-body
+{
+    text-align: start;
+    padding: 5px 10px;
+}
+button.user-button
+{
+    border: 0;
+    display: block;
+    background-color: var(--primary-color);
+    border-radius: 5px;
+    padding: 10px 20px;
+    width: 100%;
+    transition: 0.2s ease-in-out all;
+}
+button.user-button:hover {
+    background-color: var(--tertiary-color);
+}

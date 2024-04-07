@@ -1,0 +1,42 @@
+<div class = "container-fluid p-3">
+    <section id = "info-section">
+        <div>
+            <h3 class = "p-0 m-0 d-inline-block">Bans</h3>
+            <fa-icon class = "mx-1" style="font-size: 20px;" [icon]="banIcon"></fa-icon>
+        </div>
+        <p class = "mt-1">Here you can see all the bans, use the filters to navigate</p>
+    </section>
+    <div class = "d-none d-md-block">
+        <app-ban-filter (filterChanged)="handleFilterChange($event)"></app-ban-filter>
+    </div>
+    <div class = "d-block d-md-none text-center py-4">
+        <button class = "filter-button" (click)="openCanvas()">Filters</button>
+    </div>
+    <div class = "container-fluid">
+        <div>
+            <div class = "py-2">
+                <h5 class = "p-0 m-0">Use the filters to find the desired bans</h5>
+                <p class = "p-0 m-0">Try to be the most precise as possible</p>
+            </div>
+            <app-loader [isSearching]="isSearching" [diameter]="80" [fontSize]="20" [strokeWidth]="8" [showText]="true" [requiredTemplate]="bansTemplate"></app-loader>
+        </div>
+        <div *ngIf="currentItems.length == 0 && !isSearching">
+            <app-no-items (buttonClicked)="resetSearch()"></app-no-items>
+        </div>
+    </div>
+    <div class = "w-100 mt-1 py-2 text-center" *ngIf="currentPage.totalElements > 0 && !isSearching">
+        <app-pagination [pageSize]="currentPage.size" [totalElements]="currentPage.totalElements"  (pageChanged)="handlePageChange($event)"></app-pagination>
+    </div>
+</div>
+<ng-template #banFitlers>
+    <div class = "px-2 w-100">
+        <app-ban-filter [rowDisplay]="true" (filterChanged)="handleFilterChange($event)"></app-ban-filter>
+    </div>
+</ng-template>
+<ng-template #bansTemplate>
+    <div class = "row py-1">
+        <div class = "col-6 col-md-3 mt-1" *ngFor="let current of currentItems">
+            <app-ban-card (deleteBanEvent)="deleteBan(current)" [ban]="current"></app-ban-card>
+        </div>
+    </div>
+</ng-template>

@@ -1,0 +1,8 @@
+
+div.vertical-container
+{
+    padding: 10px;
+    white-space: nowrap;
+    overflow-y: auto;
+    max-height: 400px;
+}

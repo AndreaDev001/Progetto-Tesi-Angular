@@ -1,0 +1,139 @@
+<div *ngIf="currentBoard" class = "manage-board-wrapper" [ngStyle]="{'background-image': 'url(' + backgroundURL + '),linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2))'}">
+    <div>
+        <app-board-header [isBoardAdmin]="isBoardAdmin" [isAdmin]="isAdmin" (usersChanged)="this.searchBoard()" (modifiedBoard)="reloadBoardInfo()" [board]="currentBoard"></app-board-header>
+    </div>
+    <div class = "horizontal-container py-2" style="height: 92%;">
+        <div class = "d-flex"  cdkDropList cdkDropListOrientation="horizontal" (cdkDropListDropped)="dropList($event)">
+            <div cdkDrag class = "mx-1 draggable-box" *ngFor="let current of currentTaskGroups;let i = index">
+                <div class = "list-placeholder" [ngStyle]="{'height.px': this.currentHeight}" *cdkDragPlaceholder></div>
+                <div class = "task-group-wrapper">
+                    <div class = "task-group-header">
+                        <div class = "d-flex">
+                            <div class = "w-50 text-start">
+                                <input [readonly]="!isBoardAdmin && !isAdmin" (change)="nameChanged($event,current.id)" class = "default-input" [defaultValue]="current.name">
+                            </div>
+                            <div class = "w-50 text-end">
+                                <div container="body" ngbDropdown class="d-inline-block">
+                                    <button type="button" class = "option-button" ngbDropdownToggle>
+                                    </button>
+                                    <div class = "secondary-color" ngbDropdownMenu>
+                                        <button [disabled]="!isBoardAdmin && !isAdmin" (click)="deleteGroup(current.id,i)" class = "task-option">Delete</button>
+                                        <button [disabled]="!isBoardAdmin && !isAdmin" (click)="clearGroup(current.id,i)" class = "task-option">Clear</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class = "h-100 task-group-body position-relative" cdkDropList [cdkDropListData]="currentTasks[i]" [cdkDropListConnectedTo]="generateConnection(i)" [id]="'container' + i" (cdkDropListDropped)="dropItem($event)">
+                        <div *ngIf="searchingTasks[i]" style="display: flex;flex-direction: column;align-items: center;padding: 10px 0px">
+                            <mat-progress-spinner [diameter]="60" [strokeWidth]="5" [mode]="'indeterminate'"></mat-progress-spinner>
+                        </div>
+                        <div *ngIf="!searchingTasks[i]">
+                            <div *ngIf="currentTasks[i].length > 0">
+                                <div (cdkDragStarted)="updateCurrentTask($event,value);" class = "task-element-draggable draggable-box" cdkDrag *ngFor="let value of currentTasks[i];let j = index">
+                                    <div class= "item-placeholder" *cdkDragPlaceholder></div>
+                                    <div class = "task-element-wrapper">
+                                        <app-task-element [isBoardAdmin]="isBoardAdmin" [isAdmin]="isAdmin" [board]="currentBoard" [task]="value"></app-task-element>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class = "position-absolute w-100" *ngIf="currentTasks[i].length == 0 && !searchingTasks[i]">
+                            <div class = "text-center">
+                                <fa-icon style="font-size: 60px;" [icon]="emptyIcon"></fa-icon>
+                                <p>No Assigned Tasks, add one</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class = "task-group-footer">
+                        <div class = "w-50 text-start d-inline-block">
+                            <button class = "add-task-button" (click)="addTask(current)">
+                                <fa-icon class = "d-inline-block" [icon]="addTaskIcon"></fa-icon>
+                                <span class = "d-inline-block mx-1">Add a task</span>
+                            </button>
+                        </div>
+                        <div class = "w-50 text-end d-inline-block">
+                            <button class = "info-button">
+                                <fa-icon class = "d-inline-block" [icon]="infoIcon"></fa-icon>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class = "add-group-wrapper">
+                    <button [disabled]="currentNewGroupName == undefined || currentNewGroupName != undefined && currentNewGroupName.trim() == '' || !isBoardAdmin && !isAdmin" (click)="createGroup()" class = "add-group-button">Create a new group</button>
+                    <div class = "p-1">
+                        <p class = "p-0 m-0" style="word-break: wrap;">You can create a new group for this board</p>
+                        <p class = "p-0 m-0">Specify a name for this group</p>
+                        <div class = "py-1">
+                            <label for="groupName">Name:</label>
+                            <input [readOnly]="!isBoardAdmin && !isAdmin" [value]="currentNewGroupName != undefined ? currentNewGroupName : ''" (input)="updateNewGroupName($event)" [placeholder]="'Group name...'" class = "create-group-input" id="groupName" type="text">
+                            <span class = "d-block" style="font-size: 12px;">Write the name of the new group</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<ng-template #createTaskTemplate>
+    <div class = "secondary-color" *ngIf="currentGroup != undefined">
+        <app-create-task (submitEvent)="alertHandler.close()" (successEvent)="addNewTask($event)" (failedEvent)="alertHandler.close()" [groupID]="currentGroup.id"></app-create-task>
+    </div>
+</ng-template>
+
+<!--
+            <div class = "d-flex" cdkDropList cdkDropListOrientation="horizontal" (cdkDropListDropped)="dropList($event)">
+            <div cdkDrag class = "draggable mx-2 p-2 secondary-color" *ngFor="let current of values;let i = index">
+                <p>{{i}}</p>
+                <div style="width: 300px;height: 300px;" [cdkDropListData]="current" [cdkDropListConnectedTo]="generateConnection(i)" [id]="'container' + i" cdkDropList cdkDropListOrientation="vertical" (cdkDropListDropped)="dropItem($event)" >
+                    <div class = "draggable-box" cdkDrag *ngFor="let value of values[i]">
+                        <p>{{value}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+-->
+
+
+<!---
+
+<div class = "d-flex" cdkDropList cdkDropListOrientation="horizontal" (cdkDropListDropped)="dropList($event)" >
+    <div cdkDrag  class = "draggable mx-1" *ngFor="let current of currentTaskGroups;let i = index">
+        <div class = "h-100" cdkDropList [cdkDropListData]="currentTasks[i]" [cdkDropListConnectedTo]="generateConnection(i)" [id]="'container' + i" (cdkDropListDropped)="dropItem($event)">
+            <div class = "task-group-wrapper">
+                <div class = "task-group-header">
+                    <div class = "d-flex">
+                        <div class = "w-50 text-start">
+                            <p class = "group-title">{{current.name}}</p>
+                        </div>
+                        <div class = "w-50 text-end">
+                            <button class = "option-button">
+                                <fa-icon [icon]="optionIcon" style="font-size: 15px;"></fa-icon>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class = "task-group-body">
+                    <div class = "draggablen" cdkDrag *ngFor="let value of currentTasks[i]">
+                        <app-task-element [task]="value"></app-task-element>
+                    </div>
+                </div>
+                <div class = "task-group-footer">
+                    <div class = "w-50 text-start d-inline-block">
+                        <button class = "add-task-button">
+                            <fa-icon class = "d-inline-block" [icon]="addTaskIcon"></fa-icon>
+                            <span class = "d-inline-block mx-1">Add a task</span>
+                        </button>
+                    </div>
+                    <div class = "w-50 text-end d-inline-block">
+                        <button class = "info-button">
+                            <fa-icon class = "d-inline-block" [icon]="infoIcon"></fa-icon>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    --->

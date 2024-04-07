@@ -1,0 +1,27 @@
+<div>
+    <div>
+        <div [ngClass]="rowDisplay ? 'd-block mt-1' : 'd-inline-block mx-1'">
+            <app-search-bar [defaultValue]="currentFilter.name" (searchChanged)="updateFilter(currentFilter,'name',$event)" [currentLabel]="'Name'" [currentSupportingText]="'Write a name...'" [currentPlaceholder]="'Name'"></app-search-bar>
+        </div>
+        <div [ngClass]="rowDisplay ? 'd-block mt-1' : 'd-inline-block mx-1'">
+            <app-search-bar [defaultValue]="currentFilter.description" (searchChanged)="updateFilter(currentFilter,'description',$event)" [currentLabel]="'Description'" [currentSupportingText]="'Write a description...'" [currentPlaceholder]="'Surname...'"></app-search-bar>
+        </div>
+        <div [ngClass]="rowDisplay ? 'd-block mt-1' : 'd-inline-block mx-1'">
+            <app-search-bar [defaultValue]="currentFilter.publisherUsername" (searchChanged)="updateFilter(currentFilter,'publisherUsername',$event)" [currentLabel]="'Publisher username'" [currentSupportingText]="'Write an username...'" [currentPlaceholder]="'Username...'"></app-search-bar>
+        </div>
+        <div [ngClass]="rowDisplay ? 'd-block mt-1' : 'd-inline-block mx-1'">
+            <app-search-bar [defaultValue]="currentFilter.publisherName" (searchChanged)="updateFilter(currentFilter,'publisherName', $event)" [currentLabel]="'Publisher name'" [currentSupportingText]="'Write a name...'" [currentPlaceholder]="'Name...'"></app-search-bar>
+        </div>
+        <div [ngClass]="rowDisplay ? 'd-block mt-1' : 'd-inline-block mx-1'">
+            <app-search-bar [defaultValue]="currentFilter.publisherSurname" (searchChanged)="updateFilter(currentFilter,'publisherSurname',$event)" [currentLabel]="'Publisher surname'" [currentSupportingText]="'Write a surname...'" [currentPlaceholder]="'Surname...'"></app-search-bar>
+        </div>
+    </div>
+    <div class = "mt-1">
+        <div [ngClass]="rowDisplay ? 'd-block mt-1' : 'd-inline-block mx-1'">
+            <app-dropdown [currentOptions]="currentGenders" [currentLabel]="'Gender'" [currentSupportingText]="'Please choose one of the avaliable options'" [defaultValue]="'MALE'"></app-dropdown>
+        </div>
+        <div [ngClass]="rowDisplay ? 'd-block mt-1' : 'd-inline-block mx-1'">
+            <app-dropdown [currentOptions]="currentPriorities" [currentLabel]="'Priority'" [currentSupportingText]="'Please choose one of the avaliable options'"></app-dropdown>
+        </div>
+    </div>
+</div>

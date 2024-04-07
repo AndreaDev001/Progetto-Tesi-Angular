@@ -1,0 +1,105 @@
+<div class = "container-fluid board-header-wrapper" *ngIf="board != undefined">
+    <div class = "w-50 text-start d-inline-block">
+        <div class = "d-inline-block">
+            <h5>{{board.title}}</h5>
+        </div>
+        <div class = "d-inline-block mx-1">
+            <div container="body" ngbDropdown class="d-inline-block">
+                <button class = "option-template" type="button" ngbDropdownToggle>
+                    Teams
+                </button>
+                <div ngbDropdownMenu class = "default-dropdown">
+                    <div class = "p-0 m-0" ngbDropdownItem *ngFor="let current of currentTeamOptions;let i = index">
+                        <ng-container *ngTemplateOutlet="teamTemplate;context: {index: i,teamOption: current,team: this.currentTeams[i]}"></ng-container> 
+                    </div>
+                    <button [placement]="'right'" [ngbTooltip]="!isAdmin && !isBoardAdmin ? 'You must be an admin to perform this operation' : 'Create a team'" [disabled]="!isBoardAdmin && !isAdmin" (click)="handleCreateTeam()" class = "create-team-button">
+                        <fa-icon [icon]="plusIcon"></fa-icon>
+                        <span class = "mx-2">Create a team</span>
+                    </button>
+                </div>
+            </div>
+            <button [disabled]="!isBoardAdmin && !isAdmin" [placement]="'right'" [ngbTooltip]="!isAdmin && !isBoardAdmin ? 'You must be an admin to perform this operation ' : 'Invite a member'" class = "option-template" (click)="createInvite()">
+                <p class = "p-0 m-0 d-inline-block">Invite</p>
+                <fa-icon class = "d-inline-block mx-1" [icon]="inviteIcon"></fa-icon>
+            </button>
+        </div>
+        <div class = "d-inline-block mx-1 position-relative">
+            <div class = "d-inline-block mx-1" *ngFor="let current of currentMembers">
+                <ng-container *ngTemplateOutlet="memberTemplate;context: {member: current}"></ng-container>
+            </div>
+        </div>
+    </div>
+    <div class = "w-50 text-end d-inline-block">
+        <button [disabled]="!isBoardAdmin && !isAdmin" [ngbTooltip]="!isAdmin && !isBoardAdmin ? 'You must be an admin to perform this operation' : 'Modify the board'" [placement]="'left'" (click)="modifyOptions()" class = "option-template">
+            <fa-icon [icon]="optionIcon" class = "d-inline-block"></fa-icon>
+            <p class = "m-0 p-0 d-inline-block mx-1">Modify board</p>
+        </button>
+    </div>
+</div>
+
+<ng-template #teamTemplate let-teamOption="teamOption" let-team="team" let-index="index">
+    <div class = "d-flex">
+        <button class = "team-option" (click)="handleClickedTeam(team)">
+            <fa-icon [icon]="teamOption.icon" class = "d-inline-block"></fa-icon>
+            <span class = "mx-2">{{teamOption.name}}</span>
+        </button>
+        <button [disabled]="!isBoardAdmin && !isAdmin" class = "delete-team-button" (click)="removeTeam(team,index)">
+            <fa-icon [icon]="closeIcon"></fa-icon>
+        </button>
+    </div>
+</ng-template>
+<ng-template #createTeamTemplate>
+    <div class = "secondary-color">
+        <app-create-team (successEvent)="this.handleSuccessTeam($event)" (failedEvent)="this.alertHandlerService.close()" [boardID]="board?.id"></app-create-team>
+    </div>
+</ng-template>
+<ng-template #teamListTemplate>
+    <div *ngIf="this.currentSelectedTeam != undefined">
+        <app-multi-selection (confirmEvent)="this.deleteTeamMembers($event)" (cancelEvent)="this.alertHandlerService.close()" [showAlwaysButton]="false" [selectedText]="'Removed'" [unselectedText]="'Remove'" [requiredTemplate]="teamMemberHolder" [requiredObservable]="this.teamMemberService.getTeamMembersByTeam(this.currentSelectedTeam.id)"></app-multi-selection>
+    </div>
+</ng-template>
+<ng-template #createInviteTemplate let-userID="userID">
+    <div *ngIf="board != undefined" class = "secondary-color">
+        <app-create-invite [boardID]="board.id" [user]="currentInvitedUser" (successEvent)="this.alertHandlerService.close()" (failedEvent)="this.alertHandlerService.close()"></app-create-invite>
+    </div>
+</ng-template>
+<ng-template #addUserTemplate>
+    <app-search-selection (confirmEvent)="updateInvitedUser($event)" (cancelEvent)="this.alertHandlerService.close()" [requiredContext]="this.userService" [requiredTemplate]="userTemplate" [requiredObservable]="this.userService.getPossibleBoardUsers" [boardID]="this.board?.id" [placeholder]="'Username...'" [label]="'Username'" [supportingText]="'Write the username of the desired user...'"></app-search-selection>
+    <!--
+            <app-add-user (confirmedEvent)="updateInvitedUser($event)" (cancelEvent)="closeCreateInvite()"></app-add-user>
+    -->
+</ng-template>
+<ng-template #memberTemplate let-user="user" let-member="member">
+    <div ngbDropdown container="body" class = "d-inline-block">
+        <button (click)="updateAdmin(member)" class = "image-wrapper" ngbDropdownToggle>
+            <img class = "member-image" style="top: 0;left: 0" [src]="'http://localhost:8080/api/v1/userImages/public/user/' + member.user.id + '/image'">
+        </button>
+        <div class = "member-dropdown" ngbDropdownMenu *ngIf="isBoardAdmin">
+            <app-loader [diameter]="60" [strokeWidth]="6" [isSearching]="searchingMember" [requiredTemplate]="memberDropdown"></app-loader>
+        </div>
+    </div>
+</ng-template>
+<ng-template #addMemberTemplate>
+    <div *ngIf="board != undefined && this.currentSelectedTeam != undefined">
+        <app-multi-selection [requiredTemplate]="userHolder" (confirmEvent)="confirmTeamMembers()" (selectionChanged)="handleSelectionChange($event)" [requiredObservable]="this.boardMemberService.getPossibleTeamMembers(this.board.id,this.currentSelectedTeam.id)" (cancelEvent)="this.alertHandlerService.close()" ></app-multi-selection>
+    </div>
+</ng-template>
+<ng-template #modifyBoardTemplate>
+    <app-create-board  (successEvent)="this.modifiedBoard.emit(this.board?.id)" [update]="true" [boardID]="board?.id"></app-create-board>
+</ng-template>
+<ng-template #userHolder let-i>
+    <app-user-holder [userRef]="i.user"></app-user-holder>
+</ng-template>
+<ng-template #teamMemberHolder let-i>
+    <app-user-holder [userRef]="i.member.user"></app-user-holder>
+</ng-template>
+<ng-template #userTemplate let-i>
+    <app-user-holder [user]="i"></app-user-holder>
+</ng-template>
+<ng-template #memberDropdown let-member>
+    <div>
+        <button (click)="changeRole(member)" ngbDropdownItem class = "member-option">{{currentUserAdmin ? 'Demote to member' : 'Promote to admin'}}</button>
+        <button (click)="removeFromBoard(member)" ngbDropdownItem class = "member-option">Remove from board</button>
+        <button ngbDropdownItem class = "member-option">Visit profile</button>
+    </div>
+</ng-template>

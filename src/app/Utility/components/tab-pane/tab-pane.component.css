@@ -1,0 +1,31 @@
+button.button-wrapper
+{
+    padding: 10px;
+    border: 0;
+    background-color: inherit;
+    width: 100%;
+    text-align: center;
+    border-bottom: 1px solid var(--secondary-color);
+    transition: 0.2s ease-in-out all;
+}
+div.option-container {
+    background-color: var(--primary-color);
+}
+div.option-container-selected {
+    background-color: var(--tertiary-color);
+}
+button.button-wrapper:hover
+{
+    background-color: var(--tertiary-color);
+}
+p.option-text
+{
+    font-size: 20px;
+    padding: 0;
+    margin: 0;
+}
+p.option-subtitle {
+    padding: 0;
+    margin: 0;
+    font-size: 15px;
+}

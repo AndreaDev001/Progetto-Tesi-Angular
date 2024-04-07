@@ -1,0 +1,27 @@
+<div class = "container py-4">
+    <div>
+        <div class = "d-flex" style="font-size: 30px;">
+            <p>Invites</p>
+            <fa-icon class = "mx-2" [icon]="inviteIcon"></fa-icon>
+        </div>
+        <p>View all the invites you have received</p>
+    </div>
+    <div class = "py-2 text-center">
+        <app-loader [strokeWidth]="10" [diameter]="100" [fontSize]="20"  [loaderSubtitle]="'Searching invites...'" [requiredTemplate]="boardInvites" [isSearching]="isSearching"></app-loader>
+        <div *ngIf="currentInvites.length == 0 && !isSearching">
+            <app-no-items></app-no-items>
+        </div>
+        <div *ngIf="currentPage.totalElements > 0 && !isSearching">
+            <app-pagination [totalElements]="currentPage.totalElements" [pageSize]="currentPage.size"></app-pagination>
+        </div>
+    </div>
+</div>
+<ng-template #boardInvites>
+    <div *ngIf="currentInvites.length > 0">
+        <div class = "row">
+            <div class = "col-12 col-md-2 mt-2" *ngFor="let current of currentInvites">
+                <app-board-invite-card [boardInvite]="current"></app-board-invite-card>
+            </div>
+        </div>
+    </div>
+</ng-template>

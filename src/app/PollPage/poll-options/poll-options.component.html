@@ -1,0 +1,35 @@
+<div class = "publisher-polls">
+    <div>
+        <p class = "publisher-title d-inline-block">Publisher Polls</p>
+        <fa-icon class = "mx-2 d-inline-block" [icon]="userIcon" style="font-size: 20px;"></fa-icon>
+        <p class = "publisher-subtitle">View other polls created from the same user</p>
+    </div>
+    <div class = "vertical-container">
+        <div *ngIf="currentPublisherPolls.length > 0">
+            <div class = "mt-1" *ngFor="let current of currentPublisherPolls">
+                <app-poll-card [poll]="current"></app-poll-card>                
+            </div>
+        </div>
+        <div *ngIf="currentPublisherPolls.length == 0">
+            <app-no-items></app-no-items>
+        </div>
+    </div>
+
+</div>
+<div class = "similar-polls mt-2">
+    <div>
+        <p class = "similar-title d-inline-block">Similar Polls</p>
+        <fa-icon class = "mx-2 d-inline-block" [icon]="pollIcon" style="font-size: 20px;"></fa-icon>
+        <p class = "publisher-subtitle">View other similar polls</p>
+    </div>
+    <div class = "vertical-container">
+        <div *ngIf="currentSimilarPolls.length > 0">
+            <div class = "mt-1" *ngFor="let current of currentSimilarPolls">
+                <app-poll-card [poll]="current"></app-poll-card>
+            </div>
+        </div>
+        <div *ngIf="currentSimilarPolls.length == 0">
+            <app-no-items></app-no-items>
+        </div>
+    </div>
+</div>

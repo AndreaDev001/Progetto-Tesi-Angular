@@ -1,0 +1,16 @@
+<div [ngClass]="isVoted ? 'option-voted' : 'option-wrapper'" *ngIf="pollOption != undefined">
+    <div class = "row">
+        <div class = "col-12 col-md-8">
+            <p class = "option-text">{{pollOption.name}}</p>
+            <p class = "option-description">{{pollOption.description}}</p>
+        </div>
+        <div class = "col-12 col-md-4 text-end">
+            <button class = "default-button mx-1" *ngIf="isOwner" (click)="modifyOption()">Modify</button>
+            <button class = "default-button mx-1" *ngIf="isOwner" (click)="deleteOption()">Delete</button>
+            <button class = "default-button mx-1" (click)="voteOption()" *ngIf="!isVoted">Vote</button>
+        </div>
+    </div>
+</div>
+<ng-template #modifyOptionTemplate>
+    <app-create-poll-option [update]="true" [optionID]="this.pollOption!!.id" (successEvent)="this.pollOption = $event;this.alertHandlerService.close()" (failedEvent)="this.alertHandlerService.close()"></app-create-poll-option>
+</ng-template>

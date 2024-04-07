@@ -1,0 +1,44 @@
+<div class = "container-fluid p-3">
+    <section id = "info-section">
+        <div>
+            <h3 class = "d-inline-block">Users</h3>
+            <fa-icon class = "d-inline-block mx-2" [icon]="userIcon" style="font-size: 25px;"></fa-icon>
+        </div>
+        <p class = "mt-1">Here you can see all of the users, use the filters to navigate</p>
+    </section>
+    <div class = "d-none d-md-block">
+        <app-user-filter (filterChanged)="handleFilterChange($event)"></app-user-filter>
+    </div>
+    <div class = "d-block d-md-none text-center py-4">
+        <button class = "filter-button" (click)="openCanvas()">Filters</button>
+    </div>
+    <div class = "container-fluid">
+        <div>
+            <div class = "py-2">
+                <div class = "py-2">
+                    <h5 class = "p-0 m-0">Use the filters to find the desired users</h5>
+                    <p class = "p-0 m-0">Try to be the most precise as possible</p>
+                </div>
+                <app-loader  [diameter]="80" [strokeWidth]="8" [showText]="true" [isSearching]="isSearching" [fontSize]="20" [requiredTemplate]="usersTemplate"></app-loader>
+            </div>
+        </div>
+        <div *ngIf="currentItems.length == 0 && !isSearching">
+            <app-no-items (buttonClicked)="resetSearch()"></app-no-items>
+        </div>
+    </div>
+    <div class = "w-100 mt-1 py-2 text-center" *ngIf="currentPage.totalElements > 0 && !isSearching">
+        <app-pagination [pageSize]="currentPage.size" [totalElements]="currentPage.totalElements" (pageChanged)="handlePageChange($event)"></app-pagination>
+    </div>
+</div>
+<ng-template #userFilters>
+    <div class = "px-2 w-100">
+        <app-user-filter [rowDisplay]="true" (filterChanged)="handleFilterChange($event)"></app-user-filter>
+    </div>
+</ng-template>
+<ng-template #usersTemplate>
+    <div class = "row">
+        <div class = "col-6 col-md-2 mt-2" *ngFor="let current of currentItems">
+            <app-user-card [user]="current"></app-user-card>
+        </div>
+    </div>
+</ng-template>

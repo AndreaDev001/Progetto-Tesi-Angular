@@ -1,0 +1,24 @@
+<div class = "add-player-wrapper">
+    <div class = "d-block">
+        <div class = "px-2 text-center">
+            <app-search-bar (searchChanged)="handleChange($event)" [currentPlaceholder]="'Username...'" [currentLabel]="'Username'" [currentSupportingText]="'Write the username of an user...'"></app-search-bar>
+        </div>
+    </div>
+    <div class = "mt-1">
+        <div *ngIf="currentUsers.length > 0">
+            <app-text-overflow [horizontal]="false" [templates]="currentUsersItems" (scrollEndReached)="updateMaxPage()"></app-text-overflow>
+        </div>
+        <div class = "py-1" *ngIf="currentUsers.length == 0">
+            <app-no-items></app-no-items>
+        </div>
+    </div>
+    <div class = "mt-2 text-end">
+        <button (click)="confirmSelection()" [disabled]="currentSelectedUser == undefined"  class = "confirm-button">Confirm</button>
+        <button (click)="cancelSelection()" class = "cancel-button">Cancel</button>
+    </div>
+</div>
+<ng-template #userTemplate let-i>
+    <button (click)="currentSelectedUser = i" [ngClass]="this.currentSelectedUser == i ? 'player-button-selected' : 'player-button-wrapper'">
+        <app-user-holder [user]="i"></app-user-holder>
+    </button>
+</ng-template>

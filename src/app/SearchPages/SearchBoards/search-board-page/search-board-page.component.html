@@ -1,0 +1,42 @@
+<div class = "container-fluid p-3">
+    <section id = "info-section">
+        <div>
+            <h3 class = "d-inline-block">Boards</h3>
+            <fa-icon class = "d-inline-block mx-2" style="font-size: 20px;"  [icon]="boardIcon"></fa-icon>
+        </div>
+        <p class = "mt-1">Here you can see of all the boards in the organization</p>
+    </section>
+    <div class = "d-none d-md-block">
+        <app-board-filter (filterChanged)="handleFilterChange($event)"></app-board-filter>
+    </div>
+    <div class = "d-block d-md-none text-center py-4">
+        <button class = "filter-button" (click)="openCanvas()">Filters</button>
+    </div>
+    <div class = "container-fluid">
+        <div>
+            <div class = "py-2">
+                <h5 class = "p-0 m-0">Use the filters to find the desired boards</h5>
+                <p class = "p-0 m-0">Try to be the most precise as possible</p>
+            </div>
+            <app-loader [diameter]="80" [showText]="true" [strokeWidth]="8" [requiredTemplate]="boardElements" [fontSize]="20" [isSearching]="isSearching"></app-loader>
+        </div>
+        <div *ngIf="currentItems.length == 0 && !isSearching">
+            <app-no-items (buttonClicked)="resetSearch()"></app-no-items>
+        </div>
+    </div>
+    <div class = "w-100 mt-1 py-2 text-center" *ngIf="currentPage.totalElements > 0 && !isSearching">
+        <app-pagination [pageSize]="currentPage.size" [totalElements]="currentPage.totalElements"  (pageChanged)="handlePageChange($event)"></app-pagination>
+    </div>
+</div>
+<ng-template #boardFilters>
+    <div class = "px-2 w-100">
+        <app-board-filter [rowDisplay]="true" (filterChanged)="handleFilterChange($event)"></app-board-filter>
+    </div>
+</ng-template>
+<ng-template #boardElements>
+    <div class = "row py-1">
+        <div class = "col-6 col-md-2 mt-1" *ngFor="let current of currentItems">
+            <app-board-card [board]="current"></app-board-card>
+        </div>
+    </div>
+</ng-template>

@@ -1,0 +1,91 @@
+<div class = "container-fluid py-4">
+    <div>
+        <div>
+            <h4 class = "d-inline-block">Liked Created</h4>
+            <fa-icon class="d-inline-block mx-1"  [icon]="likeIcon" style="font-size: 20px;"></fa-icon>
+        </div>
+        <p class = "p-0 m-0">Here you can see all of the likes you have created, use the tabs to navigate</p>
+    </div>
+    <div class = "py-2">
+        <app-tab-pane (tabChanged)="handleTabChange($event)" [tabPaneOptions]="options"></app-tab-pane>
+        <div class = "py-4" *ngIf="currentTemplate != undefined">
+            <ng-container *ngTemplateOutlet="currentTemplate"></ng-container>
+        </div>
+    </div>
+</div>
+<ng-template #likedDiscussions>
+    <h4>Discussions</h4>
+    <p class = "p-0 m-0">View the discussions you liked</p>
+    <div class = "mt-1">
+        <div  class = "container" *ngIf="currentLikedDiscussions.length > 0">
+            <div class = "row">
+                <div class = "col-12 col-md-3 mt-2" *ngFor="let current of currentLikedDiscussions">
+                    <app-discussion-card [discussionRef]="current.discussion"></app-discussion-card>
+                </div>
+            </div>
+            <div class = "text-center mt-4">
+                <app-pagination (pageChanged)="handlePageChange($event)" [defaultPage]="0" [totalElements]="currentLikedDiscussionsTotalElements" [pageSize]="20"></app-pagination>
+            </div>
+        </div>
+        <div *ngIf="currentLikedDiscussions.length == 0">
+            <app-no-items></app-no-items>
+        </div>
+    </div>
+</ng-template>
+<ng-template #likedPolls>
+    <h4>Polls</h4>
+    <p class = "p-0 m-0">View the polls you liked</p>
+    <div class = "mt-1">
+        <div *ngIf="currentLikedPolls.length > 0">
+            <div class = "row">
+                <div class = "col-12 col-md-2 mt-1" *ngFor="let current of currentLikedPolls">
+                    <app-poll-card [pollRef]="current.poll"></app-poll-card>
+                </div>
+                <div class = "text-center py-2">
+                    <app-pagination (pageChanged)="updatePage(1,$event)" [defaultPage]="0" [totalElements]="currentLikedPollsTotalElements" [pageSize]="20"></app-pagination>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="currentLikedPolls.length == 0">
+            <app-no-items></app-no-items>
+        </div>
+    </div>
+</ng-template>
+<ng-template #likedTasks>
+    <h4>Tasks</h4>
+    <p class = "p-0 m-0">View the tasks you liked</p>
+    <div class = "mt-1">
+        <div class = "container" *ngIf="currentLikedTasks.length > 0">
+            <div class = "row">
+                <div class = "col-12 col-md-3 mt-2" *ngFor="let current of currentLikedTasks">
+                    <app-task-card [taskRef]="current.task"></app-task-card>
+                </div>
+            </div>
+            <div class = "text-center py-2">
+                <app-pagination (pageChanged)="updatePage(2,$event)" [defaultPage]="0" [totalElements]="currentLikedTasksTotalElements" [pageSize]="20"></app-pagination>
+            </div>
+        </div>
+        <div *ngIf="currentLikedTasks.length == 0">
+            <app-no-items></app-no-items>
+        </div>
+    </div>
+</ng-template>
+<ng-template #likedComments>
+    <h4>Comments</h4>
+    <p class = "p-0 m-0">View the comments you liked</p>
+    <div class = "mt-1">
+        <div *ngIf="currentLikedComments.length > 0">
+            <div class = "row">
+                <div class = "col-12 col-md-2 mt-1" *ngFor="let current of currentLikedComments">
+                    <app-comment-card [commentRef]="current.comment"></app-comment-card>
+                </div>
+            </div>
+            <div class = "text-center py-2">
+                <app-pagination [defaultPage]="0"   (pageChanged)="updatePage(3,$event)" [totalElements]="currentLikedCommentsTotalElements" [pageSize]="20"></app-pagination>
+            </div>
+        </div>
+        <div *ngIf="currentLikedComments.length == 0">
+            <app-no-items></app-no-items>
+        </div>
+    </div>
+</ng-template>

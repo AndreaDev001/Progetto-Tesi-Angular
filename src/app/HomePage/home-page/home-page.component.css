@@ -1,0 +1,74 @@
+p#welcome-subtitle{
+    padding: 0;
+    margin: 0;
+    font-size: 17px;
+}
+h3#welcome-title
+{
+    display: inline-block;
+}
+.welcome-icon
+{
+    font-size: 25px;
+    margin-left: 10px;
+}
+button.option-holder
+{
+    padding: 5px 20px;
+    background-color: var(--secondary-color);
+    border: 0;
+    width: 100%;
+    text-align: start;
+    color: whitesmoke;
+    transition: 0.2s ease-in-out all;
+}
+button.option-holder-selected
+{
+    background-color: var(--tertiary-color);
+    padding: 5px 20px;
+    color: whitesmoke;
+    border: 0;
+    width: 100%;
+    text-align: start;
+    transition: 0.2s ease-in-out all;
+}
+button.option-holder:hover
+{
+    background-color: var(--tertiary-color);
+    color: whitesmoke;
+}
+p.option-name
+{
+    font-size: 20px;
+    padding: 0;
+    margin: 0;
+    color: inherit
+}
+.option-icon
+{
+    font-size: 25px;
+    padding: 0;
+    margin: 0;
+    color:inherit;
+}
+ul.option-list
+{
+    list-style-type: none;
+    padding: 5px;
+    background-color: var(--primary-color );
+}
+h4.description-item-name
+{
+    display: inline-block;
+}
+.description-item-icon {
+    font-size: 25px;
+    display: inline-block;
+    margin-left: 10px;
+}
+p.description-item-subtitle
+{
+    padding: 0;
+    margin: 0;
+    font-size: 15px;
+}

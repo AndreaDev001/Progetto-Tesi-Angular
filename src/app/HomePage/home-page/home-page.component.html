@@ -1,0 +1,74 @@
+<div class = "container p-4">
+    <div>
+        <h3 id = "welcome-title">Welcome Back</h3>
+        <fa-icon class = "d-inline-block welcome-icon" [icon]="welcomeBackIcon"></fa-icon>
+    </div>
+    <p id = "welcome-subtitle">Welcome back, here you can view your invites, boards and the tasks that have been assigned to you</p>
+    <div class = "row">
+        <div class = "col-12 col-md-2">
+            <ul class = "option-list mt-2">
+                <li [id]="current.name" *ngFor="let current of optionsTemplate;let i = index">
+                    <ng-container *ngTemplateOutlet="optionTemplate;context: {item: current,index: i,first: i == 0}"></ng-container>
+                </li>
+            </ul>
+        </div>
+        <div class = "col-12 col-md-10 mt-2">
+            <div class = "h-100 position-relative w-100" *ngIf="currentTemplate != undefined">
+                <app-loader [showText]="false" [wrapperStyle]="{'position': 'absolute','top': '25%','left': '40%'}" [diameter]="80" [strokeWidth]="6" [requiredTemplate]="itemsTemplate" [isSearching]="isSearching" [fontSize]="18" ></app-loader>
+            </div>
+        </div>
+    </div>
+</div>
+<ng-template #boardTemplate let-i>
+    <app-board-card [boardRef]="i.board"></app-board-card>
+</ng-template>
+<ng-template #taskTemplate let-i>
+    <app-task-card [taskRef]="i.task"></app-task-card>
+</ng-template>
+<ng-template #boardInviteTemplate let-i>
+    <app-board-invite-card [boardInvite]="i"></app-board-invite-card>
+</ng-template>
+<ng-template #discussionTemplate let-i>
+    <app-discussion-card [discussion]="i"></app-discussion-card>
+</ng-template>
+<ng-template #pollTemplate let-i>
+    <app-poll-card [poll]="i"></app-poll-card>
+</ng-template>
+<ng-template #itemsTemplate>
+    <div class = "p-1">
+        <ng-container *ngTemplateOutlet="viewDescriptionTemplate;context: {description: this.viewDescriptions[currentSelectedIndex]}"></ng-container>
+    </div>
+    <div class = "row mt-1 py-1" *ngIf="currentTemplate != undefined && currentItems.length > 0">
+        <div class = "mt-3 col-6 col-md-3" *ngFor="let current of currentItems">
+            <ng-container *ngTemplateOutlet="currentTemplate;context: {$implicit: current}"></ng-container>
+        </div>
+        <div style="display: flex;justify-content: center;align-items: center;" class = "mt-1 py-2">
+            <app-pagination [totalElements]="currentPage.totalElements" [pageSize]="this.currentPage.size" (pageChanged)="handlePageChange($event)"></app-pagination>
+        </div>
+    </div>
+    <div *ngIf="currentItems.length == 0">
+        <app-no-items (buttonClicked)="resetPage()"></app-no-items>
+    </div>
+</ng-template>
+<ng-template #optionTemplate let-item="item" let-index="index" let-first="first">
+    <button  style="margin-top: 5px;" [ngClass]="currentSelectedIndex == index ? 'option-holder-selected' : 'option-holder'" [ngStyle]="first ? {'margin-top': '0px'} : {'margin-top': '5px'}" (click)="updateTemplate(item.path)">
+        <fa-icon class = "option-icon" [icon]="item.icon"></fa-icon>
+        <p class = "option-name">{{item.name}}</p>
+    </button>
+</ng-template>
+<ng-template #descriptionItem let-item="item">
+    <div class = "p-2">
+        <h4 class = "description-item-name">{{item.name}}</h4>
+        <fa-icon class = "description-item-icon" [icon]="item.icon"></fa-icon>
+        <p class = "description-item-subtitle">{{item.subtitle}}</p>
+    </div>
+</ng-template>
+<ng-template #viewDescriptionTemplate let-description="description">
+    <div>
+        <div class = "d-flex" style="font-size: 20px;">
+            <h4>{{description.requiredTitle}}</h4>
+            <fa-icon class = "mx-1" [icon]="description.requiredIcon"></fa-icon>
+        </div>
+        <p class = "p-0 m-0">{{description.requiredSubtitle}}</p>
+    </div>
+</ng-template>

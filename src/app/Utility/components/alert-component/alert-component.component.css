@@ -1,0 +1,33 @@
+button.modal-button
+{
+    padding: 10px;
+    font-size: 18px;
+    border: 0px;
+    margin: 0px;
+    border-radius: 10px;
+    background-color: var(--tertiary-color);
+    transition: 0.2s ease-in-out all;
+}
+button.modal-button:hover
+{
+    background-color: var(--primary-color);
+    color: whitesmoke;
+}
+div.default-modal-header
+{
+    background-color: var(--secondary-color);
+    padding: 0px 10px;
+    border: 0;
+}
+div.default-modal-body
+{
+    background-color: var(--tertiary-color);
+    padding: 0px 10px;
+    border: 0;
+}
+div.default-modal-footer
+{
+    background-color: var(--secondary-color);
+    padding: 0px 10px;
+    border: 0;
+}

@@ -1,0 +1,25 @@
+div.card-wrapper
+{
+    padding: 5px;
+    background-color: var(--secondary-color);
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-radius: 10px;
+    border: 1px solid var(--primary-color);
+    transition: 0.2s ease-in-out all;
+    text-align: start;
+}
+div.ban-card-header {
+    padding: 5px;
+    background-color: var(--primary-color);
+    text-align: center;
+}
+div.ban-card-body {
+    padding-top: 10px;
+    padding-bottom: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+div.ban-card-footer {
+    padding: 5px 10px;
+}

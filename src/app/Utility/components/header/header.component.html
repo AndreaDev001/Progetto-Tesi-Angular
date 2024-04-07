@@ -1,0 +1,88 @@
+<div class = "header-wrapper">
+    <div class = "d-none d-md-block">
+        <div class = "w-50 d-inline-block">
+            <button (click)="router.navigate(['/home'])" class = "header-button">
+                <fa-icon [icon]="homeIcon"></fa-icon>
+                <span class = "mx-1">Home</span>
+            </button>
+            <div class = "d-inline-block" *ngFor="let current of leftDropdowns">
+                <ng-container *ngTemplateOutlet="dropdownTemplate;context: {dropdown: current}"></ng-container>
+            </div>
+        </div>
+        <div class = "w-50 text-end d-inline-block">
+            <div class = "d-inline-block" *ngFor="let current of rightDropdowns">
+                <ng-container *ngTemplateOutlet="dropdownTemplate;context : {dropdown: current}"></ng-container>
+            </div>
+        </div>
+    </div>
+    <div class = "d-block d-md-none p-2 primary-color">
+        <div class = "text-end mx-1">
+            <button type="button" class="options-button" (click)="updateCollapsed()" [attr.aria-expanded]="!optionsCollapsed">
+                <fa-icon [icon]="optionsIcon"></fa-icon>
+            </button>
+        </div>
+        <div class = "collapse-option-wrapper" #optionsCollapse="ngbCollapse" [(ngbCollapse)]="optionsCollapsed">
+            <button (click)="router.navigate(['/home'])" class = "collapse-button mt-1">
+                <fa-icon [icon]="homeIcon"></fa-icon>
+                <span class = "mx-2">Home</span>
+            </button>
+            <div class = "mt-1" *ngFor="let current of leftDropdowns;let i = index">
+                <ng-container *ngTemplateOutlet="collapseTemplate;context: {collapse: current,index: i,key: current.key}"></ng-container>
+            </div>
+            <div class = "mt-1" *ngFor="let current of rightDropdowns;let i = index">
+                <ng-container *ngTemplateOutlet="collapseTemplate;context: {collapse: current,index: i + leftDropdowns.length,name: current.name,key: current.key}"></ng-container>
+            </div>
+        </div>
+    </div>
+</div>
+<ng-template #dropdownTemplate let-dropdown="dropdown" let-usename="usename">
+    <div container="body" class = "d-inline-block" ngbDropdown>
+        <button class = "header-button" ngbDropdownToggle>
+            <fa-icon [icon]="dropdown.icon"></fa-icon>
+            <span class = "mx-2">{{dropdown.name}}</span>
+        </button>
+        <div class = "header-menu-wrapper" ngbDropdownMenu>
+            <button [disabled]="current.admin != undefined && current.admin != this.authHandlerService.isAdmin()" class = "header-button-option" *ngFor="let current of dropdown.options" (click)="current.callback()">
+                <ng-container *ngTemplateOutlet="optionTemplate;context: {option: current}"></ng-container>
+            </button>
+        </div>
+    </div>
+</ng-template>
+<ng-template #collapseTemplate let-collapse="collapse" let-index="index" let-name="name" let-key="key">
+    <button class = "collapse-button" (click)="isCollapsed[index] = !isCollapsed[index]">
+        <div class = "text-start w-50 d-inline-block">
+            <fa-icon [icon]="collapse.icon"></fa-icon>
+            <span class = "mx-1">{{collapse.name != undefined ? collapse.name : name}}</span>
+        </div>
+        <div class = "text-end w-50 d-inline-block px-2" style="font-size: 30px;">
+            <fa-icon [icon]="!isCollapsed[index] ? openCollapsedIcon : closeCollapsedIcon"></fa-icon>
+        </div>
+    </button>
+    <div #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed[index]">
+        <div class = "primary-color p-1">
+            <div class = "collapse-menu-options-wrapper">
+                <button (click)="resetCollapsed();optionsCollapsed = true;current.callback();" [disabled]="current.admin != undefined && current.admin != this.authHandlerService.isAdmin()" class = "collapse-button" *ngFor="let current of optionsMap.get(key)">
+                    <ng-container *ngTemplateOutlet="optionTemplate;context: {option: current}"></ng-container> 
+                 </button>
+            </div>
+        </div>
+    </div>
+</ng-template>
+<ng-template #optionTemplate let-option="option">
+    <div>
+        <fa-icon [icon]="option.icon"></fa-icon>
+        <span class = "mx-1">{{option.name}}</span>
+    </div>
+</ng-template>
+<ng-template #createBoardTemplate>
+    <app-create-board (failedEvent)="this.alertHandler.close()" (successEvent)="navigateTo('/board',$event)"></app-create-board>
+</ng-template>
+<ng-template #createDiscussionTemplate>
+    <app-create-discussion (failedEvent)="this.alertHandler.close()" (successEvent)="navigateTo('/discussion',$event)"></app-create-discussion>
+</ng-template>
+<ng-template #createPollTemplate>
+    <app-create-poll (failedEvent)="this.alertHandler.close()" (successEvent)="navigateTo('/poll',$event)"></app-create-poll>
+</ng-template>
+<ng-template #updateUserTemplate>
+    <app-modify-user (successEvent)="this.alertHandler.close()" (failedEvent)="this.alertHandler.close()"></app-modify-user>
+</ng-template>

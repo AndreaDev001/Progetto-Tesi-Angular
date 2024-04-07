@@ -1,0 +1,32 @@
+<div class = "card-wrapper"  *ngIf="discussion != undefined">
+    <div class = "discussion-card">
+        <div class = "discussion-card-header">
+            <div class = "position-absolute mt-1 mx-1" style="top:0;left:0;">
+                <app-user-holder  [imageWidth]="35" [imageHeight]="35" [userRef]="discussion.publisher" [showNameInfo]="true"></app-user-holder>
+            </div>
+            <div class = "position-absolute" style="top: 0;right: 0;padding: 5px">
+                <fa-icon [icon]="chatIcon"></fa-icon>
+            </div>
+        </div>
+        <div class = "discussion-card-body">
+            <p class = "discussion-card-title">{{discussion.title}}</p>
+            <p class = "discussion-card-topic">{{discussion.topic}}</p>
+        </div>
+        <div class = "discussion-card-footer">
+            <div class = "text-center button-holder">
+                <button class = "default-button w-75" (click)="openDiscussion()">Go to discussion</button>
+                <button *ngIf="isOwner || authHandlerService.isAdmin()" class = "default-button w-75 mt-2" (click)="deleteDiscussion()">Delete</button>
+            </div>
+            <div class = "d-block">
+                <div class = "d-inline-block">
+                    <fa-icon [icon]="likeIcon"></fa-icon>
+                    <span class = "icon-text mx-1">{{discussion.amountOfReceivedLikes}}</span>
+                </div>
+                <div class = "d-inline-block mx-2">
+                    <fa-icon [icon]="commentIcon"></fa-icon>
+                    <span class = "icon-text mx-1">{{discussion.amountOfReceivedComments}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

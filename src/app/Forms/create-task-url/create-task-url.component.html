@@ -1,0 +1,41 @@
+<form [formGroup]="formGroup" (submit)="handleSubmit($event)">
+    <div class = "container">
+        <div class = "mx-1">
+            <div class = "mx-1">
+                <h4 class = "d-inline-block">Create a new URL</h4>
+                <fa-icon class = "mx-2" style="font-size: 25px;" [icon]="urlIcon"></fa-icon>
+                <p>Please specificy an URL</p>
+            </div>
+        </div>
+        <div *ngIf="!isCreating">
+            <div>
+                <span class = "d-block mx-2">Name</span>
+                <mat-form-field class = "form-field" *ngIf="name != undefined">
+                    <mat-label class = "input-label">Name</mat-label>
+                    <input matInput placeholder="Name" formControlName="name">
+                    <mat-hint>The name of the link</mat-hint>
+                    <mat-error *ngIf="name.hasError('required') && (name.touched || name.dirty)">Name is required</mat-error>
+                    <mat-error *ngIf="name.hasError('minlength') && (name.touched || name.dirty)">Name is too short, must be longer than 3 characters</mat-error>
+                    <mat-error *ngIf="name.hasError('maxlength') && (name.touched || name.dirty)">Name is too long, must be shorter than 20 characters</mat-error>
+                </mat-form-field>
+            </div>
+            <div>
+                <span class = "d-block mx-2">URL</span>
+                <mat-form-field class = "form-field" *ngIf="url != undefined">
+                    <mat-label class = "input-label">URL</mat-label>
+                    <input matInput placeholder="URL" formControlName="url">
+                    <mat-hint>Copy and paste and url from the internet</mat-hint>
+                    <mat-error *ngIf="url.hasError('required') && (url.touched || url.dirty)">URL is required</mat-error>
+                </mat-form-field>
+            </div>
+            <div class = "mt-2 py-2 text-end mx-1">
+                <button type="submit" class = "default-button" [disabled]="!formGroup.valid">Confirm</button>
+                <button (click)="reset()" class = "default-button mx-1">Clear</button>
+            </div>
+        </div>
+        <div *ngIf="isCreating" style="display: flex;flex-direction: column;align-items: center;padding: 10px 0px">
+            <mat-progress-spinner [diameter]="60" [strokeWidth]="5" [mode]="'indeterminate'"></mat-progress-spinner>
+            <p>Creating URL, please wait...</p>
+        </div>
+    </div>
+</form>

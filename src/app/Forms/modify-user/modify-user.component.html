@@ -1,0 +1,69 @@
+<form [formGroup]="formGroup" (submit)="handleSubmit($event)">
+    <div class = "container">
+        <div class = "mx-1">
+            <div class = "mx-1">
+                <h4 class = "d-inline-block">Update user</h4>
+                <fa-icon class = "mx-2" style="font-size: 25px;" [icon]="userIcon"></fa-icon>
+                <p>Please specificy a name, surname, username, gender</p>
+            </div>
+        </div>
+        <div>
+            <div *ngIf="!isUpdating">
+                <div class = "p-2 text-center">
+                    <app-better-image [wrapperStyle]="{'display': 'flex','justify-content': 'center','align-items': 'center'}" [imageStyle]="{'width': '150px','height': '150px','border-radius': '60%','object-fit': 'cover','border': '1px solid var(--tertiary-color)','filter': 'brightness(70%)'}" [requiredSource]="'http://localhost:8080/api/v1/userImages/public/user/' + authHandler.getCurrentUserID(true) + '/image'"></app-better-image>
+                    <input (change)="updateCurrentFile($event)" class = "d-block mt-1" type="file">
+                </div>
+                <div>
+                    <span class = "d-block mx-2">Name</span>
+                    <mat-form-field class = "form-field" *ngIf="name != undefined">
+                        <mat-label class = "input-label">Name</mat-label>
+                        <input matInput placeholder="Title" formControlName="name">
+                        <mat-hint>Write a name...</mat-hint>
+                        <mat-error *ngIf="name.hasError('required') && (name.touched || name.dirty)">Name is required</mat-error>
+                        <mat-error *ngIf="name.hasError('minlength') && (name.touched || name.dirty)">Name is too short, must be longer than 3 characters</mat-error>
+                        <mat-error *ngIf="name.hasError('maxlength') && (name.touched || name.dirty)">Name is too long, must be shorter than 10 characters</mat-error>
+                    </mat-form-field>
+                </div>
+                <div>
+                    <span class = "d-block mx-2">Surname</span>
+                    <mat-form-field class = "form-field" *ngIf="surname != undefined">
+                        <mat-label class = "input-label">Surname</mat-label>
+                        <input matInput placeholder="Surname" formControlName="name">
+                        <mat-hint>Write a surname...</mat-hint>
+                        <mat-error *ngIf="surname.hasError('required') && (surname.touched || surname.dirty)">Surname is required</mat-error>
+                        <mat-error *ngIf="surname.hasError('minlength') && (surname.touched || surname.dirty)">Surname is too short, must be longer than 3 characters</mat-error>
+                        <mat-error *ngIf="surname.hasError('maxlength') && (surname.touched || surname.dirty)">Surname is too long, must be shorter than 10 characters</mat-error>
+                    </mat-form-field>
+                </div>
+                <div>
+                    <span class = "d-block mx-2">Username</span>
+                    <mat-form-field class = "form-field" *ngIf="username != undefined">
+                        <mat-label class = "input-label">Username</mat-label>
+                        <input matInput placeholder="Username" formControlName="username">
+                        <mat-hint>Write an username...</mat-hint>
+                        <mat-error *ngIf="name.hasError('required') && (username.touched || username.dirty)">Username is required</mat-error>
+                        <mat-error *ngIf="name.hasError('minlength') && (username.touched || username.dirty)">Username is too short, must be longer than 3 characters</mat-error>
+                        <mat-error *ngIf="name.hasError('maxlength') && (username.touched || username.dirty)">Username is too long, must be shorter than 10 characters</mat-error>
+                    </mat-form-field>
+                </div>
+                <div>
+                    <span class = "d-block mx-2">Gender</span>
+                    <mat-form-field class = "form-field" *ngIf="gender != undefined">
+                        <mat-label class = "input-label">Gender</mat-label>
+                        <mat-select formControlName="gender">
+                            <mat-option *ngFor="let current of currentGenders" [value]="current">{{current}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class = "mt-2 py-1 text-end">
+                <button  type="submit" [disabled]="!formGroup.valid" class = "default-button">Confirm</button>
+                <button class="default-button mx-1" (click)="reset()">Clear</button>
+            </div>
+        </div>
+        <div *ngIf="isUpdating" style="display: flex;flex-direction: column;align-items: center;padding: 10px 0px">
+            <mat-progress-spinner [diameter]="60" [strokeWidth]="5" [mode]="'indeterminate'"></mat-progress-spinner>
+            <p>Updating user, please wait...</p>
+        </div>
+    </div>    
+</form>

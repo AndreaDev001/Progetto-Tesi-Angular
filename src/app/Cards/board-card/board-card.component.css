@@ -1,0 +1,46 @@
+p.board-title
+{
+    font-size: 17px;
+    font-weight: normal;
+    padding: 0;
+    margin: 0;
+    color: inherit;
+}
+div.board-card-body
+{
+    padding: 10px;
+}
+div.board-card-footer {
+    padding: 10px;
+}
+p.board-subtitle
+{
+    color: inherit;
+    font-size: 14px;
+    padding: 0;
+    margin: 0;
+}
+div.card-wrapper {
+    text-align: start;
+    background-color: var(--secondary-color);
+    border-radius: 2px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    color: whitesmoke;
+    width: 100%;
+    border: 1px solid var(--primary-color);
+}
+button.board-open-button {
+    border: 0;
+    font-size: 14px;
+    background-color: var(--primary-color);
+    border: 1px solid var(--secondary-color);
+    color: whitesmoke;
+    padding: 10px 10px;
+    border-radius: 10px;
+    width: 40%;
+    transition: 0.2s ease-in-out all;
+}
+button.board-open-button:hover {
+    background-color: var(--tertiary-color);
+}

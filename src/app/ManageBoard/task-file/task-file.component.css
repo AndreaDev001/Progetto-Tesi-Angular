@@ -1,0 +1,38 @@
+div.task-file-wrapper
+{
+    padding: 10px;
+    background-color: var(--primary-color);
+    border-radius: 5px;
+    text-align: start;
+    display: flex;
+}
+a.download-button
+{
+    padding: 17px;
+    border-radius: 5px;
+    font-size: 15px;
+    text-decoration: none;
+    color: whitesmoke;
+    background-color: var(--secondary-color);
+    transition: 0.2s ease-in-out all;
+}
+a.download-button:hover {
+    background-color: var(--tertiary-color);
+}
+button:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    border: 1px solid var(--primary-color);
+}
+button.download-button {
+    padding: 15px;
+    border-radius: 5px;
+    font-size: 15px;
+    text-decoration: none;
+    color: whitesmoke;
+    background-color: var(--secondary-color);
+    transition: 0.2s ease-in-out all;
+}
+button.download-button:hover {
+    background-color: var(--tertiary-color);
+}

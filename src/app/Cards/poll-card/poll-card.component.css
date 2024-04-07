@@ -1,0 +1,41 @@
+div.card-wrapper
+{
+    text-align: start;
+    border: 0;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+    border-radius: 2px;
+    background-color: var(--secondary-color);
+    border: 1px solid var(--primary-color);
+    padding: 5px;
+}
+p.poll-title
+{
+    padding: 0;
+    margin: 0;
+    font-size: 18px;
+}
+
+div.poll-card-footer {
+    padding: 5px 5px;
+}
+p.poll-description {
+    padding: 0;
+    margin: 0px;
+    font-size: 15px;
+}
+div.poll-card-body {
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 10px;
+    padding-bottom: 5px;
+    height: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+div.poll-card-header
+{
+    padding: 5px;
+    background-color: var(--primary-color);
+    border-radius: 5px;
+}

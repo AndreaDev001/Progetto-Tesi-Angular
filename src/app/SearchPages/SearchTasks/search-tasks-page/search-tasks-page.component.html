@@ -1,0 +1,44 @@
+<div class = "container-fluid p-3">
+    <section id = "info-section">
+        <div>
+            <h3 class = "d-inline-block">Tasks</h3>
+            <fa-icon [icon]="taskIcon" class = "mx-2" style="font-size: 20px ;"></fa-icon>
+        </div>
+        <p>Here you can see all the tasks that have been assigned to you and the ones you created</p>
+    </section>
+    <div class = "d-none d-md-block">
+        <app-task-filter [rowDisplay]="false" (filterChanged)="handleFilterChange($event)"></app-task-filter>
+    </div>
+    <div class = "d-block d-md-none text-center py-1">
+        <button class = "filter-button" (click)="openCanvas()">Filters</button>
+    </div>
+    <div class = "mt-1">
+        <div class = "container-fluid">
+            <div>
+                <div class = "py-2">
+                    <h5 class = "p-0 m-0">Use the filters to find the desired tasks</h5>
+                    <p class = "p-0 m-0">Try to be the most precise as possible</p>
+                </div>
+                <app-loader [fontSize]="20" [isSearching]="isSearching" [showText]="true" [diameter]="80" [strokeWidth]="8" [requiredTemplate]="taskElements"></app-loader>
+            </div>
+            <div *ngIf="currentItems.length == 0 && !isSearching">
+                <app-no-items (buttonClicked)="resetSearch()"></app-no-items>
+            </div>
+        </div>
+    </div>
+    <div class = "text-center mt-1 py-2" *ngIf="currentPage.totalElements > 0 && !isSearching">
+        <app-pagination [pageSize]="currentPage.size" [totalElements]="currentPage.totalElements"  (pageChanged)="handlePageChange($event)"></app-pagination>
+    </div>
+</div>
+<ng-template #taskFilters>
+    <div class = "px-2 w-100 secondary-color">
+        <app-task-filter [rowDisplay]="true" (filterChanged)="handleFilterChange($event)"></app-task-filter>
+    </div>
+</ng-template>
+<ng-template #taskElements>
+    <div class = "row py-1">
+        <div class = "col-6 col-md-2 mt-3" *ngFor="let current of currentItems">
+            <app-task-card  [task]="current"></app-task-card>
+        </div>
+    </div>
+</ng-template>

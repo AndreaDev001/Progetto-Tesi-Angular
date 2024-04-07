@@ -1,0 +1,10 @@
+<div ngbDropdown>
+    <p class = "dropdown-label">{{currentLabel}}</p>
+    <button type = "button" class = "dropdown-toggle-button" ngbDropdownToggle>{{currentSelectedOption != undefined ? currentSelectedOption : defaultValue}}</button>
+    <div class = "dropdown-menu" ngbDropdownMenu>
+        <button class = "dropdown-option" (click)="handleClick(current)" *ngFor="let current of currentOptions">
+            {{current.name}}
+        </button>
+    </div>
+    <p class = "dropdown-supporting-text">{{currentSupportingText}}</p>
+</div>

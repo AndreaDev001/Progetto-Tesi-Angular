@@ -1,0 +1,6 @@
+<div class = "text-center">
+    <h3>{{missingTitle}}</h3>
+    <fa-icon style="font-weight: bold;font-size: 60px;"  [icon]="searchIcon"></fa-icon>
+    <p class = "missing-text">{{missingText}}</p>
+    <button  (click)="handleClick()" [ngStyle]="missingButtonStyle" [ngClass]="missingButtonStyle != undefined ? '' : 'default-button w-25'">{{missingButtonText}}</button>
+</div>

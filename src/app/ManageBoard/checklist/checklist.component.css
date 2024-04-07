@@ -1,0 +1,47 @@
+input.check-list-name
+{
+    background-color: var(--secondary-color);
+    padding:  5px;
+    border-radius: 5px;
+    cursor: text;
+    transition: 0.2s ease-in-out all;
+}
+input.check-list-name-option
+{
+    background-color: inherit;
+    padding: 5px;
+    border-radius: 5px;
+    cursor: text;
+    transition: 0.2s ease-in-out all;
+}
+button:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    border: 1px solid var(--primary-color);
+}
+input.check-list-name-option
+{
+    background-color: var(--secondary-color);
+}
+input.check-list-name:hover
+{
+    background-color: var(--primary-color);
+}
+p.check-list-surname
+{
+    padding: 0;
+    margin: 0;
+}
+button.remove-button {
+    background-color: var(--primary-color);
+    border-radius: 5px;
+    padding: 10px;
+    transition: 0.2s ease-in-out all;
+}
+input.option-checkbox
+{
+    width: 20px;
+    height: 20px;
+    background-color: var(--primary-color);
+    border-radius: 5px;
+}

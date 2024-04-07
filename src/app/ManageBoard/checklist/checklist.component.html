@@ -1,0 +1,39 @@
+
+<div *ngIf="checkList != undefined">
+    <div class = "d-flex">
+        <fa-icon style="font-size: 25px;" [icon]="checkIcon"></fa-icon>
+        <div class = "mx-3">
+            <input [readOnly]="!canModify" class = "check-list-name" [defaultValue]="checkList.name" (change)="updateCheckList($event)">
+            <p class = "check-list-subtitle mx-1">Interact by modifying, adding or deleting options</p>
+        </div>
+    </div>
+    <div class = "py-1 px-5">
+        <div>
+            <app-loader [requiredTemplate]="optionsTemplate" [isSearching]="searchingOptions" [showText]="false" [diameter]="40" [strokeWidth]="5"></app-loader>
+        </div>
+        <div class = "text-end py-2">
+            <button [disabled]="!canModify" (click)="addOption()" class = "default-button">Add an option</button>
+        </div>
+    </div>
+</div>
+<ng-template #createOptionTemplate>
+    <app-create-check-list-option [checkListID]="this.checkList?.id" (submitEvent)="this.alertHandlerService.close()" (successEvent)="this.currentOptions.push($event)"></app-create-check-list-option>
+</ng-template>
+<ng-template #checkListOption let-option="option">
+    <div class = "px-2 primary-color rounded-1">
+        <div class = "text-start d-inline-block w-75">
+            <input [readOnly]="!canModify" (change)="updateOptionName($event,option)" class = "check-list-name-option" [defaultValue]="option.name">
+        </div>
+        <div class = "text-end d-inline-block w-25">
+            <input [disabled]="!canModify" [readOnly]="!canModify" [checked]="option.completed" (change)="updateOptionCompleted($event,option)" class = "option-checkbox" type="checkbox">
+            <button [disabled]="!canModify" (click)="deleteOption(option)" class = "remove-button mx-1">
+                <fa-icon [icon]="removeIcon"></fa-icon>
+            </button>
+        </div>
+    </div>
+</ng-template>
+<ng-template #optionsTemplate>
+    <div class = "mt-1" *ngFor="let current of currentOptions">
+        <ng-container *ngTemplateOutlet="checkListOption;context: {option: current}"></ng-container>
+    </div>
+</ng-template>

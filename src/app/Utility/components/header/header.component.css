@@ -1,0 +1,75 @@
+button.header-button
+{
+    padding: 12px;
+    display: inline-block;
+    background-color: var(--primary-color);
+    font-size: 18px;
+    transition: 0.2s ease-in-out all;
+}
+button.header-button:hover {
+    background-color: var(--tertiary-color);
+}
+button.header-button-option:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+div.header-wrapper {
+     background-color: var(--primary-color);
+     position: sticky;
+     top: 0;
+     z-index: 1000;
+}
+div.collapse-option-wrapper
+{
+    background-color: var(--secondary-color);
+    padding: 10px;
+}
+button.collapse-button
+{
+    background-color: var(--primary-color);
+    border: 0;
+    width: 100%;
+    text-align: start;
+    padding: 20px;
+    font-size: 25px;
+    transition: 0.2s ease-in-out all;
+}
+button.options-button
+{
+    border: 0;
+    background-color: var(--primary-color);
+    font-size: 30px;
+    padding: 5px 20px;
+}
+div.collapse-menu-options-wrapper
+{
+    background-color: var(--secondary-color);
+    padding: 20px;
+}
+button.collapse-button:hover {
+    background-color: var(--tertiary-color);
+}
+div.collapse-menu-wrapper
+{
+    background-color: var(--secondary-color);
+}
+button.header-button-option
+{
+    text-align: start;
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: var(--primary-color);
+    font-size: 17px;
+    transition: 0.2s ease-in-out all;
+}
+button.header-button-option:hover {
+    background-color: var(--tertiary-color);
+}
+div.header-menu-wrapper
+{
+    background-color: var(--primary-color);
+}
+.dropdown-toggle::after {
+    display:none;
+}

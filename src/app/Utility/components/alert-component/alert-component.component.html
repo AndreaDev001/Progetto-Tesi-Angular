@@ -1,0 +1,30 @@
+<div class = "position-relative">
+    <ng-container *ngTemplateOutlet="modalTemplate"></ng-container>
+</div>
+<ng-template #defaultHeaderTemplate>
+    <div class = "modal-header default-modal-header p-2">
+        <div>
+            <h4 class = "modal-title">{{currentAlertTitle}}</h4>
+            <p class = "p-0 m-0" style="font-size: 15px;">{{currentAlertSubtitle}}</p>
+        </div>
+        <button type = "button" class = "btn-close btn-close-white " aria-label="close" (click)="close()"></button>
+    </div>
+</ng-template>
+<ng-template #defaultContentTemplate>
+    <div class = "modal-body default-modal-body">
+        <p class = "modal-text">{{currentAlertText}}</p>
+    </div>
+</ng-template>
+<ng-template #defaultFooterTemplate>
+    <div class = "modal-footer default-modal-footer border-0">
+        <button class = "modal-button" type="button" *ngFor="let current of currentAlertOptions">{{current.text}}</button>
+    </div>
+</ng-template>
+
+<ng-template #modalTemplate>
+    <div class = "secondary-color">
+        <ng-container *ngTemplateOutlet="currentHeaderTemplate"></ng-container>
+        <ng-container *ngTemplateOutlet="currentContentTemplate"></ng-container>
+        <ng-container *ngTemplateOutlet="currentFooterTemplate"></ng-container>
+    </div>
+</ng-template>
