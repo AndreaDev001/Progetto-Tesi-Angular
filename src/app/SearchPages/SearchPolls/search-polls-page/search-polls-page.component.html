@@ -38,7 +38,7 @@
 <ng-template #pollElements>
     <div class = "row py-1">
         <div class = "col-6 col-md-2 mt-1" *ngFor="let current of currentItems">
-            <app-poll-card [poll]="current"></app-poll-card>
+            <app-poll-card (deletedEvent)="this.removePoll(current)" [poll]="current"></app-poll-card>
         </div>
     </div>
 </ng-template>

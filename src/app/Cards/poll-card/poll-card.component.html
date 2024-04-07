@@ -14,7 +14,7 @@
     <div class = "poll-card-footer">
         <div class = "py-2 text-center">
             <button class = "default-button w-75" (click)="openPoll()">Go to poll</button>
-            <button class = "default-button w-75 mt-2" (click)="deletePoll()">Delete Poll</button>
+            <button *ngIf="authHandler.isAdmin() || isOwner" class = "default-button w-75 mt-2" (click)="deletePoll()">Delete</button>
         </div>
         <div class = "d-inline-block">
             <fa-icon [icon]="likeIcon"></fa-icon>

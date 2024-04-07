@@ -18,8 +18,8 @@ import { CreateBan } from 'src/model/create';
 export class CreateBanComponent implements OnInit {
 
   public formGroup: FormGroup = new FormGroup({
-    title: new FormControl('',Validators.required),
-    description: new FormControl('',Validators.required),
+    title: new FormControl('',[Validators.required,Validators.minLength(3),Validators.maxLength(20)]),
+    description: new FormControl('',[Validators.required,Validators.minLength(20),Validators.maxLength(200)]),
     reason: new FormControl('',Validators.required)
   })
   @Input() bannedID: string | undefined = undefined;
@@ -34,10 +34,14 @@ export class CreateBanComponent implements OnInit {
 
   }
 
-  public ngOnInit(): void {
+  public ngOnInit(): void {   
+    this.searchReasons();
+  }
+
+  private searchReasons(): void {
     this.reportService.getReasons().subscribe((value: CollectionModel) => {
       this.reasons = value._embedded != undefined && value._embedded.content != undefined ? value._embedded.content : [];
-    })    
+    }) 
   }
 
   public handleSubmit(event: any): void {

@@ -52,24 +52,36 @@ export class CreateBoardComponent implements OnInit {
       let timeStamp = (new Date()).getTime();
       this.backgroundURL = "http://localhost:8080/api/v1/boardImages/public/image" + "/" + this.boardID + "?" + "time=" + timeStamp;
     }
+    this.searchVisibilities();
+    this.searchBoardImage();
+    if(this.update) {
+      this.searchBoard();
+    }
+  }
+
+  private searchVisibilities(): void {
     this.boardService.getVisibilities().subscribe((value: CollectionModel) => {
       this.currentVisibilities = value._embedded != undefined && value._embedded.content != undefined ? value._embedded.content : [];
     })
-    if(this.update) {
-      this.boardService.getBoardById(this.boardID).subscribe((value: any) => {
-        this.currentBoard = value;
-        this.formGroup.get("title")?.setValue(this.currentBoard?.title);
-        this.formGroup.get("description")?.setValue(this.currentBoard?.description);
-        this.formGroup.get("maxMembers")?.setValue(this.currentBoard?.maxMembers);
-        this.formGroup.get("visibility")?.setValue(this.currentBoard?.visibility);
-      })
-      this.boardImageService.getBoardImage(this.boardID).subscribe((value: any) => {
-        if(value != undefined) {
-          this.currentSavedImage = value;
-          this.canDeleteImage = true;
-        }
-      })
-    }
+  }
+
+  private searchBoardImage(): void {
+    this.boardImageService.getBoardImage(this.boardID).subscribe((value: any) => {
+      if(value != undefined) {
+        this.currentSavedImage = value;
+        this.canDeleteImage = true;
+      }
+    })
+  }
+
+  private searchBoard(): void {
+    this.boardService.getBoardById(this.boardID).subscribe((value: any) => {
+      this.currentBoard = value;
+      this.formGroup.get("title")?.setValue(this.currentBoard?.title);
+      this.formGroup.get("description")?.setValue(this.currentBoard?.description);
+      this.formGroup.get("maxMembers")?.setValue(this.currentBoard?.maxMembers);
+      this.formGroup.get("visibility")?.setValue(this.currentBoard?.visibility);
+    })
   }
 
   public handleSubmit(event:any): any {

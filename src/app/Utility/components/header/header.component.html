@@ -8,10 +8,6 @@
             <div class = "d-inline-block" *ngFor="let current of leftDropdowns">
                 <ng-container *ngTemplateOutlet="dropdownTemplate;context: {dropdown: current}"></ng-container>
             </div>
-            <button class = "header-button">
-                <fa-icon [icon]="aboutIcon"></fa-icon>
-                <span class = "mx-1">About</span>
-            </button>
         </div>
         <div class = "w-50 text-end d-inline-block">
             <div class = "d-inline-block" *ngFor="let current of rightDropdowns">
@@ -33,10 +29,6 @@
             <div class = "mt-1" *ngFor="let current of leftDropdowns;let i = index">
                 <ng-container *ngTemplateOutlet="collapseTemplate;context: {collapse: current,index: i,key: current.key}"></ng-container>
             </div>
-            <button class = "collapse-button mt-1">
-                <fa-icon [icon]="aboutIcon"></fa-icon>
-                <span class = "mx-2">About</span>
-            </button>
             <div class = "mt-1" *ngFor="let current of rightDropdowns;let i = index">
                 <ng-container *ngTemplateOutlet="collapseTemplate;context: {collapse: current,index: i + leftDropdowns.length,name: current.name,key: current.key}"></ng-container>
             </div>

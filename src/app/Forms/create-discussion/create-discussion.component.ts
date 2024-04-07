@@ -20,8 +20,8 @@ export class CreateDiscussionComponent implements OnInit {
   @Input() discussionID: any = undefined;
   public formGroup: FormGroup = new FormGroup({
     title: new FormControl('',[Validators.required,Validators.minLength(3),Validators.maxLength(20)]),
-    topic: new FormControl('',[Validators.required,Validators.minLength(3),Validators.maxLength(10)]),
-    text: new FormControl('',[Validators.required,Validators.minLength(3)])
+    topic: new FormControl('',[Validators.required,Validators.minLength(3),Validators.maxLength(20)]),
+    text: new FormControl('',[Validators.required,Validators.minLength(3),Validators.maxLength(200)])
   })
   public discussionIcon: IconDefinition = faDiscourse;
   public searchingDiscussion: boolean = false;
@@ -37,14 +37,18 @@ export class CreateDiscussionComponent implements OnInit {
 
   public ngOnInit(): void {
     if(this.update && this.discussionID != undefined) {
-      this.searchingDiscussion = true;
-      this.discussionService.getDiscussionById(this.discussionID).subscribe((value: any) => {
-        this.searchingDiscussion = false;
-        this.formGroup.get("title")?.setValue(value.title);
-        this.formGroup.get("topic")?.setValue(value.topic);
-        this.formGroup.get("text")?.setValue(value.text);
-      },(err: any) => this.searchingDiscussion = false)
+      this.searchDiscussion();
     }
+  }
+
+  private searchDiscussion(): void {
+    this.searchingDiscussion = true;
+    this.discussionService.getDiscussionById(this.discussionID).subscribe((value: any) => {
+      this.searchingDiscussion = false;
+      this.formGroup.get("title")?.setValue(value.title);
+      this.formGroup.get("topic")?.setValue(value.topic);
+      this.formGroup.get("text")?.setValue(value.text);
+    },(err: any) => this.searchingDiscussion = false)
   }
 
 

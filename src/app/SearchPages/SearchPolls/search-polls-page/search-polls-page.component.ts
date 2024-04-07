@@ -66,4 +66,8 @@ export class SearchPollsPageComponent implements AfterViewInit,OnDestroy {
       },(err: any) => this.isSearching = false);
     }
   }
+
+  public removePoll(poll: Poll): void {
+    this.currentItems = this.currentItems.filter((current: any) => current.id !== poll.id);
+  }
 }

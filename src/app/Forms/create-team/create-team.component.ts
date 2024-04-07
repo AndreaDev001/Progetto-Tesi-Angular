@@ -18,7 +18,7 @@ export interface CreateTeam
 export class CreateTeamComponent implements OnInit {
 
   public formGroup: FormGroup = new FormGroup({
-    name: new FormControl('',[Validators.required,Validators.minLength(3),Validators.maxLength(10)])
+    name: new FormControl('',[Validators.required,Validators.minLength(3),Validators.maxLength(20)])
   })
   public isCreating: boolean = false;
   @Input() boardID: string | undefined = undefined;

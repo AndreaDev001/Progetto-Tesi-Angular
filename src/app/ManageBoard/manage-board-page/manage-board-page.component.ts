@@ -63,8 +63,6 @@ export class ManageBoardPageComponent implements OnInit,OnDestroy {
     this.subscriptions.push(this.activatedRoute.params.subscribe((value: any) => {
       if(value.id != undefined) {
         this.boardID = value.id;
-        let timeStamp = (new Date()).getTime();
-        this.backgroundURL = "http://localhost:8080/api/v1/boardImages/public/image/" + value.id + "?" + 'time=' + timeStamp;
         this.searchBoard();
       }
     }))
@@ -99,8 +97,11 @@ export class ManageBoardPageComponent implements OnInit,OnDestroy {
       this.boardService.getBoardById(this.boardID).subscribe((value: Board) => {
         this.searchingBoard = false;
         this.currentBoard = value;
-        if(this.currentBoard != undefined)
-            this.searchGroups();
+        if(this.currentBoard != undefined) {
+          let timeStamp = (new Date()).getTime();
+          this.backgroundURL = "http://localhost:8080/api/v1/boardImages/public/image/" + value.id + "?" + 'time=' + timeStamp;
+          this.searchGroups();
+        }
       },(err: any) => this.searchingBoard = false);
     }
   }

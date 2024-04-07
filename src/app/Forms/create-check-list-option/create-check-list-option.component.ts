@@ -12,7 +12,7 @@ import { CheckListOptionService } from 'src/model/services/check-list-option.ser
 })
 export class CreateCheckListOptionComponent {
   public formGroup: FormGroup = new FormGroup({
-    name: new FormControl('',[Validators.required]),
+    name: new FormControl('',[Validators.required,Validators.minLength(3),Validators.maxLength(20)]),
   })
   public checkIcon: IconDefinition = faCheck;
   public isCreating: boolean = false;

@@ -14,8 +14,8 @@
                         <input matInput placeholder="Name" formControlName="name">
                         <mat-hint>Write a name...</mat-hint>
                         <mat-error *ngIf="name.hasError('required') && (name.touched || name.dirty)">Name is required</mat-error>
-                        <mat-error *ngIf="name.hasError('minlength') && (name.touched || name.dirty)">Name is too short, must be longer than 3 characters</mat-error>
-                        <mat-error *ngIf="name.hasError('maxlength') && (name.touched || name.dirty)">Name is too long, must be shorter than 10 characters</mat-error>
+                        <mat-error *ngIf="name.hasError('minlength') && (name.touched || name.dirty)">Name is too short, must be longer than 5 characters</mat-error>
+                        <mat-error *ngIf="name.hasError('maxlength') && (name.touched || name.dirty)">Name is too long, must be shorter than 15 characters</mat-error>
                     </mat-form-field>
                 </div>
                 <div class = "mt-1 py-2 text-end mx-1">

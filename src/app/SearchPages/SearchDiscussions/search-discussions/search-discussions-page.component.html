@@ -38,7 +38,7 @@
 <ng-template #discussionElements>
     <div class = "row py-1">
         <div class = "col-6 col-md-2 mt-3" *ngFor="let current of currentItems">
-            <app-discussion-card [discussion]="current"></app-discussion-card>
+            <app-discussion-card (deletedEvent)="this.removeDiscussion(current)" [discussion]="current"></app-discussion-card>
         </div>
     </div>
 </ng-template>

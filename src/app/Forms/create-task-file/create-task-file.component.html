@@ -18,7 +18,7 @@
                             <mat-hint>Write a name...</mat-hint>
                             <mat-error *ngIf="name.hasError('required') && (name.touched || name.dirty)">Name is required</mat-error>
                             <mat-error *ngIf="name.hasError('minlength') && (name.touched || name.dirty)">Name is too short, must be longer than 3 characters</mat-error>
-                            <mat-error *ngIf="name.hasError('maxlength') && (name.touched || name.dirty)">Name is too long, must be shorter than 10 characters</mat-error>
+                            <mat-error *ngIf="name.hasError('maxlength') && (name.touched || name.dirty)">Name is too long, must be shorter than 20 characters</mat-error>
                         </mat-form-field>
                     </div>
                     <div class = "mx-2">

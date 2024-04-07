@@ -42,14 +42,18 @@ export class CreateCommentComponent implements OnInit {
 
   public ngOnInit(): void {
     if(this.update && this.commentID != undefined) {
-      this.searchingComment = true;
-      this.commentService.getCommentByID(this.commentID).subscribe((value: any) => {
-        this.currentComment = value;
-        this.searchingComment = false;
-        this.formGroup.get("title")?.setValue(this.currentComment?.title);
-        this.formGroup.get("text")?.setValue(this.currentComment?.text);
-      },(err: any) => this.searchingComment = false)
+      this.searchComment();
     }  
+  }
+
+  private searchComment(): void {
+    this.searchingComment = true;
+    this.commentService.getCommentByID(this.commentID).subscribe((value: any) => {
+      this.currentComment = value;
+      this.searchingComment = false;
+      this.formGroup.get("title")?.setValue(this.currentComment?.title);
+      this.formGroup.get("text")?.setValue(this.currentComment?.text);
+    },(err: any) => this.searchingComment = false)
   }
 
   public handleSubmit(event: any): void {

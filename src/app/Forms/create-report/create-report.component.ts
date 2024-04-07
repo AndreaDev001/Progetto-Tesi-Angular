@@ -33,8 +33,8 @@ export class CreateReportComponent implements OnInit {
   @Output() successEvent: EventEmitter<any> = new EventEmitter();
   @Output() failedEvent: EventEmitter<any> = new EventEmitter();
   public formGroup: FormGroup = new FormGroup({
-    title: new FormControl<String>('',[Validators.required,Validators.minLength(3),Validators.maxLength(10)]),
-    description: new FormControl<String>('',[Validators.required,Validators.minLength(10),Validators.maxLength(60)]),
+    title: new FormControl<String>('',[Validators.required,Validators.minLength(3),Validators.maxLength(20)]),
+    description: new FormControl<String>('',[Validators.required,Validators.minLength(20),Validators.maxLength(200)]),
     reason: new FormControl<String>('',Validators.required)
   })
   public isCreating: boolean = false;
@@ -46,6 +46,10 @@ export class CreateReportComponent implements OnInit {
   }
 
   public ngOnInit(): void {
+    this.searchReasons();
+  }
+
+  private searchReasons(): void {
     this.reportService.getReasons().subscribe((value: CollectionModel) => {
       this.reasons = value._embedded != undefined && value._embedded.content != undefined ? value._embedded.content : [];
     })

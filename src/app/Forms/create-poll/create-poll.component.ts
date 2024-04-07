@@ -27,8 +27,8 @@ export class CreatePollComponent implements OnInit {
   @Input() pollID: any = undefined;
   public searchingPoll: boolean = false;
   public formGroup: FormGroup = new FormGroup({
-    title: new FormControl<String>('',[Validators.required,Validators.minLength(3),Validators.maxLength(10)]),
-    description: new FormControl<String>('',[Validators.required]),
+    title: new FormControl<String>('',[Validators.required,Validators.minLength(3),Validators.maxLength(20)]),
+    description: new FormControl<String>('',[Validators.required,Validators.minLength(20),Validators.maxLength(200)]),
     minimumVotes: new FormControl<Number>(0,[Validators.required,Validators.min(0),Validators.max(20)]),
     maximumVotes: new FormControl<Number>(0,[Validators.required,Validators.min(20),Validators.max(40)])
   })

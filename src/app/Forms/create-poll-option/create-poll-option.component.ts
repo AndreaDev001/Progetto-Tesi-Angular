@@ -21,8 +21,8 @@ export class CreatePollOptionComponent implements OnInit {
   public optionIcon: IconDefinition = faCircle;
 
   public formGroup: FormGroup = new FormGroup({
-    name: new FormControl('',[Validators.required(),Validators.minLength(3),Validators.maxLength(10)]),
-    description: new FormControl('',[Validators.required(),Validators.minLength(3),Validators.maxLength(15)])
+    name: new FormControl('',[Validators.required(),Validators.minLength(3),Validators.maxLength(20)]),
+    description: new FormControl('',[Validators.required(),Validators.minLength(3),Validators.maxLength(20)])
   })
   public isCreating: boolean = false;
   @Output() submitEvent: EventEmitter<any> = new EventEmitter();
@@ -35,10 +35,10 @@ export class CreatePollOptionComponent implements OnInit {
 
   public ngOnInit(): void {
     if(this.optionID != undefined && this.update)
-        this.getOption();
+        this.searchOption();
   }
 
-  private getOption(): void {
+  private searchOption(): void {
     this.searchingOption = true;
     this.pollOptionService.getPollOptionByID(this.optionID).subscribe((value: any) => {
       this.searchingOption = false;

@@ -18,7 +18,7 @@
                         <mat-hint class = "mat-hint">Write a text...</mat-hint>
                         <mat-error *ngIf="text.hasError('required') && (text.touched || text.dirty)">Text is required</mat-error>
                         <mat-error *ngIf="text.hasError('minlength') && (text.touched || text.dirty)">Text is too short, must be longer than 3 characters</mat-error>
-                        <mat-error *ngIf="text.hasError('maxlength') && (text.touched || text.dirty)">Text is too long, must be shorter than 10 characters</mat-error>
+                        <mat-error *ngIf="text.hasError('maxlength') && (text.touched || text.dirty)">Text is too long, must be shorter than 20 characters</mat-error>
                     </mat-form-field>
                 </div>
                 <div class = "mt-2 text-end mx-1">

@@ -17,7 +17,7 @@
                         <mat-hint>Write a title...</mat-hint>
                         <mat-error *ngIf="title.hasError('required') && (title.touched || title.dirty)">Title is required</mat-error>
                         <mat-error *ngIf="title.hasError('minlength') && (title.touched || title.dirty)">Title is too short, must be longer than 3 characters</mat-error>
-                        <mat-error *ngIf="title.hasError('maxlength') && (title.touched || title.dirty)">Title is too long, must be shorter than 10 characters</mat-error>
+                        <mat-error *ngIf="title.hasError('maxlength') && (title.touched || title.dirty)">Title is too long, must be shorter than 20 characters</mat-error>
                     </mat-form-field>
                 </div>
                 <div>
@@ -27,8 +27,8 @@
                         <textarea matInput placeholder="Description" formControlName="description"></textarea>
                         <mat-hint>Write a description...</mat-hint>
                         <mat-error *ngIf="description.hasError('required') && (description.touched || description.dirty)">Description is required</mat-error>
-                        <mat-error *ngIf="description.hasError('minlength') && (description.touched || description.dirty)">Description is too short, must be longer than 10 characters</mat-error>
-                        <mat-error *ngIf="description.hasError('maxlength') && (description.touched || description.dirty)">Description is too long, must be shorter than 60 characters</mat-error>
+                        <mat-error *ngIf="description.hasError('minlength') && (description.touched || description.dirty)">Description is too short, must be longer than 20 characters</mat-error>
+                        <mat-error *ngIf="description.hasError('maxlength') && (description.touched || description.dirty)">Description is too long, must be shorter than 200 characters</mat-error>
                     </mat-form-field>
                 </div>
                 <div>

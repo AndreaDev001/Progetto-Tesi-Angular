@@ -68,4 +68,8 @@ export class SearchDiscussionsPageComponent implements AfterViewInit,OnDestroy{
       },(err: any) => this.isSearching = false)
     }
   }
+
+  public removeDiscussion(discussion: Discussion): void {
+    this.currentItems = this.currentItems.filter((current: any) => current.id !== discussion.id);
+  }
 }

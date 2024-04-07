@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faComment, faHeart, faMessage } from '@fortawesome/free-solid-svg-icons';
+import { AuthHandlerService } from 'src/model/auth/auth-handler.service';
 import { Discussion } from 'src/model/interfaces';
 import { DiscussionRef } from 'src/model/refs';
 import { DiscussionService } from 'src/model/services/discussion.service';
@@ -20,13 +21,16 @@ export class DiscussionCardComponent implements OnInit {
   public commentIcon: IconDefinition = faComment;
   public chatIcon: IconDefinition = faMessage;
 
-  constructor(private router: Router,private discussionService: DiscussionService) {
+  constructor(private router: Router,private discussionService: DiscussionService,public authHandlerService: AuthHandlerService) {
 
   }
 
   public ngOnInit(): void {
-    if(this.discussionRef != undefined)
-        this.discussion = {title: this.discussionRef.title,topic: this.discussionRef.topic,id: this.discussionRef.id,createdDate: this.discussionRef.createdDate,publisher: this.discussionRef.publisher,amountOfReceivedLikes: this.discussionRef.amountOfLikes,amountOfReceivedComments: this.discussionRef.amountOfComments};  
+    if(this.discussionRef != undefined) 
+        this.discussion = {title: this.discussionRef.title,topic: this.discussionRef.topic,id: this.discussionRef.id,createdDate: this.discussionRef.createdDate,publisher: this.discussionRef.publisher,amountOfReceivedLikes: this.discussionRef.amountOfLikes,amountOfReceivedComments: this.discussionRef.amountOfComments};
+    if(this.discussion != undefined) {
+      this.isOwner = this.authHandlerService.getCurrentUserID(true) == this.discussion?.publisher.id; 
+    }
   }
 
   public openDiscussion(): void {

@@ -15,7 +15,7 @@ export class CreateTaskURLComponent {
   @Input() taskID: any = undefined;
   public formGroup: FormGroup = new FormGroup({
     url: new FormControl<String>('',[Validators.required()]),
-    name: new FormControl<String>('',[Validators.required()])
+    name: new FormControl<String>('',[Validators.required(),Validators.minLength(3),Validators.maxLength(20)])
   })
   public urlIcon: IconDefinition = faPaperclip;
   public isCreating: boolean = false;
