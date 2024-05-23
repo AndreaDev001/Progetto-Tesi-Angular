@@ -5,3 +5,6 @@ img.user-image
     height: 150px;
     border-radius: 60%;
 }
+::ng-deep .mat-mdc-select-min-line {
+    color: black;
+}

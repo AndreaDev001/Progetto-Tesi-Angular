@@ -12,7 +12,7 @@
                     <div class = "p-0 m-0" ngbDropdownItem *ngFor="let current of currentTeamOptions;let i = index">
                         <ng-container *ngTemplateOutlet="teamTemplate;context: {index: i,teamOption: current,team: this.currentTeams[i]}"></ng-container> 
                     </div>
-                    <button [placement]="'right'" [ngbTooltip]="!isAdmin && !isBoardAdmin ? 'You must be an admin to perform this operation' : 'Create a team'" [disabled]="!isBoardAdmin && !isAdmin" (click)="handleCreateTeam()" class = "create-team-button">
+                    <button class = "default-button" [placement]="'right'" [ngbTooltip]="!isAdmin && !isBoardAdmin ? 'You must be an admin to perform this operation' : 'Create a team'" [disabled]="!isBoardAdmin && !isAdmin" (click)="handleCreateTeam()" class = "create-team-button">
                         <fa-icon [icon]="plusIcon"></fa-icon>
                         <span class = "mx-2">Create a team</span>
                     </button>
@@ -56,6 +56,9 @@
 <ng-template #teamListTemplate>
     <div *ngIf="this.currentSelectedTeam != undefined">
         <app-multi-selection (confirmEvent)="this.deleteTeamMembers($event)" (cancelEvent)="this.alertHandlerService.close()" [showAlwaysButton]="false" [selectedText]="'Removed'" [unselectedText]="'Remove'" [requiredTemplate]="teamMemberHolder" [requiredObservable]="this.teamMemberService.getTeamMembersByTeam(this.currentSelectedTeam.id)"></app-multi-selection>
+        <div class = "text-center py-2">
+            <button class = "default-button py-2 w-75" (click)="addTeamMember()">Add a member</button>
+        </div>
     </div>
 </ng-template>
 <ng-template #createInviteTemplate let-userID="userID">
@@ -75,7 +78,7 @@
             <img class = "member-image" style="top: 0;left: 0" [src]="'http://localhost:8080/api/v1/userImages/public/user/' + member.user.id + '/image'">
         </button>
         <div class = "member-dropdown" ngbDropdownMenu *ngIf="isBoardAdmin">
-            <app-loader [diameter]="60" [strokeWidth]="6" [isSearching]="searchingMember" [requiredTemplate]="memberDropdown"></app-loader>
+            <app-loader [diameter]="60" [strokeWidth]="6" [isSearching]="searchingMember" [requiredTemplate]="memberDropdown" [context]="member"></app-loader>
         </div>
     </div>
 </ng-template>
@@ -85,7 +88,7 @@
     </div>
 </ng-template>
 <ng-template #modifyBoardTemplate>
-    <app-create-board  (successEvent)="this.modifiedBoard.emit(this.board?.id)" [update]="true" [boardID]="board?.id"></app-create-board>
+    <app-create-board (successEvent)="this.modifiedBoard.emit(this.board?.id)" [update]="true" [boardID]="board?.id"></app-create-board>
 </ng-template>
 <ng-template #userHolder let-i>
     <app-user-holder [userRef]="i.user"></app-user-holder>
@@ -96,10 +99,10 @@
 <ng-template #userTemplate let-i>
     <app-user-holder [user]="i"></app-user-holder>
 </ng-template>
-<ng-template #memberDropdown let-member>
+<ng-template #memberDropdown let-i>
     <div>
-        <button (click)="changeRole(member)" ngbDropdownItem class = "member-option">{{currentUserAdmin ? 'Demote to member' : 'Promote to admin'}}</button>
-        <button (click)="removeFromBoard(member)" ngbDropdownItem class = "member-option">Remove from board</button>
-        <button ngbDropdownItem class = "member-option">Visit profile</button>
+        <button [disabled]="this.authHandlerService.getCurrentUserID(true) == i.user.id" (click)="changeRole(i)" ngbDropdownItem class = "member-option">{{currentUserAdmin ? 'Demote to member' : 'Promote to admin'}}</button>
+        <button [disabled]="currentUserAdmin || this.authHandlerService.getCurrentUserID(true) == i.user.id" (click)="removeFromBoard(i)" ngbDropdownItem class = "member-option">Remove from board</button>
+        <button (click)="openProfile(i)" ngbDropdownItem class = "member-option">Visit profile</button>
     </div>
 </ng-template>

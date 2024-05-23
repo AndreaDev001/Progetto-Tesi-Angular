@@ -48,11 +48,11 @@ export class ChecklistComponent implements OnInit
   }
 
   public addOption(): void {
-    this.alertHandlerService.close();
     this.alertHandlerService.reset();
     this.alertHandlerService.setTextTemplate(this.createOptionTemplate);
     this.alertHandlerService.open();
   }
+  
   public deleteOption(option: CheckListOption): void {
     this.checkListOptionService.deleteOption(option.id).subscribe((value: any) => {
       this.currentOptions = this.currentOptions.filter((current: any) => current.id !== option.id);

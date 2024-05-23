@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Icon, IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faDiscourse } from '@fortawesome/free-brands-svg-icons';
-import { faArrowDown, faArrowUp, faBan, faBars, faCaretDown, faCaretUp, faEllipsis, faEllipsisH, faExclamationCircle, faFilter, faGear, faHamburger, faHeart, faHome, faHouse, faInfoCircle, faMessage, faPlusCircle, faPoll, faQuestionCircle, faSearch, faTable, faTasks, faUser, faUserCircle, faWarning } from '@fortawesome/free-solid-svg-icons';
+import { faArrowDown, faArrowUp, faBan, faBars, faCaretDown, faCaretUp, faEllipsis, faEllipsisH, faExclamationCircle, faFilter, faGear, faHamburger, faHeart, faHome, faHouse, faInfo, faInfoCircle, faMessage, faPlusCircle, faPoll, faQuestionCircle, faSearch, faTable, faTasks, faUser, faUserCircle, faWarning } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
 import { AlertHandlerService } from 'src/app/Utility/services/alert-handler.service';
 import { AuthHandlerService } from 'src/model/auth/auth-handler.service';
@@ -44,6 +44,7 @@ export class HeaderComponent implements OnInit,OnDestroy {
   public openCollapsedIcon: IconDefinition = faCaretUp;
   public closeCollapsedIcon: IconDefinition = faCaretDown;
   public optionsIcon: IconDefinition = faBars;
+  public infoIcon: IconDefinition = faInfoCircle;
 
   public optionsCollapsed: boolean = true;
   public isCollapsed: boolean[] = [];

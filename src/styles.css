@@ -15,10 +15,6 @@ body
     border: 0;
     color: whitesmoke;
 }
-.mat-option
-{
-    color: black;
-}
 .primary-color {
     background-color: var(--primary-color);
 }
@@ -48,6 +44,11 @@ body
 .default-button:hover
 {
     background-color: var(--tertiary-color);
+}
+.default-button:disabled
+{
+    cursor: not-allowed;
+    opacity: 0.5;
 }
 .cdk-overlay-container, .cdk-overlay-pane {
     z-index: 9999 !important;

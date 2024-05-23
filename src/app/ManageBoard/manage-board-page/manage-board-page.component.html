@@ -1,6 +1,6 @@
 <div *ngIf="currentBoard" class = "manage-board-wrapper" [ngStyle]="{'background-image': 'url(' + backgroundURL + '),linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2))'}">
     <div>
-        <app-board-header [isBoardAdmin]="isBoardAdmin" [isAdmin]="isAdmin" (usersChanged)="this.searchBoard()" (modifiedBoard)="reloadBoardInfo()" [board]="currentBoard"></app-board-header>
+        <app-board-header [isBoardAdmin]="isBoardAdmin" [isAdmin]="isAdmin" (usersChanged)="this.searchBoard()" (modifiedBoardImage)="reloadBoardImage()" (modifiedBoard)="reloadBoardInfo()" [board]="currentBoard"></app-board-header>
     </div>
     <div class = "horizontal-container py-2" style="height: 92%;">
         <div class = "d-flex"  cdkDropList cdkDropListOrientation="horizontal" (cdkDropListDropped)="dropList($event)">
@@ -33,7 +33,7 @@
                                 <div (cdkDragStarted)="updateCurrentTask($event,value);" class = "task-element-draggable draggable-box" cdkDrag *ngFor="let value of currentTasks[i];let j = index">
                                     <div class= "item-placeholder" *cdkDragPlaceholder></div>
                                     <div class = "task-element-wrapper">
-                                        <app-task-element [isBoardAdmin]="isBoardAdmin" [isAdmin]="isAdmin" [board]="currentBoard" [task]="value"></app-task-element>
+                                        <app-task-element (deletedTaskEvent)="removeTask(i,currentTasks[i][j].id)" [isBoardAdmin]="isBoardAdmin" [isAdmin]="isAdmin" [board]="currentBoard" [task]="value"></app-task-element>
                                     </div>
                                 </div>
                             </div>

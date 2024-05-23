@@ -44,7 +44,7 @@
                 </div>
             </div>
             <div class = "col-12 col-md-4">
-                <app-poll-options></app-poll-options>
+                <app-poll-options [publisherID]="this.currentPoll?.publisher?.id"></app-poll-options>
             </div>
         </div>
     </div>
@@ -55,7 +55,7 @@
     </div>
 </ng-template>
 <ng-template #optionTemplate let-i>
-    <app-poll-option (votedEvent)="updateCurrentVote(i)" [isVoted]="currentVotedOption != undefined ? currentVotedOption.option.id == i.id : false" (deletedEvent)="deleteOption(i)" [isOwner]="isOwner" [pollOption]="i"></app-poll-option>
+    <app-poll-option (votedEvent)="updateCurrentVote(i)" [isVoted]="currentVotedOption != undefined ? currentVotedOption.id == i.id : false" (deletedEvent)="deleteOption(i)" [isOwner]="isOwner" [pollOption]="i"></app-poll-option>
 </ng-template>
 <ng-template #commentsTemplate>
     <div class = "mt-1 py-1">

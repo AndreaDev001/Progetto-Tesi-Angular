@@ -12,6 +12,8 @@ import { RoleOwnerService } from 'src/model/services/role-owner.service';
 import { CreateRoleOwner, CreateTeamMember } from 'src/model/create';
 import { UserService } from 'src/model/services/user.service';
 import { TeamMemberService } from 'src/model/team-member.service';
+import { Router } from '@angular/router';
+import { AuthHandlerService } from 'src/model/auth/auth-handler.service';
 
 
 interface TeamOption
@@ -50,6 +52,8 @@ export class BoardHeaderComponent implements OnInit {
   public currentInvitedUser: User | undefined = undefined;
   public searchingTeamMembers: boolean = false;
   public searchingMember: boolean = false;
+  public searchingBoardMembers: boolean = false;
+  public searchingTeams: boolean = false;
 
 
   @ViewChild("createInviteTemplate") createInviteTemplate: any;
@@ -59,11 +63,12 @@ export class BoardHeaderComponent implements OnInit {
   @ViewChild("addUserTemplate") addUserTemplate: any;
   @ViewChild("addMemberTemplate") addMemberTemplate: any;
   @ViewChild("modifyBoardTemplate") modifyBoardTemplate: any;
+  
   @Output("usersChanged") usersChanged: EventEmitter<any> = new EventEmitter();
   @Output("teamsChanged") teamsChanged: EventEmitter<any> = new EventEmitter();
   @Output("modifiedBoard") modifiedBoard: EventEmitter<any> = new EventEmitter();
 
-  constructor(private teamService: TeamService,public userService: UserService,private roleOwnerService: RoleOwnerService,public teamMemberService: TeamMemberService,public boardMemberService: BoardMemberService,private boardInviteService: BoardInviteService,public alertHandlerService: AlertHandlerService) {
+  constructor(private teamService: TeamService,public userService: UserService,public authHandlerService: AuthHandlerService,private router: Router,private roleOwnerService: RoleOwnerService,public teamMemberService: TeamMemberService,public boardMemberService: BoardMemberService,private boardInviteService: BoardInviteService,public alertHandlerService: AlertHandlerService) {
 
   }
 
@@ -72,16 +77,28 @@ export class BoardHeaderComponent implements OnInit {
   {
     if(this.board != undefined) 
     {
-      this.teamService.getTeamsByBoard(this.board.id).subscribe((value: CollectionModel) => {
-        this.currentTeams = value._embedded != undefined && value._embedded.content != undefined ? value._embedded.content : [];
-        this.currentTeams.forEach((team: Team) => {
-          this.currentTeamOptions.push({name: team.name,icon: faUsers});
-        })
-      });
-      this.boardMemberService.getBoardMembersByBoard(this.board.id).subscribe((value: CollectionModel) => {
-        this.currentMembers = value._embedded != undefined && value._embedded.content != undefined ? value._embedded.content : []
-      });
+      this.searchBoardMembers();
+      this.searchTeams();
     }
+  }
+
+  private searchTeams(): void {
+    this.searchingTeams = true;
+    this.teamService.getTeamsByBoard(this.board!!.id).subscribe((value: CollectionModel) => {
+      this.searchingTeams = false;
+      this.currentTeams = value._embedded != undefined && value._embedded.content != undefined ? value._embedded.content : [];
+      this.currentTeams.forEach((team: Team) => {
+        this.currentTeamOptions.push({name: team.name,icon: faUsers});
+      })
+    },(err: any) => this.searchingTeams = false);
+  }
+
+  private searchBoardMembers(): void {
+    this.searchingBoardMembers = true;
+    this.boardMemberService.getBoardMembersByBoard(this.board!!.id).subscribe((value: CollectionModel) => {
+      this.searchingBoardMembers = false;
+      this.currentMembers = value._embedded != undefined && value._embedded.content != undefined ? value._embedded.content : []
+    },(err: any) => this.searchingBoardMembers = false);
   }
 
   public handleSuccessTeam(value: Team): void
@@ -136,7 +153,6 @@ export class BoardHeaderComponent implements OnInit {
     this.currentInvitedUser = event
     if(this.currentInvitedUser != undefined) 
     {
-      this.alertHandlerService.close();
       this.alertHandlerService.reset();
       this.alertHandlerService.setTextTemplate(this.createInviteTemplate);
       this.alertHandlerService.open();
@@ -173,7 +189,6 @@ export class BoardHeaderComponent implements OnInit {
   }
 
   public addTeamMember(): void {
-    this.alertHandlerService.close();
     this.alertHandlerService.reset();
     this.alertHandlerService.setDefaultAlertTitle("Add a member");
     this.alertHandlerService.setDefaultAlertSubtitle("Choose one of the avaliable members");
@@ -182,13 +197,14 @@ export class BoardHeaderComponent implements OnInit {
   }
 
   public modifyOptions(): void {
-    this.alertHandlerService.close();
     this.alertHandlerService.reset();
     this.alertHandlerService.setTextTemplate(this.modifyBoardTemplate);
     this.alertHandlerService.open();
   }
-  
+
   public changeRole(member: BoardMember): void {
+    console.log(member.user.id);
+    console.log(member.board.id);
     if(this.currentUserAdmin)
       this.roleOwnerService.deleteRoleOwner("ADMIN",member.user.id,member.board.id).subscribe((value: any) => this.currentUserAdmin = false);
     else
@@ -197,6 +213,7 @@ export class BoardHeaderComponent implements OnInit {
       this.roleOwnerService.createRoleOwner(createRoleOwner).subscribe((value: any) => this.currentUserAdmin = true);
     }
   }
+  
 
   public handleSelectionChange(event: any): void {
     this.currentSelectedNewMembers = event;
@@ -211,5 +228,9 @@ export class BoardHeaderComponent implements OnInit {
       this.currentSelectedNewMembers = [];
     }
     this.alertHandlerService.close();
+  }
+
+  public openProfile(member: any): void {
+    this.router.navigateByUrl('/user/' + member.user.id);
   }
 }

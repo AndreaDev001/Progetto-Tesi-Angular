@@ -1,5 +1,3 @@
-
-input.date-picker
-{
-    background-color: var(--secondary-color);
+::ng-deep .mat-mdc-select-min-line {
+    color: black;
 }

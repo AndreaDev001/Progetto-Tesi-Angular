@@ -6,9 +6,7 @@
     </div>
     <div class = "vertical-container">
         <div *ngIf="currentPublisherPolls.length > 0">
-            <div class = "mt-1" *ngFor="let current of currentPublisherPolls">
-                <app-poll-card [poll]="current"></app-poll-card>                
-            </div>
+            <app-text-overflow [templates]="publisherItems" [horizontal]="false" (scrollEndReached)="updatePublisherMaxPage()"></app-text-overflow>
         </div>
         <div *ngIf="currentPublisherPolls.length == 0">
             <app-no-items></app-no-items>
@@ -24,12 +22,15 @@
     </div>
     <div class = "vertical-container">
         <div *ngIf="currentSimilarPolls.length > 0">
-            <div class = "mt-1" *ngFor="let current of currentSimilarPolls">
-                <app-poll-card [poll]="current"></app-poll-card>
-            </div>
+            <app-text-overflow [templates]="similarItems" [horizontal]="false" (scrollEndReached)="updateSimilarMaxPage()"></app-text-overflow>
         </div>
         <div *ngIf="currentSimilarPolls.length == 0">
             <app-no-items></app-no-items>
         </div>
     </div>
 </div>
+<ng-template #pollTemplate let-i>
+    <div class = "mt-1">
+        <app-poll-card [poll]="i"></app-poll-card>
+    </div>
+</ng-template>

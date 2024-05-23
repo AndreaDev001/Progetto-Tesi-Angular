@@ -93,4 +93,20 @@ export class PollOptionsComponent implements OnChanges {
       this.updateSimilarPolls(paginationRequest);
     }
   }
+
+  public resetPublisherPage(): void {
+    this.currentPublisherPolls = [];
+    this.publisherItems = [];
+    this.currentPublisherPage = 0;
+    this.currentPublisherTotalPages = 0;
+    this.updatePublisherPolls({page: this.currentPublisherPage,pageSize: 20});
+  }
+
+  public resetSimilarPage(): void {
+    this.currentSimilarPolls = [];
+    this.similarItems = [];
+    this.currentSimilarPage = 0;
+    this.currentSimilarTotalPages = 0;
+    this.updateSimilarPolls({page: this.currentSimilarPage,pageSize: 20});
+  }
 }

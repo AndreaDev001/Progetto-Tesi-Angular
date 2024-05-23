@@ -36,7 +36,7 @@
                     <mat-form-field class = "form-field" *ngIf="reason != undefined">
                         <mat-label class = "input-label">Reason</mat-label>
                         <mat-select formControlName="reason">
-                            <mat-option style="color: black" *ngFor="let current of reasons" [value]="current">{{current}}</mat-option>
+                            <mat-option *ngFor="let current of reasons" [value]="current">{{current}}</mat-option>
                         </mat-select>
                     </mat-form-field>
                 </div>

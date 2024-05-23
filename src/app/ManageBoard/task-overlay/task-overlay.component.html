@@ -15,15 +15,19 @@
                 </div>
                 <div class = "w-25 text-end d-inline-block">
                     <div ngbDropdown container="body">
-                        <button *ngIf="!isOwner"  class = "task-options-dropdown-toggle" ngbDropdownToggle></button>
+                        <button *ngIf="!isOwner || isBoardAdmin || isAdmin"  class = "task-options-dropdown-toggle" ngbDropdownToggle></button>
                         <div ngbDropdownMenu class = "primary-color">
-                            <button (click)="currentLike == undefined ? createLike() : deleteLike()" class = "default-button w-100" ngbDropdownItem>
+                            <button *ngIf = "!isOwner" (click)="currentLike == undefined ? createLike() : deleteLike()" class = "default-button w-100" ngbDropdownItem>
                                 <fa-icon [icon]="currentLike != undefined ? unlikeIcon : likeIcon"></fa-icon>
                                 <span class = "mx-1">{{currentLike != undefined ? 'Remove Like' : 'Add Like'}}</span>
                             </button>
-                            <button *ngIf="!hasReported" (click)="addReport()" class = "default-button w-100" ngbDropdownItem>
+                            <button *ngIf="!hasReported && !isOwner" (click)="addReport()" class = "default-button w-100" ngbDropdownItem>
                                 <fa-icon [icon]="reportIcon"></fa-icon>
                                 <span class = "mx-1">Report</span>
+                            </button>
+                            <button *ngIf="isAdmin || isBoardAdmin" (click)="deleteTask()" class = "default-button w-100" ngbDropdownItem>
+                                <fa-icon [icon]="deleteIcon"></fa-icon>
+                                <span class = "mx-1">Delete</span>
                             </button>
                         </div>
                     </div>
@@ -154,7 +158,7 @@
                                 <button class = "user-holder-wrapper" ngbDropdownItem *ngFor="let current of currentMembers">
                                     <div class = "d-flex justify-content-between">
                                         <app-user-holder [showNameInfo]="false" [imageWidth]="35" [imageHeight]="35" [userRef]="current.member.user"></app-user-holder>
-                                        <button class = "remove-button" (click)="removeMember(current)">
+                                        <button [disabled]="!isBoardAdmin && !isAdmin" class = "remove-button" (click)="removeMember(current)">
                                             <fa-icon [icon]="removeIcon"></fa-icon>
                                         </button>
                                     </div>
@@ -171,10 +175,10 @@
                                 <button class = "mt-1 user-holder-wrapper" ngbDropdownItem *ngFor="let current of currentTagAssignments">
                                     <div>
                                         <div class = "text-start w-75 d-inline-block">
-                                            <app-task-tag [canModify]="isBoardAdmin || isAdmin || isAssigned" [tagRef]="current.tag" [fontSize]="'10px'"></app-task-tag>
+                                            <app-task-tag [tagRef]="current.tag" [fontSize]="'10px'"></app-task-tag>
                                         </div>
                                         <div class = "text-end w-25 d-inline-block">
-                                            <button class = "remove-button" (click)="removeTagAssignment(current)">
+                                            <button [disabled]="!isBoardAdmin && !isAdmin && !isAssigned" class = "remove-button" (click)="removeTagAssignment(current)">
                                                 <fa-icon [icon]="removeIcon"></fa-icon>
                                             </button>
                                         </div>
@@ -182,7 +186,7 @@
                                 </button>
                                 <div class = "mt-2">
                                     <button [disabled]="!isAssigned && !isBoardAdmin && !isAdmin" class = "add-option-button mt-1" (click)="addTag()">Add a tag</button>
-                                    <button [disabled]="!isBoardAdmin && !isAdmin" class = "add-option-button mt-1" (click)="createNewTag()">Create a tag</button>
+                                    <button [disabled]="!isBoardAdmin && !isAdmin && !isAssigned" class = "add-option-button mt-1" (click)="createNewTag()">Create a tag</button>
                                 </div>
                             </div>
                         </div>
@@ -197,7 +201,7 @@
                                         <span>{{current.name}}</span>
                                     </div>
                                     <div class = "text-end w-25 d-inline-block">
-                                        <button class = "remove-button" (click)="removeCheckList(current)">
+                                        <button [disabled]="!isBoardAdmin && !isAdmin && !isAssigned" class = "remove-button" (click)="removeCheckList(current)">
                                             <fa-icon [icon]="removeIcon"></fa-icon>
                                         </button>
                                     </div>
@@ -259,7 +263,7 @@
             <img class = "assigned-image" [src]="'http://localhost:8080/api/v1/userImages/public/user/' + member.member.user.id + '/image'">
         </button>
         <div class = "primary-color" ngbDropdownMenu>
-            <button [disabled]="isBoardAdmin || isAdmin" (click)="removeMember(member)" class = "member-option" ngbDropdownItem>Remove</button>
+            <button [disabled]="!isBoardAdmin && !isAdmin" (click)="removeMember(member)" class = "member-option" ngbDropdownItem>Remove</button>
         </div>
     </div>
 </ng-template>
@@ -289,7 +293,7 @@
     <div>
         <app-task-tag [tag]="i" [padding]="'10px'" [fontSize]="'20px'"></app-task-tag>
     </div>
-</ng-template>
+</ng-template>r
 <ng-template #tagTemplate let-item="item">
     <app-task-tag (removeEvent)="removeTagAssignment(item)" [canModify]="isBoardAdmin || isAdmin || isAssigned" [fontSize]="'10px'" [tag] = "item.tag"></app-task-tag>
 </ng-template>

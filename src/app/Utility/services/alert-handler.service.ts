@@ -108,6 +108,7 @@ export class AlertHandlerService {
     this.currentAlertOptions.next([]);
     this.currentCloseCallback.next(() => {});
     this.currentDismissCallback.next(() => {});
+    this.close();
   }
   public open(): void {
     if(this.currentAlertComponent.value != undefined) {

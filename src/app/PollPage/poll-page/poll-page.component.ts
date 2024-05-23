@@ -41,7 +41,7 @@ export class PollPageComponent implements OnInit,OnDestroy {
   public currentCommentsItems: TextOverflowItem[] = [];
   public isOwner: boolean = false;
 
-  public currentVotedOption: PollVote | undefined = undefined;
+  public currentVotedOption: PollOption | undefined = undefined;
 
   @ViewChild("createOptionTemplate") createOptionTemplate: any;
   @ViewChild("createCommentTemplate") createCommentTemplate: any;
@@ -80,11 +80,13 @@ export class PollPageComponent implements OnInit,OnDestroy {
   private searchCurrentVotedOption(): void {
     if(this.pollID != undefined) {
       this.searchingCurrentVotedOption = true;
-      let callback: (first: boolean,value: any) => void = (searching: boolean,value: any) => {
-        this.searchingCurrentVotedOption = searching;
-        this.currentVotedOption = value;
-      }
-      this.pollVoteService.getCurrentVotedOption(this.pollID).subscribe((value: any) => callback(false,value),(err: any) => callback(false,undefined));
+      this.pollVoteService.getCurrentVotedOption(this.pollID).subscribe((value: any) => {
+        this.searchingCurrentVotedOption = false;
+        this.currentVotedOption = value.option;
+      },(err: any) => {
+        this.searchingCurrentVotedOption = false;
+        this.currentVotedOption = undefined;
+      });
     }
   }
 
@@ -134,8 +136,13 @@ export class PollPageComponent implements OnInit,OnDestroy {
     this.currentCommentsItems = this.currentCommentsItems.filter((current: any) => current.context.id !== event.id);
   }
 
-  public updateCurrentVote(vote: PollVote): void {
-    this.currentVotedOption = vote;
+  public updateCurrentVote(option: PollOption): void {
+    this.currentVotedOption = option;
+    let index: number = this.currentPollOptions.indexOf(option);
+    this.pollOptionService.getPollOptionByID(option.id).subscribe((value: any) => {
+      this.currentPollOptions[index] = value;
+      this.currentPollOptionsItems[index].context = value;
+    })
   }
 
   public createOption(): void {

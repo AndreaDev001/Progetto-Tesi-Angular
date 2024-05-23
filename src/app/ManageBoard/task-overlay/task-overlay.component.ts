@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
-import { faChain, faCheck, faClockFour, faClose, faComments, faEllipsisVertical, faFileUpload, faHeart, faHeartBroken, faIdCard, faImages, faLineChart, faMessage, faPaperclip, faPeopleGroup, faPlus, faTag, faTags, faTasks, faUpload, faUser, faUserGroup, faUsers, faWarning } from '@fortawesome/free-solid-svg-icons';
+import { faChain, faCheck, faClockFour, faClose, faComments, faEllipsisVertical, faFileUpload, faHeart, faHeartBroken, faIdCard, faImages, faLineChart, faMessage, faPaperclip, faPeopleGroup, faPlus, faTag, faTags, faTasks, faUpload, faUser, faUserGroup, faUsers, faWarning, faX } from '@fortawesome/free-solid-svg-icons';
 import { TagService } from 'src/model/services/tag.service';
 import { Board, BoardMember, CheckList, CheckListOption, CollectionModel, Comment, Tag, TagAssignment, Task, TaskAssignment, TaskComment, TaskFile, TaskImage, TaskLike, TaskURL } from 'src/model/interfaces';
 import { TaskAssignmentService } from 'src/model/services/task-assignment.service';
@@ -76,6 +76,7 @@ export class TaskOverlayComponent implements OnInit,OnDestroy
   public addIcon: IconDefinition = faPlus;
   public descriptionIcon: IconDefinition = faLineChart;
   public commentIcon: IconDefinition = faMessage;
+  public deleteIcon: IconDefinition = faX;
 
 
   public isOwner: boolean = false;
@@ -117,8 +118,9 @@ export class TaskOverlayComponent implements OnInit,OnDestroy
   @ViewChild("urlTemplate") urlTemplate: any;
   @ViewChild("fileTemplate") fileTemplate: any;
   @Output() taskChanged: EventEmitter<any> = new EventEmitter();
+  @Output() taskDeleted: EventEmitter<any> = new EventEmitter();
 
-  constructor(private taskAssignmentsService: TaskAssignmentService,private taskFileService: TaskFileService,private taskURLSService: TaskURLService,private authHandler: AuthHandlerService,public taskCommentService: TaskCommentService,public teamService: TeamService,private taskLikeService: TaskLikeService,private authenticationHandler: AuthHandlerService,private taskReportService: TaskReportService,private taskImageService: TaskImageService,public tagService: TagService,public alertHandlerService: AlertHandlerService,private taskService: TaskService,private checkListOptionService: CheckListOptionService,private tagAssignmentService: TagAssignmentService,private checkListService: CheckListService,public boardMemberService:  BoardMemberService) {
+  constructor(private taskAssignmentsService: TaskAssignmentService,private taskFileService: TaskFileService,private taskURLSService: TaskURLService,private authHandler: AuthHandlerService,public taskCommentService: TaskCommentService,public teamService: TeamService,private taskLikeService: TaskLikeService,private authenticationHandler: AuthHandlerService,private taskReportService: TaskReportService,private taskImageService: TaskImageService,public tagService: TagService,public alertHandlerService: AlertHandlerService,private taskService: TaskService,private tagAssignmentService: TagAssignmentService,private checkListService: CheckListService,public boardMemberService:  BoardMemberService) {
 
   }
 
@@ -219,6 +221,8 @@ export class TaskOverlayComponent implements OnInit,OnDestroy
     this.taskFileService.getTaskFilesByTask(this.task!!.id).subscribe((value: CollectionModel) => {
       this.searchingFiles = false;
       this.currentFiles = value._embedded != undefined && value._embedded.content != undefined ? value._embedded.content : [];
+      console.log(this.currentFileItems);
+      
       this.currentFiles.forEach((current: any) => {
         let overflowItem: TextOverflowItem = {template: this.fileTemplate,context: current};
         this.currentFileItems.push(overflowItem);
@@ -383,7 +387,8 @@ export class TaskOverlayComponent implements OnInit,OnDestroy
 
 
   public confirmTeams(event: any): void {
-    if(this.task != undefined) {
+    if(this.task != undefined) 
+    {
       for(let current of event) {
         this.taskAssignmentsService.createTaskAssignmentFromTeam(this.task.id,current.id).subscribe((value: any) => {
           if(value._embedded != undefined && value._embedded.content != undefined) {
@@ -394,6 +399,7 @@ export class TaskOverlayComponent implements OnInit,OnDestroy
           this.taskChanged.emit(this.task?.id);
         })
       }
+      this.alertHandlerService.close();
     }
   }
 
@@ -411,6 +417,12 @@ export class TaskOverlayComponent implements OnInit,OnDestroy
         this.taskChanged.emit(this.task?.id);
       })
     }
+  }
+
+  public deleteTask(): void {
+    this.taskService.deleteTask(this.task!!.id).subscribe((value: any) => {
+      this.taskDeleted.emit(this.task?.id);
+    })
   }
 
   public addMember(): void {

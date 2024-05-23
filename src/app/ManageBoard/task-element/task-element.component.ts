@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faCheck, faCheckCircle, faClockFour, faComment, faComments, faEllipsis, faFileDownload, faImage, faImages, faPaperclip } from '@fortawesome/free-solid-svg-icons';
 import { TagService } from 'src/model/services/tag.service';
@@ -29,6 +29,8 @@ export class TaskElementComponent implements OnInit {
   @Input() task: Task | undefined = undefined;
   @Input() isBoardAdmin: boolean = false;
   @Input() isAdmin: boolean = false;
+
+  @Output() deletedTaskEvent: EventEmitter<any> = new EventEmitter();
 
   public searchingTagAssignments: boolean = false;
   public searchingTaskAssignments: boolean = false;
@@ -103,5 +105,10 @@ export class TaskElementComponent implements OnInit {
       this.canvasService.setContentTemplate(this.overlayTemplate);
       this.canvasService.open();
     }
+  }
+
+  public removeTask(): void {
+    this.canvasService.close();
+    this.deletedTaskEvent.emit();
   }
 }

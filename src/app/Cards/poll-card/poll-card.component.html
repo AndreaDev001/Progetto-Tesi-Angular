@@ -1,7 +1,7 @@
 <div class = "card-wrapper" *ngIf="poll != undefined">
     <div class = "poll-card-header">
         <div class = "d-inline-block w-50 text-start">
-            <app-user-holder [imageWidth]="45" [imageHeight]="45" [userRef]="poll.publisher" [showNameInfo]="false"></app-user-holder>
+            <app-user-holder  [imageWidth]="45" [imageHeight]="45" [userRef]="poll.publisher" [showNameInfo]="true"></app-user-holder>
         </div>
         <div class = "d-inline-block w-50 text-end">
             <fa-icon [icon]="pollIcon"></fa-icon>
@@ -13,20 +13,22 @@
     </div>
     <div class = "poll-card-footer">
         <div class = "py-2 text-center">
-            <button class = "default-button w-75" (click)="openPoll()">Go to poll</button>
-            <button *ngIf="authHandler.isAdmin() || isOwner" class = "default-button w-75 mt-2" (click)="deletePoll()">Delete</button>
+            <button class = "default-button w-100 d-block text-center" (click)="openPoll()">Go to poll</button>
+            <button *ngIf="authHandler.isAdmin() || isOwner" class = "default-button w-100 mt-2 d-block text-center" (click)="deletePoll()">Delete</button>
         </div>
-        <div class = "d-inline-block">
-            <fa-icon [icon]="likeIcon"></fa-icon>
-            <span class = "icon-text mx-1">{{poll.amountOfReceivedLikes}}</span>
-        </div>
-        <div class = "d-inline-block mx-1">
-            <fa-icon [icon]="minVoteIcon"></fa-icon>
-            <span class = "icon-text mx-1">{{poll.minimumVotes}}</span>
-        </div>
-        <div class = "d-inline-block mx-1">
-            <fa-icon [icon]="maxVoteIcon"></fa-icon>
-            <span class = "icon-text mx-1">{{poll.maximumVotes}}</span>
+        <div class = "d-flex">
+            <div>
+                <fa-icon [icon]="likeIcon"></fa-icon>
+                <span class = "icon-text mx-1">{{poll.amountOfReceivedLikes}}</span>
+            </div>
+            <div>
+                <fa-icon [icon]="minVoteIcon"></fa-icon>
+                <span class = "icon-text mx-1">{{poll.minimumVotes}}</span>
+            </div>
+            <div>
+                <fa-icon [icon]="maxVoteIcon"></fa-icon>
+                <span class = "icon-text mx-1">{{poll.maximumVotes}}</span>
+            </div>
         </div>
     </div>
 </div>
