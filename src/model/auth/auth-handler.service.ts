@@ -66,7 +66,6 @@ export class AuthHandlerService {
     if(this.currentAccessToken.value == undefined)
         return false;
     let decodedJWT: any = JSON.parse(window.atob(this.currentAccessToken.value.split('.')[1]));
-    console.log(decodedJWT.roles);
     return true;
   }
 

@@ -7,7 +7,7 @@ import { OAuthService } from 'angular-oauth2-oidc';
 export const AuthGuard: CanActivateFn = (next: ActivatedRouteSnapshot,state: RouterStateSnapshot): boolean => {
   let authHandler: any = inject(OAuthService);
   let router: any = inject(Router);
-  if(authHandler.hasValidAccessToken())
+  if(authHandler.getAccessToken() != undefined)
       return true;
   else
   {

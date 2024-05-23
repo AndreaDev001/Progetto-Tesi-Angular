@@ -51,4 +51,10 @@ export class TaskService {
     let queryParams: HttpParams = this.HttpUtils.generateParams(filter);
     return this.httpClient.get(desiredURL,{params: queryParams});
   }
+
+  public deleteTask(taskID: string): any {
+    const desiredURL: string = this.url + "/private" + "/" + taskID;
+    let queryParams: HttpParams = new HttpParams();
+    return this.httpClient.delete(desiredURL,{params: queryParams})
+  }
 }

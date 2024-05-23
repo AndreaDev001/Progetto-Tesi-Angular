@@ -243,7 +243,7 @@ button.option-button
 }
 button.option-button:hover {
     background-color: var(--tertiary-color);
-    border-radius: 100px;
+    border-radius: 5px;
 }
 button.create-group-button {
     border: 0;
@@ -255,6 +255,7 @@ button.add-task-button
 {
     border: 0;
     font-size: 15px;
+    border-radius: 2px;
     background-color: var(--primary-color);
     padding: 5px;
     transition: 0.2s ease-in-out all;
@@ -268,7 +269,6 @@ button.info-button {
 }
 button.add-task-button:hover {
     background-color: var(--tertiary-color);
-    border-radius: 20px;
 }
 button.info-button:hover {
     background-color: var(--tertiary-color);

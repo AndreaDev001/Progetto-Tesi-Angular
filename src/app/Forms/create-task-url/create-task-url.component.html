@@ -24,7 +24,7 @@
                 <mat-form-field class = "form-field" *ngIf="url != undefined">
                     <mat-label class = "input-label">URL</mat-label>
                     <input matInput placeholder="URL" formControlName="url">
-                    <mat-hint>Copy and paste and url from the internet</mat-hint>
+                    <mat-hint>Copy and paste an url from the internet</mat-hint>
                     <mat-error *ngIf="url.hasError('required') && (url.touched || url.dirty)">URL is required</mat-error>
                 </mat-form-field>
             </div>

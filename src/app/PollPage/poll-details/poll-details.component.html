@@ -11,7 +11,7 @@
             <div class = "col-12 col-md-6 text-end">
                 <button (click)="updateLike()" class = "default-button mx-1" *ngIf="!isOwner">{{currentLike != undefined ? 'Remove Like' : 'Add Like'}}</button>
                 <button class = "default-button mx-1" *ngIf="isOwner" (click)="modifyPoll()">Modify</button>
-                <button class = "default-button mx-1" *ngIf="isOwner">Delete</button>
+                <button class = "default-button mx-1" *ngIf="isOwner" (click)="deletePoll()">Delete</button>
                 <button (click)="createReport()" class = "default-button mx-1" *ngIf="!isOwner && currentReport == undefined">Report</button>
             </div>
         </div>

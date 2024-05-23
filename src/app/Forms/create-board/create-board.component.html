@@ -1,5 +1,5 @@
 <form [formGroup]="formGroup" (submit)="handleSubmit($event)">
-  <div class = "container py-4">
+  <div class = "container">
     <div class = "mx-1">
         <div class = "mx-1">
             <h4 class = "d-inline-block">{{update ? "Update board" : "Create a board"}}</h4>
@@ -44,8 +44,8 @@
             <span class = "d-block mx-2">Visibility</span>
             <mat-form-field class = "form-field" *ngIf="visibility != undefined">
                 <mat-label class = "input-label">Visibility</mat-label>
-                <mat-select formControlName="visibility">
-                    <mat-option *ngFor="let current of currentVisibilities" [value]="current">{{current}}</mat-option>
+                <mat-select panelClass="test" formControlName="visibility">
+                    <mat-option style="color: black" *ngFor="let current of currentVisibilities" [value]="current">{{current}}</mat-option>
                 </mat-select>
             </mat-form-field>
         </div>
@@ -60,7 +60,7 @@
         </div>
         </div> 
     </div> 
-    <div class = "mt-2 text-end mx-1">
+    <div class = "mt-1 py-2 text-end mx-1">
         <button type="submit" class = "default-button" [disabled]="!formGroup.valid && currentImage == null">Confirm</button>
         <button (click)="reset()" class = "default-button mx-1">Clear</button>
     </div>

@@ -32,10 +32,13 @@ export class TaskFileComponent {
         let dataType = response.type;
         let binaryData = [];
         binaryData.push(response);
+        const blob: Blob = new Blob(binaryData,{type: dataType});
+        console.log("current file:" + this.taskFile!!.name + "." + this.taskFile!!.extension);
+        const file = new File([blob],this.taskFile!!.name + "." + this.taskFile!!.extension,{type: dataType});
         let newLink = document.createElement('a');
-        newLink.href = window.URL.createObjectURL(new Blob(binaryData,{type: dataType}));
+        newLink.href = window.URL.createObjectURL(file);
         if(this.taskFile != undefined) {
-          newLink.setAttribute('download',this.taskFile.name);
+          newLink.setAttribute('download',file.name);
           document.body.append(newLink);
           newLink.click();
         }

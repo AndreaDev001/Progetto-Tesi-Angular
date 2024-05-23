@@ -5,8 +5,12 @@
             <p class = "option-description">{{pollOption.description}}</p>
         </div>
         <div class = "col-12 col-md-4 text-end">
-            <button class = "default-button mx-1" *ngIf="isOwner" (click)="modifyOption()">Modify</button>
-            <button class = "default-button mx-1" *ngIf="isOwner" (click)="deleteOption()">Delete</button>
+            <div *ngIf="isVoted">
+                <p class = "p-0 m-0">Amount of received votes</p>
+                <p class = "p-0 m-0">{{pollOption.amountOfVotes}}</p>
+            </div>
+            <button class = "default-button mx-1" *ngIf="isOwner && !isVoted" (click)="modifyOption()">Modify</button>
+            <button class = "default-button mx-1" *ngIf="isOwner && !isVoted" (click)="deleteOption()">Delete</button>
             <button class = "default-button mx-1" (click)="voteOption()" *ngIf="!isVoted">Vote</button>
         </div>
     </div>

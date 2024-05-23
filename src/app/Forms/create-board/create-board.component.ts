@@ -98,8 +98,7 @@ export class CreateBoardComponent implements OnInit {
         this.submitEvent.emit(updateBoard);
         this.formGroup.reset();
         this.boardService.updateBoard(updateBoard).subscribe((value: any) =>{
-          this.successEvent.emit(value);
-          this.updateBackgroundImage();
+          this.updateBackgroundImage(value);
         },(err: any) => this.failedEvent.emit(err));
       }
     }
@@ -110,10 +109,16 @@ export class CreateBoardComponent implements OnInit {
     this.formGroup.reset();
   }
 
-  public updateBackgroundImage(): void {
+  public updateBackgroundImage(board: any): void {
     if(this.currentImage != undefined) {
       let createBoardImage: CreateBoardImage = {boardID: this.boardID,file: this.currentImage};
-      this.boardImageService.createBoardImage(createBoardImage).subscribe((value: any) => this.successEvent.emit(value),(err: any) => this.failedEvent.emit(err));
+      this.boardImageService.createBoardImage(createBoardImage).subscribe((value: any) => {   
+        this.successEvent.emit(board);
+      },(err: any) => this.failedEvent.emit(err));
+    }
+    else
+    {
+      this.successEvent.emit(true);
     }
   }
 
@@ -124,7 +129,7 @@ export class CreateBoardComponent implements OnInit {
   public deleteImage(): void {
     if(this.currentSavedImage.id != undefined) {
       this.boardImageService.deleteImage(this.currentSavedImage.id).subscribe((value: any) => {
-        console.log(value);
+        this.successEvent.emit();
       })
     }
   }

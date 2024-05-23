@@ -1,5 +1,5 @@
 <form [formGroup]="formGroup" (submit)="handleSubmit($event)">
-    <div class = "container py-4">
+    <div class = "container">
         <div class = "mx-1">
             <div>
                 <h4 class = "d-inline-block">{{update ? 'Update Poll' : 'Create Poll'}}</h4>
@@ -27,8 +27,8 @@
                         <textarea class = "form-input" matInput placeholder="Description" formControlName="description"></textarea>
                         <mat-hint class = "mat-hint">Write a description...</mat-hint>
                         <mat-error *ngIf="description.hasError('required') && (description.touched || description.dirty)">Description is required</mat-error>
-                        <mat-error *ngIf="title.hasError('minlength') && (description.touched || description.dirty)">Description is too short, must be longer than 20 characters</mat-error>
-                        <mat-error *ngIf="title.hasError('maxlength') && (description.touched || description.dirty)">Description is too long, must be shorter than 200 characters</mat-error>
+                        <mat-error *ngIf="description.hasError('minlength') && (description.touched || description.dirty)">Description is too short, must be longer than 20 characters</mat-error>
+                        <mat-error *ngIf="description.hasError('maxlength') && (description.touched || description.dirty)">Description is too long, must be shorter than 200 characters</mat-error>
                     </mat-form-field>
                 </div>
                 <div>
@@ -49,13 +49,13 @@
                         <input class = "form-input" matInput placeholder="Maximum Votes" formControlName="maximumVotes">
                         <mat-hint class = "mat-hint">Write a maximum amount of votes</mat-hint>
                         <mat-error *ngIf="maximumVotes.hasError('required') && (maximumVotes.touched || maximumVotes.dirty)">You must specificy a maximum amount of votes</mat-error>
-                        <mat-error *ngIf="maximumVotes.hasError('required') && (maximumVotes.touched || maximumVotes.dirty)">Maximum amount of votes must be greater than 20</mat-error>
+                        <mat-error *ngIf="maximumVotes.hasError('min') && (maximumVotes.touched || maximumVotes.dirty)">Maximum amount of votes must be greater than 20</mat-error>
                         <mat-error *ngIf="maximumVotes.hasError('max') && (maximumVotes.touched || maximumVotes.dirty)">Maximum amount of votes must be smaller than 40</mat-error>
                     </mat-form-field>
                 </div>
                 <div class = "mt-2 py-2 text-end mx-1">
                     <button type="submit" class = "default-button" [disabled]="!formGroup.valid">Confirm</button>
-                    <button (click)="this.reset()" class = "default-button">Clear</button>
+                    <button (click)="this.reset()" class = "default-button mx-2">Clear</button>
                 </div>
             </div>
             <div *ngIf="isCreating" style="display: flex;flex-direction: column;align-items: center;padding: 10px 0px">

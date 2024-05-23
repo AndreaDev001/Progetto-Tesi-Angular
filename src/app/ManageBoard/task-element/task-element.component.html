@@ -7,11 +7,7 @@
             <app-loader [requiredTemplate]="tagAssignmentsTemplate" [isSearching]="searchingTagAssignments" [diameter]="30" [strokeWidth]="2" [showText]="false"></app-loader>
         </div>
         <div class = "position-relative">
-            <div class = "position-absolute" style="top: 0;right: 0">
-                <div class = "d-inline-block" style="margin-left: 5px;" *ngFor="let current of currentDescriptionItems">
-                    <ng-container *ngTemplateOutlet="descriptionItem;context: {item: current}"></ng-container>
-                </div>
-            </div>
+
         </div>
     </div>
     <div class = "task-element-body">
@@ -37,7 +33,7 @@
 </ng-template>
 <ng-template #overlayTemplate>
     <div>
-        <app-task-overlay [isBoardAdmin]="isBoardAdmin" [isAdmin]="isAdmin" [board]="board" [task]="task" (taskChanged)="this.updateTask()"></app-task-overlay>
+        <app-task-overlay (taskDeleted)="this.removeTask()" [isBoardAdmin]="isBoardAdmin" [isAdmin]="isAdmin" [board]="board" [task]="task" (taskChanged)="this.updateTask()"></app-task-overlay>
     </div>
 </ng-template>
 <ng-template #descriptionItem let-item="item">

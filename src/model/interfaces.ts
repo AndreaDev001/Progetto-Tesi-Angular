@@ -119,6 +119,7 @@ export interface TaskFile
     createdDate: string,
     name: string,
     type: string,
+    extension: string,
 }
 export interface RoleOwner
 {
@@ -157,7 +158,6 @@ export interface Task
     id: string,
     createdDate: string,
     title: string,
-    subtitle: string,
     name?: string,
     description: string,
     priority?: string,

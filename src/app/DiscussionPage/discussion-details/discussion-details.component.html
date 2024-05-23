@@ -18,8 +18,8 @@
                     </div>
                     <div class = "mt-2 mt-md-0 col-12 col-md-6 text-end">
                         <button (click)="modifyDiscussion()" class = "default-button mx-1" *ngIf="isOwner">Modify</button>
-                        <button class = "default-button mx-1" (click)="updateLike()">{{currentLike != undefined ? 'Remove Like' : 'Add Like'}}</button>
-                        <button class = "default-button mx-1" *ngIf="isOwner">Delete</button>
+                        <button *ngIf="!isOwner" class = "default-button mx-1" (click)="updateLike()">{{currentLike != undefined ? 'Remove Like' : 'Add Like'}}</button>
+                        <button (click)="deleteDiscussion()" class = "default-button mx-1" *ngIf="isOwner">Delete</button>
                         <button (click)="addReport()" class = "default-button mx-1" *ngIf="!isOwner && currentReport == undefined">Report</button>
                     </div>
                 </div>

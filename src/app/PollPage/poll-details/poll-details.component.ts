@@ -1,4 +1,5 @@
 import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faCalendar, faHeart } from '@fortawesome/free-solid-svg-icons';
 import { Subscription, first } from 'rxjs';
@@ -7,6 +8,7 @@ import { AuthHandlerService } from 'src/model/auth/auth-handler.service';
 import { Poll, PollLike, PollReport } from 'src/model/interfaces';
 import { PollLikeService } from 'src/model/services/poll-like.service';
 import { PollReportService } from 'src/model/services/poll-report.service';
+import { PollService } from 'src/model/services/poll.service';
 
 @Component({
   selector: 'app-poll-details',
@@ -31,7 +33,7 @@ export class PollDetailsComponent implements OnChanges,OnDestroy {
   @ViewChild("createReportTemplate") createReportTemplate: any;
   @ViewChild("modifyPollTemplate") modifyPollTemplate: any;
 
-  constructor(private authHandler: AuthHandlerService,private pollLikeService: PollLikeService,private pollReportService: PollReportService,public alertHandlerService: AlertHandlerService) {
+  constructor(private authHandler: AuthHandlerService,private pollService: PollService,private router: Router,private pollLikeService: PollLikeService,private pollReportService: PollReportService,public alertHandlerService: AlertHandlerService) {
 
   }
 
@@ -86,5 +88,13 @@ export class PollDetailsComponent implements OnChanges,OnDestroy {
     this.alertHandlerService.reset();
     this.alertHandlerService.setTextTemplate(this.modifyPollTemplate);
     this.alertHandlerService.open();
+  }
+
+  public deletePoll(): void {
+    if(this.poll != undefined) {
+      this.pollService.deletePoll(this.poll.id).subscribe((value: any) => {
+        this.router.navigate(['/home']);
+      })
+    }
   }
 }

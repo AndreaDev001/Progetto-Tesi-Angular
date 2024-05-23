@@ -1,4 +1,5 @@
 import { Component,Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import { Router } from '@angular/router';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faCalendar, faCalendarPlus, faComment, faHeart, faMessage } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
@@ -7,6 +8,7 @@ import { AuthHandlerService } from 'src/model/auth/auth-handler.service';
 import { Discussion, DiscussionLike, DiscussionReport } from 'src/model/interfaces';
 import { DiscussionLikeService } from 'src/model/services/discussion-like.service';
 import { DiscussionReportService } from 'src/model/services/discussion-report.service';
+import { DiscussionService } from 'src/model/services/discussion.service';
 
 interface DescriptionItem
 {
@@ -34,7 +36,7 @@ export class DiscussionDetailsComponent implements OnInit, OnDestroy{
   @ViewChild("createReportTemplate") createReportTemplate: any;
   @ViewChild("createDiscussionTemplate") createDiscussionTemplate: any;
 
-  constructor(private authHandler: AuthHandlerService,public alertHandlerService: AlertHandlerService,private discussionReportService: DiscussionReportService,private discussionLikeService: DiscussionLikeService) {
+  constructor(private authHandler: AuthHandlerService,private discussionService: DiscussionService,private router: Router,public alertHandlerService: AlertHandlerService,private discussionReportService: DiscussionReportService,private discussionLikeService: DiscussionLikeService) {
 
   }
 
@@ -93,6 +95,14 @@ export class DiscussionDetailsComponent implements OnInit, OnDestroy{
           this.discussion!!.amountOfReceivedLikes = this.discussion!!.amountOfReceivedLikes - 1;
           this.descriptionItems[0].amount = this.discussion!!.amountOfReceivedLikes.toString();
         })
+  }
+
+  public deleteDiscussion(): void {
+    if(this.discussion != undefined) {
+      this.discussionService.deleteDiscussion(this.discussion.id).subscribe((value: any) => {
+        this.router.navigate(["/home"]);
+      })
+    }
   }
 
   public ngOnDestroy(): void {

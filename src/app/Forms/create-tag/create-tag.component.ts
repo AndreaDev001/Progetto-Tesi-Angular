@@ -14,7 +14,7 @@ import { TagService } from 'src/model/services/tag.service';
 export class CreateTagComponent implements OnInit {
 
   public formGroup: FormGroup = new FormGroup({
-    name: new FormControl('',[Validators.required,Validators.minLength(3),Validators.maxLength(10)]),
+    name: new FormControl('',[Validators.required,Validators.minLength(3),Validators.maxLength(20)]),
     color: new FormControl('#00ff00',[Validators.required]),
   })
   public tagIcon: IconDefinition = faTag;

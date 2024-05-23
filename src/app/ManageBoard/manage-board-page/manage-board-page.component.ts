@@ -83,11 +83,15 @@ export class ManageBoardPageComponent implements OnInit,OnDestroy {
 
   public reloadBoardInfo(): void {
     this.boardService.getBoardById(this.boardID).subscribe((value: Board) => {
-      this.alertHandler.close();
       this.currentBoard = value;
-      let timeStamp = (new Date()).getTime();
-      this.backgroundURL = "http://localhost:8080/api/v1/boardImages/public/image/" + this.currentBoard.id + "?" + 'time=' + timeStamp;
+      this.reloadBoardImage();
+      this.alertHandler.close();
     })
+  }
+  
+  public reloadBoardImage(): void {
+    let timeStamp = (new Date()).getTime();
+    this.backgroundURL = "http://localhost:8080/api/v1/boardImages/public/image/" + this.currentBoard!!.id + "?" + 'time=' + timeStamp;
   }
 
 
@@ -231,6 +235,10 @@ export class ManageBoardPageComponent implements OnInit,OnDestroy {
       let updateTaskGroup: UpdateTaskGroup = {groupID: groupID,name: requiredName};
       this.taskGroupService.updateTaskGroup(updateTaskGroup).subscribe((value: any) => console.log(value));
     }
+  }
+
+  public removeTask(groupIndex: number,taskID: string): void {
+    this.currentTasks[groupIndex] = this.currentTasks[groupIndex].filter((value: any) => value.id !== taskID);
   }
 
   public updateCurrentHeight(event: any): void {

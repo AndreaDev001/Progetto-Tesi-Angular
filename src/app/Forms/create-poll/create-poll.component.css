@@ -6,3 +6,6 @@ div.vertical-container
     overflow-y: auto;
     max-height: 400px;
 }
+::ng-deep .mat-mdc-select-min-line {
+    color: black;
+}
